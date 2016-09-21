@@ -1,0 +1,11 @@
+{
+  "code": "tastyigniter-purple",
+  "name": "TastyIgniter Purple",
+  "description": "Responsive and SEO-ready theme",
+  "version": "1.0.0",
+  "author": "SamPoyigi",
+  "homepage": "https://github.com/igniter-labs/tastyigniter-purple-theme",
+  "tags": {
+    "1.0.0": "Theme initialization"
+  }
+}
