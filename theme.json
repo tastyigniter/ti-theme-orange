@@ -7,5 +7,9 @@
   "homepage": "https://github.com/igniter-labs/tastyigniter-orange-theme",
   "tags": {
     "1.0.0": "Theme initialization"
+  },
+  "require": {
+    "local_module": "1.0.*",
+    "cart_module": "2.0.*"
   }
 }
