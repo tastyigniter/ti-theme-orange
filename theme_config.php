@@ -1,18 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct access allowed');
 
 /**
-* Theme configuration options for admin panel customization.
-* This file contains an array of options to be retrieved later in the theme.
-* ONLY $theme = array() allowed
-*
-*/
-
-// Set a custom theme title.
-$theme['title']         = 'TastyIgniter Orange';
-$theme['author']        = 'SamPoyigi';
-$theme['version']       = '2.1';
-$theme['description']   = 'Responsive theme for front-end';
-$theme['child']       	= TRUE;
+ * Theme configuration options for admin panel customization.
+ * This file contains an array of options to be retrieved later in the theme.
+ * ONLY $theme = array() allowed
+ *
+ */
 
 $theme['head_tags'] = array(
 	'doctype'   => 'html5',
@@ -23,19 +16,18 @@ $theme['head_tags'] = array(
 		array('name' => 'viewport', 'content' => 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no', 'type' => 'name'),
 	),
 	'style'    	=> array(
-		array(theme_url('tastyigniter-orange/css/bootstrap.min.css'), 'bootstrap-css', '10'),
-		array(theme_url('tastyigniter-orange/css/font-awesome.min.css'), 'font-awesome-css', '11'),
-		array(theme_url('tastyigniter-orange/css/select2.css'), 'select2-css', '13'),
-		array(theme_url('tastyigniter-orange/css/select2-bootstrap.css'), 'select2-bootstrap-css', '14'),
-		array(theme_url('tastyigniter-orange/css/jquery.raty.css'), 'jquery-raty-css', '15'),
+		array(assets_url('css/bootstrap.min.css'), 'bootstrap-css', '10'),
+		array(assets_url('css/font-awesome.min.css'), 'font-awesome-css', '11'),
+		array(assets_url('css/select2.css'), 'select2-css', '13'),
+		array(assets_url('css/select2-bootstrap.css'), 'select2-bootstrap-css', '14'),
+		array(assets_url('css/jquery.raty.css'), 'jquery-raty-css', '15'),
 		array(theme_url('tastyigniter-orange/css/fonts.css'), 'fonts-css', '16'),
 		array(theme_url('tastyigniter-orange/css/stylesheet.css'), 'stylesheet-css', '100100100100100'),
 	),
 	'script'   	=> array(
-		array(theme_url('tastyigniter-orange/js/jquery-1.11.2.min.js'), 'jquery-js', '1'),
-		array(theme_url('tastyigniter-orange/js/bootstrap.min.js'), 'bootstrap-js', '10'),
-		array(theme_url('tastyigniter-orange/js/select2.js'), 'select-2-js', '12'),
-		array(theme_url('tastyigniter-orange/js/jquery.raty.js'), 'jquery-raty-js', '13'),
+		array(assets_url('js/app/vendor.js'), 'vendor-js', '1'),
+		array(assets_url('js/select2.js'), 'select-2-js', '10'),
+		array(assets_url('js/jquery.raty.js'), 'jquery-raty-js', '12'),
 		array(theme_url('tastyigniter-orange/js/common.js'), 'common-js', '100100100100100'),
 	),
 );
@@ -134,8 +126,8 @@ $theme['customize']['sections']['typography'] = array(
 					'label' 		=> 'Font Family',
 					'desc'			=> 'The font family to use for the main body text.',
 					'type' 			=> 'text',
-					'value'			=> '"Oxygen",Arial,sans-serif',
-		            'rules'         => 'required',
+					'value'			=> '"Titillium Web",Arial,sans-serif',
+					'rules'         => 'required',
 				),
 				array(
 					'id'			=> 'input-font-weight',
@@ -168,8 +160,8 @@ $theme['customize']['sections']['typography'] = array(
 					'label' 		=> 'Header menu font family',
 					'desc'			=> 'The font family to use for the header menu.',
 					'type' 			=> 'text',
-					'value'			=> '"Oxygen",Arial,sans-serif',
-		            'rules'         => 'required',
+					'value'			=> '"Titillium Web",Arial,sans-serif',
+					'rules'         => 'required',
 				),
 				array(
 					'id'			=> 'input-menu-font-weight',

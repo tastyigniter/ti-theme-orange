@@ -9,7 +9,7 @@
     "1.0.0": "Theme initialization"
   },
   "require": {
-    "local_module": "1.0.*",
-    "cart_module": "2.0.*"
+    "local_module": "*",
+    "cart_module": "*"
   }
 }
