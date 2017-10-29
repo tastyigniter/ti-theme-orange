@@ -4,14 +4,7 @@
   "description": "Responsive theme for TastyIgniter front-end, customizable, simple, and readable",
   "version": "2.1.0",
   "author": "SamPoyigi",
-  "homepage": "https://github.com/igniter-labs/tastyigniter-orange-theme",
-  "layouts": {
-    "default": {
-      "name": ""
-    }
-  },
-  "partials": {
-  },
+  "homepage": "https://github.com/sampoyigi/ti-orange-theme",
   "tags": {
     "1.0.0": "Theme initialization",
     "2.1.0": "Update code to use latest Theme API"
