@@ -1,22 +1,32 @@
 ---
-title: main::default.local.text_tab_review
-layout: local
-permalink: /:location?local/reviews
+title: Checkout
+layout: default
+permalink: /checkout
 
-'[localReview]':
+'[account]':
+
+'[local]':
+
+'[cartBox]':
+    pageIsCheckout: true
+
+'[checkout]':
 ---
 <div id="page-content">
 
     <div class="container">
+
         <div class="row">
             <div class="content col-sm-8">
                 <div class="row">
                     <?= component('local'); ?>
-
-                    <?= partial('local/tabs', ['context' => 'reviews']); ?>
                 </div>
 
-                <?= component('localReview') ?>
+                <?= partial('account::welcome'); ?>
+
+                <div id="checkout-container">
+                    <?= partial('checkout::checkout_form'); ?>
+                </div>
             </div>
 
             <div class="col-sm-4">

@@ -1,10 +1,10 @@
 ---
-title: main::account.inbox.text_heading
+title: Inbox
 layout: default
 permalink: /account/inbox
 
 '[account]':
-context: user
+    security: customer
 
 '[accountInbox]':
 ---
@@ -12,7 +12,7 @@ context: user
     <div class="container top-spacing">
         <div class="row">
             <div class="col-sm-3 col-md-3">
-                <?= partial('account::sidebar'); ?>
+                <?= partial('sidebar/account'); ?>
             </div>
 
             <div class="content-wrap col-sm-9 col-md-9">

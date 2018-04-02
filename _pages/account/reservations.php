@@ -1,10 +1,10 @@
 ---
-title: main::account.reservations.text_heading
+title: Account Reservations
 layout: default
-permalink: /account/reservations
+permalink: /account/reservations/:reservationId?
 
 '[account]':
-context: user
+    security: customer
 
 '[accountReservations]':
 ---
@@ -12,7 +12,7 @@ context: user
     <div class="container top-spacing">
         <div class="row">
             <div class="col-sm-3 col-md-3">
-                <?= partial('account::sidebar'); ?>
+                <?= partial('sidebar/account'); ?>
             </div>
 
             <div class="content-wrap col-sm-9 col-md-9">

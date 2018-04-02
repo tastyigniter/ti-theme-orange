@@ -1,25 +1,25 @@
 ---
-title: main::cart.text_heading
+title: Cart
 layout: default
 permalink: /cart
 
 '[local]':
 
-'[cart]':
+'[cartBox]':
 ---
 <div id="page-content">
     <div class="container">
         <div class="content-wrap">
             <div class="cart-buttons wrap-bottom">
                 <div class="center-block">
-                    <a
+                    <a 
                         class="btn btn-default btn-block btn-md"
-                        href="<?= restaurant_url('menus'); ?>"
-                    ><?= lang('main::cart.button_go_back') ?></a>
+                       href="<?= restaurant_url('menus'); ?>"
+                    ><?= lang('main::default.cart.button_go_back') ?></a>
                 </div>
             </div>
-
-            <?= component('cart'); ?>
+            
+            <?= component('cartBox'); ?>
         </div>
     </div>
 </div>

@@ -1,22 +1,20 @@
 ---
-title: main::account.details.text_heading
+title: Account Settings
 layout: default
 permalink: /account/settings
 
 '[account]':
-context: user
-
-'[accountSettings]':
+    security: customer
 ---
 <div id="page-content">
     <div class="container top-spacing">
         <div class="row">
             <div class="col-sm-3 col-md-3">
-                <?= partial('account::sidebar'); ?>
+                <?= partial('sidebar/account'); ?>
             </div>
 
             <div class="content-wrap col-sm-9 col-md-9">
-                <?= component('accountSettings'); ?>
+                <?= partial('account::settings'); ?>
             </div>
         </div>
     </div>

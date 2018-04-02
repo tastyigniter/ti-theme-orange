@@ -1,5 +1,7 @@
 ---
 description: Default layout
+
+'[pageNav]':
 ---
 <?
 function onInit()
@@ -25,18 +27,19 @@ function onEnd()
 
     <?= partial('nav/menu'); ?>
 
-    <?= partial('flash'); ?>
+    <div id="notification">
+        <?= partial('flash'); ?>
+    </div>
 
     <div id="page-wrapper" class="content-area">
 
         <?= partial('breadcrumb'); ?>
 
-        <?php if ($page_heading = get_heading()) { ?>
-            <?= partial('heading', ['heading' => $page_heading]); ?>
+        <?php if (isset($this->page->heading)) { ?>
+            <?= partial('heading', ['heading' => $this->page->heading]); ?>
         <?php } ?>
 
         <?= page(); ?>
-        <!--        --><? //= view('main::404')->with(['hala' => 'at me']); ?>
 
     </div>
     <footer id="page-footer">

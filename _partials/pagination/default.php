@@ -1,5 +1,4 @@
-<?php dd($paginator);
-if ($paginator->hasPages()) { ?>
+<?php if ($paginator->hasPages()) { ?>
     <ul class="pagination">
         <?php if ($paginator->onFirstPage()) { ?>
             <li class="disabled"><span>&laquo;</span></li>

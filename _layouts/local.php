@@ -1,9 +1,12 @@
 ---
 description: Local layout
 
-'[local]':
+'[pageNav]':
 
-'[cart]':
+'[local]':
+    paramFrom: location
+
+'[cartBox]':
 ---
 <?
 function onInit()
@@ -29,22 +32,22 @@ function onEnd()
 
     <?= partial('nav/menu'); ?>
 
-    <?= partial('flash'); ?>
+    <div id="notification">
+        <?= partial('flash'); ?>
+    </div>
 
     <div id="page-wrapper" class="content-area">
 
         <?= partial('breadcrumb'); ?>
 
-        <?php if ($page_heading = get_heading()) { ?>
-            <?= partial('heading', ['heading' => $page_heading]); ?>
+        <?php if (isset($this->page->heading)) { ?>
+            <?= partial('heading', ['heading' => $this->page->heading]); ?>
         <?php } ?>
 
         <?= page(); ?>
 
     </div>
     <footer id="page-footer">
-        <?= partial_area('content_footer'); ?>
-
         <?= partial('footer'); ?>
     </footer>
     <?= partial('scripts'); ?>

@@ -1,25 +1,23 @@
 ---
-title: main::home.text_heading
+title: main::default.home.text_heading
 layout: default
 permalink: /
+
+'[account]':
 
 '[slider]':
 
 '[localSearch]':
 ---
 <?
-function onInit()
-{
+function onInit() {
 }
 
-function onStart()
-{
+function onStart() {
 }
 
-function onEnd()
-{
+function onEnd() {
 }
-
 ?>
 ---
 <?= component('slider'); ?>
