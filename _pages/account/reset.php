@@ -1,5 +1,5 @@
 ---
-title: Reset Password
+title: main::default.account.reset.title
 layout: default
 permalink: /forgot-password/:code?
 
@@ -11,7 +11,7 @@ permalink: /forgot-password/:code?
 <div id="page-content">
     <div class="container">
         <div class="heading-section">
-            <h3><?= lang('main::account.reset.text_heading'); ?></h3>
+            <h3><?= lang('main::default.account.reset.text_heading'); ?></h3>
         </div>
 
         <div class="row">

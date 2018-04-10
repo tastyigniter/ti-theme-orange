@@ -1,5 +1,5 @@
 ---
-title: main::default.home.text_heading
+title: main::default.home.title
 layout: default
 permalink: /
 

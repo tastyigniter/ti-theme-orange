@@ -1,5 +1,5 @@
 ---
-title: Checkout
+title: main::default.checkout.title
 layout: default
 permalink: /checkout
 

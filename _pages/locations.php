@@ -1,5 +1,5 @@
 ---
-title: main::default.local.text_heading
+title: main::default.locations.title
 layout: local
 permalink: /locations
 

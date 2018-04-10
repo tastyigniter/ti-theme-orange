@@ -1,5 +1,5 @@
 ---
-title: Account Reservations
+title: main::default.account.reservations.title
 layout: default
 permalink: /account/reservations/:reservationId?
 

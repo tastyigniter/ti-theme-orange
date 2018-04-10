@@ -1,5 +1,5 @@
 ---
-title: Register
+title: main::default.account.register.title
 layout: default
 permalink: /register
 
@@ -11,7 +11,7 @@ permalink: /register
         <div class="row">
             <div class="col-md-12">
                 <div class="heading-section">
-                    <h3><?= lang('main::account.login.text_register'); ?></h3>
+                    <h3><?= lang('main::default.account.login.text_register'); ?></h3>
                 </div>
 
                 <div id="register-form" class="content-wrap col-sm-6 center-block">

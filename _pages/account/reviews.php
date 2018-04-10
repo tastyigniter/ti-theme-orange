@@ -1,5 +1,5 @@
 ---
-title: Account Reviews
+title: main::default.account.reviews.title
 layout: default
 permalink: /account/reviews/:saleType?/:saleId?
 

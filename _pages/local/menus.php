@@ -1,5 +1,5 @@
 ---
-title: main::default.local.text_tab_menu
+title: main::default.local.menus.title
 layout: local
 permalink: /:location?local/menus/:category?
 

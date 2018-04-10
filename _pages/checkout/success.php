@@ -1,5 +1,5 @@
 ---
-title: Checkout Confirmation
+title: main::default.checkout.success.title
 layout: default
 permalink: /checkout/success/:hash?
 

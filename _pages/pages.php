@@ -1,5 +1,5 @@
 ---
-title: Pages
+title: main::default.pages.title
 layout: default
 permalink: /pages/:slug
 

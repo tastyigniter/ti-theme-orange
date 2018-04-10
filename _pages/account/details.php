@@ -1,5 +1,5 @@
 ---
-title: Account Settings
+title: main::default.account.settings.title
 layout: default
 permalink: /account/settings
 

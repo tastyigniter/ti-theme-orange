@@ -1,5 +1,5 @@
 ---
-title: Account Orders
+title: main::default.account.orders.title
 layout: default
 permalink: /account/orders/:orderId?
 

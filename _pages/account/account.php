@@ -1,5 +1,5 @@
 ---
-title: Account Dashboard
+title: main::default.account.title
 layout: default
 permalink: /account
 

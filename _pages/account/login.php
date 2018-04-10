@@ -1,5 +1,5 @@
 ---
-title: Login
+title: main::default.account.login.title
 layout: default
 permalink: /login
 
@@ -11,7 +11,7 @@ permalink: /login
         <div class="row">
             <div class="col-md-12">
                 <div class="heading-section">
-                    <h3><?= lang('main::account.login.text_login'); ?></h3>
+                    <h3><?= lang('main::default.account.login.text_login'); ?></h3>
                 </div>
 
                 <div id="login-form" class="content-wrap col-sm-4 center-block">
@@ -20,14 +20,14 @@ permalink: /login
                     <div class="row">
                         <div class="col-md-5 wrap-none">
                             <a class="btn btn-link btn-lg" href="<?= site_url('account/reset'); ?>">
-                                <span class="small"><?= lang('main::account.login.text_forgot'); ?></span>
+                                <span class="small"><?= lang('main::default.account.login.text_forgot'); ?></span>
                             </a>
                         </div>
                         <div class="col-md-7">
                             <a
                                 class="btn btn-default btn-block btn-lg"
                                 href="<?= site_url('account/register'); ?>"
-                            ><?= lang('main::account.login.button_register'); ?>
+                            ><?= lang('main::default.account.login.button_register'); ?>
                             </a>
                         </div>
                     </div>

@@ -1,5 +1,5 @@
 ---
-title: Reservation Confirmation
+title: main::default.reservation.success.title
 layout: default
 permalink: /reservation/success/:hash?
 

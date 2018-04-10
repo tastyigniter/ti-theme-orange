@@ -1,5 +1,5 @@
 ---
-title: Inbox
+title: main::default.account.inbox.title
 layout: default
 permalink: /account/inbox
 

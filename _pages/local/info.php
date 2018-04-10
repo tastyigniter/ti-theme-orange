@@ -1,5 +1,5 @@
 ---
-title: main::default.local.text_tab_info
+title: main::default.local.info.title
 layout: local
 permalink: /:location?local/info
 

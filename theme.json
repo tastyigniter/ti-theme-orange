@@ -6,12 +6,12 @@
   "author": "TastyIgniter Dev Team",
   "version": "2.1.0",
   "require": {
-    "sampoygi.account": "*",
-    "sampoygi.cart": "*",
-    "sampoygi.frontend": "*",
-    "sampoygi.local": "*",
-    "sampoygi.pages": "*",
-    "sampoygi.reservation": "*"
+    "sampoyigi.account": "*",
+    "sampoyigi.cart": "*",
+    "sampoyigi.frontend": "*",
+    "sampoyigi.local": "*",
+    "sampoyigi.pages": "*",
+    "sampoyigi.reservation": "*"
   },
   "tags": {
     "1.0.0": "Theme initialization",

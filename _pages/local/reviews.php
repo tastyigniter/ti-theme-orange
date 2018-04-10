@@ -1,5 +1,5 @@
 ---
-title: main::default.local.text_tab_review
+title: main::default.local.reviews.title
 layout: local
 permalink: /:location?local/reviews
 

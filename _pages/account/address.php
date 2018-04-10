@@ -1,5 +1,5 @@
 ---
-title: Address Book
+title: main::default.account.address.title
 layout: default
 permalink: /account/address/:addressId?
 
