@@ -6,6 +6,12 @@ permalink: /pages/:slug
 '[sitePage]':
     slug: ':slug'
 ---
+<?
+function onEnd() {
+    $this->title = $this['sitePage'] ? $this['sitePage']->title : $this->title;
+}
+?>
+---
 <div id="page-content">
     <div class="container">
         <div id="heading" class="row">
