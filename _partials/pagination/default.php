@@ -1,10 +1,10 @@
 <?php if ($paginator->hasPages()) { ?>
     <ul class="pagination">
         <?php if ($paginator->onFirstPage()) { ?>
-            <li class="disabled"><span>&laquo;</span></li>
+            <li class="disabled"><span>«</span></li>
         <?php }
         else { ?>
-            <li><a href="<?= $paginator->previousPageUrl() ?>" rel="prev">&laquo;</a></li>
+            <li><a href="<?= $paginator->previousPageUrl() ?>" rel="prev">«</a></li>
         <?php } ?>
 
         <?php foreach ($elements as $element) { ?>
@@ -25,10 +25,10 @@
         <?php } ?>
 
         <?php if ($paginator->hasMorePages()) { ?>
-            <li><a href="<?= $paginator->nextPageUrl() ?>" rel="next">&raquo;</a></li>
+            <li><a href="<?= $paginator->nextPageUrl() ?>" rel="next">»</a></li>
         <?php }
         else { ?>
-            <li class="disabled"><span>&raquo;</span></li>
+            <li class="disabled"><span>»</span></li>
         <?php } ?>
     </ul>
 <?php } ?>

@@ -24,7 +24,7 @@ function onEnd() {
 
         <div class="row">
             <div class="col-sm-3">
-                <?= partial('sidebar/pages'); ?>
+                <?= partial('pageNav::sidebar'); ?>
             </div>
 
             <div class="col-sm-9">

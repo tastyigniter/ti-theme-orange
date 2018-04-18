@@ -15,7 +15,7 @@ permalink: /cart
                     <a 
                         class="btn btn-default btn-block btn-md"
                        href="<?= restaurant_url('menus'); ?>"
-                    ><?= lang('main::default.cart.button_go_back') ?></a>
+                    >Add more items</a>
                 </div>
             </div>
             
