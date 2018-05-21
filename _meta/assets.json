@@ -1,6 +1,6 @@
 {
   "doctype": "html5",
-  "favicon": ":root_url,favicon.ico",
+  "favicon": "/favicon.ico",
   "meta": [
     {
       "name": "Content-type",
@@ -20,37 +20,62 @@
   ],
   "style": [
     {
-      "href": ":assets_url,css/vendor/select2.min.css",
+      "path": "assets/css/vendor/bootstrap.min.css",
+      "name": "bootstrap-css",
+      "collection": "ui"
+    },
+    {
+      "path": "assets/css/vendor/font-awesome.min.css",
+      "name": "font-awesome-css",
+      "collection": "ui"
+    },
+    {
+      "path": "assets/css/vendor/select2.min.css",
       "name": "select2-css"
     },
     {
-      "href": ":assets_url,css/vendor/select2-bootstrap.min.css",
+      "path": "assets/css/vendor/select2-bootstrap.min.css",
       "name": "select2-bootstrap-css"
     },
     {
-      "href": ":assets_url,css/vendor/jquery.raty.css",
+      "path": "assets/css/vendor/jquery.raty.css",
       "name": "jquery-raty-css"
     },
     {
-      "href": ":theme_url,tastyigniter-orange/assets/css/fonts.css",
+      "path": "tastyigniter-orange/assets/css/fonts.css",
       "name": "fonts-css"
     },
     {
-      "href": ":theme_url,tastyigniter-orange/assets/css/stylesheet.css",
+      "path": "tastyigniter-orange/assets/css/stylesheet.css",
       "name": "stylesheet-css"
     }
   ],
   "script": [
     {
-      "src": ":assets_url,js/vendor/select2.min.js",
+      "path": "assets/js/app/vendor.js",
+      "name": "vendor-js",
+      "collection": "ui"
+    },
+    {
+      "path": "assets/js/app/flashmessage.js",
+      "name": "flashmessage-js",
+      "collection": "ui"
+    },
+    {
+      "path": "assets/js/app/app.js",
+      "name": "app-js",
+      "collection": "ui"
+    },
+    {
+      "path": "assets/js/vendor/select2.min.js",
       "name": "select-2-js"
     },
     {
-      "src": ":assets_url,js/vendor/jquery.raty.js",
+      "path": "assets/js/vendor/jquery.raty.js",
       "name": "jquery-raty-js"
     },
     {
-      "src": ":theme_url,tastyigniter-orange/assets/js/common.js",
+      "path": "tastyigniter-orange/assets/js/common.js",
       "name": "common-js"
     }
   ]
