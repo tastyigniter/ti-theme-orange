@@ -1,6 +1,6 @@
 {
   "doctype": "html5",
-  "favicon": "assets/images/favicon.ico",
+  "favicon": "/assets/images/favicon.ico",
   "meta": [
     {
       "name": "Content-type",
@@ -20,25 +20,25 @@
   ],
   "style": [
     {
-      "path": "assets/css/vendor/bootstrap.min.css",
+      "path": "/assets/css/vendor/bootstrap.min.css",
       "name": "bootstrap-css",
       "collection": "ui"
     },
     {
-      "path": "assets/css/vendor/font-awesome.min.css",
+      "path": "/assets/css/vendor/font-awesome.min.css",
       "name": "font-awesome-css",
       "collection": "ui"
     },
     {
-      "path": "assets/css/vendor/select2.min.css",
+      "path": "/assets/css/vendor/select2.min.css",
       "name": "select2-css"
     },
     {
-      "path": "assets/css/vendor/select2-bootstrap.min.css",
+      "path": "/assets/css/vendor/select2-bootstrap.min.css",
       "name": "select2-bootstrap-css"
     },
     {
-      "path": "assets/css/vendor/jquery.raty.css",
+      "path": "/assets/css/vendor/jquery.raty.css",
       "name": "jquery-raty-css"
     },
     {
