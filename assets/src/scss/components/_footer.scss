@@ -1,0 +1,43 @@
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: $page-padding-bottom;
+
+  .footer-top {
+    background-color: $footer-top-bg;
+  }
+  .footer-bottom {
+    background-color: $footer-bottom-bg;
+  }
+
+  a,
+  .footer-top,
+  .footer-bottom {
+    color: $footer-link-color;
+  }
+}
+.footer-title {
+  text-transform: uppercase;
+  padding-bottom: 5px;
+}
+.footer-links {
+  ul {
+    margin: 0;
+    padding: 0;
+    display: block;
+  }
+
+  li {
+    list-style: none;
+
+    a {
+      color: $footer-link-color;
+    }
+  }
+
+  i {
+    margin-right: 5px;
+    color: #ED561A;
+  }
+}

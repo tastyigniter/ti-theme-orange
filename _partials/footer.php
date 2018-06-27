@@ -1,13 +1,9 @@
-<div class="main-footer">
+<div class="main-footer pt-sm-3">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-sm-3 pull-right">
-                <?= partial('social_icons', ['socialIcons' => $this->theme->social]); ?>
-            </div>
-
-            <div class="col-xs-4 col-sm-3">
+            <div class="col-sm-3">
                 <div class="footer-links">
-                    <h4 class="footer-title hidden-xs"><?= lang('main::default.text_my_account'); ?></h4>
+                    <h6 class="footer-title d-none d-sm-block"><?= lang('main::default.text_my_account'); ?></h6>
                     <ul>
                         <li>
                             <a href="<?= site_url('account/login'); ?>">
@@ -22,9 +18,9 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-xs-4 col-sm-3">
+            <div class="col-sm-3">
                 <div class="footer-links">
-                    <h4 class="footer-title hidden-xs"><?= setting('site_name'); ?></h4>
+                    <h6 class="footer-title d-none d-sm-block"><?= setting('site_name'); ?></h6>
                     <ul>
                         <?php if (!is_single_location()) { ?>
                             <li>
@@ -51,9 +47,9 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-xs-4 col-sm-3">
+            <div class="col-sm-3">
                 <div class="footer-links">
-                    <h4 class="footer-title hidden-xs"><?= lang('main::default.text_information'); ?></h4>
+                    <h6 class="footer-title d-none d-sm-block"><?= lang('main::default.text_information'); ?></h6>
                     <ul>
                         <?php if (!empty($footerPageList)) foreach ($footerPageList as $page) { ?>
                             <li>
@@ -67,14 +63,29 @@
                     </ul>
                 </div>
             </div>
+
+            <div class="col-sm-3 mt-3 mt-sm-0">
+                <div class="social-bottom">
+                    <h6 class="footer-title"><?= lang('main::default.text_follow_us'); ?></h6>
+                    <?= partial('social_icons', ['socialIcons' => $this->theme->social]); ?>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="bottom-footer">
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <hr class="mb-3">
+        </div>
+    </div>
+</div>
+
+<div class="bottom-footer py-2">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 wrap-all border-top">
+            <div class="col p-2">
                 <?= sprintf(
                     lang('main::default.site_copyright'),
                     date('Y'),

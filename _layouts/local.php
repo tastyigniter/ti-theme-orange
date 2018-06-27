@@ -1,12 +1,29 @@
 ---
-description: Local layout
+description: 'Local layout'
 
-'[pageNav]':
+'[pageNav]': {  }
+
+'[newsletter]': {  }
 
 '[local]':
     paramFrom: location
+    showLocalThumb: 0
+    menusPage: local/menus
+    openTimeFormat: ''
+    timePickerDateFormat: 'D d'
+    timePickerTimeFormat: 'H:i'
+    timePickerDateTimeFormat: 'D d H:i'
+
+'[categories]':
+    menusPage: local/menus
 
 '[cartBox]':
+    timeFormat: 'D H:i a'
+    checkStockCheckout: 0
+    pageIsCheckout: 0
+    pageIsCart: 0
+    checkoutPage: checkout/checkout
+
 ---
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="<?= App::getLocale(); ?>">
@@ -15,25 +32,54 @@ description: Local layout
 </head>
 <body class="<?= $this->page->bodyClass; ?>">
 
-    <?= partial('nav/menu'); ?>
+    <header class="header">
+        <?= partial('nav/menu'); ?>
+    </header>
 
-    <div id="notification">
-        <?= partial('flash'); ?>
-    </div>
+    <main role="main">
+        <div id="notification">
+            <?= partial('flash'); ?>
+        </div>
 
-    <div id="page-wrapper" class="content-area">
+        <div id="page-wrapper">
+            <?= partial('breadcrumb'); ?>
 
-        <?= partial('breadcrumb'); ?>
+            <?php if (isset($this->page->heading)) { ?>
+                <?= partial('heading', ['heading' => $this->page->heading]); ?>
+            <?php } ?>
 
-        <?php if (isset($this->page->heading)) { ?>
-            <?= partial('heading', ['heading' => $this->page->heading]); ?>
-        <?php } ?>
+            <div class="container">
+                <div class="row py-4">
+                    <div class="col-sm-2 d-none d-sm-inline-block">
+                        <div class="categories affix-categories">
+                            <?= component('categories'); ?>
+                        </div>
+                    </div>
 
-        <?= page(); ?>
+                    <div class="col-sm-6">
+                        <div class="content">
+                            <?= component('local'); ?>
 
-    </div>
-    <footer id="page-footer">
-        <?= partial('footer'); ?>
+                            <?= page(); ?>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <?= component('cartBox'); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer pb-4">
+        <div class="footer-top">
+            <?= component('newsletter'); ?>
+        </div>
+
+        <div class="footer-bottom">
+            <?= partial('footer'); ?>
+        </div>
     </footer>
     <?= partial('scripts'); ?>
 </body>

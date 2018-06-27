@@ -7,15 +7,18 @@ permalink: /reservation
 
 '[booking]':
 ---
-<div id="page-content">
-
-    <div class="container">
-
-        <div class="row">
-            <div class="content col-sm-10 center-block">
-                <?= partial('account::welcome') ?>
-
-                <?= component('booking'); ?>
+<div class="container">
+    <div class="row py-4">
+        <div class="col col-sm-10 center-block">
+            <div class="card mb-1">
+                <div class="card-body">
+                    <?= partial('account::welcome'); ?>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <?= component('booking'); ?>
+                </div>
             </div>
         </div>
     </div>

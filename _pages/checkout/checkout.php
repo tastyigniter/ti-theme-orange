@@ -12,26 +12,25 @@ permalink: /checkout
 
 '[checkout]':
 ---
-<div id="page-content">
+<div class="container">
+    <div class="row py-4">
+        <div class="col col-sm-8">
+            <?= component('local'); ?>
 
-    <div class="container">
-
-        <div class="row">
-            <div class="content col-sm-8">
-                <div class="row">
-                    <?= component('local'); ?>
+            <div class="card my-1">
+                <div class="card-body">
+                    <?= partial('account::welcome'); ?>
                 </div>
-
-                <?= partial('account::welcome'); ?>
-
-                <div id="checkout-container">
+            </div>
+            <div class="card">
+                <div class="card-body">
                     <?= partial('checkout::checkout_form'); ?>
                 </div>
             </div>
+        </div>
 
-            <div class="col-sm-4">
-                <?= component('cartBox'); ?>
-            </div>
+        <div class="col-sm-4">
+            <?= component('cartBox'); ?>
         </div>
     </div>
 </div>

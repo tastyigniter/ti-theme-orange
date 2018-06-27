@@ -6,19 +6,18 @@ permalink: /cart
 '[local]':
 
 '[cartBox]':
+    pageIsCart: 1
 ---
-<div id="page-content">
-    <div class="container">
-        <div class="content-wrap">
+<div class="container">
+    <div class="row py-4">
+        <div class="col col-sm-6 m-auto">
             <div class="cart-buttons wrap-bottom">
-                <div class="center-block">
-                    <a 
-                        class="btn btn-default btn-block btn-md"
-                       href="<?= restaurant_url('menus'); ?>"
-                    >Add more items</a>
-                </div>
+                <a
+                    class="btn btn-default btn-block btn-md"
+                    href="<?= restaurant_url('local/menus'); ?>"
+                >Add more items</a>
             </div>
-            
+
             <?= component('cartBox'); ?>
         </div>
     </div>

@@ -1,110 +1,100 @@
-<header id="main-header">
+<nav class="navbar navbar-top navbar-expand-md fixed-top">
     <div class="container">
-        <div class="row">
-            <div class="col-sm-5">
-                <button
-                    type="button"
-                    class="btn-navbar navbar-toggle"
-                    data-toggle="collapse"
-                    data-target="#main-header-menu-collapse"
-                ><i class="fa fa-align-justify"></i></button>
+        <?= partial('nav/logo'); ?>
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarMainHeader"
+            aria-controls="navbarMainHeader"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        ><span class="navbar-toggler-icon"></span></button>
 
-                <?= partial('nav/logo'); ?>
-            </div>
+        <div class="justify-content-end collapse navbar-collapse" id="navbarMainHeader">
+            <ul class="nav navbar-nav">
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="<?= restaurant_url('local/menus'); ?>"
+                        class="<?= ($this->page->getId() == 'local-menus') ? 'active' : ''; ?>"
+                    ><?= lang('main::default.menu_menu'); ?></a>
+                </li>
 
-            <div class="col-sm-7">
-                <div class="collapse navbar-collapse" id="main-header-menu-collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
+                <?php if (setting('reservation_mode') == '1') { ?>
+                    <li class="nav-item">
+                        <a
+                            class="nav-link"
+                            href="<?= page_url('reservation'); ?>"
+                            class="<?= ($this->page->getId() == 'reservation-reservation') ? 'active' : ''; ?>"
+                        ><?= lang('main::default.menu_reservation'); ?></a>
+                    </li>
+                <?php } ?>
+
+                <?php if (Auth::isLogged()) { ?>
+                    <li class="nav-item dropdown">
+                        <a
+                            id="dropdownAccount"
+                            class="nav-link dropdown-toggle clickable"
+                            role="button"
+                            href="#"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                        ><?= lang('main::default.menu_my_account'); ?> <span class="caret"></span></a>
+
+                        <div
+                            class="dropdown-menu"
+                            role="menu"
+                            aria-labelledby="dropdownAccount"
+                        >
                             <a
-                                href="<?= restaurant_url('local/menus'); ?>"
-                                class="<?= ($this->page->getId() == 'local-menus') ? 'active' : ''; ?>"
-                            ><?= lang('main::default.menu_menu'); ?></a>
-                        </li>
+                                href="<?= page_url('account/orders'); ?>"
+                                class="dropdown-item <?= ($this->page->getId() == 'account-orders') ? 'active' : ''; ?>"
+                            ><?= lang('main::default.menu_recent_order'); ?></a>
+                            <a
+                                href="<?= page_url('account/account'); ?>"
+                                class="dropdown-item <?= ($this->page->getId() == 'account-account') ? 'active' : ''; ?>"
+                            ><?= lang('main::default.menu_my_account'); ?></a>
+                            <a
+                                href="<?= page_url('account/address'); ?>"
+                                class="dropdown-item <?= ($this->page->getId() == 'account-address') ? 'active' : ''; ?>"
+                            ><?= lang('main::default.menu_address'); ?></a>
 
-                        <?php if (setting('reservation_mode') == '1') { ?>
-                            <li>
-                                <a
-                                    href="<?= page_url('reservation'); ?>"
-                                    class="<?= ($this->page->getId() == 'reservation-reservation') ? 'active' : ''; ?>"
-                                ><?= lang('main::default.menu_reservation'); ?></a>
-                            </li>
-                        <?php } ?>
+                            <a
+                                href="<?= page_url('account/reservations'); ?>"
+                                class="dropdown-item <?= ($this->page->getId() == 'account-reservations') ? 'active' : ''; ?>"
+                            ><?= lang('main::default.menu_recent_reservation'); ?></a>
 
-                        <?php if (Auth::isLogged()) { ?>
-                            <li class="dropdown">
-                                <a
-                                    class="dropdown-toggle clickable"
-                                    data-toggle="dropdown" id="dropdownLabel1"
-                                ><?= lang('main::default.menu_my_account'); ?> <span class="caret"></span></a>
+                            <a
+                                class="dropdown-item"
+                                data-request="account::onLogout"
+                            ><?= lang('main::default.menu_logout'); ?></a>
+                        </div>
+                    </li>
+                <?php } else { ?>
+                    <li class="nav-item">
+                        <a
+                            href="<?= page_url('account/login'); ?>"
+                            class="nav-link <?= ($this->page->getId() == 'account-login') ? 'active' : ''; ?>"
+                        ><?= lang('main::default.menu_login'); ?></a>
+                    </li>
+                    <li class="nav-item">
+                        <a
+                            href="<?= page_url('account/register'); ?>"
+                            class="nav-link <?= ($this->page->getId() == 'account-register') ? 'active' : ''; ?>"
+                        ><?= lang('main::default.menu_register'); ?></a>
+                    </li>
+                <?php } ?>
 
-                                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownLabel">
-                                    <li>
-                                        <a
-                                            role="presentation"
-                                            href="<?= page_url('account/orders'); ?>"
-                                            class="<?= ($this->page->getId() == 'account-orders') ? 'active' : ''; ?>"
-                                        ><?= lang('main::default.menu_recent_order'); ?></a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            role="presentation"
-                                            href="<?= page_url('account/account'); ?>"
-                                            class="<?= ($this->page->getId() == 'account-account') ? 'active' : ''; ?>"
-                                        ><?= lang('main::default.menu_my_account'); ?></a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            role="presentation"
-                                            href="<?= page_url('account/address'); ?>"
-                                            class="<?= ($this->page->getId() == 'account-address') ? 'active' : ''; ?>"
-                                        ><?= lang('main::default.menu_address'); ?></a>
-                                    </li>
-
-                                    <?php if (setting('reservation_mode') == '1') { ?>
-                                        <li>
-                                            <a
-                                                role="presentation"
-                                                href="<?= page_url('account/reservations'); ?>"
-                                                class="<?= ($this->page->getId() == 'account-reservations') ? 'active' : ''; ?>"
-                                            ><?= lang('main::default.menu_recent_reservation'); ?></a>
-                                        </li>
-                                    <?php } ?>
-
-                                    <li>
-                                        <a
-                                            role="presentation"
-                                            data-request="account::onLogout"
-                                        ><?= lang('main::default.menu_logout'); ?></a>
-                                    </li>
-                                </ul>
-                            </li>
-                        <?php } else { ?>
-                            <li>
-                                <a
-                                    href="<?= page_url('account/login'); ?>"
-                                    class="<?= ($this->page->getId() == 'account-login') ? 'active' : ''; ?>"
-                                ><?= lang('main::default.menu_login'); ?></a>
-                            </li>
-                            <li>
-                                <a
-                                    href="<?= page_url('account/register'); ?>"
-                                    class="<?= ($this->page->getId() == 'account-register') ? 'active' : ''; ?>"
-                                ><?= lang('main::default.menu_register'); ?></a>
-                            </li>
-                        <?php } ?>
-
-                        <?php if (!empty($headerPageList)) foreach ($headerPageList as $page) { ?>
-                            <li>
-                                <a
-                                    href="<?= page_url('pages', ['slug' => $page->permalink_slug]); ?>"
-                                ><?= $page->name; ?></a>
-                            </li>
-                        <?php } ?>
-
-                    </ul>
-                </div>
-            </div>
+                <?php if (!empty($headerPageList)) foreach ($headerPageList as $page) { ?>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="<?= page_url('pages', ['slug' => $page->permalink_slug]); ?>"
+                        ><?= $page->name; ?></a>
+                    </li>
+                <?php } ?>
+            </ul>
         </div>
     </div>
-</header>
+</nav>

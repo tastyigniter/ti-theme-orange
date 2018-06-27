@@ -1,27 +1,22 @@
 ---
-title: main::default.local.reviews.title
+title: 'main::default.local.reviews.title'
+permalink: '/:location?local/reviews'
+description: ''
 layout: local
-permalink: /:location?local/reviews
 
 '[localReview]':
+    pageLimit: 10
+    sort: 'date_added asc'
+
 ---
-<div id="page-content">
+<?= partial('local/tabs', ['activeTab' => 'reviews']); ?>
 
-    <div class="container">
-        <div class="row">
-            <div class="content col-sm-8">
-                <div class="row">
-                    <?= component('local'); ?>
-
-                    <?= partial('local/tabs', ['context' => 'reviews']); ?>
-                </div>
-
-                <?= component('localReview') ?>
-            </div>
-
-            <div class="col-sm-4">
-                <?= component('cartBox'); ?>
-            </div>
-        </div>
+<div class="panel">
+    <div class="panel-body">
+        <h1 class="panel-title h4">
+            <?php echo sprintf(lang('sampoyigi.local::default.text_review_heading'), $currentLocation->location_name); ?>
+        </h1>
     </div>
+
+    <?= component('localReview') ?>
 </div>

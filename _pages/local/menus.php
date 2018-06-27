@@ -1,40 +1,27 @@
 ---
-title: main::default.local.menus.title
+title: 'main::default.local.menus.title'
+permalink: '/:location?local/menus/:category?'
+description: ''
 layout: local
-permalink: /:location?local/menus/:category?
-
-'[categories]':
 
 '[localMenu]':
-    menusPerPage: 50
-    isGrouped: false
+    isGrouped: 0
+    menusPerPage: 200
+    showMenuImages: 0
+    menuImageWidth: 95
+    menuImageHeight: 80
+
 ---
-<div id="page-content">
+<?= partial('local/tabs', ['activeTab' => 'menus']); ?>
 
-    <div class="container">
-
-        <div class="row">
-            <div class="content col-sm-8">
-                <div class="row">
-                    <?= component('local'); ?>
-
-                    <?= partial('local/tabs', ['context' => 'menus']); ?>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4 wrap-none hidden-xs hidden-sm">
-                        <?= component('categories'); ?>
-                    </div>
-
-                    <div class="col-sm-8">
-                        <?= component('localMenu') ?>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-4">
-                <?= component('cartBox'); ?>
-            </div>
+<div class="panel">
+    <div class="d-block d-sm-none">
+        <div class="categories">
+            <?= component('categories'); ?>
         </div>
+    </div>
+
+    <div class="panel-body">
+        <?= component('localMenu') ?>
     </div>
 </div>

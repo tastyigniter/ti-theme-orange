@@ -1,0 +1,15 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+html, html a {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+body {
+  font-size: $font-size-base;
+  margin-bottom: $page-padding-bottom;
+}
+.hide {
+  display: none !important;
+}

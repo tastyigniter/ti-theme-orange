@@ -5,7 +5,6 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-
                         <h4 class="modal-title"><?= $message['title'] ?></h4>
                     </div>
 
@@ -20,16 +19,16 @@
             </div>
         </div>    <?php }
     else { ?>
-        <div class="alert alert-<?= $message['level']; ?> <?= $message['important'] ? 'alert-important' : ''; ?>"
+        <div class="alert alert-<?= $message['level']; ?><?= $message['important'] ? ' alert-important' : ''; ?>"
              role="alert"
         >
-            <?php if ($message['important']) { ?>
+<!--            --><?php //if ($message['important']) { ?>
                 <button type="button"
                         class="close"
                         data-dismiss="alert"
                         aria-hidden="true"
                 >&times;</button>
-            <?php } ?>
+<!--            --><?php //} ?>
             <?= $message['message']; ?>
         </div>
     <?php } ?>

@@ -6,26 +6,26 @@ permalink: /login
 '[account]':
     security: guest
 ---
-<div id="page-content">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="heading-section">
-                    <h3><?= lang('main::default.account.login.text_login'); ?></h3>
-                </div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4 mx-auto my-5">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title h4 mb-4 font-weight-normal">
+                        <?= lang('main::default.account.login.text_login'); ?>
+                    </h1>
 
-                <div id="login-form" class="content-wrap col-sm-4 center-block">
                     <?= partial('account::login'); ?>
 
                     <div class="row">
-                        <div class="col-md-5 wrap-none">
+                        <div class="col-md-5 p-sm-0">
                             <a class="btn btn-link btn-lg" href="<?= site_url('account/reset'); ?>">
                                 <span class="small"><?= lang('main::default.account.login.text_forgot'); ?></span>
                             </a>
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-sm-7">
                             <a
-                                class="btn btn-default btn-block btn-lg"
+                                class="btn btn-outline-default btn-block btn-lg"
                                 href="<?= site_url('account/register'); ?>"
                             ><?= lang('main::default.account.login.button_register'); ?>
                             </a>

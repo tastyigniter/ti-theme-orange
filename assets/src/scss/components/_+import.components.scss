@@ -1,0 +1,11 @@
+// ======================================================================== //
+// Import
+// ======================================================================== //
+@import "mainnav";
+@import "nav";
+@import "affix";
+@import "select";
+@import "footer";
+
+// Create node_module package instead
+@import "../../../../../../core/app/system/assets/ui/scss/components/icons";

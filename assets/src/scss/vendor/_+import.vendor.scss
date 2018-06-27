@@ -1,0 +1,14 @@
+// ======================================================================== //
+// Import vendors
+// ======================================================================== //
+
+@import "bootstrap-partials";
+//
+// FontAwesome
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-brands";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-solid";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-regular";
+//
+// Select 2 bootstrap 4 theme
+@import "~select2-theme-bootstrap4/src/select2-bootstrap";

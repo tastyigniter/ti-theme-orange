@@ -1,0 +1,90 @@
+$white:    #fff;
+$gray-100: #efeded; //#f8f9fa;
+$gray-200: #e0dcdb; //#e9ecef;
+$gray-300: #d0cbc9; //#dee2e6;
+$gray-400: #c1bab8; //#ced4da;
+$gray-500: #a29894; //#adb5bd;
+$gray-600: #64544d; //#6c757d;
+$gray-700: #463732; //#495057;
+$gray-800: #372b27; //#343a40;
+$gray-900: #271f1c; //#212529;
+$black:    #000;
+
+$primary:       #ED561A;
+$secondary:     $gray-600;
+$success:       #28a745;
+$info:          #17a2b8;
+$warning:       #ffc107;
+$danger:        #dc3545;
+$light:         $gray-100;
+$dark:          $gray-800;
+
+$theme-colors: () !default;
+$theme-colors: map-merge((
+  "primary":    $primary,
+  "default":    $secondary,
+  "secondary":  $secondary,
+  "success":    $success,
+  "info":       $info,
+  "warning":    $warning,
+  "danger":     $danger,
+  "light":      $light,
+  "dark":       $dark
+), $theme-colors);
+
+// Options
+//
+// Quickly modify global styling by enabling or disabling optional features.
+
+// Fonts
+//
+$font-family-sans-serif: "Titillium Web", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$font-family-monospace: "Droid Sans Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+// Icon
+//
+$icon-font-path: '/themes/tastyigniter-orange/assets/fonts/FontAwesome';
+$fa-font-path: $icon-font-path;
+
+// Body
+//
+$body-bg:                               $gray-100;
+$body-color:                            $gray-800;
+
+$font-size-base:                        0.875rem;
+$font-weight-bold:                      600;
+
+$headings-font-weight:                  $font-weight-bold;
+
+$page-padding-top:                      55px ;
+$page-padding-bottom:                   354px;
+
+// Spacer
+//
+$spacer:                                 1rem;
+
+// Components
+//
+//$border-width:                          0;
+$border-color:                          $gray-300;
+
+$btn-font-weight:                       $font-weight-bold;
+
+// Logo
+$logo-height:                           40px;
+
+// Navbar
+$navbar-top-bg:                         $white;
+$navbar-link-color:                     $primary;
+//$navbar-link-font-size:                 1rem;
+
+// Footer
+$footer-top-bg:                         $secondary;
+$footer-bottom-bg:                      $dark;
+$footer-link-color:                     rgba($white, .75);
+
+// Forms
+
+// Cards
+$card-border-width:                     0;
+

@@ -1,0 +1,112 @@
+.nav-menus {
+  padding: 0px $spacer;
+  background-color: $white;
+  margin: 2px 0;
+
+  .nav-link {
+    color: inherit;
+    padding: $spacer;
+    border-width: 0;
+  }
+
+  .nav-link.active {
+    background-color: transparent;
+    font-weight: $font-weight-bold;
+  }
+
+  .nav-link.active,
+  .nav-link:hover {
+    border-color: transparent;
+    color: $primary;
+  }
+}
+.nav-categories {
+  .nav-link {
+    color: $body-color;
+  }
+
+  .nav-link.active,
+  .show > .nav-link {
+    color: $nav-pills-link-active-bg;
+    font-weight: $font-weight-bold;
+  }
+}
+.menu-group-item {
+  border-bottom: 1px dashed var(--gray-300);
+}
+.menu-group-item .category-title {
+  padding: 12px 0;
+  margin-bottom: 0;
+}
+.menu-group-item .menu-category {
+  margin-bottom: 15px;
+}
+.menu-group-item .image {
+  max-height: 80px;
+  overflow: hidden;
+}
+//.menu-item {
+//    border-top: 1px dashed #E7E7E7;
+//    padding: 10px 0;
+//}
+//.menu-item-wrapper {
+//    height: 65px;
+//    position: relative;
+//}
+//.menu-item:first-child {
+//    border-top: 0px none;
+//}
+//.menu-thumb {
+//    float: left;
+//    padding-right: 25px;
+//    height: 65px;
+//    overflow: hidden;
+//}
+//.menu-content {
+//    float: left;
+//    width: 55%;
+//}
+//.menu-meta {
+//    vertical-align: middle;
+//    margin-right: 15px;
+//    font-size: 18px;
+//}
+//.menu-meta .fa {
+//    margin-left: 15px;
+//}
+//.fa.menu-special {
+//    color: #31708F;
+//}
+//.menu-detail {
+//    text-align: right;
+//    line-height: 22px;
+//    float: right;
+//}
+//.menu-name {
+//    display: block;
+//    color: #444;
+//    overflow: hidden;
+//    text-overflow: ellipsis;
+//    text-transform: uppercase;
+//    white-space: nowrap;
+//}
+//.menu-desc {
+//    line-height: 14px;
+//    font-size: 90%;
+//}
+//.menu-price {
+//    vertical-align: middle;
+//}
+//.menu-button {
+//    margin-top: 0;
+//    margin-left: 15px;
+//}
+//.menu-button .btn-cart {
+//    border: 0 none;
+//    color: #FFF;
+//    padding: 3px 8px;
+//}
+//.menu-category > p,
+//.menu-items {
+//    font-size: 16px;
+//}

@@ -27,6 +27,13 @@ $.fn.tabs = function () {
 }
 
 $(function () {
+    $(window).on('ajaxErrorMessage', function (event, message) {
+        event.preventDefault()
+        $.ti.flashMessage({class: 'danger', text: message})
+    })
+})
+
+$(function () {
     var alertMsgs = $('.alert-collapsible .alert-hide')
     var dropdownButton = $('.btn-dropdown')
     alertMsgs.hide()
@@ -52,18 +59,18 @@ $(function () {
 
 $(function () {
 
-    $(document).on('change', '.btn-group-toggle input[type="radio"], .btn-group input[type="radio"]', function () {
-        var btn = $(this).parent()
-        var parent = btn.parent()
-        var activeClass = (btn.attr('data-btn')) ? btn.attr('data-btn') : 'btn-default'
-
-        parent.find('.btn').each(function () {
-            removeClass = ($(this).attr('data-btn')) ? $(this).attr('data-btn') : activeClass
-            $(this).removeClass(removeClass)
-        })
-
-        btn.addClass(activeClass)
-    })
+    // $(document).on('change', '.btn-group-toggle input[type="radio"], .btn-group input[type="radio"]', function () {
+    //     var btn = $(this).parent()
+    //     var parent = btn.parent()
+    //     var activeClass = (btn.attr('data-btn')) ? btn.attr('data-btn') : 'btn-default'
+    //
+    //     parent.find('.btn').each(function () {
+    //         removeClass = ($(this).attr('data-btn')) ? $(this).attr('data-btn') : activeClass
+    //         $(this).removeClass(removeClass)
+    //     })
+    //
+    //     btn.addClass(activeClass)
+    // })
 
     $('.button-checkbox').each(function () {
 

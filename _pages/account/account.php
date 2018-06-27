@@ -10,16 +10,14 @@ permalink: /account
 
 '[cartBox]':
 ---
-<div id="page-content">
-    <div class="container">
-        <div class="row top-spacing">
-            <div class="col-sm-3 col-md-3">
-                <?= partial('sidebar/account'); ?>
-            </div>
+<div class="container">
+    <div class="row py-5">
+        <div class="col-sm-3">
+            <?= partial('account::sidebar'); ?>
+        </div>
 
-            <div class="content-wrap col-sm-9 col-md-9">
-                <?= component('account'); ?>
-            </div>
+        <div class="col-sm-9">
+            <?= component('account'); ?>
         </div>
     </div>
 </div>

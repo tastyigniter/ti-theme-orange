@@ -2,6 +2,8 @@
 description: Default layout
 
 '[pageNav]':
+
+'[newsletter]': {  }
 ---
 <?
 function onInit()
@@ -25,25 +27,34 @@ function onEnd()
 </head>
 <body class="<?= $this->page->bodyClass; ?>">
 
-    <?= partial('nav/menu'); ?>
+    <header class="header">
+        <?= partial('nav/menu'); ?>
+    </header>
 
-    <div id="notification">
-        <?= partial('flash'); ?>
-    </div>
+    <main role="main">
+        <div id="notification">
+            <?= partial('flash'); ?>
+        </div>
 
-    <div id="page-wrapper" class="content-area">
+        <div id="page-wrapper">
+            <?= partial('breadcrumb'); ?>
 
-        <?= partial('breadcrumb'); ?>
+            <?php if (isset($this->page->heading)) { ?>
+                <?= partial('heading', ['heading' => $this->page->heading]); ?>
+            <?php } ?>
 
-        <?php if (isset($this->page->heading)) { ?>
-            <?= partial('heading', ['heading' => $this->page->heading]); ?>
-        <?php } ?>
+            <?= page(); ?>
+        </div>
+    </main>
 
-        <?= page(); ?>
-
-    </div>
-    <footer id="page-footer">
-        <?= partial('footer'); ?>
+    <footer class="footer pt-4">
+        <div class="footer-top">
+            <?= component('newsletter'); ?>
+        </div>
+        
+        <div class="footer-bottom">
+            <?= partial('footer'); ?>
+        </div>
     </footer>
     <?= partial('scripts'); ?>
 </body>

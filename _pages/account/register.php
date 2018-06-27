@@ -1,20 +1,31 @@
 ---
-title: main::default.account.register.title
-layout: default
+title: 'main::default.account.register.title'
 permalink: /register
+description: ''
+layout: default
 
 '[account]':
-    security: guest
----
-<div id="page-content">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="heading-section">
-                    <h3><?= lang('main::default.account.login.text_register'); ?></h3>
-                </div>
+    accountPage: account/account
+    detailsPage: account/details
+    addressPage: account/address
+    ordersPage: account/orders
+    reservationsPage: account/reservations
+    reviewsPage: account/reviews
+    inboxPage: account/inbox
+    redirectPage: account/account
+    loginPage: account/login
+    agreeRegistrationTermsPage: 12
 
-                <div id="register-form" class="content-wrap col-sm-6 center-block">
+---
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 mx-auto my-5">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title h4 mb-4 font-weight-normal">
+                        <?= lang('main::default.account.login.text_register'); ?>
+                    </h1>
+
                     <?= partial('account::register'); ?>
                 </div>
             </div>

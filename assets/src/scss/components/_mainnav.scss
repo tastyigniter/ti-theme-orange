@@ -1,0 +1,42 @@
+.navbar-top {
+  background-color: $navbar-top-bg;
+
+  .navbar-brand {
+    .img-logo {
+      height: $logo-height;
+    }
+
+    .text-logo {
+      line-height: $logo-height;
+    }
+  }
+
+  .navbar-nav {
+    .nav-link {
+      font-weight: $font-weight-bold;
+      color: $navbar-link-color;
+      opacity: .769;
+
+      &:hover,
+      &.active {
+        color: $navbar-link-color;
+        opacity: 1;
+      }
+    }
+
+    .dropdown-menu {
+      right: 0;
+      left: auto;
+    }
+  }
+}
+@include media-breakpoint-up(sm) {
+  .navbar-top {
+    padding: 0;
+
+    .nav-link,
+    .nav navbar > li > a {
+      padding: $spacer;
+    }
+  }
+}

@@ -7,28 +7,32 @@ permalink: /pages/:slug
     slug: ':slug'
 ---
 <?
-function onEnd() {
+function onEnd()
+{
     $this->title = $this['sitePage'] ? $this['sitePage']->title : $this->title;
 }
+
 ?>
 ---
-<div id="page-content">
-    <div class="container">
-        <div id="heading" class="row">
-            <div class="col-md-12">
-                <div class="heading-section">
-                    <h2><?= $sitePage ? $sitePage->title : null; ?></h2>
-                </div>
+<div class="container py-4">
+    <div id="heading" class="row">
+        <div class="col-md-12">
+            <div class="heading-section">
+                <h2><?= $sitePage ? $sitePage->title : null; ?></h2>
             </div>
         </div>
+    </div>
 
-        <div class="row">
-            <div class="col-sm-3">
-                <?= partial('pageNav::sidebar'); ?>
-            </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <?= partial('pageNav::sidebar'); ?>
+        </div>
 
-            <div class="col-sm-9">
-                <?= component('sitePage'); ?>
+        <div class="col-sm-9">
+            <div class="card">
+                <div class="card-body">
+                    <?= component('sitePage'); ?>
+                </div>
             </div>
         </div>
     </div>
