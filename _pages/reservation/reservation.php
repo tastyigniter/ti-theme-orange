@@ -1,5 +1,5 @@
 ---
-title: main::default.reservation.title
+title: main::lang.reservation.title
 layout: default
 permalink: /reservation
 

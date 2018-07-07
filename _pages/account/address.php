@@ -1,5 +1,5 @@
 ---
-title: main::default.account.address.title
+title: main::lang.account.address.title
 layout: default
 permalink: /account/address/:addressId?
 

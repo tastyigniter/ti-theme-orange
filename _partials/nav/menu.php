@@ -18,7 +18,7 @@
                         class="nav-link"
                         href="<?= restaurant_url('local/menus'); ?>"
                         class="<?= ($this->page->getId() == 'local-menus') ? 'active' : ''; ?>"
-                    ><?= lang('main::default.menu_menu'); ?></a>
+                    ><?= lang('main::lang.menu_menu'); ?></a>
                 </li>
 
                 <?php if (setting('reservation_mode') == '1') { ?>
@@ -27,7 +27,7 @@
                             class="nav-link"
                             href="<?= page_url('reservation'); ?>"
                             class="<?= ($this->page->getId() == 'reservation-reservation') ? 'active' : ''; ?>"
-                        ><?= lang('main::default.menu_reservation'); ?></a>
+                        ><?= lang('main::lang.menu_reservation'); ?></a>
                     </li>
                 <?php } ?>
 
@@ -41,7 +41,7 @@
                             data-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="false"
-                        ><?= lang('main::default.menu_my_account'); ?> <span class="caret"></span></a>
+                        ><?= lang('main::lang.menu_my_account'); ?> <span class="caret"></span></a>
 
                         <div
                             class="dropdown-menu"
@@ -51,25 +51,25 @@
                             <a
                                 href="<?= page_url('account/orders'); ?>"
                                 class="dropdown-item <?= ($this->page->getId() == 'account-orders') ? 'active' : ''; ?>"
-                            ><?= lang('main::default.menu_recent_order'); ?></a>
+                            ><?= lang('main::lang.menu_recent_order'); ?></a>
                             <a
                                 href="<?= page_url('account/account'); ?>"
                                 class="dropdown-item <?= ($this->page->getId() == 'account-account') ? 'active' : ''; ?>"
-                            ><?= lang('main::default.menu_my_account'); ?></a>
+                            ><?= lang('main::lang.menu_my_account'); ?></a>
                             <a
                                 href="<?= page_url('account/address'); ?>"
                                 class="dropdown-item <?= ($this->page->getId() == 'account-address') ? 'active' : ''; ?>"
-                            ><?= lang('main::default.menu_address'); ?></a>
+                            ><?= lang('main::lang.menu_address'); ?></a>
 
                             <a
                                 href="<?= page_url('account/reservations'); ?>"
                                 class="dropdown-item <?= ($this->page->getId() == 'account-reservations') ? 'active' : ''; ?>"
-                            ><?= lang('main::default.menu_recent_reservation'); ?></a>
+                            ><?= lang('main::lang.menu_recent_reservation'); ?></a>
 
                             <a
                                 class="dropdown-item"
                                 data-request="account::onLogout"
-                            ><?= lang('main::default.menu_logout'); ?></a>
+                            ><?= lang('main::lang.menu_logout'); ?></a>
                         </div>
                     </li>
                 <?php } else { ?>
@@ -77,13 +77,13 @@
                         <a
                             href="<?= page_url('account/login'); ?>"
                             class="nav-link <?= ($this->page->getId() == 'account-login') ? 'active' : ''; ?>"
-                        ><?= lang('main::default.menu_login'); ?></a>
+                        ><?= lang('main::lang.menu_login'); ?></a>
                     </li>
                     <li class="nav-item">
                         <a
                             href="<?= page_url('account/register'); ?>"
                             class="nav-link <?= ($this->page->getId() == 'account-register') ? 'active' : ''; ?>"
-                        ><?= lang('main::default.menu_register'); ?></a>
+                        ><?= lang('main::lang.menu_register'); ?></a>
                     </li>
                 <?php } ?>
 

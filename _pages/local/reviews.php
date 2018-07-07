@@ -1,5 +1,5 @@
 ---
-title: 'main::default.local.reviews.title'
+title: 'main::lang.local.reviews.title'
 permalink: '/:location?local/reviews'
 description: ''
 layout: local

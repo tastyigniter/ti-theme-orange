@@ -1,5 +1,5 @@
 ---
-title: 'main::default.account.register.title'
+title: 'main::lang.account.register.title'
 permalink: /register
 description: ''
 layout: default
@@ -23,7 +23,7 @@ layout: default
             <div class="card">
                 <div class="card-body">
                     <h1 class="card-title h4 mb-4 font-weight-normal">
-                        <?= lang('main::default.account.login.text_register'); ?>
+                        <?= lang('main::lang.account.login.text_register'); ?>
                     </h1>
 
                     <?= partial('account::register'); ?>

@@ -1,5 +1,5 @@
 ---
-title: main::default.cart.title
+title: main::lang.cart.title
 layout: default
 permalink: /cart
 

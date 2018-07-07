@@ -1,5 +1,5 @@
 ---
-title: main::default.local.gallery.title
+title: main::lang.local.gallery.title
 layout: local
 permalink: /:location?local/gallery
 

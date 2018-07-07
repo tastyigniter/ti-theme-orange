@@ -1,5 +1,5 @@
 ---
-title: 'main::default.home.title'
+title: 'main::lang.home.title'
 permalink: /
 description: ''
 layout: default

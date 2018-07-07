@@ -1,5 +1,5 @@
 ---
-title: main::default.locations.title
+title: main::lang.locations.title
 layout: default
 permalink: /locations
 

@@ -1,5 +1,5 @@
 ---
-title: main::default.account.title
+title: main::lang.account.title
 layout: default
 permalink: /account
 

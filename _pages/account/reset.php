@@ -1,5 +1,5 @@
 ---
-title: main::default.account.reset.title
+title: main::lang.account.reset.title
 layout: default
 permalink: /forgot-password/:code?
 
@@ -14,7 +14,7 @@ permalink: /forgot-password/:code?
             <div class="card">
                 <div class="card-body">
                     <h1 class="card-title h4 mb-4 font-weight-normal">
-                        <?= lang('main::default.account.reset.text_heading'); ?>
+                        <?= lang('main::lang.account.reset.text_heading'); ?>
                     </h1>
 
                     <?= component('resetPassword'); ?>

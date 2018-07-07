@@ -1,5 +1,5 @@
 ---
-title: 'main::default.local.menus.title'
+title: 'main::lang.local.menus.title'
 permalink: '/:location?local/menus/:category?'
 description: ''
 layout: local

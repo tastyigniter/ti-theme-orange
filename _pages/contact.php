@@ -1,5 +1,5 @@
 ---
-title: main::default.contact.title
+title: main::lang.contact.title
 layout: default
 permalink: /contact
 

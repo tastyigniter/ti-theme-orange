@@ -3,16 +3,16 @@
         <div class="row">
             <div class="col-sm-3">
                 <div class="footer-links">
-                    <h6 class="footer-title d-none d-sm-block"><?= lang('main::default.text_my_account'); ?></h6>
+                    <h6 class="footer-title d-none d-sm-block"><?= lang('main::lang.text_my_account'); ?></h6>
                     <ul>
                         <li>
                             <a href="<?= site_url('account/login'); ?>">
-                                <?= lang('main::default.menu_login'); ?>
+                                <?= lang('main::lang.menu_login'); ?>
                             </a>
                         </li>
                         <li>
                             <a href="<?= site_url('account/register'); ?>">
-                                <?= lang('main::default.menu_register'); ?>
+                                <?= lang('main::lang.menu_register'); ?>
                             </a>
                         </li>
                     </ul>
@@ -25,13 +25,13 @@
                         <?php if (!is_single_location()) { ?>
                             <li>
                                 <a href="<?= site_url('locations'); ?>">
-                                    <?= lang('main::default.menu_locations'); ?>
+                                    <?= lang('main::lang.menu_locations'); ?>
                                 </a>
                             </li>
                         <?php } ?>
                         <li>
                             <a href="<?= site_url('contact'); ?>">
-                                <?= lang('main::default.menu_contact'); ?>
+                                <?= lang('main::lang.menu_contact'); ?>
                             </a>
                         </li>
                         <?php if ($this->theme->hide_admin_link != 1) { ?>
@@ -40,7 +40,7 @@
                                     target="_blank"
                                     href="<?= admin_url(); ?>"
                                 >
-                                    <?= lang('main::default.menu_admin'); ?>
+                                    <?= lang('main::lang.menu_admin'); ?>
                                 </a>
                             </li>
                         <?php } ?>
@@ -49,7 +49,7 @@
             </div>
             <div class="col-sm-3">
                 <div class="footer-links">
-                    <h6 class="footer-title d-none d-sm-block"><?= lang('main::default.text_information'); ?></h6>
+                    <h6 class="footer-title d-none d-sm-block"><?= lang('main::lang.text_information'); ?></h6>
                     <ul>
                         <?php if (!empty($footerPageList)) foreach ($footerPageList as $page) { ?>
                             <li>
@@ -66,7 +66,7 @@
 
             <div class="col-sm-3 mt-3 mt-sm-0">
                 <div class="social-bottom">
-                    <h6 class="footer-title"><?= lang('main::default.text_follow_us'); ?></h6>
+                    <h6 class="footer-title"><?= lang('main::lang.text_follow_us'); ?></h6>
                     <?= partial('social_icons', ['socialIcons' => $this->theme->social]); ?>
                 </div>
             </div>
@@ -87,11 +87,11 @@
         <div class="row">
             <div class="col p-2">
                 <?= sprintf(
-                    lang('main::default.site_copyright'),
+                    lang('main::lang.site_copyright'),
                     date('Y'),
                     setting('site_name'),
-                    lang('system::default.tastyigniter.system_name')
-                ).lang('system::default.tastyigniter.system_powered'); ?>
+                    lang('system::lang.system_name')
+                ).lang('system::lang.system_powered'); ?>
             </div>
         </div>
     </div>

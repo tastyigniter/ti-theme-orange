@@ -1,5 +1,5 @@
 <ul class="social-icons list-inline">
-    <?php $socialIcons = $this->theme->social; ?>
+    <?php $socialIcons = $this->theme->social ?? []; ?>
 
     <?php foreach ($socialIcons as $icon) { ?>
         <li>

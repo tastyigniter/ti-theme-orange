@@ -22,7 +22,8 @@
     {
       "path": "tastyigniter-orange/assets/css/vendor/vendor.css",
       "name": "vendor-css",
-      "collection": "ui"
+      "collection": "ui",
+      "combine": true
     },
     {
       "path": "tastyigniter-orange/assets/css/app.css",
