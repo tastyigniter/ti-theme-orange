@@ -26,7 +26,9 @@ layout: default
                         <?= lang('main::lang.account.login.text_register'); ?>
                     </h1>
 
-                    <?= partial('account::register'); ?>
+                    <?php if (has_component('account')) { ?>
+                        <?= partial('account::register'); ?>
+                    <?php } ?>
                 </div>
             </div>
         </div>

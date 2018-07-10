@@ -13,7 +13,7 @@
         class="nav-item nav-link <?= ($activeTab === 'info') ? 'active' : ''; ?>"
         href="<?= restaurant_url('local/info'); ?>"
     ><?= lang('main::lang.local.text_tab_info'); ?></a>
-    <?php if ($currentLocation->hasGallery()) { ?>
+    <?php if (isset($currentLocation) AND $currentLocation->hasGallery()) { ?>
         <a
             class="nav-item nav-link <?= ($activeTab === 'gallery') ? 'active' : ''; ?>"
             href="<?= restaurant_url('local/gallery'); ?>"

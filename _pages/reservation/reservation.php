@@ -12,7 +12,9 @@ permalink: /reservation
         <div class="col col-sm-10 center-block">
             <div class="card mb-1">
                 <div class="card-body">
-                    <?= partial('account::welcome'); ?>
+                    <?php if (has_component('account')) { ?>
+                        <?= partial('account::welcome'); ?>
+                    <?php } ?>
                 </div>
             </div>
             <div class="card">

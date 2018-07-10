@@ -5,7 +5,7 @@ description: ''
 layout: local
 
 '[localMenu]':
-    isGrouped: 0
+    isGrouped: 1
     menusPerPage: 200
     showMenuImages: 0
     menuImageWidth: 95

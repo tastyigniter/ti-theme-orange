@@ -19,7 +19,9 @@ permalink: /checkout
 
             <div class="card my-1">
                 <div class="card-body">
-                    <?= partial('account::welcome'); ?>
+                    <?php if (has_component('account')) { ?>
+                        <?= partial('account::welcome'); ?>
+                    <?php } ?>
                 </div>
             </div>
             <div class="card">

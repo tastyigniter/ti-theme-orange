@@ -15,7 +15,9 @@ permalink: /login
                         <?= lang('main::lang.account.login.text_login'); ?>
                     </h1>
 
-                    <?= partial('account::login'); ?>
+                    <?php if (has_component('account')) { ?>
+                        <?= partial('account::login'); ?>
+                    <?php } ?>
 
                     <div class="row">
                         <div class="col-md-5 p-sm-0">
