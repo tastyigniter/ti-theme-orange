@@ -14,7 +14,7 @@ layout: local
 <div class="panel">
     <div class="panel-body">
         <h1 class="panel-title h4">
-            <?php echo sprintf(lang('sampoyigi.local::default.text_review_heading'), $currentLocation->location_name); ?>
+            <?php echo sprintf(lang('igniter.local::default.text_review_heading'), $currentLocation->location_name); ?>
         </h1>
     </div>
 
