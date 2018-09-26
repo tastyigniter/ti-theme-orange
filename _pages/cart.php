@@ -3,7 +3,7 @@ title: main::lang.cart.title
 layout: default
 permalink: /cart
 
-'[local]':
+'[localBox]':
 
 '[cartBox]':
     pageIsCart: 1

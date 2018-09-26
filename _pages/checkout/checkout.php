@@ -5,7 +5,7 @@ permalink: /checkout
 
 '[account]':
 
-'[local]':
+'[localBox]':
 
 '[cartBox]':
     pageIsCheckout: true
@@ -15,13 +15,11 @@ permalink: /checkout
 <div class="container">
     <div class="row py-4">
         <div class="col col-sm-8">
-            <?= component('local'); ?>
+            <?= component('localBox'); ?>
 
             <div class="card my-1">
                 <div class="card-body">
-                    <?php if (has_component('account')) { ?>
-                        <?= partial('account::welcome'); ?>
-                    <?php } ?>
+                    <?= partial('account::welcome'); ?>
                 </div>
             </div>
             <div class="card">

@@ -8,7 +8,7 @@ description: 'Local layout'
 
 '[newsletter]': {  }
 
-'[local]':
+'[localBox]':
     paramFrom: location
     showLocalThumb: 0
     menusPage: local/menus
@@ -61,7 +61,7 @@ description: 'Local layout'
 
                     <div class="col-sm-6">
                         <div class="content">
-                            <?= component('local'); ?>
+                            <?= component('localBox'); ?>
 
                             <?= page(); ?>
                         </div>
