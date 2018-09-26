@@ -5,10 +5,15 @@
 @import "bootstrap-partials";
 //
 // FontAwesome
-@import "~@fortawesome/fontawesome-free-webfonts/scss/fontawesome";
-@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-brands";
-@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-solid";
-@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-regular";
+@import "../../../../node_modules/@fortawesome/fontawesome-free-webfonts/scss/fontawesome";
+@import "../../../../node_modules/@fortawesome/fontawesome-free-webfonts/scss/fa-brands";
+@import "../../../../node_modules/@fortawesome/fontawesome-free-webfonts/scss/fa-solid";
+@import "../../../../node_modules/@fortawesome/fontawesome-free-webfonts/scss/fa-regular";
 //
 // Select 2 bootstrap 4 theme
-@import "~select2-theme-bootstrap4/src/select2-bootstrap";
+@import "../../../../node_modules/select2-theme-bootstrap4/src/select2-bootstrap";
+//
+// Raty
+@import "../../../../node_modules/jquery-raty-js/lib/jquery.raty";
+// Animate.css
+@import "../../../../node_modules/animate.css/animate";

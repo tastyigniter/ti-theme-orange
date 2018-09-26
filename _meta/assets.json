@@ -20,32 +20,32 @@
   ],
   "style": [
     {
-      "path": "tastyigniter-orange/assets/css/vendor/vendor.css",
-      "name": "vendor-css",
-      "collection": "ui",
-      "combine": true
-    },
-    {
       "path": "tastyigniter-orange/assets/css/app.css",
-      "name": "app-css",
-      "collection": "ui"
+      "name": "app-css"
     }
   ],
   "script": [
     {
-      "path": "tastyigniter-orange/assets/js/vendor/vendor.js",
-      "name": "vendor-js",
-      "collection": "ui"
-    },
-    {
-      "path": "/app/system/assets/ui/flame.js",
-      "name": "flame-js",
-      "collection": "ui"
-    },
-    {
       "path": "tastyigniter-orange/assets/js/app.js",
-      "name": "app-js",
-      "collection": "ui"
+      "name": "app-js"
+    }
+  ],
+  "bundles": [
+    {
+      "type": "scss",
+      "files": "~/themes/tastyigniter-orange/assets/src/scss/app.scss",
+      "destination": "~/themes/tastyigniter-orange/assets/css/app.css"
+    },
+    {
+      "type": "js",
+      "files": [
+        "~/app/system/assets/ui/flame.js",
+        "~/themes/tastyigniter-orange/assets/src/js/vendor/affix.js",
+        "~/themes/tastyigniter-orange/node_modules/select2/dist/js/select2.min.js",
+        "~/themes/tastyigniter-orange/node_modules/jquery-raty-js/lib/jquery.raty.js",
+        "~/themes/tastyigniter-orange/assets/src/js/app.js"
+      ],
+      "destination": "~/themes/tastyigniter-orange/assets/js/app.js"
     }
   ]
 }

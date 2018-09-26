@@ -8,7 +8,7 @@ else { ?>
     <?= get_favicon(); ?>
 <?php } ?>
 <title><?= sprintf(lang('main::lang.site_title'), lang(get_title()), setting('site_name')); ?></title>
-<?= get_style_tags(['ui', 'widget', 'component', 'theme', 'custom']); // Render link tags added by widget, components. ?>
-<?php if (empty($this->theme->custom_css)) { ?>
+<?= get_style_tags(); ?>
+<?php if (!empty($this->theme->custom_css)) { ?>
     <?= '<link type="text/css" id="custom-css">'.$this->theme->custom_css.'</link>' ?>
 <?php } ?>

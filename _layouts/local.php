@@ -12,7 +12,7 @@ description: 'Local layout'
     paramFrom: location
     showLocalThumb: 0
     menusPage: local/menus
-    openTimeFormat: ''
+    openTimeFormat: 'H:i'
     timePickerDateFormat: 'D d'
     timePickerTimeFormat: 'H:i'
     timePickerDateTimeFormat: 'D d H:i'
@@ -40,10 +40,6 @@ description: 'Local layout'
     </header>
 
     <main role="main">
-        <div id="notification">
-            <?= partial('flash'); ?>
-        </div>
-
         <div id="page-wrapper">
             <?= partial('breadcrumb'); ?>
 
@@ -84,6 +80,9 @@ description: 'Local layout'
             <?= partial('footer'); ?>
         </div>
     </footer>
+    <div id="notification">
+        <?= partial('flash'); ?>
+    </div>
     <?= partial('scripts'); ?>
 </body>
 </html>

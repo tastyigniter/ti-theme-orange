@@ -1,6 +1,9 @@
 <?php foreach (Flash::all() as $message) { ?>
     <?php if ($message['overlay']) { ?>
-        <div id="flash-overlay-modal" class="modal fade flash-modal">
+        <div
+            class="modal fade flash-modal"
+            data-control="flash-modal"
+        >
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -17,18 +20,19 @@
                     </div>
                 </div>
             </div>
-        </div>    <?php }
+        </div>
+    <?php }
     else { ?>
         <div class="alert alert-<?= $message['level']; ?><?= $message['important'] ? ' alert-important' : ''; ?>"
              role="alert"
         >
-<!--            --><?php //if ($message['important']) { ?>
-                <button type="button"
-                        class="close"
-                        data-dismiss="alert"
-                        aria-hidden="true"
-                >&times;</button>
-<!--            --><?php //} ?>
+            <!--            --><?php //if ($message['important']) { ?>
+            <button type="button"
+                    class="close"
+                    data-dismiss="alert"
+                    aria-hidden="true"
+            >&times;</button>
+            <!--            --><?php //} ?>
             <?= $message['message']; ?>
         </div>
     <?php } ?>

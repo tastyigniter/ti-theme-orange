@@ -2,6 +2,7 @@
   "code": "tastyigniter-orange",
   "name": "TastyIgniter Orange",
   "description": "Responsive theme for TastyIgniter front-end, customizable, simple, and readable",
+  "version": "2.1.0-beta.2",
   "author": "TastyIgniter Dev Team",
   "require": {
     "igniter.cart": "*",

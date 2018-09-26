@@ -6,11 +6,19 @@ permalink: /checkout
 '[account]':
 
 '[localBox]':
+    paramFrom: location
+    showLocalThumb: 0
+    menusPage: local/menus
+    openTimeFormat: 'H:i'
+    timePickerDateFormat: 'D d'
+    timePickerTimeFormat: 'H:i'
+    timePickerDateTimeFormat: 'D d H:i'
 
 '[cartBox]':
     pageIsCheckout: true
 
 '[checkout]':
+    showCountryField: 0
 ---
 <div class="container">
     <div class="row py-4">

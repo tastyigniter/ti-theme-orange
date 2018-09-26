@@ -40,6 +40,9 @@ description: Account layout
             <?= partial('footer'); ?>
         </div>
     </footer>
+    <div id="notification">
+        <?= partial('flash'); ?>
+    </div>
     <?= partial('scripts'); ?>
 </body>
 </html>

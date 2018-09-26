@@ -35,10 +35,6 @@ function onEnd()
     </header>
 
     <main role="main">
-        <div id="notification">
-            <?= partial('flash'); ?>
-        </div>
-
         <div id="page-wrapper">
             <?= partial('breadcrumb'); ?>
 
@@ -59,6 +55,9 @@ function onEnd()
             <?= partial('footer'); ?>
         </div>
     </footer>
+    <div id="notification">
+        <?= partial('flash'); ?>
+    </div>
     <?= partial('scripts'); ?>
 </body>
 </html>
