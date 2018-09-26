@@ -1,10 +1,7 @@
 ---
 title: main::lang.account.address.title
-layout: default
+layout: account
 permalink: /account/address/:addressId?
-
-'[account]':
-    security: customer
 
 '[accountAddressBook]':
 ---

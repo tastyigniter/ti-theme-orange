@@ -3,8 +3,10 @@ title: main::lang.account.reset.title
 layout: default
 permalink: /forgot-password/:code?
 
-'[account]':
+'[session]':
     security: guest
+
+'[account]':
 
 '[resetPassword]':
 ---

@@ -1,10 +1,7 @@
 ---
 title: main::lang.account.orders.title
-layout: default
+layout: account
 permalink: /account/orders/:orderId?
-
-'[account]':
-    security: customer
 
 '[accountOrders]':
 ---

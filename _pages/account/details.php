@@ -1,10 +1,9 @@
 ---
 title: main::lang.account.settings.title
-layout: default
+layout: account
 permalink: /account/settings
 
 '[account]':
-    security: customer
 ---
 <div class="container">
     <div class="row py-5">

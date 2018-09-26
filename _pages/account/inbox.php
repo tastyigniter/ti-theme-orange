@@ -1,10 +1,7 @@
 ---
 title: main::lang.account.inbox.title
-layout: default
+layout: account
 permalink: /account/inbox
-
-'[account]':
-    security: customer
 
 '[accountInbox]':
 ---

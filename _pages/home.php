@@ -4,17 +4,6 @@ permalink: /
 description: ''
 layout: default
 
-'[account]':
-    accountPage: account/account
-    detailsPage: account/details
-    addressPage: account/address
-    ordersPage: account/orders
-    reservationsPage: account/reservations
-    reviewsPage: account/reviews
-    inboxPage: account/inbox
-    redirectPage: account/account
-    loginPage: account/login
-
 '[slider]': {  }
 
 '[localSearch]':

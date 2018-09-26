@@ -1,27 +1,12 @@
 ---
-description: Default layout
+description: Account layout
 
 '[session]':
-    security: all
+    security: customer
+
+'[account]':
 
 '[pageNav]':
-
-'[newsletter]': {  }
----
-<?
-function onInit()
-{
-}
-
-function onStart()
-{
-}
-
-function onEnd()
-{
-}
-
-?>
 ---
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="<?= App::getLocale(); ?>">
@@ -51,10 +36,6 @@ function onEnd()
     </main>
 
     <footer class="footer pt-4">
-        <div class="footer-top">
-            <?= component('newsletter'); ?>
-        </div>
-        
         <div class="footer-bottom">
             <?= partial('footer'); ?>
         </div>

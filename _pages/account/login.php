@@ -3,8 +3,10 @@ title: main::lang.account.login.title
 layout: default
 permalink: /login
 
-'[account]':
+'[session]':
     security: guest
+
+'[account]':
 ---
 <div class="container">
     <div class="row">
@@ -15,9 +17,7 @@ permalink: /login
                         <?= lang('main::lang.account.login.text_login'); ?>
                     </h1>
 
-                    <?php if (has_component('account')) { ?>
-                        <?= partial('account::login'); ?>
-                    <?php } ?>
+                    <?= partial('account::login'); ?>
 
                     <div class="row">
                         <div class="col-md-5 p-sm-0">

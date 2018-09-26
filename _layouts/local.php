@@ -1,6 +1,9 @@
 ---
 description: 'Local layout'
 
+'[session]':
+    security: all
+
 '[pageNav]': {  }
 
 '[newsletter]': {  }

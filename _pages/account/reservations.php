@@ -1,10 +1,7 @@
 ---
 title: main::lang.account.reservations.title
-layout: default
+layout: account
 permalink: /account/reservations/:reservationId?
-
-'[account]':
-    security: customer
 
 '[accountReservations]':
 ---

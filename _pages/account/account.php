@@ -1,12 +1,9 @@
 ---
 title: main::lang.account.title
-layout: default
+layout: account
 permalink: /account
 
-'[account]':
-    security: customer
-
-'[local]':
+'[localBox]':
 
 '[cartBox]':
 ---

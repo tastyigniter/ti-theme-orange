@@ -1,10 +1,7 @@
 ---
 title: main::lang.account.reviews.title
-layout: default
+layout: account
 permalink: /account/reviews/:saleType?/:saleId?
-
-'[account]':
-    security: customer
 
 '[accountReviews]':
 ---

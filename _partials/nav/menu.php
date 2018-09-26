@@ -68,7 +68,7 @@
 
                             <a
                                 class="dropdown-item"
-                                data-request="account::onLogout"
+                                data-request="session::onLogout"
                             ><?= lang('main::lang.menu_logout'); ?></a>
                         </div>
                     </li>

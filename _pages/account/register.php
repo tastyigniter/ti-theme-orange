@@ -4,6 +4,9 @@ permalink: /register
 description: ''
 layout: default
 
+'[session]':
+    security: guest
+
 '[account]':
     accountPage: account/account
     detailsPage: account/details
@@ -26,9 +29,7 @@ layout: default
                         <?= lang('main::lang.account.login.text_register'); ?>
                     </h1>
 
-                    <?php if (has_component('account')) { ?>
-                        <?= partial('account::register'); ?>
-                    <?php } ?>
+                    <?= partial('account::register'); ?>
                 </div>
             </div>
         </div>
