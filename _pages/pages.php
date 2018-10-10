@@ -11,7 +11,6 @@ function onEnd()
 {
     $this->title = $this['sitePage'] ? $this['sitePage']->title : $this->title;
 }
-
 ?>
 ---
 <div class="container py-4">
