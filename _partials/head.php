@@ -2,7 +2,7 @@
 <meta name="keywords" content="<?= setting('meta_keywords') ?>">
 <?= get_metas(); ?>
 <?php if (trim($favicon = $this->theme->favicon, '/')) { ?>
-    <link href="<?= image_url($favicon); ?>" rel="shortcut icon" type="image/ico">
+    <link href="<?= uploads_url($favicon); ?>" rel="shortcut icon" type="image/ico">
 <?php }
 else { ?>
     <?= get_favicon(); ?>

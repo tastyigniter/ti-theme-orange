@@ -438,7 +438,7 @@ if (jQuery === undefined)
         this.meter = this.indicator.find('.meter')
         this.meter.html(LoadingIndicator.meterTemplate)
 
-        $(document).ready(function () {
+        $(document).render(function () {
             $(document.body).append(self.indicator)
         })
     }
@@ -581,7 +581,7 @@ if (jQuery === undefined)
     // FLASH MESSAGE DATA-API
     // ===============
 
-    $(document).ready(function () {
+    $(document).render(function () {
         $('[data-control="flash-message"]').each(function (index, element) {
             setTimeout(function () {
                 $.ti.flashMessage($(element).data(), element)
@@ -658,7 +658,7 @@ if (jQuery === undefined)
 
     // TOGGLE DATA-API
     // ===============
-    $(document).ready(function () {
+    $(document).render(function () {
         $('[data-toggle="disabled"]').toggler()
     })
 

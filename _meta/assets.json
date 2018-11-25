@@ -1,6 +1,6 @@
 {
   "doctype": "html5",
-  "favicon": "/assets/images/favicon.ico",
+  "favicon": "tastyigniter-orange/assets/images/favicon.ico",
   "meta": [
     {
       "name": "Content-type",
