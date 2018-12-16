@@ -86,9 +86,40 @@
  * https://tastyigniter.com/docs/javascript
  * ======================================================================== */
 
-if (jQuery === undefined)
+if (window.jQuery === undefined)
     throw new Error('TastyIgniter Javascript requires jQuery.');
 
+if (window.jQuery.request !== undefined)
+    throw new Error('The TastyIgniter Javascript framework is already loaded.');
+
+/*
+ * Custom event that unifies document.ready with window.ajaxUpdateComplete
+ *
+ * $(document).render(function() { })
+ * $(document).on('render', function() { })
+ */
++function ($) {
+    "use strict";
+
+    $(document).ready(function() {
+        $(document).trigger('render')
+    })
+
+    $(window).on('ajaxUpdateComplete', function() {
+        $(document).trigger('render')
+    })
+
+    $.fn.render = function (callback) {
+        $(document).on('render', callback)
+    }
+}(window.jQuery);
+
+/*
+ * TastyIgniter AJAX plugin..
+ *
+ * $.request('handler', function() { })
+ * $(form).request('handler', function() { })
+ */
 +function ($) {
     "use strict";
 
@@ -107,7 +138,7 @@ if (jQuery === undefined)
             loading = options.loading !== undefined && options.loading.length ? $(options.loading) : null,
             isRedirect = options.redirect !== undefined && options.redirect.length
 
-        var _event = jQuery.Event('ti.before.request')
+        var _event = jQuery.Event('ajaxBeforeUpdate')
         $triggerEl.trigger(_event, context)
         if (_event.isDefaultPrevented()) return
 
@@ -409,7 +440,7 @@ if (jQuery === undefined)
             $appendToForm.append(input)
         })
     }
-}(jQuery);
+}(window.jQuery);
 
 /*
  * The loading indicator.
@@ -438,7 +469,7 @@ if (jQuery === undefined)
         this.meter = this.indicator.find('.meter')
         this.meter.html(LoadingIndicator.meterTemplate)
 
-        $(document).render(function () {
+        $(document).ready(function () {
             $(document.body).append(self.indicator)
         })
     }
@@ -593,7 +624,6 @@ if (jQuery === undefined)
                 options = $.extend({}, $this.data(), $this.data('closeOnEsc') === true ? {
                 timer: (index + 1) * 3000
             } : {})
-            console.log(options)
             swal(options)
         })
     })
@@ -836,7 +866,7 @@ if (jQuery === undefined)
     // TRIGGERON DATA-API
     // ===============
 
-    $(document).ready(function() {
+    $(document).render(function() {
         $('[data-trigger]').triggerOn()
     })
 
