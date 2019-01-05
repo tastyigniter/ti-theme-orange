@@ -21,15 +21,13 @@
                     ><?= lang('main::lang.menu_menu'); ?></a>
                 </li>
 
-                <?php if (setting('reservation_mode') == '1') { ?>
-                    <li class="nav-item">
-                        <a
-                            class="nav-link"
-                            href="<?= page_url('reservation'); ?>"
-                            class="<?= ($this->page->getId() == 'reservation-reservation') ? 'active' : ''; ?>"
-                        ><?= lang('main::lang.menu_reservation'); ?></a>
-                    </li>
-                <?php } ?>
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="<?= page_url('reservation'); ?>"
+                        class="<?= ($this->page->getId() == 'reservation-reservation') ? 'active' : ''; ?>"
+                    ><?= lang('main::lang.menu_reservation'); ?></a>
+                </li>
 
                 <?php if (Auth::isLogged()) { ?>
                     <li class="nav-item dropdown">
@@ -79,12 +77,14 @@
                             class="nav-link <?= ($this->page->getId() == 'account-login') ? 'active' : ''; ?>"
                         ><?= lang('main::lang.menu_login'); ?></a>
                     </li>
-                    <li class="nav-item">
-                        <a
-                            href="<?= page_url('account/register'); ?>"
-                            class="nav-link <?= ($this->page->getId() == 'account-register') ? 'active' : ''; ?>"
-                        ><?= lang('main::lang.menu_register'); ?></a>
-                    </li>
+                    <?php if ((bool)setting('allow_registration', true)) { ?>
+                        <li class="nav-item">
+                            <a
+                                href="<?= page_url('account/register'); ?>"
+                                class="nav-link <?= ($this->page->getId() == 'account-register') ? 'active' : ''; ?>"
+                            ><?= lang('main::lang.menu_register'); ?></a>
+                        </li>
+                    <?php } ?>
                 <?php } ?>
 
                 <?php if (!empty($headerPageList)) foreach ($headerPageList as $page) { ?>

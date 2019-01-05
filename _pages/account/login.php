@@ -25,12 +25,14 @@ permalink: /login
                                 <span class="small"><?= lang('main::lang.account.login.text_forgot'); ?></span>
                             </a>
                         </div>
+                        <?php if ((bool)$canRegister) { ?>
                         <div class="col-sm-7">
                             <a
                                 class="btn btn-outline-default btn-block btn-lg"
                                 href="<?= site_url('account/register'); ?>"
                             ><?= lang('main::lang.account.login.button_register'); ?>
                             </a>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
