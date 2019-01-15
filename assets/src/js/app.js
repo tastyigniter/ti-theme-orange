@@ -164,4 +164,8 @@ $(function () {
             $(this).find('[data-spy="affix"]:first-child').css('width', $(this).width())
         })
     })
+
+    $('body').css({
+        'margin-bottom': $('.footer').outerHeight() + 10 + 'px' //adjust the css rule for margin-top to equal the element height - 10px and add the measurement unit "px" for valid CSS
+    });
 })

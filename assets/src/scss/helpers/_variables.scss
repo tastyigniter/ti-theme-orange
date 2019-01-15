@@ -43,7 +43,7 @@ $font-family-monospace: "Droid Sans Mono", Menlo, Monaco, Consolas, "Liberation 
 
 // Icon
 //
-$icon-font-path: '/themes/tastyigniter-orange/assets/fonts/FontAwesome';
+$icon-font-path: '../fonts/FontAwesome';
 $fa-font-path: $icon-font-path;
 
 // Body
@@ -57,7 +57,6 @@ $font-weight-bold:                      600;
 $headings-font-weight:                  $font-weight-bold;
 
 $page-padding-top:                      55px ;
-$page-padding-bottom:                   354px;
 
 // Spacer
 //
