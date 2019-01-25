@@ -24,7 +24,7 @@
                 <li class="nav-item">
                     <a
                         class="nav-link"
-                        href="<?= page_url('reservation'); ?>"
+                        href="<?= page_url('reservation/reservation'); ?>"
                         class="<?= ($this->page->getId() == 'reservation-reservation') ? 'active' : ''; ?>"
                     ><?= lang('main::lang.menu_reservation'); ?></a>
                 </li>
