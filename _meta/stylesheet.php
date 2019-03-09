@@ -41,7 +41,7 @@ if (!empty($body['background']))
 	$style .= "background-color: {$body['background']};";
 
 if (!empty($body['image']) AND !empty($body['display'])) {
-	$style .= "background-image: url('".image_url($body['image'])."');";
+	$style .= "background-image: url('".uploads_url($body['image'])."');";
 
 	if ($body['display'] === 'tiled') {
 		$style .= "background-repeat: repeat;";
@@ -76,7 +76,7 @@ if (!empty($header['background']))
 	$style .= "background-color: {$header['background']};";
 
 if (!empty($header['image']) AND !empty($header['display'])) {
-	$style .= "background-image: url('".image_url($header['image'])."');";
+	$style .= "background-image: url('".uploads_url($header['image'])."');";
 
 	if ($header['display'] === 'tiled') {
 		$style .= "background-repeat: repeat;";
@@ -151,7 +151,7 @@ if (empty($heading['image']) AND !empty($heading['background'])) {
 	$style .= "background: {$heading['background']} !important;";
 } else if (!empty($heading['image']) AND !empty($heading['display'])) {
 	$style .= "background-color: {$heading['background']};";
-	$style .= "background-image: url('".image_url($heading['image'])."');";
+	$style .= "background-image: url('".uploads_url($heading['image'])."');";
 
 	if ($heading['display'] === 'tiled') {
 		$style .= "background-repeat: repeat;";
@@ -170,7 +170,7 @@ $style .= "}";
 
 $style .= ".under-heading {";
 if ( ! empty($heading['under_image'])) {
-	$style .= "background-image: url('".image_url($heading['under_image'])."');";
+	$style .= "background-image: url('".uploads_url($heading['under_image'])."');";
 } else if ( isset($heading['under_image']) AND  empty($heading['under_image'])) {
 	$style .= "background-image: none; height: auto;";
 }
@@ -184,7 +184,7 @@ if (!empty($sidebar['background']))
 	$style .= "background-color: {$sidebar['background']};";
 
 if (!empty($sidebar['image'])) {
-	$style .= "background-image: url('".image_url($sidebar['image'])."');";
+	$style .= "background-image: url('".uploads_url($sidebar['image'])."');";
 
 	if ($sidebar['display'] === 'tiled') {
 		$style .= "background-repeat: repeat;";
@@ -388,7 +388,7 @@ if (!empty($footer['background']))
 	$style .= "background-color: {$footer['background']}; background-image:linear-gradient(to bottom, {$footer['background']}, {$footer['background']});";
 
 if (!empty($footer['image']) AND !empty($footer['display'])) {
-	$style .= "background-image: url('".image_url($footer['image'])."');";
+	$style .= "background-image: url('".uploads_url($footer['image'])."');";
 
 	if ($footer['display'] === 'tiled') {
 		$style .= "background-repeat: repeat;";
@@ -407,7 +407,7 @@ if ( ! empty($footer['bottom_background']))
 	$style .= "background-color: {$footer['bottom_background']};";
 
 if ( ! empty($footer['bottom_image']) AND ! empty($footer['bottom_display'])) {
-	$style .= "background-image: url('" . image_url($footer['bottom_image']) . "'); background-position: center center;background-repeat: no-repeat;";
+	$style .= "background-image: url('" . uploads_url($footer['bottom_image']) . "'); background-position: center center;background-repeat: no-repeat;";
 
 	if ($footer['bottom_display'] === 'tiled') {
 		$style .= "background-repeat: repeat;";
