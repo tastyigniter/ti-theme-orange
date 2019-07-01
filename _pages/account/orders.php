@@ -13,7 +13,9 @@ permalink: /account/orders/:orderId?
 
         <div class="col-sm-9">
             <div class="card">
-                <?= component('accountOrders'); ?>
+                <div class="card-body">
+                    <?= component('accountOrders'); ?>
+                </div>
             </div>
         </div>
     </div>

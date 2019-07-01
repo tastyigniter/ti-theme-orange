@@ -13,7 +13,9 @@ permalink: /account/reviews/:saleType?/:saleId?
 
         <div class="col-sm-9">
             <div class="card">
-                <?= component('accountReviews'); ?>
+                <div class="card-body">
+                    <?= component('accountReviews'); ?>
+                </div>
             </div>
         </div>
     </div>

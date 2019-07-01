@@ -13,7 +13,9 @@ permalink: /account/reservations/:reservationId?
 
         <div class="col-sm-9">
             <div class="card">
-                <?= component('accountReservations'); ?>
+                <div class="card-body">
+                    <?= component('accountReservations'); ?>
+                </div>
             </div>
         </div>
     </div>
