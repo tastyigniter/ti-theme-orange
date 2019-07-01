@@ -1,23 +1,23 @@
-$white:    #fff;
-$gray-100: #efeded; //#f8f9fa;
-$gray-200: #e0dcdb; //#e9ecef;
-$gray-300: #d0cbc9; //#dee2e6;
-$gray-400: #c1bab8; //#ced4da;
-$gray-500: #a29894; //#adb5bd;
-$gray-600: #64544d; //#6c757d;
-$gray-700: #463732; //#495057;
-$gray-800: #372b27; //#343a40;
-$gray-900: #271f1c; //#212529;
-$black:    #000;
+$white:    #fff !default;
+$gray-100: #efeded !default;
+$gray-200: #e0dcdb !default;
+$gray-300: #d0cbc9 !default;
+$gray-400: #c1bab8 !default;
+$gray-500: #a29894 !default;
+$gray-600: #64544d !default;
+$gray-700: #463732 !default;
+$gray-800: #372b27 !default;
+$gray-900: #271f1c !default;
+$black:    #000 !default;
 
-$primary:       #ED561A;
-$secondary:     $gray-600;
-$success:       #28a745;
-$info:          #17a2b8;
-$warning:       #ffc107;
-$danger:        #dc3545;
-$light:         $gray-100;
-$dark:          $gray-800;
+$primary:       #ED561A !default;
+$secondary:     $gray-600 !default;
+$success:       #28a745 !default;
+$info:          #17a2b8 !default;
+$warning:       #ffc107 !default;
+$danger:        #dc3545 !default;
+$light:         $gray-100 !default;
+$dark:          $gray-800 !default;
 
 $theme-colors: () !default;
 $theme-colors: map-merge((
@@ -38,52 +38,52 @@ $theme-colors: map-merge((
 
 // Fonts
 //
-$font-family-sans-serif: "Titillium Web", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-$font-family-monospace: "Droid Sans Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+$font-family-sans-serif: "Titillium Web", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
+$font-family-monospace: "Droid Sans Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
 
 // Icon
 //
-$icon-font-path: '../fonts/FontAwesome';
+$icon-font-path: '../../fonts/FontAwesome';
 $fa-font-path: $icon-font-path;
 
 // Body
 //
-$body-bg:                               $gray-100;
-$body-color:                            $gray-800;
+$body-bg:                               $gray-100 !default;
+$body-color:                            $gray-800 !default;
 
-$font-size-base:                        0.875rem;
-$font-weight-bold:                      600;
+$font-size-base:                        0.875rem !default;
+$font-weight-bold:                      600 !default;
 
-$headings-font-weight:                  $font-weight-bold;
+$headings-font-weight:                  $font-weight-bold !default;
 
-$page-padding-top:                      55px ;
+$page-padding-top:                      55px !default;
 
 // Spacer
 //
-$spacer:                                 1rem;
+$spacer:                                 1rem !default;
 
 // Components
 //
-//$border-width:                          0;
-$border-color:                          $gray-300;
+//$border-width:                          0 !default;
+$border-color:                          $gray-300 !default;
 
-$btn-font-weight:                       $font-weight-bold;
+$btn-font-weight:                       $font-weight-bold !default;
 
 // Logo
-$logo-height:                           40px;
+$logo-height:                           40px !default;
 
 // Navbar
-$navbar-top-bg:                         $white;
-$navbar-link-color:                     $primary;
-//$navbar-link-font-size:                 1rem;
+$navbar-top-bg:                         $white !default;
+$navbar-link-color:                     $primary !default;
+//$navbar-link-font-size:                 1rem !default;
 
 // Footer
-$footer-top-bg:                         $secondary;
-$footer-bottom-bg:                      $dark;
-$footer-link-color:                     rgba($white, .75);
+$footer-top-bg:                         $secondary !default;
+$footer-bottom-bg:                      $dark !default;
+$footer-link-color:                     rgba($white, .75) !default;
 
 // Forms
 
 // Cards
-$card-border-width:                     0;
+$card-border-width:                     0 !default;
 

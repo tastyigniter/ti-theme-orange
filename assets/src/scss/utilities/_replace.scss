@@ -61,15 +61,15 @@
 .input-sm {
   @extend .form-control-sm;
 }
-select.input-sm {
-  @extend select.form-control-sm;
-}
+//select.input-sm {
+//  @extend select.form-control-sm;
+//}
 .input-lg {
   @extend .form-control-lg;
 }
-select.input-lg {
-  @extend select.form-control-lg;
-}
+//select.input-lg {
+//  @extend select.form-control-lg;
+//}
 .table-condensed {
   @extend .table-sm;
 }
