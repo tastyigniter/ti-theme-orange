@@ -22,7 +22,7 @@ description: 'Local layout'
 
 '[cartBox]':
     timeFormat: 'D H:i a'
-    checkStockCheckout: 0
+    checkStockCheckout: 1
     pageIsCheckout: 0
     pageIsCart: 0
     checkoutPage: checkout/checkout

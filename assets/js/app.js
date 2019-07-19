@@ -1966,7 +1966,6 @@ $(function () {
         $('.affix-module').each(function () {
             $(this).find('[data-spy="affix"]:first-child').css('width', $(this).width())
         })
+        $('body').css({'margin-bottom': $('.footer').outerHeight() + 10 + 'px'});
     })
-
-    $('body').css({'margin-bottom': $('.footer').outerHeight() + 10 + 'px'});
 })
