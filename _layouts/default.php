@@ -58,6 +58,7 @@ function onEnd()
     <div id="notification">
         <?= partial('flash'); ?>
     </div>
+    <?= partial('eucookiebanner'); ?>
     <?= partial('scripts'); ?>
 </body>
 </html>

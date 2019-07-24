@@ -242,5 +242,54 @@ return [
                 ],
             ],
         ],
+        'gdpr' => [
+            'title' => 'GDPR (EU cookie settings)',
+            'fields' => [
+                'enable_gdpr' => [
+                    'label' => 'Enable Cookie Banner',
+                    'type' => 'switch',
+                    'default' => true,
+                ],
+                'gdpr_cookie_message' => [
+                    'label' => 'Cookie Message',
+                    'type' => 'textarea',
+                    'default' => 'We use own and third party cookies to improve our services. If you continue to browse, consider accepting its use',
+                    'rules' => 'required|string',
+                    'attribute' => [
+                        'rows' => '10',
+                    ],
+                ],
+                'gdpr_accept_text' => [
+                    'label' => 'Accept cookie text',
+                    'type' => 'text',
+                    'default' => 'OK',
+                    'rules' => 'required|max:128',
+                ],
+                'gdpr_more_info_text' => [
+                    'label' => 'More information text',
+                    'type' => 'text',
+                    'default' => 'More Information',
+                    'rules' => 'required|max:128',
+                ],
+                'gdpr_more_info_link' => [
+                    'label' => 'More information link',
+                    'type' => 'select',
+                    'options' => [\System\Models\Pages_model::class, 'getDropdownOptions'],
+                    'rules' => 'required|string',
+                ],
+                'gdpr_background_color' => [
+                    'label' => 'Cookie banner CSS background color attribute',
+                    'type' => 'colorpicker',
+                    'default' => '#FFF',
+                    'rules' => 'required|string',
+                ],
+                'gdpr_text_color' => [
+                    'label' => 'Cookie banner CSS text color attribute',
+                    'type' => 'colorpicker',
+                    'default' => '#000',
+                    'rules' => 'required|string',
+                ],
+            ],
+        ],
     ],
 ];
