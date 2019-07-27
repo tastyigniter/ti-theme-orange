@@ -1,0 +1,7 @@
+.payment-form {
+  background-color: darken($light, 10%);
+  border: $btn-border-width solid transparent;
+  margin-left: -$btn-border-width;
+  width: 100%;
+  padding: $btn-padding-y $btn-padding-x;
+}
