@@ -1,5 +1,3 @@
-<meta name="description" content="<?= setting('meta_description') ?>">
-<meta name="keywords" content="<?= setting('meta_keywords') ?>">
 <?= get_metas(); ?>
 <?php if (trim($favicon = $this->theme->favicon, '/')) { ?>
     <link href="<?= uploads_url($favicon); ?>" rel="shortcut icon" type="image/ico">
