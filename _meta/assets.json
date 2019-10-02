@@ -41,8 +41,8 @@
       "files": [
         "~/app/system/assets/ui/flame.js",
         "~/themes/tastyigniter-orange/assets/src/js/vendor/affix.js",
-        "~/themes/tastyigniter-orange/node_modules/select2/dist/js/select2.min.js",
-        "~/themes/tastyigniter-orange/node_modules/jquery-raty-js/lib/jquery.raty.js",
+        "~/themes/tastyigniter-orange/assets/src/js/vendor/select2.min.js",
+        "~/themes/tastyigniter-orange/assets/src/js/vendor/jquery.raty.js",
         "~/themes/tastyigniter-orange/assets/src/js/app.js"
       ],
       "destination": "~/themes/tastyigniter-orange/assets/js/app.js"

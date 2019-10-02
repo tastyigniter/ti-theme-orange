@@ -5,13 +5,13 @@
 @import "bootstrap-partials";
 //
 // FontAwesome
-@import "../../../../node_modules/@fortawesome/fontawesome-free-webfonts/scss/fontawesome";
-@import "../../../../node_modules/@fortawesome/fontawesome-free-webfonts/scss/fa-brands";
-@import "../../../../node_modules/@fortawesome/fontawesome-free-webfonts/scss/fa-solid";
-@import "../../../../node_modules/@fortawesome/fontawesome-free-webfonts/scss/fa-regular";
+@import "FontAwesome/fontawesome";
+@import "FontAwesome/fa-brands";
+@import "FontAwesome/fa-solid";
+@import "FontAwesome/fa-regular";
 //
 // Select 2 bootstrap 4 theme
-@import "../../../../node_modules/select2-theme-bootstrap4/src/select2-bootstrap";
+@import "select2-bootstrap";
 //
 // Raty
 @import "jquery.raty";

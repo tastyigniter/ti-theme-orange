@@ -106,6 +106,7 @@ $(function () {
         })
         $('body').css({'padding-bottom': $('.footer').outerHeight() + 10 + 'px'});
     })
+    $('body').css({'padding-bottom': $('.footer').outerHeight() + 10 + 'px'});
 })
 
 $(function () {
