@@ -1,0 +1,22 @@
+{
+    "name": "ti-orange-theme",
+    "description": "Links to documentation to help you get started!",
+    "private": true,
+    "scripts": {
+        "dev": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch": "npm run dev -- --watch",
+        "prod": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    },
+    "devDependencies": {
+        "cross-env": "^5.0.1",
+        "laravel-mix": "^1.0",
+        "jquery": "^3.4.0",
+        "bootstrap": "^4.3.1",
+        "popper.js": "^1.14.0",
+        "@fortawesome/fontawesome-free-webfonts": "^1.0.6",
+        "select2": "4.0.6-rc.1",
+        "select2-theme-bootstrap4": "0.2.0-beta.2",
+        "animate.css": "^3.6.1",
+        "jquery-raty-js": "2.8.0"
+    }
+}
