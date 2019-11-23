@@ -1,9 +1,12 @@
 ---
 title: main::lang.account.reservations.title
 layout: account
-permalink: /account/reservations/:reservationId?
+permalink: /account/reservations/:hash?
 
 '[accountReservations]':
+
+'[localReview]':
+    reviewableType: reservation
 ---
 <div class="container">
     <div class="row py-5">

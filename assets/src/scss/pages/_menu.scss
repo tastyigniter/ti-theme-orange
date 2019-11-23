@@ -20,6 +20,7 @@
     color: $primary;
   }
 }
+
 .nav-categories {
   .nav-link {
     color: $body-color;
@@ -31,17 +32,91 @@
     font-weight: $font-weight-bold;
   }
 }
-.menu-group-item {
-  border-bottom: 1px dashed var(--gray-300);
-}
-.menu-group-item .category-title {
-  padding: 12px 0;
+
+.menu-group {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0;
   margin-bottom: 0;
+
+  .menu-group-item {
+    border-top: 1px solid $light;
+    padding-left: $card-spacer-x;
+    padding-right: $card-spacer-x;
+
+    &:first-child {
+      border-top: 0 none;
+    }
+
+    .category-title {
+      padding: 15px 0;
+      margin-bottom: 0;
+
+      .collapse-toggle {
+        @extend .fa;
+        @extend .fa-chevron-up;
+      }
+
+      &.collapsed .collapse-toggle {
+        @extend .fa-chevron-down
+      }
+    }
+
+    .image {
+      max-height: 80px;
+      overflow: hidden;
+    }
+  }
+
+  .menu-items {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
-.menu-group-item .menu-category {
-  margin-bottom: 15px;
+
+.menu-items {
+  padding-left: $card-spacer-x;
+  padding-right: $card-spacer-x;
+
+  .menu-item {
+    border-top: 1px dashed $light;
+    padding-top: $card-spacer-x;
+    padding-bottom: $card-spacer-x;
+  }
+
+  .menu-item:first-child {
+    border-top: 0 none;
+  }
 }
-.menu-group-item .image {
-  max-height: 80px;
-  overflow: hidden;
+
+.menu-option, .menu-size {
+  .custom-control {
+    margin-top: 10px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  .option-details, .size-details {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: -$modal-inner-padding;
+    margin-right: -$modal-inner-padding;
+    padding: 10px $modal-inner-padding;
+    background-color: rgba($light, 0.5);
+  }
+
+  .option-group, .size-group {
+    padding: $card-spacer-x 0;
+  }
+}
+
+.menu-comment {
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: -$modal-inner-padding;
+  margin-right: -$modal-inner-padding;
+  padding: $card-spacer-x $modal-inner-padding 10px;
+  border-top: 1px solid $light;
 }

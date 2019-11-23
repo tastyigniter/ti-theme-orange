@@ -16,12 +16,10 @@ layout: local
 
 <div class="panel">
     <div class="d-block d-sm-none">
-        <div class="categories">
+        <div class="panel-body categories">
             <?= component('categories'); ?>
         </div>
     </div>
 
-    <div class="panel-body">
-        <?= component('localMenu') ?>
-    </div>
+    <?= component('localMenu') ?>
 </div>

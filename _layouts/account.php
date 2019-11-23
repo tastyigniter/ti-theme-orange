@@ -3,6 +3,7 @@ description: Account layout
 
 '[session]':
     security: customer
+    redirectPage: account/login
 
 '[account]':
 

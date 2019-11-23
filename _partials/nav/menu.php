@@ -1,8 +1,8 @@
-<nav class="navbar navbar-top navbar-expand-md fixed-top">
+<nav class="navbar navbar-light navbar-top navbar-expand-md fixed-top">
     <div class="container">
         <?= partial('nav/logo'); ?>
         <button
-            class="navbar-toggler"
+            class="navbar-toggler border-0"
             type="button"
             data-toggle="collapse"
             data-target="#navbarMainHeader"
@@ -65,6 +65,7 @@
                             ><?= lang('main::lang.menu_recent_reservation'); ?></a>
 
                             <a
+                                href="javascript:;"
                                 class="dropdown-item"
                                 data-request="session::onLogout"
                             ><?= lang('main::lang.menu_logout'); ?></a>
