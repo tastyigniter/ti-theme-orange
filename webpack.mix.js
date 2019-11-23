@@ -30,6 +30,9 @@ mix.copyDirectory(
 );
 
 mix.copy(
+    'node_modules/bootstrap/dist/js/bootstrap.min.js.map',
+    'assets/src/js/bootstrap.min.js.map'
+).copy(
     'node_modules/select2/dist/js/select2.min.js',
     'assets/src/js/vendor/select2.min.js'
 ).copy(
