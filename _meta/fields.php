@@ -275,7 +275,7 @@ return [
                     'label' => 'More information link',
                     'type' => 'select',
                     'options' => [\System\Models\Pages_model::class, 'getDropdownOptions'],
-                    'rules' => 'required|string',
+                    'rules' => 'string',
                 ],
                 'gdpr_background_color' => [
                     'label' => 'Cookie banner CSS background color attribute',
