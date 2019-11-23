@@ -9,6 +9,16 @@ layout: local
     sort: 'date_added asc'
 
 ---
+<?php
+function onStart() {
+    if (!setting('allow_reviews')) {
+        flash()->error(lang('igniter.local::default.review.alert_review_disabled'))->now();
+
+        return Redirect::to($controller->pageUrl($localReview->property('redirectPage')));
+    }
+}
+?>
+---
 <?= partial('local/tabs', ['activeTab' => 'reviews']); ?>
 
 <div class="panel">
