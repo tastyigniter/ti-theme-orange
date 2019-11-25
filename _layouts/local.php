@@ -12,10 +12,6 @@ description: 'Local layout'
     paramFrom: location
     showLocalThumb: 0
     menusPage: local/menus
-    openTimeFormat: 'H:i'
-    timePickerDateFormat: 'D d'
-    timePickerTimeFormat: 'H:i'
-    timePickerDateTimeFormat: 'D d H:i'
 
 '[categories]':
     menusPage: local/menus
