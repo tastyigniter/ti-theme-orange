@@ -18,7 +18,7 @@ $.fn.render=function(callback){$(document).on('render',callback)}}(window.jQuery
 this.options=options||{}
 var
 $form=options.form?$(options.form):$el.closest('form'),$triggerEl=!!$form.length?$form:$el,context={handler:handler,options:options},loading=options.loading!==undefined&&options.loading.length?$(options.loading):null,isRedirect=options.redirect!==undefined&&options.redirect.length
-var _event=jQuery.Event('ajaxBeforeUpdate')
+var _event=jQuery.Event('ajaxSetup')
 $triggerEl.trigger(_event,context)
 if(_event.isDefaultPrevented())return
 if($.type(loading)=='string')loading=$(loading)
@@ -32,7 +32,7 @@ $form.append(appendObjToForm(data,$form))}else{requestData=[$form.serialize(),$.
 var requestOptions={context:context,headers:{'X-IGNITER-REQUEST-HANDLER':handler,},success:function(data,textStatus,jqXHR){if(this.options.beforeUpdate.apply(this,[data,textStatus,jqXHR])===false)return
 if(options.fireBeforeUpdate&&eval('(function($el, context, data, textStatus, jqXHR) {'+
 options.fireBeforeUpdate+'}.call($el.get(0), $el, context, data, textStatus, jqXHR))')===false)return
-var _event=jQuery.Event('ti.before.update')
+var _event=jQuery.Event('ajaxBeforeUpdate')
 $triggerEl.trigger(_event,[context,data,textStatus,jqXHR])
 if(_event.isDefaultPrevented())return
 var updatePromise=requestOptions.handleUpdateResponse(data,textStatus,jqXHR)
