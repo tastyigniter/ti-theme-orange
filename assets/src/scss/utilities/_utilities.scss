@@ -12,6 +12,12 @@ body {
 .hide {
   display: none !important;
 }
+.border-none {
+  border: 0 none;
+}
+.radius-none {
+  border-radius: 0;
+}
 .cursor-pointer {cursor: pointer;}
 a.ti-loading, button.ti-loading, span.ti-loading {
   &:before {

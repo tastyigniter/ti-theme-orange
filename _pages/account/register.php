@@ -11,7 +11,7 @@ layout: default
     accountPage: account/account
     redirectPage: account/account
     loginPage: account/login
-    agreeRegistrationTermsPage: 12
+    agreeRegistrationTermsPage: 1
 
 ---
 <div class="container">

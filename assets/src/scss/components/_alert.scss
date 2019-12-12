@@ -22,6 +22,11 @@
     }
   }
 }
+@media (max-width: 768px) {
+  #notification {
+    width: 100%;
+  }
+}
 .alert-collapse {
   .alert {
     padding: .3rem 1.25rem;

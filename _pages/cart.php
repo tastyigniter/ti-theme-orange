@@ -11,7 +11,7 @@ permalink: /cart
 <div class="container">
     <div class="row py-4">
         <div class="col col-sm-6 m-auto">
-            <div class="cart-buttons wrap-bottom">
+            <div class="cart-buttons mb-3">
                 <a
                     class="btn btn-default btn-block btn-md"
                     href="<?= restaurant_url('local/menus'); ?>"

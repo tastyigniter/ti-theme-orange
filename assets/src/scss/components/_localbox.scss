@@ -1,17 +1,19 @@
 .local-box-fluid .panel {
   background-color: #FFF;
-  width: 50%;
+  width: 40%;
   margin: 0 auto;
 }
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .local-box-fluid {
+    .panel {
+      width: 100%;
+    }
   }
 }
 .local-box-fluid .container {
   width: 100%;
 }
 .local-box-fluid h2 {
-  color: #ED561A;
   font-weight: 600;
   text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
   margin: 0 0 15px;

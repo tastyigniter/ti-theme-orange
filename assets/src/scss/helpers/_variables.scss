@@ -56,8 +56,6 @@ $font-weight-bold:                      600 !default;
 
 $headings-font-weight:                  $font-weight-bold !default;
 
-$page-padding-top:                      55px !default;
-
 $text-muted:                            $gray-600 !default;
 
 // Spacer
@@ -83,10 +81,10 @@ $logo-height:                           40px !default;
 $navbar-top-bg:                         $white !default;
 $navbar-link-color:                     $primary !default;
 //$navbar-link-font-size:                 1rem !default;
+$page-padding-top:                      $logo-height + 10px !default;
 
 // Footer
-$footer-top-bg:                         $secondary !default;
-$footer-bottom-bg:                      $dark !default;
+$footer-bg:                             $dark !default;
 $footer-link-color:                     rgba($white, .75) !default;
 
 // Forms

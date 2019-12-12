@@ -17,18 +17,6 @@ layout: default
     itemsPerRow: 3
     itemWidth: 400
     itemHeight: 300
-
----
-<?php
-function onInit() {
-}
-
-function onStart() {
-}
-
-function onEnd() {
-}
-?>
 ---
 <?= component('slider'); ?>
 
