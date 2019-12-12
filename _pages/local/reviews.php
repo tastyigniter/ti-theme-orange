@@ -19,7 +19,7 @@ function onStart() {
 }
 ?>
 ---
-<?= partial('local/tabs', ['activeTab' => 'reviews']); ?>
+<?= partial('nav/local_tabs', ['activeTab' => 'reviews']); ?>
 
 <div class="panel">
     <div class="panel-body">

@@ -5,7 +5,7 @@ permalink: /:location?local/gallery
 
 '[localGallery]':
 ---
-<?= partial('local/tabs', ['activeTab' => 'gallery']); ?>
+<?= partial('nav/local_tabs', ['activeTab' => 'gallery']); ?>
 
 <div class="panel">
     <div class="panel-body">

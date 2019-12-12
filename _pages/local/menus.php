@@ -12,7 +12,7 @@ layout: local
     menuImageHeight: 80
 
 ---
-<?= partial('local/tabs', ['activeTab' => 'menus']); ?>
+<?= partial('nav/local_tabs', ['activeTab' => 'menus']); ?>
 
 <div class="panel">
     <div class="d-block d-sm-none">

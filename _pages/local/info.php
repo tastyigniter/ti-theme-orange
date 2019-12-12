@@ -5,6 +5,6 @@ permalink: /:location?local/info
 
 '[localInfo]':
 ---
-<?= partial('local/tabs', ['activeTab' => 'info']); ?>
+<?= partial('nav/local_tabs', ['activeTab' => 'info']); ?>
 
 <?= component('localInfo') ?>

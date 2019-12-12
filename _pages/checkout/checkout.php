@@ -28,7 +28,7 @@ permalink: /checkout
             </div>
             <div class="card">
                 <div class="card-body">
-                    <?= component('checkout'); ?>
+                    <?= partial('checkout::form'); ?>
                 </div>
             </div>
         </div>
