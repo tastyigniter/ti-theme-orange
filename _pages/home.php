@@ -4,7 +4,8 @@ permalink: /
 description: ''
 layout: default
 
-'[slider]': {  }
+'[slider]':
+    code: home-slider
 
 '[localSearch]':
     hideSearch: 0
