@@ -4,7 +4,11 @@ description: 'Local layout'
 '[session]':
     security: all
 
-'[pageNav]': {  }
+'[staticMenu mainMenu]':
+    code: main-menu
+
+'[staticMenu footerMenu]':
+    code: footer-menu
 
 '[newsletter]': {  }
 
@@ -33,17 +37,11 @@ description: 'Local layout'
 <body class="<?= $this->page->bodyClass; ?>">
 
     <header class="header">
-        <?= partial('nav/menu'); ?>
+        <?= partial('header'); ?>
     </header>
 
     <main role="main">
         <div id="page-wrapper">
-            <?= partial('breadcrumb'); ?>
-
-            <?php if (isset($this->page->heading)) { ?>
-                <?= partial('heading', ['heading' => $this->page->heading]); ?>
-            <?php } ?>
-
             <div class="container">
                 <div class="row py-4">
                     <div class="col-sm-2 d-none d-sm-inline-block">
@@ -68,14 +66,8 @@ description: 'Local layout'
         </div>
     </main>
 
-    <footer class="footer pb-4">
-        <div class="footer-top">
-            <?= component('newsletter'); ?>
-        </div>
-
-        <div class="footer-bottom">
-            <?= partial('footer'); ?>
-        </div>
+    <footer class="pt-5">
+        <?= partial('footer'); ?>
     </footer>
     <div id="notification">
         <?= partial('flash'); ?>

@@ -4,24 +4,13 @@ description: Default layout
 '[session]':
     security: all
 
-'[pageNav]':
+'[staticMenu mainMenu]':
+    code: main-menu
+
+'[staticMenu footerMenu]':
+    code: footer-menu
 
 '[newsletter]': {  }
----
-<?
-function onInit()
-{
-}
-
-function onStart()
-{
-}
-
-function onEnd()
-{
-}
-
-?>
 ---
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="<?= App::getLocale(); ?>">
@@ -31,29 +20,17 @@ function onEnd()
 <body class="<?= $this->page->bodyClass; ?>">
 
     <header class="header">
-        <?= partial('nav/menu'); ?>
+        <?= partial('header'); ?>
     </header>
 
     <main role="main">
         <div id="page-wrapper">
-            <?= partial('breadcrumb'); ?>
-
-            <?php if (isset($this->page->heading)) { ?>
-                <?= partial('heading', ['heading' => $this->page->heading]); ?>
-            <?php } ?>
-
             <?= page(); ?>
         </div>
     </main>
 
-    <footer class="footer pt-4">
-        <div class="footer-top">
-            <?= component('newsletter'); ?>
-        </div>
-        
-        <div class="footer-bottom">
-            <?= partial('footer'); ?>
-        </div>
+    <footer class="pt-5">
+        <?= partial('footer'); ?>
     </footer>
     <div id="notification">
         <?= partial('flash'); ?>

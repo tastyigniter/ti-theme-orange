@@ -2,17 +2,9 @@
   position: absolute;
   bottom: 0;
   width: 100%;
-
-  .footer-top {
-    background-color: $footer-top-bg;
-  }
-  .footer-bottom {
-    background-color: $footer-bottom-bg;
-  }
-
-  a,
-  .footer-top,
-  .footer-bottom {
+  color: $footer-link-color;
+  background-color: $footer-bg;
+  a {
     color: $footer-link-color;
   }
 }
