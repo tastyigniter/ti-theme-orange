@@ -5,13 +5,6 @@
  *
  */
 
-$backgroundOptions = [
-    'contain' => 'Contain',
-    'tiled' => 'Tiled',
-    'cover' => 'Cover',
-    'centered' => 'Centered',
-];
-
 return [
     // Set form fields for the admin theme customisation.
     'form' => [

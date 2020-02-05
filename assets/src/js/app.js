@@ -51,12 +51,14 @@ $(function () {
         cookieValue = 'on',
         cookieDuration = 30
 
-    if (options.active === 1) {
-        if (checkCookie(cookieName) !== cookieValue) {
-            $el.fadeIn()
+    if ($el.length) {
+        if (options.active === 1) {
+            if (checkCookie(cookieName) !== cookieValue) {
+                $el.fadeIn()
+            }
+        } else {
+            eraseCookie('complianceCookie');
         }
-    } else {
-        eraseCookie('complianceCookie');
     }
 
     $btn.on('click', function (event) {

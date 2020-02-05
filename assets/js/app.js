@@ -459,7 +459,7 @@ $(function(){$(window).bind("load resize",function(){$('.affix-module').each(fun
 $('body').css({'padding-bottom':$('.footer').outerHeight()+10+'px'});})
 $('body').css({'padding-bottom':$('.footer').outerHeight()+10+'px'});})
 $(function(){var $el=$('[data-control="cookie-banner"]'),$btn=$el.find('#eu-cookie-action'),options=$.extend({},$el.data()),cookieName='complianceCookie',cookieValue='on',cookieDuration=30
-if(options.active===1){if(checkCookie(cookieName)!==cookieValue){$el.fadeIn()}}else{eraseCookie('complianceCookie');}
+if($el.length){if(options.active===1){if(checkCookie(cookieName)!==cookieValue){$el.fadeIn()}}else{eraseCookie('complianceCookie');}}
 $btn.on('click',function(event){createCookie(cookieName,cookieValue,cookieDuration);$el.fadeOut()})
 function createCookie(name,value,days){var expires=''
 if(days){var date=new Date()
