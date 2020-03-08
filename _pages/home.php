@@ -12,7 +12,7 @@ layout: default
     menusPage: local/menus
 
 '[featuredItems]':
-    items: ['76', '77', '78', '79']
+    items: ['6', '7', '8', '9']
     limit: 3
     itemsPerRow: 3
     itemWidth: 400

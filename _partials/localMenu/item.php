@@ -41,7 +41,7 @@ $menuPrice = $specialActive ? $special->getMenuPrice($menuItem->menu_price) : $m
             <?php } ?>
 
             <span class="menu-price pr-sm-3">
-                <b><?= $menuPrice > 0 ? currency_format($menuPrice) : lang('igniter.local::default.text_free'); ?></b>
+                <b><?= $menuPrice > 0 ? currency_format($menuPrice) : lang('main::lang.text_free'); ?></b>
             </span>
 
             <span class="menu-button">
