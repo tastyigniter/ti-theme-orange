@@ -20,8 +20,9 @@ if ($unAvailable) {
 ?>
 <button
     class="checkout-btn btn btn-primary <?= ($fullyClosed) ? 'disabled' : ''; ?> btn-block btn-lg"
+    data-attach-loading="disabled"
     <?php if ($pageIsCheckout) { ?>
-        data-cart-control="confirm-checkout"
+        data-checkout-control="confirm-checkout"
         data-request-form="#checkout-form"
     <?php } else if (!$fullyClosed) { ?>
         data-request="<?= $checkoutEventHandler; ?>"

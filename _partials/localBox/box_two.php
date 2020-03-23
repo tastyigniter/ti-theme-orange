@@ -17,7 +17,7 @@ $closingTime = Carbon\Carbon::parse($schedule->getCloseTime());
     <?php } ?>
 
     <dd>
-        <?php if ($schedule->getPeriod($openingTime)->opensAllDay()) { ?>
+        <?php if ($openingTime->isToday() AND $schedule->getPeriod($openingTime)->opensAllDay()) { ?>
             <span class="fa fa-clock-o"></span>&nbsp;&nbsp;
             <span><?= lang('igniter.local::default.text_24_7_hour'); ?></span>
         <?php }

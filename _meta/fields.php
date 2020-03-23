@@ -171,7 +171,7 @@ return [
                     'label' => 'Footer font color',
                     'type' => 'colorpicker',
                     'span' => 'right',
-                    'default' => 'rgba(255, 255, 255, 0.75)',
+                    'default' => '#FFFFFF',
                     'rules' => 'required',
                     'assetVar' => 'footer-link-color',
                 ],

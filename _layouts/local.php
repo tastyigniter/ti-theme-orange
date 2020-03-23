@@ -21,7 +21,6 @@ description: 'Local layout'
     menusPage: local/menus
 
 '[cartBox]':
-    timeFormat: 'D H:i a'
     checkStockCheckout: 1
     showCartItemThumb: 1
     pageIsCheckout: 0

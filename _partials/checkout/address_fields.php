@@ -41,7 +41,7 @@
     <input
         type="hidden"
         name="address[address_id]"
-        value="<?= set_value('address.address_id', $order->address['address_id']); ?>"
+        value="<?= set_value('address.address_id', $order->address['address_id'] ?? ''); ?>"
     >
     <div class="row">
         <div class="col-sm-6">
@@ -51,7 +51,7 @@
                     type="text"
                     name="address[address_1]"
                     class="form-control"
-                    value="<?= set_value('address[address_1]', $order->address['address_1']); ?>"/>
+                    value="<?= set_value('address[address_1]', $order->address['address_1'] ?? ''); ?>"/>
                 <?= form_error('address.address_1', '<span class="text-danger">', '</span>'); ?>
             </div>
         </div>
@@ -62,7 +62,7 @@
                     type="text"
                     name="address[address_2]"
                     class="form-control"
-                    value="<?= set_value('address[address_2]', $order->address['address_2']); ?>"/>
+                    value="<?= set_value('address[address_2]', $order->address['address_2'] ?? ''); ?>"/>
                 <?= form_error('address.address_2', '<span class="text-danger">', '</span>'); ?>
             </div>
         </div>
@@ -75,7 +75,7 @@
                     type="text"
                     name="address[city]"
                     class="form-control"
-                    value="<?= set_value('address[city]', $order->address['city']); ?>"/>
+                    value="<?= set_value('address[city]', $order->address['city'] ?? ''); ?>"/>
                 <?= form_error('address.city', '<span class="text-danger">', '</span>'); ?>
             </div>
         </div>
@@ -86,7 +86,7 @@
                     type="text"
                     name="address[state]"
                     class="form-control"
-                    value="<?= set_value('address[state]', $order->address['state']); ?>"/>
+                    value="<?= set_value('address[state]', $order->address['state'] ?? ''); ?>"/>
                 <?= form_error('address.state', '<span class="text-danger">', '</span>'); ?>
             </div>
         </div>
@@ -97,7 +97,7 @@
                     type="text"
                     name="address[postcode]"
                     class="form-control"
-                    value="<?= set_value('address[postcode]', $order->address['postcode']); ?>"/>
+                    value="<?= set_value('address[postcode]', $order->address['postcode'] ?? ''); ?>"/>
                 <?= form_error('address.postcode', '<span class="text-danger">', '</span>'); ?>
             </div>
         </div>
