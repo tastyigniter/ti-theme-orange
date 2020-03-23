@@ -13,7 +13,9 @@
     <?= partial('@address_fields'); ?>
 <?php } ?>
 
-<?= partial('@payments'); ?>
+<div data-partial="checkoutPayments">
+    <?= partial('@payments'); ?>
+</div>
 
 <div class="form-group">
     <label for="comment"><?= lang('igniter.cart::default.checkout.label_comment'); ?></label>
