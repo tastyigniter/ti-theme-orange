@@ -15,7 +15,7 @@ $privacyPage = \System\Models\Pages_model::find($this->theme->gdpr_more_info_lin
                 <p id="eu-cookie-message" class="mb-0">
                     <span><?= $this->theme->gdpr_cookie_message ?></span>
                     <a
-                        href="<?= site_url('pages', ['slug' => $privacyPage ? $privacyPage->permalink_slug : '']); ?>"
+                        href="<?= site_url($privacyPage->permalink_slug); ?>"
                     ><?= $this->theme->gdpr_more_info_text ?></a>
                 </p>
                 <a
