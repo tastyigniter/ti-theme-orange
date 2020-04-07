@@ -12,7 +12,7 @@
             <button
                 id="subscribeButton"
                 class="btn btn-info"
-            ><i class="fa fa-paper-plane-o"></i></button>
+            ><i class="fa fa-paper-plane"></i></button>
         </span>
     </div>
 </form>
