@@ -1,5 +1,11 @@
-.payment-form {
-  background-color: transparent;
-  border: $btn-border-width solid transparent;
-  padding-top: 15px;
+.payments {
+  .list-group-item {
+    padding-top: 0;
+    padding-bottom: 0;
+
+    > .custom-control {
+      padding-top: $list-group-item-padding-y;
+      padding-bottom: $list-group-item-padding-y;
+    }
+  }
 }
