@@ -3,8 +3,12 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-sm-<?= ($hideSearch) ? '12' : '4' ?> mb-3 mb-sm-0">
-                    <?= partial('@timeslot'); ?>
-                </div>
+		    <div
+                       id="local-timeslot"
+                    >
+                    	<?= partial('@timeslot'); ?>
+                    </div>
+		</div>
                 <?php if (!$hideSearch) { ?>
                     <div class="col-sm-8">
                         <?= partial('@searchbar'); ?>
