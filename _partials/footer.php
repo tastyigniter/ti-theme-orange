@@ -8,7 +8,10 @@
                         <ul>
                             <?php foreach ($navItem->items as $item) { ?>
                                 <li>
-                                    <a href="<?= $item->url; ?>"><?= e(lang($item->title)); ?></a>
+                                    <a
+                                        href="<?= $item->url; ?>"
+                                        <?= e($item->extraAttributes) ?>
+                                    ><?= e(lang($item->title)); ?></a>
                                 </li>
                             <?php } ?>
                         </ul>

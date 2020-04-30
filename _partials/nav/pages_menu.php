@@ -6,6 +6,7 @@
                     <a
                         class="nav-link<?= ($item->isActive OR $item->isChildActive) ? ' active font-weight-bold' : ''; ?>"
                         href="<?= $item->url ?>"
+                        <?= e($item->extraAttributes) ?>
                     ><?= e(lang($item->title)); ?></a>
                 </li>
             <?php } ?>
