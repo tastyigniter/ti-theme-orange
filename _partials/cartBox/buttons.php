@@ -1,31 +1,12 @@
-<?php
-$fullyClosed = FALSE;
-$cartTotalIsAboveMinTotal = $location->checkMinimumOrder($cart->subtotal());
-$unAvailable = (!$location->checkOrderType() OR ($location->orderTypeIsDelivery() AND !$cartTotalIsAboveMinTotal));
-$workingSchedule = $location->workingSchedule($location->orderType());
-if ($workingSchedule->isClosed() AND !$location->current()->hasFutureOrder()) {
-    $buttonLang = 'igniter.cart::default.text_is_closed';
-    $fullyClosed = TRUE;
-}
-else if (!$pageIsCheckout) {
-    $buttonLang = 'igniter.cart::default.button_order';
-}
-else {
-    $buttonLang = 'igniter.cart::default.button_confirm';
-}
-
-if ($unAvailable) {
-    $fullyClosed = TRUE;
-}
-?>
+<?php $locationIsClosed = $cartBox->locationIsClosed(); ?>
 <button
-    class="checkout-btn btn btn-primary <?= ($fullyClosed) ? 'disabled' : ''; ?> btn-block btn-lg"
+    class="checkout-btn btn btn-primary <?= ($locationIsClosed) ? 'disabled' : ''; ?> btn-block btn-lg"
     data-attach-loading="disabled"
     <?php if ($pageIsCheckout) { ?>
         data-checkout-control="confirm-checkout"
         data-request-form="#checkout-form"
-    <?php } else if (!$fullyClosed) { ?>
+    <?php } else if (!$locationIsClosed) { ?>
         data-request="<?= $checkoutEventHandler; ?>"
         data-request-data="locationId: '<?= $location->getId() ?>'"
     <?php } ?>
-><?= lang($buttonLang); ?></button>
+><?= $cartBox->buttonLabel(); ?></button>

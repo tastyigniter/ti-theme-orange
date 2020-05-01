@@ -31,7 +31,7 @@
                         <?= partial('@box_one'); ?>
                     </div>
                     <div class="box-divider d-block d-sm-none"></div>
-                    <div class="box-two col-sm-6">
+                    <div id="local-box-two" class="box-two col-sm-6">
                         <?= partial('@box_two'); ?>
                     </div>
                 </div>
