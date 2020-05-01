@@ -10,7 +10,7 @@
                                 <li>
                                     <a
                                         href="<?= $item->url; ?>"
-                                        <?= e($item->extraAttributes) ?>
+                                        <?= $item->extraAttributes ?>
                                     ><?= e(lang($item->title)); ?></a>
                                 </li>
                             <?php } ?>

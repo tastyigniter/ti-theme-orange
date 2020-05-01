@@ -23,7 +23,7 @@
                         <a
                             class="dropdown-item<?= ($item->isActive ? ' active' : '') ?>"
                             href="<?= $item->url; ?>"
-                            <?= e($item->extraAttributes) ?>
+                            <?= $item->extraAttributes ?>
                         ><?= e(lang($item->title)); ?></a>
                     <?php } ?>
                 </div>
