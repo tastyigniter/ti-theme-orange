@@ -18,7 +18,7 @@
                 <?php if ($location->deliverySchedule()->isOpen()) { ?>
                     <?= sprintf(lang('igniter.local::default.text_in_minutes'), $locationCurrent->deliveryMinutes()); ?>
                 <?php } else if ($location->deliverySchedule()->isOpening()) { ?>
-                    <?= sprintf(lang('igniter.local::default.text_starts'), $location->deliverySchedule()->getOpenTime('H:i a')); ?>
+                    <span class="text-danger"><?= sprintf(lang('igniter.local::default.text_starts'), $location->deliverySchedule()->getOpenTime('H:i a')); ?></span>
                 <?php } else { ?>
                     <?= lang('igniter.local::default.text_closed'); ?>
                 <?php } ?>
@@ -30,7 +30,7 @@
                 <?php if ($location->collectionSchedule()->isOpen()) { ?>
                     <?= sprintf(lang('igniter.local::default.text_in_minutes'), $locationCurrent->collectionMinutes()); ?>
                 <?php } else if ($location->collectionSchedule()->isOpening()) { ?>
-                    <?= sprintf(lang('igniter.local::default.text_starts'), $location->collectionSchedule()->getOpenTime('H:i a')); ?>
+                    <span class="text-danger"><?= sprintf(lang('igniter.local::default.text_starts'), $location->collectionSchedule()->getOpenTime('H:i a')); ?></span>
                 <?php } else { ?>
                     <?= lang('igniter.local::default.text_closed'); ?>
                 <?php } ?>

@@ -71,7 +71,7 @@
                                 <?= sprintf(lang('igniter.local::default.text_delivery_time_info'), sprintf(lang('igniter.local::default.text_in_minutes'), $deliveryMinutes)); ?>
                             <?php }
                             else if ($deliverySchedule->isOpening()) { ?>
-                                <?= sprintf(lang('igniter.local::default.text_delivery_time_info'), sprintf(lang('igniter.local::default.text_starts'), $collectionTime->isoFormat($openingTimeFormat))); ?>
+                                <?= sprintf(lang('igniter.local::default.text_delivery_time_info'), '<span class="text-danger">'.sprintf(lang('igniter.local::default.text_starts'), $collectionTime->isoFormat($openingTimeFormat).'</span>')); ?>
                             <?php }
                             else { ?>
                                 <?= sprintf(lang('igniter.local::default.text_delivery_time_info'), lang('igniter.local::default.text_is_closed')); ?>
@@ -84,7 +84,7 @@
                                 <?= sprintf(lang('igniter.local::default.text_collection_time_info'), sprintf(lang('igniter.local::default.text_in_minutes'), $collectionMinutes)); ?>
                             <?php }
                             else if ($collectionSchedule->isOpening()) { ?>
-                                <?= sprintf(lang('igniter.local::default.text_collection_time_info'), sprintf(lang('igniter.local::default.text_starts'), $collectionTime->isoFormat($openingTimeFormat))); ?>
+                                <?= sprintf(lang('igniter.local::default.text_collection_time_info'), '<span class="text-danger">'.sprintf(lang('igniter.local::default.text_starts'), $collectionTime->isoFormat($openingTimeFormat).'</span>')); ?>
                             <?php }
                             else { ?>
                                 <?= sprintf(lang('igniter.local::default.text_collection_time_info'), lang('igniter.local::default.text_is_closed')); ?>
