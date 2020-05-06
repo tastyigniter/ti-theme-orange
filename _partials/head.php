@@ -1,4 +1,5 @@
 <?= get_metas(); ?>
+<meta name="csrf-token" content="<?= csrf_token() ?>">
 <?php if (trim($favicon = $this->theme->favicon, '/')) { ?>
     <link href="<?= uploads_url($favicon); ?>" rel="shortcut icon" type="image/ico">
 <?php }
