@@ -20,7 +20,7 @@
             for="menuOptionCheck<?= $optionIndex; ?>"
         >
             <?= $optionValue->name; ?>
-            <span class="pull-right"><?= currency_format($optionValue->price); ?></span>
+            <?php if ($optionValue->price > 0) {?><span class="pull-right"><?= currency_format($optionValue->price); ?></span><?php } ?>
         </label>
     </div>
 <?php } ?>

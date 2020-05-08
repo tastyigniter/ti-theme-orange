@@ -11,6 +11,6 @@
         <option
             value="<?= $optionValue->menu_option_value_id; ?>"
             <?= ($isSelected OR $optionValue->isDefault()) ? 'selected="selected"' : ''; ?>
-        ><?= $optionValue->name; ?>&nbsp;&nbsp;-&nbsp;&nbsp;<?= currency_format($optionValue->price); ?></option>
+        ><?= $optionValue->name; ?><?= ($optionValue->price > 0 ? '&nbsp;&nbsp;-&nbsp;&nbsp;+'.currency_format($optionValue->price) : ''); ?></option>
     <?php } ?>
 </select>
