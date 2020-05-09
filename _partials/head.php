@@ -9,5 +9,5 @@ else { ?>
 <title><?= sprintf(lang('main::lang.site_title'), lang(get_title()), setting('site_name')); ?></title>
 <?= get_style_tags(); ?>
 <?php if (!empty($this->theme->custom_css)) { ?>
-    <?= '<link type="text/css" id="custom-css">'.$this->theme->custom_css.'</link>' ?>
+    <style type="text/css" id="custom-css"><?= $this->theme->custom_css; ?></style>
 <?php } ?>
