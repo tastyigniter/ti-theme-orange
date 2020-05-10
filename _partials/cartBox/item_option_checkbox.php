@@ -20,7 +20,7 @@
             for="menuOptionCheck<?= $optionIndex; ?>"
         >
             <?= $optionValue->name; ?>
-            <?php if ($optionValue->price > 0) {?><span class="pull-right"><?= currency_format($optionValue->price); ?></span><?php } ?>
+            <?php if ($optionValue->price > 0 || $hideFreeOptionPrices == false) {?><span class="pull-right"><?= currency_format($optionValue->price); ?></span><?php } ?>
         </label>
     </div>
 <?php } ?>
