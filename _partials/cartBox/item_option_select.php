@@ -12,6 +12,6 @@
             value="<?= $optionValue->menu_option_value_id; ?>"
             <?= ($isSelected OR $optionValue->isDefault()) ? 'selected="selected"' : ''; ?>
             data-option-price="<?= $optionValue->price; ?>"
-        ><?= $optionValue->name; ?><?= ($optionValue->price > 0 || $hideFreeOptionPrices == false ? '&nbsp;&nbsp;-&nbsp;&nbsp;+'.currency_format($optionValue->price) : ''); ?></option>
+        ><?= $optionValue->name; ?><?= ($optionValue->price > 0 || !$hideZeroOptionPrices ? '&nbsp;&nbsp;-&nbsp;&nbsp;+'.currency_format($optionValue->price) : ''); ?></option>
     <?php } ?>
 </select>
