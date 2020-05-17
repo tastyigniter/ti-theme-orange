@@ -12,6 +12,7 @@
             value="<?= $optionValue->menu_option_value_id; ?>"
             data-option-price="<?= $optionValue->price ?>"
             <?= ($isSelected OR $optionValue->isDefault()) ? 'selected="selected"' : ''; ?>
-        ><?= $optionValue->name; ?>&nbsp;&nbsp;-&nbsp;&nbsp;<?= currency_format($optionValue->price); ?></option>
+            data-option-price="<?= $optionValue->price; ?>"
+        ><?= $optionValue->name; ?><?= ($optionValue->price > 0 || !$hideZeroOptionPrices ? '&nbsp;&nbsp;'.lang('main::lang.text_minus').'&nbsp;&nbsp;'.lang('main::lang.text_plus').currency_format($optionValue->price) : ''); ?></option>
     <?php } ?>
 </select>
