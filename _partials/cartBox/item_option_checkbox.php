@@ -20,7 +20,9 @@
             for="menuOptionCheck<?= $optionIndex; ?>"
         >
             <?= $optionValue->name; ?>
-            <?php if ($optionValue->price > 0 || !$hideZeroOptionPrices) {?><span class="pull-right">+<?= currency_format($optionValue->price); ?></span><?php } ?>
+            <?php if ($optionValue->price > 0 || !$hideZeroOptionPrices) {?>
+                <span class="pull-right"><?= lang('main::lang.text_plus').currency_format($optionValue->price); ?></span>
+            <?php } ?>
         </label>
     </div>
 <?php } ?>
