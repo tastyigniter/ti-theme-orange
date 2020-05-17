@@ -16,17 +16,17 @@
                     $menuCategory = array_get($menuListCategories, $categoryId);
                     $menuCategoryAlias = strtolower(str_slug($menuCategory->name));
                     ?>
-                    <div id="<?= $menuCategoryAlias; ?>-heading" role="tab">
+                    <div id="category-<?= $menuCategoryAlias; ?>-heading" role="tab">
                         <h4
                             class="category-title cursor-pointer"
                             data-toggle="collapse"
-                            data-target="#<?= $menuCategoryAlias; ?>-collapse"
+                            data-target="#category-<?= $menuCategoryAlias; ?>-collapse"
                             aria-expanded="false"
-                            aria-controls="<?= $menuCategoryAlias; ?>-heading"
+                            aria-controls="category-<?= $menuCategoryAlias; ?>-heading"
                         ><?= e($menuCategory->name); ?><span class="collapse-toggle text-muted pull-right"></span></h4>
                     </div>
                     <div
-                        id="<?= $menuCategoryAlias; ?>-collapse"
+                        id="category-<?= $menuCategoryAlias; ?>-collapse"
                         class="collapse <?= $index < 5 ? 'show' : ''; ?>"
                         role="tabpanel" aria-labelledby="<?= $menuCategoryAlias; ?>"
                     >
