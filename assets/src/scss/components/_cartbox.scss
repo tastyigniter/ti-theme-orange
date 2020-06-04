@@ -85,6 +85,17 @@
   padding: 15px 20px;
 }
 
+.cart-tip {
+  border-top: 2px solid $light;
+  border-bottom: 2px solid $light;
+  margin: 0 -20px 10px;
+  padding: 15px 20px;
+}
+
+#cart-coupon + #cart-tip {
+	margin-top: -12px;
+}
+
 .cart-total {
   .table {
     margin-bottom: 0;
