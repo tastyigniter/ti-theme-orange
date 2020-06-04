@@ -12,7 +12,7 @@
                     type="text"
                     name="tip_amount"
                     class="form-control"
-                    value="<?= ($coupon = $cart->getCondition('coupon')) ? $coupon->getMetaData('code') : '' ?>"
+                    value="<?= ($tip = $cart->getCondition('tip')) ? $tip->getMetaData('amount') : '' ?>"
                     placeholder="<?= lang('igniter.cart::default.text_apply_tip'); ?>"
                 	inputmode="numeric" 
                 	pattern="[0-9\.]*"    
