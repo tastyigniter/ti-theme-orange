@@ -6,59 +6,20 @@
         data-request="<?= $applyTipEventHandler; ?>"
     >
         <div class="cart-tip">
-<<<<<<< HEAD
-            <?php
-            $tip = $cart->getCondition('tip');
-            $tipAmountType = $tip ? $tip->getMetaData('amountType', 'none') : 'none';
-            $currentAmount = $tip ? $tip->getMetaData('amount', 0) : '';
-            ?>
-            <?php if ($tipAmounts = $__SELF__->tippingAmounts()) { ?>
-                <div class="btn-group btn-group-toggle w-100 text-center tip-amounts" data-toggle="buttons">
-                    <button
-                        type="button"
-                        class="btn btn-light<?= ($tipAmountType == 'none') ? ' active' : ''; ?>"
-                        data-cart-control="tip-amount"
-                        data-tip-amount-type="none"
-                    ><?= lang('igniter.cart::default.text_no_tip'); ?></button>
-                    <?php foreach ($tipAmounts as $tipAmount) { ?>
-                        <button
-                            type="button"
-                            class="btn btn-light<?= $currentAmount == $tipAmount->value ? ' active' : ''; ?>"
-                            data-cart-control="tip-amount"
-                            data-tip-amount-type="amount"
-                            data-tip-value="<?= $tipAmount->value; ?>"
-                        ><strong><?= $tipAmount->valueType != 'F' ? round($tipAmount->value).'%' : currency_format($tipAmount->value); ?></strong></button>
-                    <?php } ?>
-                    <button
-                        type="button"
-                        class="btn btn-light<?= ($tipAmountType == 'custom') ? ' active' : ''; ?>"
-                        data-cart-control="tip-amount"
-                        data-tip-amount-type="custom"
-                    ><?= lang('igniter.cart::default.text_edit_tip'); ?></button>
-                </div>
-            <?php } ?>
-            <input type="hidden" name="amount_type" value="<?= $tipAmountType; ?>">
-            <div
-                class="input-group<?= $tipAmounts ? ' mt-2' : '' ?>"
-                data-tip-custom
-                <?= ($tipAmounts AND $tipAmountType != 'custom') ? 'style="display: none;"' : '' ?>
-            >
-                <input
-                    type="number"
-                    name="amount"
-                    class="form-control"
-                    value="<?= $currentAmount; ?>"
-                    placeholder="<?= lang('igniter.cart::default.text_apply_tip'); ?>"
-                />
-                <div class="input-group-append">
-                    <button
-                        type="submit"
-                        class="btn btn-light"
-                        data-replace-loading="fa fa-spinner fa-spin"
-                        title="<?= lang('igniter.cart::default.button_apply_tip'); ?>"
-                    ><i class="fa fa-check"></i></button>
-                </div>
-=======
+			<div class="btn-group btn-group-toggle w-100 text-center tip-percentage" data-toggle="buttons">
+                <label class="btn btn-light active">
+                	<input type="radio" name="tip_percentage" data-cart-control="tip-percentage" value="10%">&nbsp;&nbsp;
+					<strong>10%</strong>
+				</label>
+                <label class="btn btn-light active">
+                	<input type="radio" name="tip_percentage" data-cart-control="tip-percentage" value="15%">&nbsp;&nbsp;
+					<strong>15%</strong>
+				</label>				
+                <label class="btn btn-light active">
+                	<input type="radio" name="tip_percentage" data-cart-control="tip-percentage" value="20%">&nbsp;&nbsp;
+					<strong>20%</strong>
+				</label>
+            </div>	        
             <div
                 class="input-group">
                 <input
@@ -67,8 +28,6 @@
                     class="form-control"
                     value="<?= ($tip = $cart->getCondition('tip')) ? $tip->getMetaData('amount') : '' ?>"
                     placeholder="<?= lang('igniter.cart::default.text_apply_tip'); ?>"
-                	inputmode="numeric" 
-                	pattern="[0-9\.]*"    
                 />
                 <span class="input-group-append">
                 <button
@@ -78,7 +37,6 @@
                     title="<?= lang('igniter.cart::default.button_apply_tip'); ?>"
                 ><i class="fa fa-check"></i></button>
             </span>
->>>>>>> HTML and style changes
             </div>
         </div>
     </form>
