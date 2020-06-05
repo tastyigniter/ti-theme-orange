@@ -6,6 +6,20 @@
         data-request="<?= $applyTipEventHandler; ?>"
     >
         <div class="cart-tip">
+			<div class="btn-group btn-group-toggle w-100 text-center tip-percentage" data-toggle="buttons">
+                <label class="btn btn-light active">
+                	<input type="radio" name="tip_percentage" data-cart-control="tip-percentage" value="10%">&nbsp;&nbsp;
+					<strong>10%</strong>
+				</label>
+                <label class="btn btn-light active">
+                	<input type="radio" name="tip_percentage" data-cart-control="tip-percentage" value="15%">&nbsp;&nbsp;
+					<strong>15%</strong>
+				</label>				
+                <label class="btn btn-light active">
+                	<input type="radio" name="tip_percentage" data-cart-control="tip-percentage" value="20%">&nbsp;&nbsp;
+					<strong>20%</strong>
+				</label>
+            </div>	        
             <div
                 class="input-group">
                 <input
@@ -14,8 +28,6 @@
                     class="form-control"
                     value="<?= ($tip = $cart->getCondition('tip')) ? $tip->getMetaData('amount') : '' ?>"
                     placeholder="<?= lang('igniter.cart::default.text_apply_tip'); ?>"
-                	inputmode="numeric" 
-                	pattern="[0-9\.]*"    
                 />
                 <span class="input-group-append">
                 <button

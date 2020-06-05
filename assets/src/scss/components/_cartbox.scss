@@ -6,6 +6,11 @@
   width: 50%;
 }
 
+.tip-percentage > .btn {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
 .cart-items {
   padding: 15px 1.25rem;
   max-height: 36vh;

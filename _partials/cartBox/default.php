@@ -17,9 +17,11 @@
             <?= partial('@coupon_form'); ?>
         </div>
 
+		<?php if (config('cart.tippingEnabled')) { ?>
         <div id="cart-tip">
             <?= partial('@tip_form'); ?>
         </div>
+        <?php } ?>
 
         <div id="cart-totals">
             <?= partial('@totals'); ?>
