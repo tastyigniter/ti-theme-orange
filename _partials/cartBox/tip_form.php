@@ -6,20 +6,20 @@
         data-request="<?= $applyTipEventHandler; ?>"
     >
         <div class="cart-tip">
+	        
+	        <?php 
+		        $tipPercentages = config('cart.tipPercentages');      
+		        if (sizeof($tipPercentages) > 0) {      
+		    ?>
 			<div class="btn-group btn-group-toggle w-100 text-center tip-percentage" data-toggle="buttons">
+				<?php foreach ($tipPercentages as $tipPercentage){ ?>
                 <label class="btn btn-light active">
-                	<input type="radio" name="tip_percentage" data-cart-control="tip-percentage" value="10%">&nbsp;&nbsp;
-					<strong>10%</strong>
+                	<input type="radio" name="tip_percentage" data-cart-control="tip-percentage" value="<?= str_replace('%', '', $tipPercentage['amount']); ?>%">&nbsp;&nbsp;
+					<strong><?= $tipPercentage['label']; ?></strong>
 				</label>
-                <label class="btn btn-light active">
-                	<input type="radio" name="tip_percentage" data-cart-control="tip-percentage" value="15%">&nbsp;&nbsp;
-					<strong>15%</strong>
-				</label>				
-                <label class="btn btn-light active">
-                	<input type="radio" name="tip_percentage" data-cart-control="tip-percentage" value="20%">&nbsp;&nbsp;
-					<strong>20%</strong>
-				</label>
-            </div>	        
+				<?php } ?>
+            </div>	 
+            <?php } ?>       
             <div
                 class="input-group">
                 <input
