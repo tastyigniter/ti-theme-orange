@@ -17,7 +17,7 @@
             <?= partial('@coupon_form'); ?>
         </div>
 
-		<?php if (config('cart.tippingEnabled')) { ?>
+		<?php if ($__SELF__->tippingEnabled()) { ?>
         <div id="cart-tip">
             <?= partial('@tip_form'); ?>
         </div>
