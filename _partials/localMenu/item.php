@@ -1,7 +1,7 @@
 <?php
-$mealtime = $menuItem->mealtime;
+$mealtimes = $menuItem->mealtimes;
 $special = $menuItem->special;
-$mealtimeNotAvailable = ($mealtime AND !$mealtime->isAvailableNow());
+$mealtimeNotAvailable = !$menuItem->isAvailable($location->orderDateTime());
 $specialActive = ($special AND $special->active());
 $menuHasOptions = $menuItem->hasOptions();
 $menuPrice = $specialActive ? $special->getMenuPrice($menuItem->menu_price) : $menuItem->menu_price;
@@ -58,9 +58,15 @@ $menuPrice = $specialActive ? $special->getMenuPrice($menuItem->menu_price) : $m
                             data-replace-loading="fa fa-spinner fa-spin"
                         <?php } ?>
                     <?php } else { ?>
-                        title="<?= sprintf(lang('igniter.local::default.text_mealtime'),
-                            $mealtime->mealtime_name, $mealtime->start_time, $mealtime->end_time
-                        ); ?>"
+                        title="<?php 
+	                        $title = [];
+	                        foreach ($mealtimes as $mealtime){ 
+	                        	$title[] = sprintf(lang('igniter.local::default.text_mealtime'),
+                            		$mealtime->mealtime_name, $mealtime->start_time, $mealtime->end_time
+								); 
+							} 
+							echo implode("\r\n", $title);
+							?>"
                     <?php } ?>
                 >
                     <i class="fa fa-<?= $mealtimeNotAvailable ? 'clock-o' : 'plus' ?>"></i>
