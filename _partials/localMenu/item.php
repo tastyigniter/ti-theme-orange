@@ -5,6 +5,12 @@ $mealtimeNotAvailable = !$menuItem->isAvailable($location->orderDateTime());
 $specialActive = ($special AND $special->active());
 $menuHasOptions = $menuItem->hasOptions();
 $menuPrice = $specialActive ? $special->getMenuPrice($menuItem->menu_price) : $menuItem->menu_price;
+$mealtimeTitles = [];
+foreach ($menuItem->mealtimes ?? [] as $mealtime) {
+    $mealtimeTitles[] = sprintf(lang('igniter.local::default.text_mealtime'),
+        $mealtime->mealtime_name, $mealtime->start_time, $mealtime->end_time
+    );
+}
 ?>
 <div id="menu<?= $menuItem->menu_id; ?>" class="menu-item">
     <div class="d-flex flex-row">
@@ -58,15 +64,7 @@ $menuPrice = $specialActive ? $special->getMenuPrice($menuItem->menu_price) : $m
                             data-replace-loading="fa fa-spinner fa-spin"
                         <?php } ?>
                     <?php } else { ?>
-                        title="<?php 
-	                        $title = [];
-	                        foreach ($mealtimes as $mealtime){ 
-	                        	$title[] = sprintf(lang('igniter.local::default.text_mealtime'),
-                            		$mealtime->mealtime_name, $mealtime->start_time, $mealtime->end_time
-								); 
-							} 
-							echo implode("\r\n", $title);
-							?>"
+                        title="<?= implode("\r\n", $mealtimeTitles); ?>"
                     <?php } ?>
                 >
                     <i class="fa fa-<?= $mealtimeNotAvailable ? 'clock-o' : 'plus' ?>"></i>
