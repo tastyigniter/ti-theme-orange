@@ -13,14 +13,16 @@
     }
     ?>
     <div
-        class=""
+        class="custom-control custom-quantity"
     >
         <label
             class="w-100"
             for="menuOptionQuantity<?= $menuOptionValueId; ?>"
         >
             <?= $optionValue->name; ?>
-            <span class="pull-right"><?= currency_format($optionValue->price); ?></span>
+            <?php if ($optionValue->price > 0 || !$hideZeroOptionPrices) {?>
+                <span class="pull-right"><?= lang('main::lang.text_plus').currency_format($optionValue->price); ?></span>
+            <?php } ?>
             <input
                 type="hidden"
                 name="menu_options[<?= $index; ?>][option_values][<?= $optionIndex; ?>][id]"
@@ -28,7 +30,7 @@
             />
 	        <input
 	            type="text"
-	            class="pull-right w-25 mr-5"
+	            class="custom-control-quantity"
 	            id="menuOptionQuantity<?= $menuOptionValueId; ?>"
 	            name="menu_options[<?= $index; ?>][option_values][<?= $optionIndex; ?>][qty]"
 	            value="<?= $value; ?>"

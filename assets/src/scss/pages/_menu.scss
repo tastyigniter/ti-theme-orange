@@ -97,6 +97,17 @@
       margin-top: 0;
     }
   }
+  
+  .custom-quantity {
+    padding-left: 0px;
+    
+    .custom-control-quantity {
+	   float:left;
+	   margin-right: 10px;
+	   width: 40px;
+    }
+    
+  }
 
   .option-details, .size-details {
     margin-top: 0;
