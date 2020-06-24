@@ -16,7 +16,7 @@
         class="custom-control custom-quantity"
     >
         <label
-            class="w-100"
+            class="custom-quantity-label w-100"
             for="menuOptionQuantity<?= $menuOptionValueId; ?>"
         >
             <?= $optionValue->name; ?>
@@ -29,14 +29,16 @@
                 value="<?= $optionValue->menu_option_value_id; ?>"
             />
 	        <input
-	            type="text"
-	            class="custom-control-quantity"
+	            type="number"
+	            class="form-control custom-quantity-input"
 	            id="menuOptionQuantity<?= $menuOptionValueId; ?>"
 	            name="menu_options[<?= $index; ?>][option_values][<?= $optionIndex; ?>][qty]"
 	            value="<?= $value; ?>"
 	            data-option-price="<?= $optionValue->price; ?>"
 	            inputmode="numeric"
 	            pattern="[0-9]*"
+                min="0"
+                autocomplete="off"
 	        />
         </label>
     </div>

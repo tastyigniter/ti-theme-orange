@@ -64,6 +64,8 @@
                 name="quantity"
                 class="form-control text-center"
                 value="<?= $cartItem ? $cartItem->qty : $menuItem->minimum_qty; ?>"
+                min="0"
+                autocomplete="off"
               >
               <div class="input-group-append">
                 <button
