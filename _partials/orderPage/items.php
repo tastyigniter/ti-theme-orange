@@ -18,9 +18,13 @@
                 <?php if ($itemOptions = $orderItemOptions->get($orderItem->order_menu_id)) { ?>
                     <ul class="list-unstyled small text-muted">
                         <?php foreach ($itemOptions as $itemOption) { ?>
-                            <li><?= $itemOption->order_option_name; ?>&nbsp;
+                            <li>
+                                <?php if ($itemOption->quantity > 1) { ?>
+                                    <?= $itemOption->quantity.' '.lang('igniter.cart::default.text_times'); ?>
+                                <?php } ?>
+                                <?= $itemOption->order_option_name; ?>&nbsp;
                                 <?php if ($itemOption->order_option_price > 0) { ?>
-                                    (<?= currency_format($itemOption->order_option_price); ?>)
+                                    (<?= currency_format($itemOption->quantity * $itemOption->order_option_price); ?>)
                                 <?php } ?>
                             </li>
                         <?php } ?>
