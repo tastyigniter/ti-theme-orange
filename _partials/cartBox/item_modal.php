@@ -1,9 +1,9 @@
 <div
   class="modal-dialog "
   data-control="cart-item"
-  data-min-quantity="<?= $menuItem->minimum_qty; ?>" 
+  data-min-quantity="<?= $menuItem->minimum_qty; ?>"
   data-price-amount="<?= $cartItem ? $cartItem->price : $menuItem->getBuyablePrice() ?>"
-  data-price-format="<?= currency_format(0); ?>"
+  data-price-format="<?= currency_format(0, 0,false); ?>"
 >
   <form method="POST" data-request="<?= $formHandler; ?>">
     <div class="modal-content">
