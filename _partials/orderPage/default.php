@@ -1,5 +1,5 @@
 <div class="card mb-1">
-    <div class="card-body text-sm-center">
+    <div class="card-body text-sm-center" id="ti-order-status">
         <?= partial('@status') ?>
     </div>
 </div>
