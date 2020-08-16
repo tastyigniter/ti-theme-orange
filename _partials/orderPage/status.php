@@ -7,7 +7,11 @@
 <h5><?= lang('igniter.cart::default.checkout.text_order_no').$order->order_id; ?></h5>
 <?php if ($order->status) { ?>
     <div class="progress mb-4 mt-4">
-        <div class="progress-bar progress-bar-striped" role="progressbar" style="width: <?= $order->status->status_width; ?>%; background-color: <?= $order->status->status_color; ?>"></div>
+        <div
+            class="progress-bar progress-bar-striped"
+            role="progressbar"
+            style="width: <?= $order->status->status_width; ?>%; background-color: <?= $order->status->status_color; ?>"
+        ></div>
     </div>
     <h3 style="color: <?= $order->status->status_color; ?>;"><?= $order->status->status_name; ?></h3>
     <p class="lead"><?= $order->status->status_comment; ?></p>
