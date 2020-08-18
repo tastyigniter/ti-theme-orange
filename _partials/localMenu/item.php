@@ -1,10 +1,17 @@
 <?php
-$mealtime = $menuItem->mealtime;
+$mealtimes = $menuItem->mealtimes;
 $special = $menuItem->special;
-$mealtimeNotAvailable = ($mealtime AND !$mealtime->isAvailableNow());
+$mealtimeNotAvailable = !$menuItem->isAvailable($location->orderDateTime());
 $specialActive = ($special AND $special->active());
 $menuHasOptions = $menuItem->hasOptions();
 $menuPrice = $specialActive ? $special->getMenuPrice($menuItem->menu_price) : $menuItem->menu_price;
+$mealtimeTitles = [];
+$allergens = $menuItem->allergens;
+foreach ($menuItem->mealtimes ?? [] as $mealtime) {
+    $mealtimeTitles[] = sprintf(lang('igniter.local::default.text_mealtime'),
+        $mealtime->mealtime_name, $mealtime->start_time, $mealtime->end_time
+    );
+}
 ?>
 <div id="menu<?= $menuItem->menu_id; ?>" class="menu-item">
     <div class="d-flex flex-row">
@@ -23,7 +30,7 @@ $menuPrice = $specialActive ? $special->getMenuPrice($menuItem->menu_price) : $m
                 >
             </div>
         <?php } ?>
-
+        
         <div class="menu-content flex-grow-1 mr-3">
             <h6 class="menu-name"><?= e($menuItem->menu_name); ?></h6>
             <p class="menu-desc text-muted mb-0">
@@ -39,7 +46,7 @@ $menuPrice = $specialActive ? $special->getMenuPrice($menuItem->menu_price) : $m
                     <i class="fa fa-star text-warning pr-sm-1" title="<?= $specialDaysText; ?>"></i>
                 </span>
             <?php } ?>
-
+            
             <span class="menu-price pr-sm-3">
                 <b><?= $menuPrice > 0 ? currency_format($menuPrice) : lang('main::lang.text_free'); ?></b>
             </span>
@@ -58,14 +65,31 @@ $menuPrice = $specialActive ? $special->getMenuPrice($menuItem->menu_price) : $m
                             data-replace-loading="fa fa-spinner fa-spin"
                         <?php } ?>
                     <?php } else { ?>
-                        title="<?= sprintf(lang('igniter.local::default.text_mealtime'),
-                            $mealtime->mealtime_name, $mealtime->start_time, $mealtime->end_time
-                        ); ?>"
+                        title="<?= implode("\r\n", $mealtimeTitles); ?>"
                     <?php } ?>
                 >
                     <i class="fa fa-<?= $mealtimeNotAvailable ? 'clock-o' : 'plus' ?>"></i>
                 </button>
             </span>
-        </div>
+        </div>            
+    </div>
+    <div class="d-flex flex-row allergens">                
+        <?php foreach ($allergens as $allergen): ?>
+            <?php if($allergen->status && $allergen->hasMedia('thumb')) { ?>
+                <img
+                    class="img-responsive img-rounded"
+                    alt="<?= $allergen->name; ?>"
+                    src="<?= $allergen->getThumb() ?>"                        
+                    data-toggle="tooltip" 
+                    title="<?= $allergen->name ?>: <?= $allergen->description ?>"
+                >
+            <?php } elseif ($allergen->status) {?> 
+                <button class="btn btn-primary btn-sm mx-1"
+                        data-toggle="tooltip" 
+                        title="<?= $allergen->description ?>">
+                    <?= $allergen->name ?>
+                </button>
+            <?php } ?>                       
+        <?php endforeach; ?>
     </div>
 </div>
