@@ -1,8 +1,8 @@
-<?php $locationIsClosed = $cartBox->locationIsClosed(); ?>
+<?php $locationIsClosed = ($cartBox->locationIsClosed() OR $cartBox->hasMinimumOrder()); ?>
 <button
     class="checkout-btn btn btn-primary <?= ($locationIsClosed) ? 'disabled' : ''; ?> btn-block btn-lg"
     data-attach-loading="disabled"
-    <?php if ($pageIsCheckout) { ?>
+    <?php if ($pageIsCheckout AND !$locationIsClosed) { ?>
         data-checkout-control="confirm-checkout"
         data-request-form="#checkout-form"
     <?php } else if (!$locationIsClosed) { ?>

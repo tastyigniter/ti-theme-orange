@@ -98,6 +98,21 @@
     }
   }
 
+  .custom-quantity {
+    padding-left: 0px;
+
+    .custom-quantity-label {
+      line-height: 2.5;
+      margin-bottom: 0;
+    }
+
+    .custom-quantity-input {
+      float: left;
+      margin-right: 10px;
+      width: 60px;
+    }
+  }
+
   .option-details, .size-details {
     margin-top: 0;
     margin-bottom: 0;

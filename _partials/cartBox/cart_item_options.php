@@ -2,9 +2,13 @@
     <?php foreach ($itemOptions as $itemOption) { ?>
         <li class="text-muted"><?= $itemOption->name; ?></li>
         <?php foreach ($itemOption->values as $optionValue) { ?>
-            <li><?= $optionValue->name; ?>&nbsp;
+            <li>
+                <?php if ($optionValue->qty > 1) { ?>
+                    <?= $optionValue->qty.' '.lang('igniter.cart::default.text_times'); ?>
+                <?php } ?>
+                <?= $optionValue->name; ?>&nbsp;
                 <?php if ($optionValue->price > 0) { ?>
-                    (<?= currency_format($optionValue->price); ?>)
+                    (<?= currency_format($optionValue->subtotal()); ?>)
                 <?php } ?>
             </li>
         <?php } ?>
