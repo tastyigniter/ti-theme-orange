@@ -4,12 +4,12 @@
     $value = 0;
     if ($cartItem AND $cartItem->hasOptionValue($menuOptionValueId)){
         $cartItem->options->search(function ($option) use ($menuOptionValueId, &$value) {
-            $option->values->each(function($opt) use ($menuOptionValueId, &$value) {
-	           if ($opt->id == $menuOptionValueId){
-		           $value = $opt->qty;
-	           } 
+            $option->values->each(function ($opt) use ($menuOptionValueId, &$value) {
+               if ($opt->id == $menuOptionValueId){
+                   $value = $opt->qty;
+               }
             });
-        });    
+        });
     }
     ?>
     <div

@@ -2,7 +2,6 @@
 
 /**
  * Theme config file
- *
  */
 
 return [
@@ -138,7 +137,7 @@ return [
                     'rules' => 'required',
                     'assetVar' => ['gray-800', 'gray-700'],
                 ],
-            ]
+            ],
         ],
         'navigation' => [
             'title' => 'Navigation',
@@ -175,7 +174,7 @@ return [
                     'rules' => 'required',
                     'assetVar' => 'footer-link-color',
                 ],
-            ]
+            ],
         ],
         'social' => [
             'title' => 'Social',

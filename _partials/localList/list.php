@@ -59,7 +59,7 @@
                     <?php if ($openingSchedule->isOpen()) { ?>
                         <dt><?= lang('igniter.local::default.text_is_opened'); ?></dt>
                     <?php }
-                    else if ($openingSchedule->isOpening()) { ?>
+                    elseif ($openingSchedule->isOpening()) { ?>
                         <dt class="text-muted"><?= sprintf(lang('igniter.local::default.text_opening_time'), $openingTime->isoFormat($openingTimeFormat)); ?></dt>
                     <?php }
                     else { ?>
@@ -70,7 +70,7 @@
                             <?php if ($deliverySchedule->isOpen()) { ?>
                                 <?= sprintf(lang('igniter.local::default.text_delivery_time_info'), sprintf(lang('igniter.local::default.text_in_minutes'), $deliveryMinutes)); ?>
                             <?php }
-                            else if ($deliverySchedule->isOpening()) { ?>
+                            elseif ($deliverySchedule->isOpening()) { ?>
                                 <?= sprintf(lang('igniter.local::default.text_delivery_time_info'), '<span class="text-danger">'.sprintf(lang('igniter.local::default.text_starts'), $collectionTime->isoFormat($openingTimeFormat).'</span>')); ?>
                             <?php }
                             else { ?>
@@ -83,7 +83,7 @@
                             <?php if ($collectionSchedule->isOpen()) { ?>
                                 <?= sprintf(lang('igniter.local::default.text_collection_time_info'), sprintf(lang('igniter.local::default.text_in_minutes'), $collectionMinutes)); ?>
                             <?php }
-                            else if ($collectionSchedule->isOpening()) { ?>
+                            elseif ($collectionSchedule->isOpening()) { ?>
                                 <?= sprintf(lang('igniter.local::default.text_collection_time_info'), '<span class="text-danger">'.sprintf(lang('igniter.local::default.text_starts'), $collectionTime->isoFormat($openingTimeFormat).'</span>')); ?>
                             <?php }
                             else { ?>
@@ -95,10 +95,10 @@
                         <?php if (!$hasDelivery AND $hasCollection) { ?>
                             <?= lang('igniter.local::default.text_only_collection_is_available'); ?>
                         <?php }
-                        else if ($hasDelivery AND !$hasCollection) { ?>
+                        elseif ($hasDelivery AND !$hasCollection) { ?>
                             <?= lang('igniter.local::default.text_only_delivery_is_available'); ?>
                         <?php }
-                        else if ($hasDelivery AND $hasCollection) { ?>
+                        elseif ($hasDelivery AND $hasCollection) { ?>
                             <?= lang('igniter.local::default.text_offers_both_types'); ?>
                         <?php }
                         else { ?>

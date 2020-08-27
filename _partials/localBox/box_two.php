@@ -9,7 +9,7 @@ $closingTime = Carbon\Carbon::parse($schedule->getCloseTime());
     <?php if ($schedule->isOpen()) { ?>
         <dt><?= lang('igniter.local::default.text_is_opened'); ?></dt>
     <?php }
-    else if ($schedule->isOpening()) { ?>
+    elseif ($schedule->isOpening()) { ?>
         <dt class="text-muted"><?= sprintf(lang('igniter.local::default.text_opening_time'), $openingTime->isoFormat($openingTimeFormat)); ?></dt>
     <?php }
     else { ?>
@@ -35,10 +35,10 @@ $closingTime = Carbon\Carbon::parse($schedule->getCloseTime());
         <?php if (!$hasDelivery AND $hasCollection) { ?>
             <?= lang('igniter.local::default.text_collection_only'); ?>
         <?php }
-        else if ($hasDelivery AND !$hasCollection) { ?>
+        elseif ($hasDelivery AND !$hasCollection) { ?>
             <?= lang('igniter.local::default.text_delivery_only'); ?>
         <?php }
-        else if ($hasDelivery AND $hasCollection) { ?>
+        elseif ($hasDelivery AND $hasCollection) { ?>
             <?= lang('igniter.local::default.text_both_types'); ?>
         <?php }
         else { ?>
