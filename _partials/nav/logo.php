@@ -5,7 +5,7 @@
             alt="<?= setting('site_name'); ?>"
             src="<?= uploads_url($this->theme->logo_image) ?>"
         >
-    <?php } else if ($this->theme->logo_text) { ?>
+    <?php } elseif ($this->theme->logo_text) { ?>
         <span class="text-logo"><?= $this->theme->logo_text; ?></span>
     <?php } else { ?>
         <img
