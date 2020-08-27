@@ -5,7 +5,7 @@
     <?php if ($pageIsCheckout AND !$locationIsClosed) { ?>
         data-checkout-control="confirm-checkout"
         data-request-form="#checkout-form"
-    <?php } else if (!$locationIsClosed) { ?>
+    <?php } elseif (!$locationIsClosed) { ?>
         data-request="<?= $checkoutEventHandler; ?>"
         data-request-data="locationId: '<?= $location->getId() ?>'"
     <?php } ?>

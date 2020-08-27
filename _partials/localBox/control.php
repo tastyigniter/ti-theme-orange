@@ -23,7 +23,7 @@
                         <?php if ($location->deliverySchedule()->isOpen()) { ?>
                             <?= sprintf(lang('igniter.local::default.text_in_min'), $locationCurrent->deliveryMinutes()); ?>
                         <?php }
-                        else if ($location->deliverySchedule()->isOpening()) { ?>
+                        elseif ($location->deliverySchedule()->isOpening()) { ?>
                             <?= sprintf(lang('igniter.local::default.text_starts'), $deliveryTime->isoFormat($cartBoxTimeFormat)); ?>
                         <?php }
                         else { ?>
@@ -45,7 +45,7 @@
                         <?php if ($location->collectionSchedule()->isOpen()) { ?>
                             <?= sprintf(lang('igniter.local::default.text_in_min'), $locationCurrent->collectionMinutes()); ?>
                         <?php }
-                        else if ($location->collectionSchedule()->isOpening()) { ?>
+                        elseif ($location->collectionSchedule()->isOpening()) { ?>
                             <?= sprintf(lang('igniter.local::default.text_starts'), $collectionTime->isoFormat($cartBoxTimeFormat)); ?>
                         <?php }
                         else { ?>
