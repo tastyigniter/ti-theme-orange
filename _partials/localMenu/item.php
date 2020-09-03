@@ -6,7 +6,6 @@ $specialActive = ($special AND $special->active());
 $menuHasOptions = $menuItem->hasOptions();
 $menuPrice = $specialActive ? $special->getMenuPrice($menuItem->menu_price) : $menuItem->menu_price;
 $mealtimeTitles = [];
-$allergens = $menuItem->allergens;
 foreach ($menuItem->mealtimes ?? [] as $mealtime) {
     $mealtimeTitles[] = sprintf(lang('igniter.local::default.text_mealtime'),
         $mealtime->mealtime_name, $mealtime->start_time, $mealtime->end_time
@@ -71,25 +70,25 @@ foreach ($menuItem->mealtimes ?? [] as $mealtime) {
                     <i class="fa fa-<?= $mealtimeNotAvailable ? 'clock-o' : 'plus' ?>"></i>
                 </button>
             </span>
-        </div>            
-    </div>
-        <div class="d-flex flex-row allergens">                
-            <?php foreach ($allergens as $allergen): ?>
-                <?php if($allergen->status && $allergen->hasMedia('thumb')) { ?>
-                    <img
-                        class="img-responsive img-rounded"
-                        alt="<?= $allergen->name; ?>"
-                        src="<?= $allergen->getThumb() ?>"                        
-                        data-toggle="tooltip" 
-                        title="<?= $allergen->name ?>: <?= $allergen->description ?>"
-                    >
-                <?php } elseif ($allergen->status) {?> 
-                    <button class="btn btn-primary btn-sm mx-1"
-                            data-toggle="tooltip" 
-                            title="<?= $allergen->description ?>">
-                        <?= $allergen->name ?>
-                    </button>
-                <?php } ?>                       
-            <?php endforeach; ?>
         </div>
+    </div>
+    <div class="d-flex flex-wrap allergens">
+        <?php foreach ($menuItem->allergens ?? [] as $allergen): ?>
+            <?php if ($allergen->status && $allergen->hasMedia('thumb')) { ?>
+                <img
+                    class="img-responsive img-rounded"
+                    alt="<?= $allergen->name; ?>"
+                    src="<?= $allergen->getThumb() ?>"
+                    data-toggle="tooltip"
+                    title="<?= $allergen->name ?>: <?= $allergen->description ?>"
+                >
+            <?php } elseif ($allergen->status) { ?>
+                <a
+                    class="badge badge-light rounded mt-2 mr-1"
+                    data-toggle="tooltip"
+                    title="<?= $allergen->description ?>"
+                ><?= $allergen->name ?></a>
+            <?php } ?>
+        <?php endforeach; ?>
+    </div>
 </div>
