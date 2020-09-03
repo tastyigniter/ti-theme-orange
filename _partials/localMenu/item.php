@@ -73,7 +73,7 @@ foreach ($menuItem->mealtimes ?? [] as $mealtime) {
         </div>
     </div>
     <div class="d-flex flex-wrap align-items-center allergens">
-        <?php foreach ($menuItem->allergens ?? [] as $allergen): ?>
+        <?php foreach ($menuItem->allergens ?? [] as $allergen) { ?>
             <?php if (!$allergen->status) continue; $hasMedia = $allergen->hasMedia('thumb') ?>
             <a
                 class="badge <?= !$hasMedia ? 'badge-light' : '' ?> rounded mt-2 mr-1"
@@ -93,6 +93,6 @@ foreach ($menuItem->mealtimes ?? [] as $mealtime) {
                     <?= $allergen->name ?>
                 <?php } ?>
             </a>
-        <?php endforeach; ?>
+        <?php } ?>
     </div>
 </div>
