@@ -86,7 +86,7 @@ foreach ($menuItem->mealtimes ?? [] as $mealtime) {
                         alt="<?= $allergen->name; ?>"
                         src="<?= $allergen->getThumb([
                             'width' => $menuAllergenImageWidth,
-                            'height' => $menuAllergenImageHeight
+                            'height' => $menuAllergenImageHeight,
                         ]) ?>"
                     >
                 <?php } else { ?>
