@@ -1,3 +1,9 @@
+<?php if (!$hideMenuSearch) { ?>
+    <div class="menu-search">
+        <?= partial('@searchbar'); ?>
+    </div>
+<?php } ?>
+
 <div class="menu-list">
     <?php if ($menuIsGrouped) { ?>
         <?= partial('@grouped', ['groupedMenuItems' => $menuList]); ?>
