@@ -1,8 +1,12 @@
+---
+description: ''
+---
 <div class="footer pt-5 pb-5">
-    <div class="container">
-        <div class="row">
+    <div class="container-fluid">
+        <div class="row smoova-mobile-footer">
+          <div class="col-sm-2 mt-3 mt-sm-0"></div>
             <?php foreach ($footerMenu->menuItems() as $navItem) { ?>
-                <div class="col-sm-3">
+                <div class="col-sm-2 smoova-mobile-col-sm">
                     <div class="footer-links">
                         <h6 class="footer-title d-none d-sm-block"><?= lang($navItem->title); ?></h6>
                         <ul>
@@ -19,15 +23,17 @@
                 </div>
             <?php } ?>
 
-            <div class="col-sm-3 mt-3 mt-sm-0">
-                <div class="social-bottom">
-                    <h6 class="footer-title"><?= lang('main::lang.text_follow_us'); ?></h6>
+            <div class="col-sm-2 mt-3 mt-sm-0  text-center">
+                <div class="social-bottom text-center">
+                    <h6 class="footer-title  text-center"><?= lang('main::lang.text_follow_us'); ?></h6>
                     <?= partial('social_icons', ['socialIcons' => $this->theme->social]); ?>
                 </div>
             </div>
 
-            <?php if (has_component('newsletter')) { ?>
-                <div class="col-sm-3 mt-3 mt-sm-0">
+            <div class="col-sm-2 mt-3 mt-sm-0"></div>
+          
+            <?php if (has_component('!newsletter')) { ?>
+                <div class="col-sm-2 mt-3 mt-sm-0">
                     <div id="newsletter-box">
                         <h5 class="mb-4"><?= lang('igniter.frontend::default.newsletter.text_subscribe'); ?></h5>
                         <?= partial('newsletter::subscribe-form'); ?>
@@ -37,7 +43,7 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col">
                 <hr class="mb-3">
@@ -45,9 +51,9 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col p-2">
+            <div class="col-sm-12 text-center">
                 <?= sprintf(
                     lang('main::lang.site_copyright'),
                     date('Y'),

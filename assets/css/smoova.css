@@ -1,0 +1,344 @@
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+@media (max-width: 767px) {
+    html, body {
+        overflow-x: hidden;
+    }
+
+    body {
+        position: relative;
+    }
+
+    .container-fluid {
+        /*max-width: 1320px;*/
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+    .smoova-header-search {
+        /*width: 100%*/
+    }
+
+    .smoova-search {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .smoova-location-search {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        width: inherit !important;
+    }
+
+    .smoova-logo {
+        padding-left: 0px !important;
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+        margin-right: 0px !important;
+        padding-top: 5px !important;
+        padding-bottom: 0px !important;
+    }
+
+    .smoova-mobile-list {
+        padding: 8px;
+    }
+
+    .smoova-mobile-icon-col {
+        width: 10% !important;
+    }
+
+    .smoova-mobile-col-lg {
+        width: 90% !important;
+    }
+
+    .smoova-mobile-col-md {
+        width: 42% !important;
+    }
+
+    .smoova-mobile-col-sm {
+        width: 33% !important;
+    }
+
+    .smoova-mobile-col-sm-p-0 {
+        width: 30% !important;
+        padding: 5px !important;
+    }
+
+    .smoova-mobile-footer {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .container-fluid {
+        max-width: 1400px;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+    .smoova-header-search {
+        width: 90%
+    }
+
+    .smoova-search {
+        /*padding-left: 20px !important;*/
+        padding-top: 4px !important;
+        padding-bottom: 4px !important;
+    }
+
+    .smoova-location-search {
+        padding-top: 4px !important;
+        padding-bottom: 4px !important;
+    }
+
+    .smoova-logo {
+        padding-left: 15px !important;
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+        margin-right: 30px !important;
+        padding-top: 0px !important;
+        padding-bottom: 0px !important;
+    }
+}
+
+
+.card-footer, .panel-footer {
+    background-color: rgba(140, 2, 2, 0.03);
+}
+
+@media (min-width: 576px) {
+    .card-deck .card, .card-deck .well, .card-deck .thumbnail, .card-deck .panel {
+        flex: 1 0 20%;
+        min-width: 350px;
+        max-width: 350px;
+        object-fit: cover;
+        margin: 15px;
+    }
+
+    .smoova-category-fixed {
+        width: 250px !important;
+        flex: 0 0 20% !important;
+        max-width: 20% !important;
+    }
+
+    .smoova-store-list {
+        flex: 0 0 80% !important;
+        max-width: 80% !important;
+    }
+}
+
+.img-fluid, .img-responsive {
+    object-fit: cover;
+    width: 100%;
+    min-width: 70px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.card-deck .card, .card-deck .well, .card-deck .thumbnail, .card-deck .panel {
+    border-radius: 5px;
+    border: #c8c2c05e;
+    border-width: thin;
+    border-style: solid;
+}
+
+div.affix-cart.d-none.d-sm-block.affix {
+    min-width: 325px;
+    max-width: 400px;
+}
+
+.custom-control-label::before,
+.custom-control-label::after {
+    top: 3.8rem;
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.badge-pill, .badge, .label {
+    padding-right: 0.4em;
+    padding-left: 0.4em;
+    font-size: 14px;
+}
+
+.smoova-category-item {
+    font-size: 16px;
+    vertical-align: middle;
+    line-height: 22px;
+    height: 30px;
+}
+
+.smoova-store-name-link {
+    color: #64544D;
+    margin-bottom: 5px !important;
+    line-height: 1;
+}
+
+.badge-pill, .badge, .label {
+    font-size: 14px !important;
+}
+
+.smoova-category-item {
+    font-size: 16px;
+    vertical-align: middle;
+    line-height: 22px;
+    height: 30px;
+}
+
+.smoova-text-large {
+    font-size: 18px;
+    font-weight: 400 !important;
+}
+
+.smoova-text-medium {
+    font-size: 16px;
+    font-weight: 400 !important;
+}
+
+.smoova-icon-xxs {
+    width: 16px;
+    height: 16px;
+}
+
+.smoova-icon-xs {
+    width: 18px;
+    height: 18px;
+}
+
+.smoova-icon-s {
+    width: 20px;
+    height: 20px;
+}
+
+.smoova-icon-m {
+    width: 24px;
+    height: 24px;
+}
+
+.smoova-icon-ml {
+    width: 28px;
+    height: 28px;
+}
+
+.smoova-icon-l {
+    width: 32px;
+    height: 32px;
+}
+
+.smoova-icon-xl {
+    width: 36px;
+    height: 36px;
+}
+
+.smoova-icon-xxl {
+    width: 40px;
+    height: 40px;
+}
+
+.smoova-icon-xxxl {
+    width: 44px;
+    height: 44px;
+}
+
+.smoova-text-small {
+    font-size: 14px;
+}
+
+.smoova-text-xsmall {
+    font-size: 12px;
+}
+
+.smoova-font-default {
+    font-family: "Niramit", Arial, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+
+}
+
+.smoova-card-small {
+    min-width: 300px !important;
+    width: 100%
+}
+
+.smoova-navbar-brand {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    padding-right: 0px !important;
+}
+
+
+.smoova-account-menu:after {
+    content: none !important;
+}
+
+.smoova-location-input {
+    border-bottom: 1px solid #e0dcdb !important;
+    border-top: 0px !important;
+    border-left: 0px !important;
+    border-right: 0px !important;
+    /*font-weight: 600 !important;*/
+    font-size: 16px !important;
+    min-width: 300px !important;;
+    max-width: 100% !important;
+    float: right;
+    clear: both;
+    /*text-decoration: underline;*/
+}
+
+.smoova-search-button {
+    background-color: #ffffff !important;
+    border-color: #ffffff !important;
+    color: #434445 !important;
+    font-size: 18px !important;
+    padding: 0px !important;
+}
+
+.smoova-add-item-button {
+    /*color: #ffffff !important;*/
+    /*background-color: #2585E3 !important;*/
+    /*border-color: #2585E3 !important;*/
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+}
+
+.smoova-nav-width{
+    width: 186px;
+}
+.smoova-gallery-image {
+    padding: 5px;
+    margin: 1px;
+    height: 200px !important;
+    min-width: 250px;
+    max-width: 250px !important;
+    object-fit: cover;
+}
+
+.star-half-png:before {
+    padding-top: 8.3px;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 16px;
+    content: "\f123";
+}
+
+.fa-clock:before {
+    vertical-align: middle;
+}
+
+.fa-map-marker-alt:before {
+    vertical-align: middle;
+}
+

@@ -1,8 +1,11 @@
+---
+description: ''
+---
 <?php if (count($locationsList)) { ?>
-    <div class="local-group">
+    <div class="card-deck smoova-mobile-list">
         <?= partial('@list', [
             'locationsList' => $locationsList,
-            'distanceUnit' => $distanceUnit,
+            'distanceUnit' => $distanceUnit, 
         ]); ?>
     </div>
 

@@ -1,3 +1,6 @@
+---
+description: ''
+---
 <?= get_script_tags(); ?>
 <?= $this->theme->ga_tracking_code; ?>
 <?php if (!empty($this->theme->custom_js)) { ?>

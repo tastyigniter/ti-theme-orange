@@ -1,3 +1,6 @@
+---
+description: ''
+---
 <?php
 $mealtimes = $menuItem->mealtimes;
 $special = $menuItem->special;
@@ -5,7 +8,7 @@ $mealtimeNotAvailable = !$menuItem->isAvailable($location->orderDateTime());
 $specialActive = ($special AND $special->active());
 $menuHasOptions = $menuItem->hasOptions();
 $menuPrice = $specialActive ? $special->getMenuPrice($menuItem->menu_price) : $menuItem->menu_price;
-$mealtimeTitles = [];
+$mealtimeTitles = []; 
 foreach ($menuItem->mealtimes ?? [] as $mealtime) {
     $mealtimeTitles[] = sprintf(lang('igniter.local::default.text_mealtime'),
         $mealtime->mealtime_name, $mealtime->start_time, $mealtime->end_time
@@ -17,11 +20,21 @@ foreach ($menuItem->mealtimes ?? [] as $mealtime) {
         <?php if ($showMenuImages == 1 AND $menuItem->hasMedia('thumb')) { ?>
             <div
                 class="menu-thumb align-self-center mr-3"
-                style="width: <?= $menuImageWidth ?>px"
+
             >
                 <img
-                    class="img-responsive img-rounded"
+                    data-cart-control="load-item"
+                    data-menu-id="<?= $menuItem->menu_id; ?>"
+                    data-quantity="<?= $menuItem->minimum_qty; ?>"
+                    class="img-responsive img-rounded align-top"
                     alt="<?= $menuItem->menu_name; ?>"
+                    style=" width: <?= $menuImageWidth ?>px;
+                            height: <?= $menuImageHeight ?>px;
+                            min-width: <?= $menuImageWidth ?>px;
+                            min-height: <?= $menuImageHeight ?>px;
+                            max-width: <?= $menuImageWidth ?>px;
+                            max-height: <?= $menuImageHeight ?>px;
+                            object-fit: cover;"
                     src="<?= $menuItem->getThumb([
                         'width' => $menuImageWidth,
                         'height' => $menuImageHeight,
@@ -31,8 +44,13 @@ foreach ($menuItem->mealtimes ?? [] as $mealtime) {
         <?php } ?>
 
         <div class="menu-content flex-grow-1 mr-3">
-            <h6 class="menu-name"><?= e($menuItem->menu_name); ?></h6>
-            <p class="menu-desc text-muted mb-0">
+            <h6 data-cart-control="load-item"
+                data-menu-id="<?= $menuItem->menu_id; ?>"
+                data-quantity="<?= $menuItem->minimum_qty; ?>"
+                class="menu-name"><?= e($menuItem->menu_name); ?>
+            </h6>
+            <p class="menu-desc text-muted mb-0" data-cart-control="load-item"
+               data-menu-id="<?= $menuItem->menu_id; ?>" >
                 <?= nl2br($menuItem->menu_description); ?>
             </p>
         </div>
@@ -71,28 +89,5 @@ foreach ($menuItem->mealtimes ?? [] as $mealtime) {
                 </button>
             </span>
         </div>
-    </div>
-    <div class="d-flex flex-wrap align-items-center allergens">
-        <?php foreach ($menuItem->allergens ?? [] as $allergen) { ?>
-            <?php if (!$allergen->status) continue; $hasMedia = $allergen->hasMedia('thumb') ?>
-            <a
-                class="badge <?= !$hasMedia ? 'badge-light' : '' ?> rounded mt-2 mr-1"
-                data-toggle="tooltip"
-                title="<?= $allergen->name ?>: <?= $allergen->description ?>"
-            >
-                <?php if ($hasMedia) { ?>
-                    <img
-                        class="img-responsive img-rounded"
-                        alt="<?= $allergen->name; ?>"
-                        src="<?= $allergen->getThumb([
-                            'width' => $menuAllergenImageWidth,
-                            'height' => $menuAllergenImageHeight,
-                        ]) ?>"
-                    >
-                <?php } else { ?>
-                    <?= $allergen->name ?>
-                <?php } ?>
-            </a>
-        <?php } ?>
     </div>
 </div>

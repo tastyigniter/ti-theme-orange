@@ -1,12 +1,12 @@
 ---
-title: main::lang.checkout.success.title
+title: 'main::lang.checkout.success.title'
 layout: default
-permalink: /checkout/success/:hash?
-
+permalink: '/checkout/success/:hash?'
 '[orderPage]':
+    orderDateTimeFormat: 'DD MMM \a\t h:mm a'
     hideReorderBtn: 1
-
-'[localReview]':
+    hashParamName: hash
+'[localReview]': null
 ---
 <div class="container">
     <div class="row py-4">

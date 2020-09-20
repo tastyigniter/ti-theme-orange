@@ -1,40 +1,47 @@
-<?php if ($paymentGateways) { ?>
+---
+description: ''
+---
+<?php use Igniter\Cart\Classes\CartManager;
+
+if ($paymentGateways) { ?>
     <div class="row payments">
         <div class="col-sm-8">
             <div class="form-group">
                 <label for=""><?= lang('igniter.cart::default.checkout.label_payment_method'); ?></label><br/>
                 <input type="hidden" name="payment" value=""/>
-                <div
-                    data-toggle="payments"
-                    class="progress-indicator-container"
+
+                <div data-toggle="payments"
+                     class="progress-indicator-container"
                 >
+
                     <div class="list-group">
                         <?php foreach ($paymentGateways as $paymentGateway) { ?>
                             <?php
+                            $paymentCodeType = $paymentGateway->getPaymentCodeType();
                             $paymentIsSelected = ($order->payment == $paymentGateway->code);
                             $paymentIsNotApplicable = !$paymentGateway->isApplicable($order->order_total, $paymentGateway);
                             ?>
                             <div
-                                class="list-group-item<?= $paymentIsSelected ? ' bg-light' : '' ?><?= $paymentIsNotApplicable ? ' disabled' : '' ?>"
+                                    class="list-group-item<?= $paymentIsSelected ? ' bg-light' : '' ?><?= $paymentIsNotApplicable ? ' disabled' : '' ?>"
                             >
                                 <div
-                                    class="custom-control custom-radio"
-                                    data-checkout-control="choose-payment"
-                                    data-payment-code="<?= $paymentGateway->code; ?>"
+                                        class="custom-control custom-radio"
+                                        data-checkout-control="choose-payment"
+                                        data-payment-code="<?= $paymentGateway->code; ?>"
                                 >
                                     <input
-                                        type="radio"
-                                        id="payment-<?= $paymentGateway->code ?>"
-                                        class="custom-control-input"
-                                        name="payment"
-                                        value="<?= $paymentGateway->code ?>"
+                                            type="radio"
+                                            id="payment-<?= $paymentGateway->code; ?>"
+                                            class="custom-control-input"
+                                            name="payment"
+                                            value="<?= $paymentCodeType ?>"
                                         <?= $paymentIsSelected ? 'checked="checked"' : '' ?>
                                         <?= $paymentIsNotApplicable ? 'disabled="disabled"' : '' ?>
-                                        autocomplete="off"
+                                            autocomplete="off"
                                     />
                                     <label
-                                        class="custom-control-label d-block"
-                                        for="payment-<?= $paymentGateway->code ?>"
+                                            class="custom-control-label d-block"
+                                            for="payment-<?= $paymentGateway->code ?>"
                                     ><?= $paymentGateway->name; ?></label>
                                     <?php if (strlen($paymentGateway->description)) { ?>
                                         <p class="hide small font-weight-normal mb-0">
@@ -70,9 +77,14 @@
                             </div>
                         <?php } ?>
                     </div>
+
                 </div>
+
                 <?= form_error('payment', '<span class="text-danger">', '</span>'); ?>
+
+
             </div>
+
         </div>
     </div>
 <?php } ?>

@@ -3,14 +3,14 @@ title: 'main::lang.local.menus.title'
 permalink: '/:location?local/menus/:category?'
 description: ''
 layout: local
-
 '[localMenu]':
     isGrouped: 1
-    menusPerPage: 200
-    showMenuImages: 0
-    menuImageWidth: 95
-    menuImageHeight: 80
-
+    menusPerPage: !!float 2000
+    showMenuImages: 1
+    menuImageWidth: !!float 350
+    menuImageHeight: !!float 240
+    defaultLocationParam: local
+    localNotFoundPage: home
 ---
 <?= partial('nav/local_tabs', ['activeTab' => 'menus']); ?>
 

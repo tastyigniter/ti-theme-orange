@@ -1,16 +1,30 @@
 ---
-description: Default layout
-
+description: 'Default layout'
 '[session]':
     security: all
-
 '[staticMenu mainMenu]':
     code: main-menu
-
 '[staticMenu footerMenu]':
     code: footer-menu
-
 '[newsletter]': {  }
+'[localList]':
+    alias: '[localList]'
+    distanceUnit: km
+    openingTimeFormat: 'ddd h:mm a'
+'[localBox]':
+    paramFrom: location
+    redirect: home
+    defaultOrderType: delivery
+    hideSearch: 0
+    showLocalThumb: 0
+    localThumbWidth: !!float 80
+    localThumbHeight: !!float 80
+    menusPage: home
+    localBoxTimeFormat: 'h:mm a'
+    openingTimeFormat: 'ddd h:mm a'
+    timePickerDateFormat: 'ddd DD'
+    timePickerDateTimeFormat: 'ddd DD h:mm a'
+    cartBoxAlias: cartBox
 ---
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="<?= App::getLocale(); ?>">

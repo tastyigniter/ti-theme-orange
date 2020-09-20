@@ -1,9 +1,9 @@
+---
+description: ''
+---
 <div class="panel">
     <?php if ('' !== ($description = $locationCurrent->getDescription())) { ?>
         <div class="panel-body">
-            <h1
-                class="h4 wrap-bottom border-bottom"
-            ><?= sprintf(lang('igniter.local::default.text_info_heading'), $locationCurrent->getName()); ?></h1>
             <p class="m-0"><?= nl2br($description); ?></p>
         </div>
     <?php } ?>
@@ -17,7 +17,7 @@
                 <?= lang('igniter.local::default.text_delivery'); ?>
                 <?php if ($location->deliverySchedule()->isOpen()) { ?>
                     <?= sprintf(lang('igniter.local::default.text_in_minutes'), $locationCurrent->deliveryMinutes()); ?>
-                <?php } elseif ($location->deliverySchedule()->isOpening()) { ?>
+                <?php } else if ($location->deliverySchedule()->isOpening()) { ?>
                     <span class="text-danger"><?= sprintf(lang('igniter.local::default.text_starts'), $location->deliverySchedule()->getOpenTime('H:i a')); ?></span>
                 <?php } else { ?>
                     <?= lang('igniter.local::default.text_closed'); ?>
@@ -29,7 +29,7 @@
                 <?= lang('igniter.local::default.text_collection'); ?>
                 <?php if ($location->collectionSchedule()->isOpen()) { ?>
                     <?= sprintf(lang('igniter.local::default.text_in_minutes'), $locationCurrent->collectionMinutes()); ?>
-                <?php } elseif ($location->collectionSchedule()->isOpening()) { ?>
+                <?php } else if ($location->collectionSchedule()->isOpening()) { ?>
                     <span class="text-danger"><?= sprintf(lang('igniter.local::default.text_starts'), $location->collectionSchedule()->getOpenTime('H:i a')); ?></span>
                 <?php } else { ?>
                     <?= lang('igniter.local::default.text_closed'); ?>
@@ -55,4 +55,3 @@
     <h4 class="panel-title p-3"><b><?= lang('igniter.local::default.text_hours'); ?></b></h4>
     <?= partial('@hours') ?>
 </div>
-

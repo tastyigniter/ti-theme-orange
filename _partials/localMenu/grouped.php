@@ -1,6 +1,9 @@
+---
+description: ''
+---
 <div class="menu-group">
     <?php if (!count($groupedMenuItems)) { ?>
-        <div class="menu-group-item">
+        <div class="menu-group-item pb-4">
             <p><?= lang('igniter.local::default.text_no_category'); ?></p>
         </div>
     <?php }
@@ -11,14 +14,14 @@
             $hasCategory = $categoryId > 0;
             $index++;
             ?>
-            <div class="menu-group-item">
+            <div class="menu-group-item pb-4">
                 <?php if ($hasCategory) {
                     $menuCategory = array_get($menuListCategories, $categoryId);
                     $menuCategoryAlias = strtolower(str_slug($menuCategory->name));
                     ?>
                     <div id="category-<?= $menuCategoryAlias; ?>-heading" role="tab">
                         <h4
-                            class="category-title cursor-pointer <?= $index >= 5 ? 'collapsed' : ''; ?>"
+                            class="category-title cursor-pointer"
                             data-toggle="collapse"
                             data-target="#category-<?= $menuCategoryAlias; ?>-collapse"
                             aria-expanded="false"
@@ -27,7 +30,7 @@
                     </div>
                     <div
                         id="category-<?= $menuCategoryAlias; ?>-collapse"
-                        class="collapse <?= $index < 5 ? 'show' : ''; ?>"
+                        class="collapse <?= $index < 50 ? 'show' : ''; ?>"
                         role="tabpanel" aria-labelledby="<?= $menuCategoryAlias; ?>"
                     >
                         <div class="menu-category">
@@ -47,7 +50,7 @@
                                 </div>
                             <?php } ?>
                         </div>
-
+ 
                         <?= partial('@items', ['menuItems' => $menuList]); ?>
                     </div>
                 <?php } else { ?>

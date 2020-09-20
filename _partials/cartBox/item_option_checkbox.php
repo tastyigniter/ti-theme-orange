@@ -1,6 +1,9 @@
+---
+description: ''
+---
 <?php foreach ($optionValues as $optionValue) { ?>
     <?php
-    $menuOptionValueId = $optionValue->menu_option_value_id;
+    $menuOptionValueId = $optionValue->menu_option_value_id; 
     $isChecked = ($cartItem AND $cartItem->hasOptionValue($menuOptionValueId));
     ?>
     <div

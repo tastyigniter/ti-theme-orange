@@ -1,8 +1,11 @@
+---
+description: ''
+---
 <?php if ($cart->count()) { ?>
     <form
         id="tip-form"
         method="POST"
-        role="form"
+        role="form" 
         data-request="<?= $applyTipEventHandler; ?>"
     >
         <div class="cart-tip">
@@ -36,7 +39,11 @@
                     ><?= lang('igniter.cart::default.text_edit_tip'); ?></button>
                 </div>
             <?php } ?>
-            <input type="hidden" name="amount_type" value="<?= $tipAmountType; ?>">
+            <div class="text-muted mb-2"> <?= lang('igniter.cart::default.text_leave_tip'); ?></div>
+            <input type="hidden"
+                   name="amount_type"
+                   value="<?= $tipAmountType; ?>"
+                   placeholder="<?= lang('igniter.local::default.label_search_query'); ?>">
             <div
                 class="input-group<?= $tipAmounts ? ' mt-2' : '' ?>"
                 data-tip-custom

@@ -1,5 +1,8 @@
-<div class="form-group">
-    <label for=""><?= lang('igniter.cart::default.checkout.text_delivery_address'); ?></label>
+---
+description: ''
+---
+<div class="form-group"> 
+    <label for=""><?= lang('igniter.cart::default.checkout.text_delivery_address'); ?></label> 
     <div class="input-group">
         <?php $customerAddresses = $order->listCustomerAddresses(); ?>
         <select

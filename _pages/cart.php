@@ -1,12 +1,22 @@
 ---
-title: main::lang.cart.title
+title: 'main::lang.cart.title'
 layout: default
 permalink: /cart
-
-'[localBox]':
-
 '[cartBox]':
+    cartBoxTimeFormat: 'ddd h:mm a'
+    showCartItemThumb: 0
+    cartItemThumbWidth: !!float 720
+    cartItemThumbHeight: !!float 300
+    checkStockCheckout: 1
+    pageIsCheckout: 0
     pageIsCart: 1
+    hideZeroOptionPrices: 1
+    checkoutPage: checkout/checkout
+    localBoxAlias: localBox
+'[localList]':
+    distanceUnit: km
+    openingTimeFormat: 'ddd h:mm a'
+description: ''
 ---
 <div class="container">
     <div class="row py-4">

@@ -1,3 +1,6 @@
+---
+description: ''
+---
 <?php if ($locationCurrent->hasDelivery()) { ?>
     <h4 class="panel-title p-3"><b><?= lang('igniter.local::default.text_delivery_areas'); ?></b></h4>
     <div class="list-group list-group-flush">
@@ -19,7 +22,7 @@
                     </div>
                 </div>
             <?php } ?>
-        <?php }
+        <?php } 
         else { ?>
             <div class="list-group-item">
                 <p><?= lang('igniter.local::default.text_no_delivery_areas'); ?></p>

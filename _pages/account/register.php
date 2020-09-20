@@ -3,16 +3,16 @@ title: 'main::lang.account.register.title'
 permalink: /register
 description: ''
 layout: default
-
 '[session]':
     security: guest
-
 '[account]':
     accountPage: account/account
     redirectPage: account/account
     loginPage: account/login
     agreeRegistrationTermsPage: 1
-
+'[socialite]':
+    errorPage: account/register
+    successPage: account/account
 ---
 <div class="container">
     <div class="row">
@@ -24,6 +24,7 @@ layout: default
                     </h1>
 
                     <?= partial('account::register'); ?>
+<!--                    <= component('socialite'); ?>-->
                 </div>
             </div>
         </div>

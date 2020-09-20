@@ -1,6 +1,9 @@
+---
+description: ''
+---
 <div class="row">
-    <div class="col-sm-6">
-        <div class="form-group">
+    <div class="col-sm-6">   
+        <div class="form-group"> 
             <label for="first-name"><?= lang('igniter.cart::default.checkout.label_first_name'); ?></label>
             <input
                 type="text"

@@ -1,20 +1,25 @@
 ---
-title: main::lang.checkout.title
+title: 'main::lang.checkout.title'
 layout: default
 permalink: /checkout
-
-'[account]':
-
-'[localBox]':
-    paramFrom: location
-    showLocalThumb: 0
-    menusPage: local/menus
-
+'[account]': null
 '[cartBox]':
-    pageIsCheckout: true
-
+    cartBoxTimeFormat: 'ddd h:mm a'
+    showCartItemThumb: 1
+    cartItemThumbWidth: !!float 720
+    cartItemThumbHeight: !!float 300
+    checkStockCheckout: 1
+    pageIsCheckout: 1
+    pageIsCart: 0
+    hideZeroOptionPrices: 1
+    checkoutPage: checkout/checkout
+    localBoxAlias: localBox
 '[checkout]':
     showCountryField: 0
+'[localList]':
+    alias: '[localList]'
+    distanceUnit: km
+    openingTimeFormat: 'ddd h:mm a'
 ---
 <div class="container">
     <div class="row py-4">

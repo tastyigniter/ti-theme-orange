@@ -1,9 +1,14 @@
+---
+description: ''
+---
 <div class="menu-list">
-    <?php if ($menuIsGrouped) { ?>
+
+    <?php
+    if ($menuIsGrouped) { ?>
         <?= partial('@grouped', ['groupedMenuItems' => $menuList]); ?>
-    <?php } else { ?>
+    <?php } else { dd($menuIsGrouped); ?>
         <?= partial('@items', ['menuItems' => $menuList]); ?>
-    <?php } ?>
+    <?php } ?> 
 
     <div class="pagination-bar text-right">
         <div class="links"><?= $menuList->links(); ?></div>

@@ -1,3 +1,6 @@
+---
+description: ''
+---
 <ul class="list-unstyled small">
     <?php foreach ($itemOptions as $itemOption) { ?>
         <li class="text-muted"><?= $itemOption->name; ?></li>

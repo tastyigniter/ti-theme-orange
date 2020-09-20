@@ -1,12 +1,14 @@
 ---
-title: main::lang.account.login.title
+title: 'main::lang.account.login.title'
 layout: default
 permalink: /login
-
 '[session]':
     security: guest
-
-'[account]':
+'[account]': null
+description: ''
+'[socialite]':
+    errorPage: account/login
+    successPage: account/account
 ---
 <div class="container">
     <div class="row">
@@ -26,15 +28,16 @@ permalink: /login
                             </a>
                         </div>
                         <?php if ((bool)$canRegister) { ?>
-                        <div class="col-sm-7">
+                        <div class="col-sm-7  text-sm-right">
                             <a
-                                class="btn btn-outline-default btn-block btn-lg"
+                                class="btn btn-link btn-lg"
                                 href="<?= site_url('account/register'); ?>"
-                            ><?= lang('main::lang.account.login.button_register'); ?>
+                            ><span class="small"><?= lang('main::lang.account.login.button_register'); ?></span>
                             </a>
                             <?php } ?>
                         </div>
                     </div>
+<!--                  <= component('socialite'); ?>-->
                 </div>
             </div>
         </div>

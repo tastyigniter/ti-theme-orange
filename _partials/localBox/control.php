@@ -1,7 +1,10 @@
+---
+description: ''
+---
 <?php if ($locationCurrent->hasDelivery() OR $locationCurrent->hasCollection()) { ?>
     <?php
     $deliveryTime = Carbon\Carbon::parse($location->deliverySchedule()->getOpenTime());
-    $collectionTime = Carbon\Carbon::parse($location->collectionSchedule()->getOpenTime());
+    $collectionTime = Carbon\Carbon::parse($location->collectionSchedule()->getOpenTime()); 
     ?>
     <div
         class="btn-group btn-group-toggle w-100 text-center order-type"
@@ -23,7 +26,7 @@
                         <?php if ($location->deliverySchedule()->isOpen()) { ?>
                             <?= sprintf(lang('igniter.local::default.text_in_min'), $locationCurrent->deliveryMinutes()); ?>
                         <?php }
-                        elseif ($location->deliverySchedule()->isOpening()) { ?>
+                        else if ($location->deliverySchedule()->isOpening()) { ?>
                             <?= sprintf(lang('igniter.local::default.text_starts'), $deliveryTime->isoFormat($cartBoxTimeFormat)); ?>
                         <?php }
                         else { ?>
@@ -45,7 +48,7 @@
                         <?php if ($location->collectionSchedule()->isOpen()) { ?>
                             <?= sprintf(lang('igniter.local::default.text_in_min'), $locationCurrent->collectionMinutes()); ?>
                         <?php }
-                        elseif ($location->collectionSchedule()->isOpening()) { ?>
+                        else if ($location->collectionSchedule()->isOpening()) { ?>
                             <?= sprintf(lang('igniter.local::default.text_starts'), $collectionTime->isoFormat($cartBoxTimeFormat)); ?>
                         <?php }
                         else { ?>

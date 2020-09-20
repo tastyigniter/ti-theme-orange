@@ -1,16 +1,19 @@
+---
+description: ''
+---
 <?php foreach ($optionValues as $optionIndex => $optionValue) { ?>
     <?php
     $menuOptionValueId = $optionValue->menu_option_value_id;
     $value = 0;
     if ($cartItem AND $cartItem->hasOptionValue($menuOptionValueId)){
         $cartItem->options->search(function ($option) use ($menuOptionValueId, &$value) {
-            $option->values->each(function ($opt) use ($menuOptionValueId, &$value) {
-               if ($opt->id == $menuOptionValueId){
-                   $value = $opt->qty;
-               }
+            $option->values->each(function($opt) use ($menuOptionValueId, &$value) {
+	           if ($opt->id == $menuOptionValueId){
+		           $value = $opt->qty;
+	           } 
             });
-        });
-    }
+        });    
+    } 
     ?>
     <div
         class="custom-control custom-quantity"

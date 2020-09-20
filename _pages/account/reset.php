@@ -1,14 +1,21 @@
 ---
-title: main::lang.account.reset.title
+title: 'main::lang.account.reset.title'
 layout: default
-permalink: /forgot-password/:code?
-
+permalink: '/forgot-password/:code?'
 '[session]':
     security: guest
-
 '[account]':
-
-'[resetPassword]':
+    accountPage: account/account
+    addressPage: account/address
+    ordersPage: account/orders
+    reservationsPage: account/reservations
+    reviewsPage: account/reset
+    inboxPage: account/inbox
+    loginPage: account/login
+    activationPage: account/register
+    agreeRegistrationTermsPage: 1
+    redirectPage: checkout/success
+'[resetPassword]': null
 ---
 <div class="container">
     <div class="row">
