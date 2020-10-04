@@ -72,4 +72,27 @@ foreach ($menuItem->mealtimes ?? [] as $mealtime) {
             </span>
         </div>
     </div>
+    <div class="d-flex flex-wrap align-items-center allergens">
+        <?php foreach ($menuItem->allergens ?? [] as $allergen) { ?>
+            <?php if (!$allergen->status) continue; $hasMedia = $allergen->hasMedia('thumb') ?>
+            <a
+                class="badge <?= !$hasMedia ? 'badge-light' : '' ?> rounded mt-2 mr-1"
+                data-toggle="tooltip"
+                title="<?= $allergen->name ?>: <?= $allergen->description ?>"
+            >
+                <?php if ($hasMedia) { ?>
+                    <img
+                        class="img-responsive img-rounded"
+                        alt="<?= $allergen->name; ?>"
+                        src="<?= $allergen->getThumb([
+                            'width' => $menuAllergenImageWidth,
+                            'height' => $menuAllergenImageHeight,
+                        ]) ?>"
+                    >
+                <?php } else { ?>
+                    <?= $allergen->name ?>
+                <?php } ?>
+            </a>
+        <?php } ?>
+    </div>
 </div>

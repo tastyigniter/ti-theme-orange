@@ -16,11 +16,11 @@
                     <?php foreach ($hours->sortByDesc('type') as $hour) { ?>
                         <?php if ($hour->type == 'delivery' AND !$locationCurrent->hasDelivery()) { ?>
                             <td><?= lang('igniter.local::default.text_closed'); ?></td>
-                        <?php } else if ($hour->type == 'collection' AND !$locationCurrent->hasCollection()) { ?>
+                        <?php } elseif ($hour->type == 'collection' AND !$locationCurrent->hasCollection()) { ?>
                             <td><?= lang('igniter.local::default.text_closed'); ?></td>
-                        <?php } else if (!$hour->isEnabled()) { ?>
+                        <?php } elseif (!$hour->isEnabled()) { ?>
                             <td><?= lang('igniter.local::default.text_closed'); ?></td>
-                        <?php } else if ($hour->isOpenAllDay()) { ?>
+                        <?php } elseif ($hour->isOpenAllDay()) { ?>
                             <td><?= lang('igniter.local::default.text_24h'); ?></td>
                         <?php } else { ?>
                             <td><?= sprintf(
