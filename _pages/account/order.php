@@ -13,7 +13,7 @@ permalink: /account/order/:hash?
     <div class="row py-5">
         <?php if ($customer) { ?>
             <div class="col-sm-3">
-            <?= partial('account::sidebar'); ?>
+            <?= partial('account/sidebar'); ?>
         </div>
         <?php } ?>
 

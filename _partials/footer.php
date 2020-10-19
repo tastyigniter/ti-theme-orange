@@ -30,7 +30,7 @@
                 <div class="col-sm-3 mt-3 mt-sm-0">
                     <div id="newsletter-box">
                         <h5 class="mb-4"><?= lang('igniter.frontend::default.newsletter.text_subscribe'); ?></h5>
-                        <?= partial('newsletter::subscribe-form'); ?>
+                        <?= component('newsletter'); ?>
                     </div>
                 </div>
             <?php } ?>

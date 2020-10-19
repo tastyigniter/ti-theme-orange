@@ -23,7 +23,7 @@ permalink: /checkout
 
             <div class="card my-1">
                 <div class="card-body">
-                    <?= partial('account::welcome'); ?>
+                    <?= partial('account/welcome'); ?>
                 </div>
             </div>
             <div class="card">
@@ -34,7 +34,7 @@ permalink: /checkout
         </div>
 
         <div class="col-sm-4">
-            <?= partial('cartBox/container'); ?>
+            <?= partial('cartBox::container'); ?>
         </div>
     </div>
 </div>

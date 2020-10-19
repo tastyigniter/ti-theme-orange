@@ -18,7 +18,7 @@ permalink: /cart
                 >Add more items</a>
             </div>
 
-            <?= partial('cartBox/container'); ?>
+            <?= partial('cartBox::container'); ?>
         </div>
     </div>
 </div>

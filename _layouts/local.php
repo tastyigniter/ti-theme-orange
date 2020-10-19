@@ -58,7 +58,7 @@ description: 'Local layout'
                     </div>
 
                     <div class="col-sm-4">
-                        <?= partial('cartBox/container'); ?>
+                        <?= partial('cartBox::container'); ?>
                     </div>
                 </div>
             </div>
