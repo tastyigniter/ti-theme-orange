@@ -19,7 +19,7 @@ permalink: /checkout
 <div class="container">
     <div class="row py-4">
         <div class="col col-sm-8">
-            <?= component('localBox'); ?>
+            <?= partial('localBox::container'); ?>
 
             <div class="card my-1">
                 <div class="card-body">

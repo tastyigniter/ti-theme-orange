@@ -51,7 +51,7 @@ description: 'Local layout'
 
                     <div class="col-sm-6">
                         <div class="content">
-                            <?= component('localBox'); ?>
+                            <?= partial('localBox::container'); ?>
 
                             <?= page(); ?>
                         </div>
