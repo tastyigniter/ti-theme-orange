@@ -15,7 +15,7 @@ permalink: /cart
                 <a
                     class="btn btn-link btn-block btn-md"
                     href="{{ restaurant_url('local/menus') }}"
-                >Add more items</a>
+                >@lang('igniter.cart::default.text_add_more_items')</a>
             </div>
 
             @partial('cartBox::container')
