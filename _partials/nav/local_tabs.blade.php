@@ -3,7 +3,7 @@
         class="nav-item nav-link {{ ($activeTab === 'menus') ? 'active' : '' }}"
         href="{{ restaurant_url('local/menus') }}"
     >@lang('main::lang.local.text_tab_menu')</a>
-    @if (setting('allow_reviews', 1))
+    @if ($showReviews)
         <a
             class="nav-item nav-link {{ ($activeTab === 'reviews') ? 'active' : '' }}"
             href="{{ restaurant_url('local/reviews') }}"
