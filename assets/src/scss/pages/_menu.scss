@@ -135,3 +135,9 @@
   padding: $card-spacer-x $modal-inner-padding 10px;
   border-top: 1px solid $light;
 }
+
+.div-sticky {
+  position: -webkit-sticky;  
+  position: sticky;
+  top: 68px;
+}
