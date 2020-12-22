@@ -136,8 +136,8 @@
   border-top: 1px solid $light;
 }
 
-.div-sticky {
-  position: -webkit-sticky;  
+.affix-categories, .affix-cart {
+  position: -webkit-sticky;
   position: sticky;
   top: 68px;
 }
