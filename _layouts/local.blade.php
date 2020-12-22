@@ -44,7 +44,7 @@ description: 'Local layout'
             <div class="container">
                 <div class="row py-4">
                     <div class="col-sm-2 d-none d-sm-inline-block">
-                        <div class="categories div-sticky">
+                        <div class="categories affix-categories">
                             @component('categories')
                         </div>
                     </div>
