@@ -46,16 +46,6 @@ $(function () {
 })
 
 $(function () {
-    $(window).bind("load resize", function () {
-        $('.affix-module').each(function () {
-            $(this).find('[data-spy="affix"]:first-child').css('width', $(this).width())
-        })
-        $('body').css({'padding-bottom': $('.footer').outerHeight() + 10 + 'px'});
-    })
-    $('body').css({'padding-bottom': $('.footer').outerHeight() + 10 + 'px'});
-})
-
-$(function () {
     var $el = $('[data-control="cookie-banner"]'),
         $btn = $el.find('#eu-cookie-action'),
         options = $.extend({}, $el.data()),
