@@ -18,7 +18,7 @@ permalink: /checkout
 ---
 <div class="container">
     <div class="row py-4">
-        <div class="col col-sm-8">
+        <div class="col col-lg-8">
             @partial('localBox::container')
 
             <div class="card my-1">
@@ -33,7 +33,7 @@ permalink: /checkout
             </div>
         </div>
 
-        <div class="col-sm-4">
+        <div class="col-lg-4">
             @partial('cartBox::container')
         </div>
     </div>
