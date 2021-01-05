@@ -7,7 +7,7 @@
   "locked": true,
   "require": {
     "igniter.cart": "*",
-    "igniter.coupon": "*",
+    "igniter.coupons": "*",
     "igniter.frontend": "*",
     "igniter.local": "*",
     "igniter.pages": "*",
