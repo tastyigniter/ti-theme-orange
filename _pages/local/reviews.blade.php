@@ -10,11 +10,12 @@ layout: local
 
 ---
 <?php
-function onStart() {
-    if (!setting('allow_reviews')) {
+function onStart()
+{
+    if (!View::shared('showReviews')) {
         flash()->error(lang('igniter.local::default.review.alert_review_disabled'))->now();
 
-        return Redirect::to($controller->pageUrl($localReview->property('redirectPage')));
+        return Redirect::to($this->controller->pageUrl($this['localReview']->property('redirectPage')));
     }
 }
 ?>
