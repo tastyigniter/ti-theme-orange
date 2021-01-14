@@ -46,3 +46,7 @@ margin-bottom: 0;
 .local-group a:hover {
   text-decoration: none;
 }
+
+.local-timeslot .dropdown-menu {
+  width: calc(100% - 40px); 
+}
