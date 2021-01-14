@@ -62,7 +62,14 @@ if(_event.isDefaultPrevented())return
 if(message)return confirm(message)},handleErrorMessage:function(message){var _event=jQuery.Event('ajaxErrorMessage')
 $(window).trigger(_event,[message])
 if(_event.isDefaultPrevented())return
-if(message)alert(message)},handleRedirectResponse:function(url){window.location.href=url},handleUpdateResponse:function(data,textStatus,jqXHR){var updatePromise=$.Deferred().done(function(){var dataArray=[]
+if(message)alert(message)},handleValidationMessage:function(message,fields){$triggerEl.trigger('ajaxValidation',[context,message,fields])
+var isFirstInvalidField=true
+$.each(fields,function focusErrorField(fieldName,fieldMessages){fieldName=fieldName.replace(/\.(\w+)/g,'[$1]')
+var fieldElement=$form.find('[name="'+fieldName+'"], [name="'+fieldName+'[]"], [name$="['+fieldName+']"], [name$="['+fieldName+'][]"]').filter(':enabled').first()
+if(fieldElement.length>0){var _event=jQuery.Event('ajaxInvalidField')
+$(window).trigger(_event,[fieldElement.get(0),fieldName,fieldMessages,isFirstInvalidField])
+if(isFirstInvalidField){if(!_event.isDefaultPrevented())fieldElement.focus()
+isFirstInvalidField=false}}})},handleRedirectResponse:function(url){window.location.href=url},handleUpdateResponse:function(data,textStatus,jqXHR){var updatePromise=$.Deferred().done(function(){var dataArray=[]
 try{dataArray=jQuery.type(data)==='object'?data:jQuery.parseJSON(data)}catch(e){}
 for(var partial in dataArray){var selector=partial
 if(jQuery.type(selector)==='string'&&selector.charAt(0)=='@'){$(selector.substring(1)).append(dataArray[partial]).trigger('ajaxUpdate',[context,data,textStatus,jqXHR])}else if(jQuery.type(selector)=='string'&&selector.charAt(0)=='^'){$(selector.substring(1)).prepend(dataArray[partial]).trigger('ajaxUpdate',[context,data,textStatus,jqXHR])}else{$(selector).trigger('ajaxBeforeReplace')
@@ -72,6 +79,8 @@ if(data['X_IGNITER_REDIRECT']){options.redirect=data['X_IGNITER_REDIRECT']
 isRedirect=true}
 if(isRedirect)
 requestOptions.handleRedirectResponse(options.redirect)
+if(data['X_IGNITER_ERROR_FIELDS'])
+requestOptions.handleValidationMessage(data['X_IGNITER_ERROR_MESSAGE'],data['X_IGNITER_ERROR_FIELDS'])
 updatePromise.resolve()
 return updatePromise},}
 context.success=requestOptions.success
@@ -217,7 +226,7 @@ if($element.length===0){$element=$('<div />',{class:'alert alert-'+options.class
 $element.addClass('flash-message animated fadeInDown')
 $element.attr('data-control',null)
 if(options.allowDismiss)
-$element.append('<button type="button" class="close" aria-hidden="true">&times;</button>')
+$element.prepend('<button type="button" class="close" aria-hidden="true">&times;</button>')
 $element.on('click','button',remove)
 if(options.interval>0)$element.on('click',remove)
 $(options.container).prepend($element)
@@ -303,6 +312,7 @@ TriggerOn.prototype.updateTargetAction=function(action,status){if(action=='show'
 else if(action=='hide'){this.$el.toggleClass('animated fadeIn',!status).toggleClass('hide',status).trigger('hide.ti.triggerapi',[status])}
 else if(action=='enable'){this.$el.prop('disabled',!status).toggleClass('control-disabled',!status).trigger('disable.ti.triggerapi',[!status])}
 else if(action=='disable'){this.$el.prop('disabled',status).toggleClass('control-disabled',status).trigger('disable.ti.triggerapi',[status])}
+else if(action=='check'&&status){this.$el.filter('input[type=checkbox]').prop('checked',true);}
 else if(action=='empty'&&status){this.$el.not('input[type=checkbox], input[type=radio], input[type=button], input[type=submit]').val('')
 this.$el.not(':not(input[type=checkbox], input[type=radio])').prop('checked',false)
 this.$el.trigger('empty.ti.triggerapi').trigger('change')}
@@ -443,6 +453,8 @@ var
 width=methods._getWidth.call(this),steps=width/10,star=$(this.stars[integer]),percent=star.offset().left+steps*decimal,evt=$.Event('mousemove',{pageX:percent});this.move=true;star.trigger(evt);this.move=false;});},readOnly:function(readonly){return this.each(function(){var self=$(this);if(self.data('readonly')!==readonly){if(readonly){self.off('.raty').children(this.opt.starType).off('.raty');methods._lock.call(this);}else{methods._binds.call(this);methods._unlock.call(this);}
 self.data('readonly',readonly);}});},reload:function(){return methods.set.call(this,{});},score:function(){var self=$(this);return arguments.length?methods.setScore.apply(self,arguments):methods.getScore.call(self);},set:function(options){return this.each(function(){$(this).raty($.extend({},this.opt,options));});},setScore:function(score){return this.each(function(){if($(this).data('readonly')!==true){score=methods._adjustedScore.call(this,score);methods._apply.call(this,score);methods._target.call(this,score);}});}};$.fn.raty=function(method){if(methods[method]){return methods[method].apply(this,Array.prototype.slice.call(arguments,1));}else if(typeof method==='object'||!method){return methods.init.apply(this,arguments);}else{$.error('Method '+method+' does not exist!');}};$.fn.raty.defaults={cancel:false,cancelClass:'raty-cancel',cancelHint:'Cancel this rating!',cancelOff:'cancel-off.png',cancelOn:'cancel-on.png',cancelPlace:'left',click:undefined,half:false,halfShow:true,hints:['bad','poor','regular','good','gorgeous'],iconRange:undefined,mouseout:undefined,mouseover:undefined,noRatedMsg:'Not rated yet!',number:5,numberMax:20,path:undefined,precision:false,readOnly:false,round:{down:0.25,full:0.6,up:0.76},score:undefined,scoreName:'score',single:false,space:true,starHalf:'star-half.png',starOff:'star-off.png',starOn:'star-on.png',starType:'img',target:undefined,targetFormat:'{score}',targetKeep:false,targetScore:undefined,targetText:'',targetType:'hint'};})(jQuery);
 
+(function(e,g){"object"===typeof exports&&"undefined"!==typeof module?module.exports=g():"function"===typeof define&&define.amd?define(g):(e=e||self,e.currency=g())})(this,function(){function e(b,a){if(!(this instanceof e))return new e(b,a);a=Object.assign({},m,a);var d=Math.pow(10,a.precision);this.intValue=b=g(b,a);this.value=b/d;a.increment=a.increment||1/d;a.groups=a.useVedic?n:p;this.s=a;this.p=d}function g(b,a){var d=2<arguments.length&&void 0!==arguments[2]?arguments[2]:!0;var c=a.decimal;var h=a.errorOnInvalid,k=a.fromCents,l=Math.pow(10,a.precision),f=b instanceof e;if(f&&k)return b.intValue;if("number"===typeof b||f)c=f?b.value:b;else if("string"===typeof b)h=new RegExp("[^-\\d"+c+"]","g"),c=new RegExp("\\"+c,"g"),c=(c=b.replace(/\((.*)\)/,"-$1").replace(h,"").replace(c,"."))||0;else{if(h)throw Error("Invalid Input");c=0}k||(c=(c*l).toFixed(4));return d?Math.round(c):c}var m={symbol:"$",separator:",",decimal:".",errorOnInvalid:!1,precision:2,pattern:"!#",negativePattern:"-!#",format:function(b,a){var d=a.pattern,c=a.negativePattern,h=a.symbol,k=a.separator,l=a.decimal;a=a.groups;var f=(""+b).replace(/^-/,"").split("."),q=f[0];f=f[1];return(0<=b.value?d:c).replace("!",h).replace("#",q.replace(a,"$1"+k)+(f?l+f:""))},fromCents:!1},p=/(\d)(?=(\d{3})+\b)/g,n=/(\d)(?=(\d\d)+\d\b)/g;e.prototype={add:function(b){var a=this.s,d=this.p;return e((this.intValue+g(b,a))/(a.fromCents?1:d),a)},subtract:function(b){var a=this.s,d=this.p;return e((this.intValue-g(b,a))/(a.fromCents?1:d),a)},multiply:function(b){var a=this.s;return e(this.intValue*b/(a.fromCents?1:Math.pow(10,a.precision)),a)},divide:function(b){var a=this.s;return e(this.intValue/g(b,a,!1),a)},distribute:function(b){var a=this.intValue,d=this.p,c=this.s,h=[],k=Math[0<=a?"floor":"ceil"](a/b),l=Math.abs(a-k*b);for(d=c.fromCents?1:d;0!==b;b--){var f=e(k/d,c);0<l--&&(f=f[0<=a?"add":"subtract"](1/d));h.push(f)}return h},dollars:function(){return~~this.value},cents:function(){return~~(this.intValue%this.p)},format:function(b){var a=this.s;return"function"===typeof b?b(this,a):a.format(this,Object.assign({},a,b))},toString:function(){var b=this.s,a=b.increment;return(Math.round(this.intValue/this.p/a)*a).toFixed(b.precision)},toJSON:function(){return this.value}};return e});
+
 $.fn.tabs=function(){var selector=this
 this.each(function(){var obj=$(this)
 $(obj.attr('rel')).hide()
@@ -458,9 +470,6 @@ if(token){if(!options.headers)options.headers={}
 options.headers['X-CSRF-TOKEN']=token}})
 $(function(){$(window).on('ajaxErrorMessage',function(event,message){event.preventDefault()
 $.ti.flashMessage({class:'danger',text:message})})})
-$(function(){$(window).bind("load resize",function(){$('.affix-module').each(function(){$(this).find('[data-spy="affix"]:first-child').css('width',$(this).width())})
-$('body').css({'padding-bottom':$('.footer').outerHeight()+10+'px'});})
-$('body').css({'padding-bottom':$('.footer').outerHeight()+10+'px'});})
 $(function(){var $el=$('[data-control="cookie-banner"]'),$btn=$el.find('#eu-cookie-action'),options=$.extend({},$el.data()),cookieName='complianceCookie',cookieValue='on',cookieDuration=30
 if($el.length){if(options.active===1){if(checkCookie(cookieName)!==cookieValue){$el.fadeIn()}}else{eraseCookie('complianceCookie');}}
 $btn.on('click',function(event){createCookie(cookieName,cookieValue,cookieDuration);$el.fadeOut()})
@@ -475,3 +484,5 @@ while(c.charAt(0)===' ')c=c.substring(1,c.length)
 if(c.indexOf(nameEQ)===0)return c.substring(nameEQ.length,c.length)}
 return null}
 function eraseCookie(name){createCookie(name,"",-1);}})
+if(app){app.currencyFormat=function(amount){if(!app.currency)
+throw'Currency values not defined in app scope';return currency(amount,{decimal:app.currency.decimal_sign,precision:app.currency.decimal_precision,separator:app.currency.thousand_sign,symbol:app.currency.symbol,pattern:app.currency.symbol_position?'#!':'!#',}).format();};}
