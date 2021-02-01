@@ -4,6 +4,11 @@ mix.setPublicPath('./').options({
     processCssUrls: false,
 })
 
+// adding mix version for prod
+ if (mix.inProduction()) {
+     mix.version();
+}
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
