@@ -40,7 +40,6 @@
       "type": "js",
       "files": [
         "~/app/system/assets/ui/flame.js",
-        "~/themes/tastyigniter-orange/assets/src/js/vendor/affix.js",
         "~/themes/tastyigniter-orange/assets/src/js/vendor/select2.min.js",
         "~/themes/tastyigniter-orange/assets/src/js/vendor/jquery.raty.js",
         "~/themes/tastyigniter-orange/assets/src/js/vendor/currency.min.js",
