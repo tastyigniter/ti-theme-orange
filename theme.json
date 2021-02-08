@@ -2,7 +2,7 @@
   "code": "tastyigniter-orange",
   "name": "Orange Theme",
   "description": "Free Modern, Responsive and Clean TastyIgniter Theme based on Bootstrap 4.",
-  "version": "v2.7.3",
+  "version": "v2.8.0",
   "author": "TastyIgniter Dev Team",
   "locked": true,
   "require": {
