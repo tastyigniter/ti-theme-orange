@@ -1,4 +1,4 @@
-<div class="footer pt-5 pb-5">
+<div class="py-5">
     <div class="container">
         <div class="row">
             @foreach ($footerMenu->menuItems() as $navItem)

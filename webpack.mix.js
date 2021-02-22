@@ -68,7 +68,6 @@ mix.copy(
 //         '../../core/app/system/assets/ui/flame.js',
 //         'assets/src/js/vendor/select2.min.js',
 //         'assets/src/js/vendor/jquery.raty.js',
-//         'assets/src/js/vendor/affix.js',
 //         'assets/src/js/app.js',
 //     ],
 //     'assets/js/app.js')

@@ -14,11 +14,11 @@ description: Account layout
 '[account]':
 ---
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ App::getLocale() }}">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ App::getLocale() }}" class="h-100">
 <head>
     @partial('head')
 </head>
-<body class="{{ $this->page->bodyClass }}">
+<body class="d-flex flex-column h-100 {{ $this->page->bodyClass }}">
 
     <header class="header">
         @partial('header')
@@ -34,7 +34,7 @@ description: Account layout
         </div>
     </main>
 
-    <footer class="pt-5">
+    <footer class="footer mt-auto">
         @partial('footer')
     </footer>
     <div id="notification">
