@@ -43,13 +43,13 @@ description: 'Local layout'
         <div id="page-wrapper">
             <div class="container">
                 <div class="row py-4">
-                    <div class="col-md-2 d-none d-sm-inline-block">
+                    <div class="col-lg-2 d-none d-lg-inline-block">
                         <div class="categories affix-categories">
                             @component('categories')
                         </div>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-lg-6">
                         <div class="content">
                             @partial('localBox::container')
 
@@ -57,7 +57,7 @@ description: 'Local layout'
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-lg-4">
                         @partial('cartBox::container')
                     </div>
                 </div>
