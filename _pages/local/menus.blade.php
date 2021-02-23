@@ -15,10 +15,8 @@ layout: local
 @partial('nav/local_tabs', ['activeTab' => 'menus'])
 
 <div class="panel">
-    <div class="d-block d-sm-none">
-        <div class="panel-body categories">
-            @component('categories')
-        </div>
+    <div class="bg-white border-bottom px-3 d-block d-lg-none">
+        @partial('categories::mobile')
     </div>
 
     @component('localMenu')

@@ -1,0 +1,12 @@
+.nav-inline {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 100%;
+
+  .nav-link {
+    white-space: nowrap
+  }
+}
