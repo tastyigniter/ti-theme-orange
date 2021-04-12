@@ -65,7 +65,7 @@ description: 'Local layout'
         </div>
     </main>
 
-    <footer class="footer mt-auto">
+    <footer class="footer mt-auto d-none d-lg-block">
         @partial('footer')
     </footer>
     <div id="notification">
