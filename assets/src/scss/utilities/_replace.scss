@@ -141,6 +141,7 @@
 }
 .panel {
   @extend .card;
+  box-shadow: $box-shadow-sm;
 }
 .panel-title {
   @extend .card-title;
