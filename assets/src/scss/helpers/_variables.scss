@@ -85,12 +85,16 @@ $page-padding-top:                      $logo-height + 10px !default;
 
 // Footer
 $footer-bg:                             $dark !default;
-$footer-link-color:                     rgba($white, .75) !default;
+$footer-link-color: rgba($white, .75) !default;
 
 // Forms
 
 // Cards
-$card-border-width:                     0 !default;
+$card-border-width: 0 !default;
 
 // List groups
-$list-group-border-color:               $border-color !default;
+$list-group-border-color: $border-color !default;
+
+// Dropdowns
+$dropdown-link-active-color: $dark !default;
+$dropdown-link-active-bg: darken($light, 10%) !default;
