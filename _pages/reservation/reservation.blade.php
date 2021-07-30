@@ -1,7 +1,7 @@
 ---
 title: main::lang.reservation.title
 layout: default
-permalink: /reservation
+permalink: ':location?/reservation'
 
 '[account]':
 
