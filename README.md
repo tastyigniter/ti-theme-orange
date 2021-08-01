@@ -1,14 +1,5 @@
 Free Modern, Responsive and Clean TastyIgniter Theme based on Bootstrap 4.
 
-### Required Extensions
-- Igniter Cart
-- Igniter FrontEnd
-- Igniter Local
-- Igniter Pages
-- Igniter Pay Register
-- Igniter Reservation
-- Igniter User
-
 ### Features
 - Responsive design
 - Lightweight and very fast
