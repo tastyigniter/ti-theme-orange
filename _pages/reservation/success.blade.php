@@ -1,7 +1,7 @@
 ---
 title: main::lang.reservation.success.title
 layout: default
-permalink: /reservation/success/:hash?
+permalink: :location/reservation/success/:hash?
 
 '[booking]':
 ---
