@@ -9,7 +9,6 @@ layout: default
 
 '[localSearch]':
     hideSearch: 0
-    menusPage: local/menus
 
 '[featuredItems]':
     items: ['6', '7', '8', '9']

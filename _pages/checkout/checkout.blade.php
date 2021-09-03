@@ -8,7 +8,6 @@ permalink: /checkout
 '[localBox]':
     paramFrom: location
     showLocalThumb: 0
-    menusPage: local/menus
 
 '[cartBox]':
     pageIsCheckout: true

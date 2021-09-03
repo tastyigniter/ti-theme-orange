@@ -11,13 +11,13 @@ return [
                     'title' => 'main::lang.menu_menu',
                     'code' => '',
                     'type' => 'theme-page',
-                    'reference' => 'local/menus',
+                    'reference' => 'local'.DIRECTORY_SEPARATOR.'menus',
                 ],
                 [
                     'title' => 'main::lang.menu_reservation',
                     'code' => '',
                     'type' => 'theme-page',
-                    'reference' => 'reservation/reservation',
+                    'reference' => 'reservation'.DIRECTORY_SEPARATOR.'reservation',
                 ],
                 [
                     'title' => 'main::lang.menu_locations',

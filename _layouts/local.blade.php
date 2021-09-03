@@ -15,17 +15,14 @@ description: 'Local layout'
 '[localBox]':
     paramFrom: location
     showLocalThumb: 0
-    menusPage: local/menus
 
 '[categories]':
-    menusPage: local/menus
 
 '[cartBox]':
     checkStockCheckout: 1
     showCartItemThumb: 1
     pageIsCheckout: 0
     pageIsCart: 0
-    checkoutPage: checkout/checkout
 
 ---
 <!DOCTYPE html>

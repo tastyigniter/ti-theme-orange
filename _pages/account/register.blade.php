@@ -8,9 +8,6 @@ layout: default
     security: guest
 
 '[account]':
-    accountPage: account/account
-    redirectPage: account/account
-    loginPage: account/login
     agreeRegistrationTermsPage: 1
 
 ---
