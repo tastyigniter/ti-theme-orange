@@ -48,5 +48,10 @@ margin-bottom: 0;
 }
 
 .local-timeslot .dropdown-menu {
-  width: calc(100% - 40px); 
+  width: calc(100% - 40px);
+}
+.local-search {
+  .dropdown-toggle::after {
+    content: none;
+  }
 }

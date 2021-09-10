@@ -3,6 +3,8 @@ title: main::lang.cart.title
 layout: default
 permalink: /cart
 
+'[localSearch]':
+
 '[localBox]':
 
 '[cartBox]':

@@ -12,6 +12,8 @@ description: 'Local layout'
 
 '[newsletter]': {  }
 
+'[localSearch]':
+
 '[localBox]':
     paramFrom: location
     showLocalThumb: 0

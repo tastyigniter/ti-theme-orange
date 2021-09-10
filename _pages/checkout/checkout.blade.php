@@ -5,6 +5,9 @@ permalink: /checkout
 
 '[account]':
 
+'[localSearch]':
+    hideSearch: 1
+
 '[localBox]':
     paramFrom: location
     showLocalThumb: 0
