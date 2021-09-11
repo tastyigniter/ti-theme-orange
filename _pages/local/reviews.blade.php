@@ -5,8 +5,8 @@ description: ''
 layout: local
 
 '[localReview]':
-    pageLimit: 10
-    sort: 'date_added asc'
+pageLimit: 10
+sort: 'created_at asc'
 
 ---
 <?php
