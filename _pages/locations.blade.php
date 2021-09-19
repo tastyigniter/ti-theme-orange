@@ -3,6 +3,8 @@ title: main::lang.locations.title
 layout: default
 permalink: /locations
 
+'[localSearch]':
+
 '[localList]':
 ---
 <div class="container">
@@ -12,6 +14,9 @@ permalink: /locations
         </div>
         <div class="location-list col-sm-9">
             @partial('localList::search')
+
+            @partial('localList::sorting')
+
             @component('localList')
         </div>
     </div>
