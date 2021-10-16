@@ -100,23 +100,22 @@ $(function () {
 
 // CURRENCY HELPER FUNCTION DEFINITION
 // ============================
-if (app) {
+$(function () {
+    if (app) {
+        app.currencyFormat = function (amount) {
+            if (!app.currency)
+                throw 'Currency values not defined in app scope';
 
-    app.currencyFormat = function (amount) {
+            return currency(amount, {
+                decimal: app.currency.decimal_sign,
+                precision: app.currency.decimal_precision,
+                separator: app.currency.thousand_sign,
+                symbol: app.currency.symbol,
+                pattern: app.currency.symbol_position ? '#!' : '!#',
+            }).format();
 
-        if (!app.currency)
-            throw 'Currency values not defined in app scope';
-
-        return currency(amount, {
-            decimal: app.currency.decimal_sign,
-            precision: app.currency.decimal_precision,
-            separator: app.currency.thousand_sign,
-            symbol: app.currency.symbol,
-            pattern: app.currency.symbol_position ? '#!' : '!#',
-        }).format();
-        
-    };
-    
-}
+        };
+    }
+})
 
 
