@@ -1,7 +1,7 @@
 ---
 title: main::lang.account.orders.title
 layout: account
-permalink: /account/orders/:orderId?
+permalink: /account/orders
 
 '[accountOrders]':
 ---
