@@ -13,7 +13,7 @@
         class="nav-item nav-link {{ ($activeTab === 'info') ? 'active' : '' }}"
         href="{{ restaurant_url('local/info') }}"
     >@lang('main::lang.local.text_tab_info')</a>
-    @if (isset($locationCurrent) AND $locationCurrent->hasGallery())
+    @if (isset($locationCurrent) && $locationCurrent->hasGallery())
         <a
             class="nav-item nav-link {{ ($activeTab === 'gallery') ? 'active' : '' }}"
             href="{{ restaurant_url('local/gallery') }}"

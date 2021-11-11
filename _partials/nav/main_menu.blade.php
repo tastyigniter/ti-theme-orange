@@ -1,10 +1,10 @@
 <ul class="nav navbar-nav">
     @foreach ($items as $navItem)
-        @continue(Auth::isLogged() AND in_array($navItem->code, ['login', 'register']))
-        @continue(!Auth::isLogged() AND in_array($navItem->code, ['account', 'recent-orders']))
+        @continue(Auth::isLogged() && in_array($navItem->code, ['login', 'register']))
+        @continue(!Auth::isLogged() && in_array($navItem->code, ['account', 'recent-orders']))
         <li
             class="nav-item{{
-                ($navItem->items ? ' dropdown' : '').(($navItem->isActive OR $navItem->isChildActive) ? ' active' : '')
+                ($navItem->items ? ' dropdown' : '').(($navItem->isActive || $navItem->isChildActive) ? ' active' : '')
             }}"
         >
             <a
