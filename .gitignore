@@ -1,2 +1,15 @@
-/node_modules
+.idea
+.php_cs
+.php_cs.cache
+.phpunit.result.cache
+build
+composer.lock
+coverage
+phpunit.xml
+psalm.xml
+/vendor
+.php-cs-fixer.cache
+node_modules/
+npm-debug.log
+yarn-error.log
 /_partials/payregister

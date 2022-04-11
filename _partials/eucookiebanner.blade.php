@@ -20,7 +20,7 @@
                 </p>
                 <a
                     id="eu-cookie-action"
-                    class="btn btn-secondary ml-auto"
+                    class="btn btn-secondary ms-auto"
                     href="javascript:void(0);"
                 >{{ $this->theme->gdpr_accept_text }}</a>
             </div>

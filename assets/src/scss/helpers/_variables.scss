@@ -26,15 +26,18 @@ $theme-colors: map-merge((
   "secondary":  $secondary,
   "success":    $success,
   "info":       $info,
-  "warning":    $warning,
-  "danger":     $danger,
-  "light":      $light,
-  "dark":       $dark
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark
 ), $theme-colors);
 
 // Options
 //
 // Quickly modify global styling by enabling or disabling optional features.
+
+$enable-shadows: true;
+$enable-negative-margins: true;
 
 // Fonts
 //

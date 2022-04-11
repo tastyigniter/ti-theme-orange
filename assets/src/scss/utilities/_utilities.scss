@@ -6,9 +6,6 @@ html, html a {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-body {
-  font-size: $font-size-base;
-}
 .hide {
   display: none !important;
 }
@@ -21,9 +18,9 @@ body {
 .cursor-pointer {cursor: pointer;}
 a.ti-loading, button.ti-loading, span.ti-loading {
   &:before {
-    @extend .fa;
-    @extend .fa-spinner;
-    @extend .fa-spin;
+    //@extend .fa;
+    //@extend .fa-spinner;
+    //@extend .fa-spin;
   }
 }
 dl.no-spacing {

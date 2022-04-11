@@ -2,6 +2,8 @@
   background-color: $navbar-top-bg;
 
   .navbar-brand {
+    padding: 0;
+
     .img-logo {
       height: $logo-height;
     }
@@ -13,14 +15,10 @@
 
   .navbar-nav {
     .nav-link {
-      font-weight: $font-weight-bold;
       color: $navbar-link-color;
-      opacity: .769;
 
-      &:hover,
       &.active {
-        color: $navbar-link-color;
-        opacity: 1;
+        font-weight: $font-weight-bold;
       }
     }
 
@@ -35,7 +33,7 @@
     padding: 0;
 
     .nav-link,
-    .nav navbar > li > a {
+    .nav .navbar > li > a {
       padding: $spacer;
     }
   }
