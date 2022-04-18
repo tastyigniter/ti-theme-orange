@@ -4,8 +4,8 @@
         <button
             class="navbar-toggler border-0"
             type="button"
-            data-toggle="collapse"
-            data-target="#navbarMainHeader"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarMainHeader"
             aria-controls="navbarMainHeader"
             aria-expanded="false"
             aria-label="Toggle navigation"
