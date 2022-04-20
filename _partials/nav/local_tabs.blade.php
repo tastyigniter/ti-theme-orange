@@ -1,4 +1,4 @@
-<ul id="nav-tabs" class="nav-menus nav nav-tabs">
+<ul id="nav-tabs" class="nav-menus nav nav-tabs py-2">
     <li class="nav-item">
         <a
             @class(['nav-link rounded-pill py-1 fw-bold', 'text-muted' => $activeTab !== 'menus', 'active' => $activeTab === 'menus'])
