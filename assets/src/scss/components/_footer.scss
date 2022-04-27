@@ -4,6 +4,12 @@
   background-color: $footer-bg;
   a {
     color: $footer-link-color;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+      font-weight: $font-weight-bold;
+    }
   }
 }
 .footer-title {

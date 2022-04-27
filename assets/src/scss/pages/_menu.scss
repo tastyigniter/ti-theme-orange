@@ -53,12 +53,12 @@
       margin-bottom: 0;
 
       .collapse-toggle {
-        @extend .fa;
-        @extend .fa-chevron-up;
+        //@extend .fa;
+        //@extend .fa-chevron-up;
       }
 
       &.collapsed .collapse-toggle {
-        @extend .fa-chevron-down
+        //@extend .fa-chevron-down
       }
     }
 

@@ -18,36 +18,21 @@ mix.setPublicPath('./').options({
 //
 // Copy fonts from node_modules
 //
-mix.copyDirectory(
-    'node_modules/@fortawesome/fontawesome-free-webfonts/webfonts',
-    'assets/fonts/FontAwesome'
-).copyDirectory(
-    'node_modules/@fortawesome/fontawesome-free-webfonts/scss',
-    'assets/src/scss/vendor/FontAwesome'
-).copyDirectory(
-    'node_modules/bootstrap/scss',
-    'assets/src/scss/vendor/bootstrap'
-);
-
-mix.copy(
-    'node_modules/bootstrap/dist/js/bootstrap.min.js.map',
-    'assets/src/js/bootstrap.min.js.map'
-).copy(
-    'node_modules/select2/dist/js/select2.min.js',
-    'assets/src/js/vendor/select2.min.js'
-).copy(
-    'node_modules/jquery-raty-js/lib/jquery.raty.js',
-    'assets/src/js/vendor/jquery.raty.js'
-).copy(
-    'node_modules/jquery-raty-js/lib/jquery.raty.css',
-    'assets/src/scss/vendor/jquery.raty.scss'
-).copy(
-    'node_modules/animate.css/animate.css',
-    'assets/src/scss/vendor/animate.scss'
-).copy(
-    'node_modules/select2-theme-bootstrap4/src/select2-bootstrap.scss',
-    'assets/src/scss/vendor/select2-bootstrap.scss'
-)
+// mix.copyDirectory(
+//     'node_modules/bootstrap/scss',
+//     'assets/src/scss/vendor/bootstrap'
+// );
+//
+// mix.copy(
+//     'node_modules/bootstrap/dist/js/bootstrap.min.js.map',
+//     'assets/src/js/bootstrap.min.js.map'
+// ).copy(
+//     'node_modules/jquery-raty-js/lib/jquery.raty.css',
+//     'assets/src/scss/vendor/jquery.raty.scss'
+// ).copy(
+//     'node_modules/animate.css/animate.css',
+//     'assets/src/scss/vendor/animate.scss'
+// )
 
 //
 //  Build SCSS
@@ -55,7 +40,7 @@ mix.copy(
 // Leave commented to use the admin theme customizer to compile your assets,
 // or uncomment to use webpack to compile
 //
-// mix.sass('assets/src/scss/app.scss', 'assets/css/');
+mix.sass('assets/src/scss/app.scss', 'assets/css/');
 
 //
 //  Combine Vendor JS
@@ -63,11 +48,23 @@ mix.copy(
 // Leave commented to use the theme customizer to compile your assets,
 // or uncomment to use webpack to compile
 //
-// mix.scripts(
-//     [
-//         '../../core/app/system/assets/ui/flame.js',
-//         'assets/src/js/vendor/select2.min.js',
-//         'assets/src/js/vendor/jquery.raty.js',
-//         'assets/src/js/app.js',
-//     ],
-//     'assets/js/app.js')
+mix.scripts(
+    [
+        'node_modules/jquery/dist/jquery.min.js',
+        'node_modules/@popperjs/core/dist/umd/popper.min.js',
+        'node_modules/bootstrap/dist/js/bootstrap.min.js',
+        'node_modules/sweetalert/dist/sweetalert.min.js',
+        '../../app/admin/assets/src/js/vendor/waterfall.min.js',
+        '../../app/admin/assets/src/js/vendor/transition.js',
+        '../../app/admin/assets/src/js/app.js',
+        '../../app/admin/assets/src/js/loader.bar.js',
+        '../../app/admin/assets/src/js/loader.progress.js',
+        '../../app/admin/assets/src/js/flashmessage.js',
+        '../../app/admin/assets/src/js/toggler.js',
+        '../../app/admin/assets/src/js/trigger.js',
+        'node_modules/jquery-raty-js/lib/jquery.raty.js',
+        "node_modules/currency.js/dist/currency.min.js",
+        'assets/src/js/app.js',
+    ],
+    'assets/js/app.js'
+)
