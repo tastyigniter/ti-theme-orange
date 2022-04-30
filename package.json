@@ -17,7 +17,7 @@
     "currency.js": "^2.0.4",
     "jquery": "^3.5.1",
     "jquery-raty-js": "2.8.0",
-    "sweetalert": "^2.1.0"
+    "sweetalert2": "^11.4.8"
   },
   "devDependencies": {
     "axios": "^0.25",
