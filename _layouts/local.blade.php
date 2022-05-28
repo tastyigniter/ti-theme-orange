@@ -30,12 +30,12 @@ description: 'Local layout'
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="{{ App::getLocale() }}" class="h-100">
 <head>
-    @partial('head')
+    @themePartial('head')
 </head>
 <body class="d-flex flex-column h-100 {{ $this->page->bodyClass }}">
 
     <header class="header">
-        @partial('header')
+        @themePartial('header')
     </header>
 
     <main role="main">
@@ -44,20 +44,20 @@ description: 'Local layout'
                 <div class="row py-4">
                     <div class="col-lg-2 d-none d-lg-inline-block">
                         <div class="categories affix-categories">
-                            @component('categories')
+                            @componentPartial('categories')
                         </div>
                     </div>
 
                     <div class="col-lg-6">
                         <div class="content">
-                            @partial('localBox::container')
+                            @themePartial('localBox::container')
 
                             @page
                         </div>
                     </div>
 
                     <div class="col-lg-4">
-                        @partial('cartBox::container')
+                        @themePartial('cartBox::container')
                     </div>
                 </div>
             </div>
@@ -65,12 +65,12 @@ description: 'Local layout'
     </main>
 
     <footer class="footer mt-auto d-none d-lg-block">
-        @partial('footer')
+        @themePartial('footer')
     </footer>
     <div id="notification">
-        @partial('flash')
+        @themePartial('flash')
     </div>
-    @partial('eucookiebanner')
-    @partial('scripts')
+    @themePartial('eucookiebanner')
+    @themePartial('scripts')
 </body>
 </html>

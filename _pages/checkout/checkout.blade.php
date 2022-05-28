@@ -21,22 +21,22 @@ permalink: /checkout
 <div class="container">
     <div class="row py-4">
         <div class="col col-lg-8">
-            @partial('localBox::container')
+            @themePartial('localBox::container')
 
             <div class="card my-1">
                 <div class="card-body">
-                    @partial('account/welcome')
+                    @themePartial('account/welcome')
                 </div>
             </div>
             <div class="card">
                 <div class="card-body">
-                    @component('checkout')
+                    @componentPartial('checkout')
                 </div>
             </div>
         </div>
 
         <div class="col-lg-4">
-            @partial('cartBox::container')
+            @themePartial('cartBox::container')
         </div>
     </div>
 </div>

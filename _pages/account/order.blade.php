@@ -13,12 +13,12 @@ permalink: /account/order/:hash?
     <div class="row py-5">
         @if ($customer)
             <div class="col-sm-3">
-                @partial('account/sidebar')
+                @themePartial('account/sidebar')
             </div>
         @endif
 
         <div class="col-sm-9{{ $customer ? '' : ' m-auto' }}">
-            @component('orderPage')
+            @componentPartial('orderPage')
         </div>
     </div>
 </div>

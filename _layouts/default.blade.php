@@ -15,27 +15,27 @@ description: Default layout
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="{{ App::getLocale() }}" class="h-100">
 <head>
-    @partial('head')
+    @themePartial('head')
 </head>
 <body class="d-flex flex-column h-100 {{ $this->page->bodyClass }}">
 
     <header class="header">
-        @partial('header')
+        @themePartial('header')
     </header>
 
     <main role="main">
         <div id="page-wrapper">
-            @page
+            @themePage
         </div>
     </main>
 
     <footer class="footer mt-auto">
-        @partial('footer')
+        @themePartial('footer')
     </footer>
     <div id="notification">
-        @partial('flash')
+        @themePartial('flash')
     </div>
-    @partial('eucookiebanner')
-    @partial('scripts')
+    @themePartial('eucookiebanner')
+    @themePartial('scripts')
 </body>
 </html>

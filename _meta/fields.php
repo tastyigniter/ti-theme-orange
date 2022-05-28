@@ -265,7 +265,7 @@ return [
                 'gdpr_more_info_link' => [
                     'label' => 'More information link',
                     'type' => 'select',
-                    'options' => [\System\Models\Pages_model::class, 'getDropdownOptions'],
+                    'options' => [\Igniter\Pages\Models\Page::class, 'getDropdownOptions'],
                     'rules' => 'string',
                 ],
                 'gdpr_background_color' => [

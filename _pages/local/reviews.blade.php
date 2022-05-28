@@ -20,7 +20,7 @@ function onStart()
 }
 ?>
 ---
-@partial('nav/local_tabs', ['activeTab' => 'reviews'])
+@themePartial('nav/local_tabs', ['activeTab' => 'reviews'])
 
 <div class="panel">
     <div class="panel-body">
@@ -29,5 +29,5 @@ function onStart()
         </h1>
     </div>
 
-    @component('localReview')
+    @componentPartial('localReview')
 </div>

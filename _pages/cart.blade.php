@@ -20,7 +20,7 @@ permalink: /cart
                 >@lang('igniter.cart::default.text_add_more_items')</a>
             </div>
 
-            @partial('cartBox::container')
+            @themePartial('cartBox::container')
         </div>
     </div>
 </div>
