@@ -1,6 +1,6 @@
 {
   "doctype": "html5",
-  "favicon": "tastyigniter-orange/assets/images/favicon.ico",
+  "favicon": "$/tastyigniter-orange/images/favicon.ico",
   "meta": [
     {
       "name": "Content-type",
@@ -20,21 +20,21 @@
   ],
   "style": [
     {
-      "path": "tastyigniter-orange/assets/css/app.css",
+      "path": "tastyigniter-orange::css/app.css",
       "name": "app-css"
     }
   ],
   "script": [
     {
-      "path": "tastyigniter-orange/assets/js/app.js",
+      "path": "tastyigniter-orange::js/app.js",
       "name": "app-js"
     }
   ],
   "bundles": [
     {
       "type": "scss",
-      "files": "~/themes/tastyigniter-orange/assets/src/scss/app.scss",
-      "destination": "~/themes/tastyigniter-orange/assets/css/app.css"
+      "files": "tastyigniter-orange::src/scss/app.scss",
+      "destination": "tastyigniter-orange::css/app.css"
     }
   ]
 }

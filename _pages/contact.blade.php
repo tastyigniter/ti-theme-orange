@@ -27,7 +27,7 @@ permalink: /contact
             <div class="card">
                 <div class="card-body">
                     <h4 class="contact-title mb-3">@lang('igniter.frontend::default.contact.text_summary')</h4>
-                    @component('contact')
+                    @componentPartial('contact')
                 </div>
             </div>
         </div>

@@ -1,6 +1,5 @@
 {
   "name": "tastyigniter/ti-theme-orange",
-  "type": "tastyigniter-theme",
   "description": "Free Modern, Responsive and Clean TastyIgniter Theme based on Bootstrap.",
   "license": "MIT",
   "authors": [
@@ -13,6 +12,16 @@
     "theme",
     "orange"
   ],
+  "require": {
+    "tastyigniter/ti-ext-cart": "~2.0",
+    "tastyigniter/ti-ext-coupons": "~1.0",
+    "tastyigniter/ti-ext-frontend": "~1.0",
+    "tastyigniter/ti-ext-local": "~2.0",
+    "tastyigniter/ti-ext-pages": "~1.0",
+    "tastyigniter/ti-ext-payregister": "~1.0",
+    "tastyigniter/ti-ext-reservation": "~2.0",
+    "tastyigniter/ti-ext-user": "~1.0"
+  },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3.0",
     "pestphp/pest": "^1.20"
@@ -21,26 +30,13 @@
     "tastyigniter-theme": {
       "code": "tastyigniter-orange",
       "name": "Orange Theme",
-      "locked": true,
-      "require": {
-        "igniter.cart": "*",
-        "igniter.coupons": "*",
-        "igniter.frontend": "*",
-        "igniter.local": "*",
-        "igniter.pages": "*",
-        "igniter.payregister": "*",
-        "igniter.reservation": "*",
-        "igniter.user": "*"
-      }
+      "locked": true
     }
   },
   "scripts": {
     "test": "vendor/bin/pest",
     "test-coverage": "vendor/bin/pest --coverage",
     "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes"
-  },
-  "config": {
-    "sort-packages": true
   },
   "minimum-stability": "dev",
   "prefer-stable": true

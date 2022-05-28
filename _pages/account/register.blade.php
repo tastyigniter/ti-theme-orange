@@ -20,7 +20,7 @@ layout: default
                         @lang('main::lang.account.login.text_register')
                     </h1>
 
-                    @partial('account::register')
+                    @themePartial('account::register')
                 </div>
             </div>
         </div>

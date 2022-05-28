@@ -22,7 +22,7 @@
             <div class="col-sm-3 mt-3 mt-sm-0">
                 <div class="social-bottom">
                     <h6 class="footer-title">@lang('main::lang.text_follow_us')</h6>
-                    @partial('social_icons', ['socialIcons' => $this->theme->social])
+                    @themePartial('social_icons', ['socialIcons' => $this->theme->social])
                 </div>
             </div>
 
@@ -30,7 +30,7 @@
                 <div class="col-sm-3 mt-3 mt-sm-0">
                     <div id="newsletter-box">
                         <h5 class="mb-4">@lang('igniter.frontend::default.newsletter.text_subscribe')</h5>
-                        @component('newsletter')
+                        @componentPartial('newsletter')
                     </div>
                 </div>
             @endif

@@ -10,14 +10,14 @@ permalink: /locations
 <div class="container">
     <div class="row py-4">
         <div class="locations-filter col-sm-3">
-            @partial('localList::filter')
+            @themePartial('localList::filter')
         </div>
         <div class="location-list col-sm-9">
-            @partial('localList::search')
+            @themePartial('localList::search')
 
-            @partial('localList::sorting')
+            @themePartial('localList::sorting')
 
-            @component('localList')
+            @themePartial('localList')
         </div>
     </div>
 </div>

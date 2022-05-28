@@ -5,10 +5,10 @@ permalink: /:location?local/gallery
 
 '[localGallery]':
 ---
-@partial('nav/local_tabs', ['activeTab' => 'gallery'])
+@themePartial('nav/local_tabs', ['activeTab' => 'gallery'])
 
 <div class="panel">
     <div class="panel-body">
-        @component('localGallery')
+        @componentPartial('localGallery')
     </div>
 </div>

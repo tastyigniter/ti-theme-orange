@@ -10,7 +10,7 @@ permalink: :location/reservation/success/:hash?
         <div class="col-6 m-auto">
             <div class="card">
                 <div class="card-body">
-                    @partial('booking::success')
+                    @componentPartial('booking::success')
                 </div>
             </div>
         </div>

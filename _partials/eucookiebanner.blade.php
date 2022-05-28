@@ -1,5 +1,5 @@
 @php
-    $privacyPage = \System\Models\Pages_model::find($this->theme->gdpr_more_info_link)
+    $privacyPage = \Igniter\Pages\Models\Page::find($this->theme->gdpr_more_info_link)
 @endphp
 <div
     id="euCookieBanner"

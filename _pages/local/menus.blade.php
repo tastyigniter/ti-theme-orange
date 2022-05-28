@@ -12,12 +12,12 @@ layout: local
     menuImageHeight: 80
 
 ---
-@partial('nav/local_tabs', ['activeTab' => 'menus'])
+@themePartial('nav/local_tabs', ['activeTab' => 'menus'])
 
 <div class="panel">
     <div class="bg-white border-bottom px-3 d-block d-lg-none">
-        @partial('categories::mobile')
+        @componentPartial('categories::mobile')
     </div>
 
-    @component('localMenu')
+    @componentPartial('localMenu')
 </div>

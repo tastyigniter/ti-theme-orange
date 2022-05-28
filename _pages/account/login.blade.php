@@ -17,7 +17,7 @@ security: guest
                         @lang('main::lang.account.login.text_login')
                     </h1>
 
-                    @partial('account::login')
+                    @themePartial('account::login')
 
                     <div class="row">
                         <div class="col-md-5 p-sm-0">

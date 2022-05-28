@@ -14,12 +14,12 @@ permalink: ':location/reservation'
         <div class="col col-sm-10 center-block">
             <div class="card mb-1">
                 <div class="card-body">
-                    @partial('account/welcome')
+                    @themePartial('account/welcome')
                 </div>
             </div>
             <div class="card">
                 <div class="card-body">
-                    @component('booking')
+                    @componentPartial('booking')
                 </div>
             </div>
         </div>

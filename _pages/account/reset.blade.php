@@ -19,7 +19,7 @@ permalink: /forgot-password/:code?
                         @lang('main::lang.account.reset.text_heading')
                     </h1>
 
-                    @component('resetPassword')
+                    @componentPartial('resetPassword')
                 </div>
             </div>
         </div>

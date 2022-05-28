@@ -17,8 +17,8 @@ layout: default
     itemWidth: 400
     itemHeight: 300
 ---
-@component('slider')
+@componentPartial('slider')
 
-@component('localSearch')
+@componentPartial('localSearch')
 
-@component('featuredItems')
+@componentPartial('featuredItems')
