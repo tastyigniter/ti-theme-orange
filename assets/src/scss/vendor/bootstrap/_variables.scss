@@ -6,9 +6,9 @@
 // Color system
 
 // scss-docs-start gray-color-variables
-$white:    #fff !default;
-$gray-100: #f8f9fa !default;
-$gray-200: #e9ecef !default;
+$white: #FFF !default;
+$gray-100: #F8F9FA !default;
+$gray-200: #E9ECEF !default;
 $gray-300: #DEE2E6 !default;
 $gray-400: #CED4DA !default;
 $gray-500: #ADB5BD !default;
@@ -475,7 +475,6 @@ $grid-breakpoints: (
 
 @include _assert-ascending($grid-breakpoints, "$grid-breakpoints");
 @include _assert-starts-at-zero($grid-breakpoints, "$grid-breakpoints");
-
 
 // Grid containers
 //
@@ -1477,10 +1476,10 @@ $list-group-disabled-color: $gray-600 !default;
 $list-group-disabled-bg: $list-group-bg !default;
 
 $list-group-action-color: $gray-700 !default;
-$list-group-action-hover-color:     $list-group-action-color !default;
+$list-group-action-hover-color: $list-group-action-color !default;
 
-$list-group-action-active-color:    $body-color !default;
-$list-group-action-active-bg:       $gray-200 !default;
+$list-group-action-active-color: $body-color !default;
+$list-group-action-active-bg: $gray-200 !default;
 // scss-docs-end list-group-variables
 
 // Image thumbnails

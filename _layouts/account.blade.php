@@ -30,7 +30,7 @@ description: Account layout
         </div>
 
         <div id="page-wrapper">
-            @page
+            @themePage
         </div>
     </main>
 

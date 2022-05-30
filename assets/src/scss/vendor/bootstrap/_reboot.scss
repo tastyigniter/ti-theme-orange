@@ -229,7 +229,6 @@ sup {
 sub { bottom: -.25em; }
 sup { top: -.5em; }
 
-
 // Links
 
 a {
@@ -254,7 +253,6 @@ a:not([href]):not([class]) {
     text-decoration: none;
   }
 }
-
 
 // Code
 
@@ -321,14 +319,12 @@ figure {
   margin: 0 0 1rem;
 }
 
-
 // Images and content
 
 img,
 svg {
   vertical-align: middle;
 }
-
 
 // Tables
 //

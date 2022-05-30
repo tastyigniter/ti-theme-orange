@@ -52,7 +52,7 @@ description: 'Local layout'
                         <div class="content">
                             @themePartial('localBox::container')
 
-                            @page
+                            @themePage
                         </div>
                     </div>
 
