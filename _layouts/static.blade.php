@@ -43,7 +43,7 @@ description: Static layout for static pages
                     <div class="col-sm-9">
                         <div class="card">
                             <div class="card-body">
-                                @page
+                                @themePage
                             </div>
                         </div>
                     </div>

@@ -20,13 +20,17 @@
   ],
   "style": [
     {
-      "path": "tastyigniter-orange::css/app.css",
+      "path": "$/tastyigniter-orange/css/app.css",
       "name": "app-css"
     }
   ],
   "script": [
     {
-      "path": "tastyigniter-orange::js/app.js",
+      "path": "$/igniter/js/app.js",
+      "name": "igniter-app-js"
+    },
+    {
+      "path": "$/tastyigniter-orange/js/app.js",
       "name": "app-js"
     }
   ],
@@ -34,7 +38,7 @@
     {
       "type": "scss",
       "files": "tastyigniter-orange::src/scss/app.scss",
-      "destination": "tastyigniter-orange::css/app.css"
+      "destination": "$/tastyigniter-orange/css/app.css"
     }
   ]
 }

@@ -11,20 +11,3 @@
 //
 // Sweetalert2
 @import "sweetalert2";
-// International Telephone Input
-@import "intlTelInput";
-
-.iti__flag {
-  background-image: url("/themes/tastyigniter-orange/assets/images/intlTelInput/flags.png");
-}
-
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .iti__flag {
-    background-image: url("/themes/tastyigniter-orange/assets/images/intlTelInput/flags@2x.png");
-  }
-}
-
-.intl-tel-input,
-.iti {
-  width: 100%;
-}
