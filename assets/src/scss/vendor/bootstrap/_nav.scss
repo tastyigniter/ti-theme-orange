@@ -76,6 +76,7 @@
   }
 }
 
+
 //
 // Pills
 //
@@ -93,6 +94,7 @@
     @include gradient-bg($nav-pills-link-active-bg);
   }
 }
+
 
 //
 // Justified variants
@@ -122,6 +124,7 @@
   }
 }
 
+
 // Tabbable tabs
 //
 // Hide tabbable panes to start, show them when `.active`
@@ -130,7 +133,6 @@
   > .tab-pane {
     display: none;
   }
-
   > .active {
     display: block;
   }

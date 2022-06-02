@@ -29,7 +29,7 @@
       @include border-top-radius($card-inner-border-radius);
     }
 
-    &:last-child {
+    &:last-child  {
       border-bottom-width: 0;
       @include border-bottom-radius($card-inner-border-radius);
     }
@@ -101,6 +101,7 @@
   }
 }
 
+
 //
 // Header navs
 //
@@ -151,6 +152,7 @@
   @include border-bottom-radius($card-inner-border-radius);
 }
 
+
 //
 // Card groups
 //
@@ -187,7 +189,6 @@
             // stylelint-disable-next-line property-disallowed-list
             border-top-right-radius: 0;
           }
-
           .card-img-bottom,
           .card-footer {
             // stylelint-disable-next-line property-disallowed-list
@@ -203,7 +204,6 @@
             // stylelint-disable-next-line property-disallowed-list
             border-top-left-radius: 0;
           }
-
           .card-img-bottom,
           .card-footer {
             // stylelint-disable-next-line property-disallowed-list

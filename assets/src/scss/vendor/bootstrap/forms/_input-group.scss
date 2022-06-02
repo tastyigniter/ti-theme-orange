@@ -36,6 +36,7 @@
   }
 }
 
+
 // Textual addons
 //
 // Serves as a catch-all element for any text or radio/checkbox input you wish
@@ -55,6 +56,7 @@
   border: $input-border-width solid $input-group-addon-border-color;
   @include border-radius($input-border-radius);
 }
+
 
 // Sizing
 //
@@ -83,6 +85,7 @@
 .input-group-sm > .form-select {
   padding-right: $form-select-padding-x + $form-select-indicator-padding;
 }
+
 
 // Rounded corners
 //
