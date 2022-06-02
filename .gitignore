@@ -9,7 +9,7 @@ phpunit.xml
 psalm.xml
 /vendor
 .php-cs-fixer.cache
-node_modules/
+node_modules
 npm-debug.log
 yarn-error.log
 /_partials/payregister
