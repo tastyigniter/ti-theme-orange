@@ -76,6 +76,7 @@
   }
 }
 
+
 //
 // Pills
 //
@@ -93,6 +94,7 @@
     @include gradient-bg($nav-pills-link-active-bg);
   }
 }
+
 
 //
 // Justified variants
@@ -131,7 +133,6 @@
   > .tab-pane {
     display: none;
   }
-
   > .active {
     display: block;
   }
