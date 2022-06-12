@@ -13,14 +13,15 @@
     "orange"
   ],
   "require": {
-    "tastyigniter/ti-ext-cart": "* || ~2.0",
-    "tastyigniter/ti-ext-coupons": "* || ~1.0",
-    "tastyigniter/ti-ext-frontend": "* || ~1.0",
-    "tastyigniter/ti-ext-local": "* || ~2.0",
-    "tastyigniter/ti-ext-pages": "* || ~1.0",
-    "tastyigniter/ti-ext-payregister": "* || ~1.0",
-    "tastyigniter/ti-ext-reservation": "* || ~2.0",
-    "tastyigniter/ti-ext-user": "* || ~1.0"
+    "tastyigniter/flame": "v4.x-dev",
+    "tastyigniter/ti-ext-cart": "v4.x-dev",
+    "tastyigniter/ti-ext-coupons": "v4.x-dev",
+    "tastyigniter/ti-ext-frontend": "v4.x-dev",
+    "tastyigniter/ti-ext-local": "v4.x-dev",
+    "tastyigniter/ti-ext-pages": "v4.x-dev",
+    "tastyigniter/ti-ext-payregister": "v4.x-dev",
+    "tastyigniter/ti-ext-reservation": "v4.x-dev",
+    "tastyigniter/ti-ext-user": "v4.x-dev"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3.0",
