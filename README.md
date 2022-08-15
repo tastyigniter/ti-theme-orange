@@ -29,4 +29,4 @@ Simply run `npm install` in the theme's root folder
 
 ### License
 
-[The MIT License (MIT)](https://tastyigniter.com/licence/)
+[The MIT License (MIT)](https://tastyigniter.com/license/)
