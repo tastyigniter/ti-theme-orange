@@ -52,13 +52,11 @@
       padding: 15px 0;
       margin-bottom: 0;
 
-      .collapse-toggle {
-        //@extend .fa;
-        //@extend .fa-chevron-up;
+      .fa {
+          transition: .3s transform ease-in-out;
       }
-
-      &.collapsed .collapse-toggle {
-        //@extend .fa-chevron-down
+      &.collapsed .fa {
+          transform: rotate(180deg);
       }
     }
 
