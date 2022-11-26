@@ -1,5 +1,6 @@
 {
   "name": "tastyigniter/ti-theme-orange",
+  "type": "tastyigniter-package",
   "description": "Free Modern, Responsive and Clean TastyIgniter Theme based on Bootstrap.",
   "license": "MIT",
   "authors": [
