@@ -44,13 +44,14 @@ mix.scripts(
         '../../app/admin/assets/src/js/trigger.js',
         'node_modules/jquery-raty-js/lib/jquery.raty.js',
         "node_modules/currency.js/dist/currency.min.js",
+        'node_modules/intl-tel-input/build/js/intlTelInput-jquery.min.js',
         'assets/src/js/app.js',
     ],
     'assets/js/app.js'
 )
 
 // We only want to copy these files when building for production
-if (process.env.NODE_ENV !== 'productiion') return
+if (process.env.NODE_ENV !== 'production') return
 
 // Copy fonts from node_modules
 //
@@ -68,4 +69,10 @@ mix.copy(
 ).copy(
     'node_modules/animate.css/animate.css',
     'assets/src/scss/vendor/animate.scss'
+).copy(
+    'node_modules/intl-tel-input/build/css/intlTelInput.min.css',
+    'assets/src/scss/vendor/intlTelInput.scss'
+).copyDirectory(
+    'node_modules/intl-tel-input/build/img',
+    'assets/images/intlTelInput'
 )
