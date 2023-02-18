@@ -113,7 +113,6 @@ $(function () {
                 symbol: app.currency.symbol,
                 pattern: app.currency.symbol_position ? '#!' : '!#',
             }).format();
-
         };
     }
 })
