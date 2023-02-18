@@ -36,7 +36,6 @@
     @include transition($modal-transition);
     transform: $modal-fade-transform;
   }
-
   .modal.show & {
     transform: $modal-show-transform;
   }

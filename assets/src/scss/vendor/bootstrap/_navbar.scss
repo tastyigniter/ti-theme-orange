@@ -278,7 +278,7 @@
 
     a,
     a:hover,
-    a:focus {
+    a:focus  {
       color: $navbar-light-active-color;
     }
   }
@@ -326,7 +326,6 @@
 
   .navbar-text {
     color: $navbar-dark-color;
-
     a,
     a:hover,
     a:focus {
