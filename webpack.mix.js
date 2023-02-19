@@ -35,6 +35,7 @@ mix.scripts(
         'node_modules/@popperjs/core/dist/umd/popper.min.js',
         'node_modules/bootstrap/dist/js/bootstrap.min.js',
         'node_modules/sweetalert2/dist/sweetalert2.min.js',
+        '../../app/admin/assets/src/js/vendor/waterfall.min.js',
         '../../app/admin/assets/src/js/request.js',
         '../../app/admin/assets/src/js/loader.bar.js',
         '../../app/admin/assets/src/js/loader.progress.js',
