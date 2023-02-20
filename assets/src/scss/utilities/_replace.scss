@@ -82,9 +82,6 @@
 .pagination > li > a {
   @extend .page-link;
 }
-.item {
-  @extend .carousel-item;
-}
 .help-block {
   @extend .form-text;
   font-size: $font-size-sm;
