@@ -70,6 +70,9 @@ mix.copy(
     'node_modules/animate.css/animate.css',
     'assets/src/scss/vendor/animate.scss'
 ).copy(
+    'node_modules/sweetalert2/dist/sweetalert2.min.css',
+    'assets/src/scss/vendor/sweetalert2.scss'
+).copy(
     'node_modules/intl-tel-input/build/css/intlTelInput.min.css',
     'assets/src/scss/vendor/intlTelInput.scss'
 ).copyDirectory(
