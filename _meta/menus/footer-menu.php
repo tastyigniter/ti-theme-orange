@@ -1,4 +1,5 @@
 <?php
+
 return [
     'name' => 'Footer menu',
     'items' => [
