@@ -25,7 +25,7 @@
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3.0",
-    "pestphp/pest": "^1.20"
+    "laravel/pint": "^1.2"
   },
   "extra": {
     "tastyigniter-theme": {
@@ -38,5 +38,11 @@
     }
   },
   "minimum-stability": "dev",
-  "prefer-stable": true
+  "prefer-stable": true,
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    },
+    "sort-packages": true
+  }
 }
