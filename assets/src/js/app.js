@@ -29,7 +29,7 @@ $.fn.tabs = function () {
 /*
  * Ensure the CSRF token is added to all AJAX requests.
  */
-$.ajaxPrefilter(function(options) {
+$.ajaxPrefilter(function (options) {
     var token = $('meta[name="csrf-token"]').attr('content')
 
     if (token) {
@@ -73,15 +73,15 @@ $(function () {
 
         if (days) {
             var date = new Date()
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000))
-            expires = '; expires=' + date.toGMTString()
+            date.setTime(date.getTime()+(days * 24 * 60 * 60 * 1000))
+            expires = '; expires='+date.toGMTString()
         }
 
-        document.cookie = name + "=" + value + expires + "; path=/"
+        document.cookie = name+"="+value+expires+"; path=/"
     }
 
     function checkCookie(name) {
-        var nameEQ = name + "=",
+        var nameEQ = name+"=",
             ca = document.cookie.split(';')
 
         for (var i = 0; i < ca.length; i++) {
@@ -123,7 +123,7 @@ $(function () {
     $(document).find('[data-control="country-code-picker"]').each(function () {
         var $this = $(this),
             options = $.extend({
-                initialCountry: 'gb',
+                initialCountry: (app.country.iso_code_2 || '').toLowerCase(),
                 separateDialCode: true,
                 utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.4/js/utils.js"
             }, $this.data()),
