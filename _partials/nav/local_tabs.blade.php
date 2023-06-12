@@ -20,7 +20,7 @@
             href="{{ restaurant_url('local/info') }}"
         >@lang('main::lang.local.text_tab_info')</a>
     </li>
-    @if (isset($locationCurrent) && $locationCurrent->hasGallery())
+    @if(isset($locationCurrent) && $locationCurrent->hasGallery())
         <li class="nav-item">
             <a
                 @class(['nav-link rounded-pill py-1 fw-bold', 'text-muted' => $activeTab !== 'gallery', 'active' => $activeTab === 'gallery'])
