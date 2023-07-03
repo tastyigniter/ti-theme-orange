@@ -17,7 +17,7 @@ permalink: /locations
 
             @themePartial('localList::sorting')
 
-            @themePartial('localList')
+            @componentPartial('localList')
         </div>
     </div>
 </div>
