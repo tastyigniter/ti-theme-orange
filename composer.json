@@ -32,7 +32,7 @@
       "code": "tastyigniter-orange",
       "name": "Orange Theme",
       "locked": true,
-      "publish": [
+      "publish-paths": [
         "assets/dist"
       ]
     }
