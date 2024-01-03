@@ -27,7 +27,22 @@
     "friendsofphp/php-cs-fixer": "^3.0",
     "laravel/pint": "^1.2"
   },
+  "autoload": {
+    "psr-4": {
+      "Igniter\\Orange\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Igniter\\Orange\\Tests\\": "tests/"
+    }
+  },
   "extra": {
+    "laravel": {
+      "providers": [
+        "Igniter\\Orange\\ServiceProvider"
+      ]
+    },
     "tastyigniter-theme": {
       "code": "tastyigniter-orange",
       "name": "Orange Theme",
