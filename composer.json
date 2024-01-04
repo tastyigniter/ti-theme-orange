@@ -48,7 +48,7 @@
       "name": "Orange Theme",
       "locked": true,
       "publish-paths": [
-        "assets/dist"
+        "/assets/dist"
       ]
     }
   },
