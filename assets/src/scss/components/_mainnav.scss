@@ -1,21 +1,21 @@
 .navbar-top {
-  background-color: $navbar-top-bg;
+  background-color: var(--navbar-top-bg);
 
   .navbar-brand {
     padding: 0;
 
     .img-logo {
-      height: $logo-height;
+      height: var(--logo-height);
     }
 
     .text-logo {
-      line-height: $logo-height;
+      line-height: var(--logo-height);
     }
   }
 
   .navbar-nav {
     .nav-link {
-      color: $navbar-link-color;
+      color: var(--navbar-link-color);
 
       &.active {
         font-weight: $font-weight-bold;
@@ -28,6 +28,7 @@
     }
   }
 }
+
 @include media-breakpoint-up(sm) {
   .navbar-top {
     padding: 0;

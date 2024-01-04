@@ -38,7 +38,7 @@ description: 'Local layout'
         @themePartial('header')
     </header>
 
-    <main role="main">
+    <main role="main" class="page-pt">
         <div id="page-wrapper">
             <div class="container">
                 <div class="row py-4">

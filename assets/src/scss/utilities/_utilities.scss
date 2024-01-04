@@ -2,20 +2,28 @@ html {
   position: relative;
   min-height: 100%;
 }
+
 html, html a {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 .hide {
   display: none !important;
 }
+
 .border-none {
   border: 0 none;
 }
+
 .radius-none {
   border-radius: 0;
 }
-.cursor-pointer {cursor: pointer;}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
 a.ti-loading, button.ti-loading, span.ti-loading {
   &:before {
     //@extend .fa;
@@ -23,6 +31,7 @@ a.ti-loading, button.ti-loading, span.ti-loading {
     //@extend .fa-spin;
   }
 }
+
 dl.no-spacing {
   margin-bottom: 0;
 
@@ -36,7 +45,12 @@ dl.no-spacing {
     margin-bottom: 0;
   }
 }
+
 .layout-scrollable {
   overflow-x: auto;
   display: block;
+}
+
+.page-pt {
+  padding-top: var(--logo-height) + 10px;
 }

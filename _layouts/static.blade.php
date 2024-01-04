@@ -28,7 +28,7 @@ description: Static layout for static pages
         @themePartial('header')
     </header>
 
-    <main role="main">
+    <main role="main" class="page-pt">
         <div id="page-wrapper">
             <div class="container py-4">
                 <div id="heading" class="heading-section py-5">
