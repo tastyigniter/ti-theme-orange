@@ -52,5 +52,5 @@ dl.no-spacing {
 }
 
 .page-pt {
-  padding-top: var(--logo-height) + 10px;
+  padding-top: calc(var(--logo-height) + 10px);
 }
