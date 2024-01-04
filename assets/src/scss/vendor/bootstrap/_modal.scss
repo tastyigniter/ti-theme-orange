@@ -62,7 +62,6 @@
     @include transition($modal-transition);
     transform: $modal-fade-transform;
   }
-
   .modal.show & {
     transform: $modal-show-transform;
   }
@@ -235,5 +234,4 @@
     }
   }
 }
-
 // scss-docs-end modal-fullscreen-loop

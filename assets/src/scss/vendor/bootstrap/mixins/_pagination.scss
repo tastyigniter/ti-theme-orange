@@ -7,5 +7,4 @@
   @include rfs($font-size, --#{$prefix}pagination-font-size);
   --#{$prefix}pagination-border-radius: #{$border-radius};
 }
-
 // scss-docs-end pagination-mixin
