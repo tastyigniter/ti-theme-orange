@@ -1,9 +1,10 @@
 .footer {
   width: 100%;
-  color: $footer-link-color;
-  background-color: $footer-bg;
+  color: var(--footer-link-color);
+  background-color: var(--footer-bg);
+
   a {
-    color: $footer-link-color;
+    color: var(--footer-link-color);
     text-decoration: none;
 
     &:hover,
@@ -12,10 +13,12 @@
     }
   }
 }
+
 .footer-title {
   text-transform: uppercase;
   padding-bottom: 5px;
 }
+
 .footer-links {
   ul {
     margin: 0;
@@ -27,7 +30,7 @@
     list-style: none;
 
     a {
-      color: $footer-link-color;
+      color: var(--footer-link-color);
     }
   }
 

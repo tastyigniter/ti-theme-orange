@@ -24,7 +24,7 @@ description: Account layout
         @themePartial('header')
     </header>
 
-    <main role="main">
+    <main role="main" class="page-pt">
         <div id="notification">
             @themePartial('flash')
         </div>

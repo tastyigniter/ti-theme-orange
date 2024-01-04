@@ -23,7 +23,7 @@ description: Default layout
         @themePartial('header')
     </header>
 
-    <main role="main">
+    <main role="main" class="page-pt">
         <div id="page-wrapper">
             @themePage
         </div>
