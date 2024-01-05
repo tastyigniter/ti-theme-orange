@@ -65,7 +65,6 @@ class LocalList extends \Igniter\System\Classes\BaseComponent
         $sortBy = $this->getSortByCondition();
 
         $options = [
-            'pageLimit' => null,
             'search' => $this->getSearchTerm(),
             'sort' => $sortBy,
         ];

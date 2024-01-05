@@ -190,8 +190,6 @@ class Account extends \Igniter\System\Classes\BaseComponent
             throw new ApplicationException(lang('igniter.user::default.login.alert_registration_disabled'));
         }
 
-        $data = post();
-
         $rules = [
             ['first_name', 'lang:igniter.user::default.settings.label_first_name', 'required|between:1,48'],
             ['last_name', 'lang:igniter.user::default.settings.label_last_name', 'required|between:1,48'],
@@ -206,7 +204,8 @@ class Account extends \Igniter\System\Classes\BaseComponent
             $rules[] = ['terms', 'lang:igniter.user::default.login.label_i_agree', 'required|integer'];
         }
 
-        $this->validate($data, $rules);
+        $data = $this->validate(post(), $rules);
+        $data['status'] = true;
 
         $action = resolve(RegisterUser::class);
         $customer = $action->handle(array_except($data, ['password_confirm', 'terms']));

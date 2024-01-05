@@ -4,7 +4,7 @@ const dist = 'assets/dist';
 
 mix.setPublicPath('./').options({
     processCssUrls: false,
-}).sourceMaps()
+})
 
 /*
  |--------------------------------------------------------------------------
