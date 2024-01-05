@@ -36,5 +36,5 @@
         <div class="links">{!! $customerReservations->links() !!}</div>
     </div>
 @else
-    <p>@lang('igniter.reservation::default.reservations.text_empty')</p>
+    <p>@lang('igniter.reservation::default.text_empty')</p>
 @endif
