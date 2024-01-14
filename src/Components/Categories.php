@@ -9,7 +9,7 @@ class Categories extends \Igniter\System\Classes\BaseComponent
 {
     use \Igniter\Main\Traits\UsesPage;
 
-    public function defineProperties()
+    public function defineProperties(): array
     {
         return [
             'menusPage' => [

@@ -9,7 +9,7 @@ class Banners extends \Igniter\System\Classes\BaseComponent
 {
     public $banner;
 
-    public function defineProperties()
+    public function defineProperties(): array
     {
         return [
             'banner_id' => [

@@ -45,7 +45,7 @@ class Checkout extends BaseComponent
         $this->checkoutStep = $this->param($this->property('stepParamName'), 'details');
     }
 
-    public function defineProperties()
+    public function defineProperties(): array
     {
         return [
             'isMultiStepCheckout' => [

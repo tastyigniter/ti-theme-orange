@@ -28,7 +28,7 @@ class Order extends \Igniter\System\Classes\BaseComponent
         $this->orderManager = resolve(OrderManager::class);
     }
 
-    public function defineProperties()
+    public function defineProperties(): array
     {
         return [
             'ordersPage' => [

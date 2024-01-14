@@ -38,7 +38,7 @@ class Booking extends BaseComponent
 
     public $endDate;
 
-    public function defineProperties()
+    public function defineProperties(): array
     {
         return [
             'useCalendarView' => [

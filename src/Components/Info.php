@@ -11,7 +11,7 @@ use Igniter\Local\Models\WorkingHour;
 
 class Info extends \Igniter\System\Classes\BaseComponent
 {
-    public function defineProperties()
+    public function defineProperties(): array
     {
         return [];
     }

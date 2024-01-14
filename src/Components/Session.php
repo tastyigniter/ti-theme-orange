@@ -19,7 +19,7 @@ class Session extends BaseComponent
         }
     }
 
-    public function defineProperties()
+    public function defineProperties(): array
     {
         return [
             'security' => [

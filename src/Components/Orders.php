@@ -10,7 +10,7 @@ class Orders extends \Igniter\System\Classes\BaseComponent
 {
     use UsesPage;
 
-    public function defineProperties()
+    public function defineProperties(): array
     {
         return [
             'itemsPerPage' => [

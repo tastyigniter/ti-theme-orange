@@ -18,7 +18,7 @@ class Review extends \Igniter\System\Classes\BaseComponent
     use UsesPage;
     use ValidatesForm;
 
-    public function defineProperties()
+    public function defineProperties(): array
     {
         return [
             'pageLimit' => [

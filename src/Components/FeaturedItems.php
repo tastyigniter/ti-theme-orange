@@ -6,7 +6,7 @@ use Igniter\Frontend\Models\Menu as FeaturedItemsModel;
 
 class FeaturedItems extends \Igniter\System\Classes\BaseComponent
 {
-    public function defineProperties()
+    public function defineProperties(): array
     {
         return [
             'title' => [

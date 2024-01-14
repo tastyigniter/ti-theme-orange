@@ -12,7 +12,7 @@ class StaticPage extends BaseComponent
      */
     protected $staticPage;
 
-    public function defineProperties()
+    public function defineProperties(): array
     {
         return [
             'slug' => [
