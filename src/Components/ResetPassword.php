@@ -16,7 +16,7 @@ class ResetPassword extends BaseComponent
     use UsesPage;
     use ValidatesForm;
 
-    public function defineProperties()
+    public function defineProperties(): array
     {
         return [
             'resetPage' => [

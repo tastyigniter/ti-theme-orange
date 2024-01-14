@@ -20,7 +20,7 @@ class StaticMenu extends BaseComponent
 
     protected static $menuCache;
 
-    public function defineProperties()
+    public function defineProperties(): array
     {
         return [
             'code' => [

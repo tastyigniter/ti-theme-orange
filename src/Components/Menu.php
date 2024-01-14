@@ -14,7 +14,7 @@ class Menu extends \Igniter\System\Classes\BaseComponent
 
     protected $menuListCategories = [];
 
-    public function defineProperties()
+    public function defineProperties(): array
     {
         return [
             'isGrouped' => [

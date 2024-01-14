@@ -13,7 +13,7 @@ class Slider extends \Igniter\System\Classes\BaseComponent
      */
     protected $sliderThumbs;
 
-    public function defineProperties()
+    public function defineProperties(): array
     {
         return [
             'code' => [

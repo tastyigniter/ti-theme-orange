@@ -15,7 +15,7 @@ class LocalList extends \Igniter\System\Classes\BaseComponent
 
     protected static $registeredSorting;
 
-    public function defineProperties()
+    public function defineProperties(): array
     {
         return [
             'distanceUnit' => [

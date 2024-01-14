@@ -19,7 +19,7 @@ class Contact extends BaseComponent
 
     public $subjects;
 
-    public function defineProperties()
+    public function defineProperties(): array
     {
         return [
             'redirectPage' => [

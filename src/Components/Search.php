@@ -18,7 +18,7 @@ class Search extends \Igniter\System\Classes\BaseComponent
 
     protected $savedAddresses;
 
-    public function defineProperties()
+    public function defineProperties(): array
     {
         return [
             'hideSearch' => [
