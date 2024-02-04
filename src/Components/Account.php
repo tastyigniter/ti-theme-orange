@@ -101,6 +101,10 @@ class Account extends \Igniter\System\Classes\BaseComponent
         }
 
         $this->prepareVars();
+
+        if ($this->page->getId() === $this->property('loginPage')) {
+            $this->setIntendedUrl();
+        }
     }
 
     public function prepareVars()
@@ -316,6 +320,20 @@ class Account extends \Igniter\System\Classes\BaseComponent
         return Redirect::to($redirectUrl);
     }
 
+    public function onDelete()
+    {
+        if (!$customer = $this->customer())
+            return;
+
+        $customer->delete();
+
+        Auth::logout();
+
+        flash()->success(lang('igniter.user::default.settings.alert_deleted_success'));
+
+        return Redirect::to($this->controller->pageUrl($this->property('loginPage')));
+    }
+
     public function getActivationCode()
     {
         $param = $this->property('paramCode');
@@ -387,5 +405,13 @@ class Account extends \Igniter\System\Classes\BaseComponent
         }
 
         return $url;
+    }
+
+    protected function setIntendedUrl()
+    {
+        $previousUrl = url()->previous();
+        if (!session()->has('url.intended') && $previousUrl && $previousUrl !== url()->current()) {
+            session(['url.intended' => $previousUrl]);
+        }
     }
 }

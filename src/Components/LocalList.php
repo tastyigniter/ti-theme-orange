@@ -200,7 +200,7 @@ class LocalList extends \Igniter\System\Classes\BaseComponent
 
     protected function getOrderTypes()
     {
-        return Location::current()->getOrderTypeOptions();
+        return Location::current()?->getOrderTypeOptions() ?? [];
     }
 
     protected function mapIntoObjects($collection)

@@ -3,6 +3,7 @@
 namespace Igniter\Orange\Components;
 
 use Exception;
+use Igniter\Admin\Traits\ValidatesForm;
 use Igniter\Cart\Classes\CartManager;
 use Igniter\Cart\Classes\OrderManager;
 use Igniter\Cart\Facades\Cart;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Redirect;
 
 class Order extends \Igniter\System\Classes\BaseComponent
 {
+    use ValidatesForm;
     use UsesPage;
 
     /**
@@ -94,7 +96,10 @@ class Order extends \Igniter\System\Classes\BaseComponent
             return false;
         }
 
-        return !$order->isCanceled() && $order->isCancelable();
+        if (!setting('canceled_order_status') || $order->isCanceled())
+            return false;
+
+        return $order->isCancelable();
     }
 
     public function onRun()
@@ -149,11 +154,12 @@ class Order extends \Igniter\System\Classes\BaseComponent
 
     public function onCancel()
     {
-        if (!is_numeric($orderId = input('orderId'))) {
-            return;
-        }
+        $validated = $this->validate(request()->input(), [
+            'orderId' => ['required', 'numeric'],
+            'cancel_reason' => ['string', 'max:255'],
+        ]);
 
-        if (!$order = OrderModel::find($orderId)) {
+        if (!$order = OrderModel::find($validated['orderId'])) {
             return;
         }
 
@@ -161,9 +167,10 @@ class Order extends \Igniter\System\Classes\BaseComponent
             throw new ApplicationException(lang('igniter.cart::default.orders.alert_cancel_failed'));
         }
 
-        if (!$order->markAsCanceled()) {
-            throw new ApplicationException(lang('igniter.cart::default.orders.alert_cancel_failed'));
-        }
+        if (!$order->markAsCanceled([
+            'comment' => array_get($validated, 'cancel_reason'),
+            'notify' => true,
+        ])) throw new ApplicationException(lang('igniter.cart::default.orders.alert_cancel_failed'));
 
         flash()->success(lang('igniter.cart::default.orders.alert_cancel_success'));
 

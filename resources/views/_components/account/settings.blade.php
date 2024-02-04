@@ -40,8 +40,6 @@
                         value="{{ set_value('telephone', $customer->telephone) }}"
                         name="telephone"
                         data-control="country-code-picker"
-                        data-initial-country="gb"
-                        placeholder="@lang('igniter.user::default.settings.label_telephone')"
                 >
                 {!! form_error('telephone', '<span class="text-danger">', '</span>') !!}
             </div>
@@ -120,10 +118,16 @@
         </div>
     </div>
 
-    <div class="buttons">
+    <div class="buttons d-flex justify-content-between">
         <button
                 type="submit"
                 class="btn btn-primary"
         >@lang('igniter.user::default.settings.button_save')</button>
+        <button
+                type="button"
+                class="btn btn-link text-danger"
+                data-request="{{ $__SELF__.'::onDelete' }}"
+                data-request-confirm="@lang('igniter.user::default.settings.alert_delete_confirm')"
+        >@lang('igniter.user::default.settings.button_delete')</button>
     </div>
 </form>
