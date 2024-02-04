@@ -11,9 +11,9 @@ use Igniter\Local\Facades\Location;
 use Igniter\System\Classes\BaseComponent;
 use Igniter\System\Models\Country;
 use Igniter\User\Facades\Auth;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Redirect;
+use Symfony\Component\HttpFoundation\Response;
 
 class Checkout extends BaseComponent
 {
@@ -258,7 +258,7 @@ class Checkout extends BaseComponent
 
         $this->validateCheckoutSecurity();
 
-        try {
+        return rescue(callback: function () use ($data) {
             $order = $this->getOrder();
 
             $this->validateCheckout($data, $order);
@@ -273,18 +273,18 @@ class Checkout extends BaseComponent
                 return;
             }
 
-            if ($redirect instanceof RedirectResponse) {
+            if ($redirect instanceof Response) {
                 return $redirect;
             }
 
             if ($redirect = $this->isOrderMarkedAsProcessed()) {
                 return $redirect;
             }
-        } catch (Exception $ex) {
+        }, rescue: function (\Throwable $ex) {
             flash()->warning($ex->getMessage())->important();
 
             return Redirect::back()->withInput();
-        }
+        });
     }
 
     public function onDeletePaymentProfile()
