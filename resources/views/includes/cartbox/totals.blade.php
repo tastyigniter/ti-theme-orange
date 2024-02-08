@@ -1,0 +1,59 @@
+<div id="cart-totals" class="mt-3">
+        <div class="table-responsive">
+            <table class="table table-sm table-borderless mb-0">
+                <tbody>
+                <tr>
+                    <td>@lang('igniter.cart::default.text_sub_total'):</td>
+                    <td class="text-end">{{ currency_format($cart->subtotal()) }}</td>
+                </tr>
+
+                @foreach ($cart->conditions() as $id => $condition)
+                    @continue(!$pageIsCheckout && $id === 'tip' && $tipConditionValue = $condition->getValue())
+                    <tr>
+                        <td>
+                            {{ $condition->getLabel() }}:
+                            @if ($condition->removeable)
+                                <button
+                                    type="button"
+                                    class="btn btn-sm"
+                                    data-request="{{ $removeConditionEventHandler }}"
+                                    data-request-data="conditionId: '{{ $id }}'"
+                                    data-replace-loading="fa fa-spinner fa-spin"
+                                ><i class="fa fa-times"></i></button>
+                            @endif
+                        </td>
+                        <td class="text-end">
+                            {{ is_numeric($result = $condition->getValue()) ? currency_format($result) : $result }}
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+        @if (!$pageIsCheckout && $this->tippingEnabled())
+            @php $tipCondition = $cart->getCondition('tip') @endphp
+            <div class="border-top border-bottom my-2 pt-2 pb-2">
+                <div class="table-responsive">
+                    <table class="table table-sm table-borderless mb-0">
+                        <tbody>
+                        <tr>
+                            <td>{{ $tipCondition->getLabel() }}:</td>
+                            <td class="text-end">{{ currency_format($tipConditionValue ?? 0) }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                @include('igniter-orange::includes.cartbox.tip-form')
+            </div>
+        @endif
+        <div class="table-responsive">
+            <table class="table table-sm table-borderless mb-0">
+                <tbody>
+                <tr class="fw-bold">
+                    <td>@lang('igniter.cart::default.text_order_total'):</td>
+                    <td class="text-end">{{ currency_format($cart->total()) }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>

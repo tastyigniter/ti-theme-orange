@@ -1,8 +1,8 @@
 let mix = require('laravel-mix');
-const src = 'assets/src';
-const dist = 'assets/dist';
+const src = 'resources/src';
+const dist = 'public';
 
-mix.setPublicPath('./').options({
+mix.setPublicPath('./public').options({
     processCssUrls: false,
 })
 
@@ -17,9 +17,6 @@ mix.setPublicPath('./').options({
  | Compilation is done by the theme customizer in the Admin Panel.
  |
  */
-
-// We only want to copy these files when building for production
-// if (process.env.NODE_ENV !== 'production') return
 
 // Copy fonts from node_modules
 //
@@ -40,6 +37,9 @@ mix.copy(
 ).copy(
     'node_modules/sweetalert2/dist/sweetalert2.min.css',
     `${src}/scss/vendor/sweetalert2.scss`
+).copy(
+    'node_modules/intl-tel-input/build/css/intlTelInput.css',
+    `${src}/scss/vendor/intlTelInput.scss`
 )
 
 //  Build SCSS

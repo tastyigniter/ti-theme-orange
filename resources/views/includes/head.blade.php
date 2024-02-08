@@ -1,0 +1,28 @@
+{!! get_metas() !!}
+<meta name="csrf-token" content="{{ csrf_token() }}">
+@if (trim($favicon = $theme->favicon, '/'))
+    <link href="{{ media_url($favicon) }}" rel="shortcut icon" type="image/ico">
+@elseif ($site_logo !== 'no_photo.png')
+        <link href="{{ media_thumb($site_logo, ['width' => 64, 'height' => 64]) }}" rel="shortcut icon" type="image/ico">
+@else
+    {!! get_favicon() !!}
+@endif
+<title>{{ sprintf(lang('main::lang.site_title'), lang(get_title()), setting('site_name')) }}</title>
+@if ($page->description)
+    <meta name="description" content="{{ $page->description }}">
+@endif
+@if ($page->keywords)
+    <meta name="keywords" content="{{ $page->keywords }}">
+@endif
+@unless($theme->font['download'] ?? FALSE)
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="{{$theme->font['url'] ?? 'https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap'}}" rel="stylesheet">
+@else
+    @googlefonts
+@endunless
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+@styles
+@if (!empty($theme->custom_css))
+    <style>{{$theme->custom_css}}</style>
+@endif

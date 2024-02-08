@@ -3,146 +3,101 @@
 namespace Igniter\Orange;
 
 use Igniter\Flame\Igniter;
-use Igniter\System\Classes\ComponentManager;
+use Igniter\Local\Facades\Location;
+use Igniter\Main\Classes\MainController;
+use Igniter\Main\Classes\Theme;
+use Igniter\Main\Classes\ThemeManager;
+use Igniter\Orange\Http\Controllers\Logout;
+use Igniter\System\Libraries\Assets;
+use Igniter\User\Facades\Auth;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View as ViewFacade;
+use Illuminate\Support\Str;
+use Illuminate\View\View;
+use Livewire\Livewire;
+use Spatie\GoogleFonts\GoogleFonts;
+use Symfony\Component\Finder\Finder;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
-    public function register()
-    {
-        resolve(ComponentManager::class)->registerComponents(function (ComponentManager $manager) {
-            foreach ($this->registerComponents() as $component => $definition) {
-                $manager->registerComponent($component, $definition);
-            }
-        });
-    }
-
     public function boot()
     {
-        Igniter::loadResourcesFrom(__DIR__.'/../resources', 'igniter.orange');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'igniter-orange');
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'igniter.orange');
+
+        Blade::componentNamespace('Igniter\\Orange\\View\\Components', 'igniter-orange');
+
+        $this->loadLivewireComponents();
+
+        if (!Igniter::runningInAdmin()) {
+            ViewFacade::composer('*', function (View $view) {
+                $view->with([
+                    'theme' => controller()->getTheme(),
+                    'page' => controller()->getPage(),
+                ]);
+            });
+
+            Route::matched(function () {
+                if (App::bound('location')) {
+                    Location::currentOrDefault();
+                }
+            });
+
+            MainController::extend(function ($controller) {
+                $controller->bindEvent('page.init', function ($page) {
+                    $isAuthenticated = Auth::check();
+                    if ($page->security == 'customer' && !$isAuthenticated) {
+                        return redirect()->guest(page_url('home'));
+                    }
+
+                    if ($page->security == 'guest' && $isAuthenticated) {
+                        return redirect()->guest(page_url('home'));
+                    }
+                });
+            });
+        }
+
+        config()->set('livewire.pagination_theme', 'bootstrap');
+
+        $this->callAfterResolving(GoogleFonts::class, function (GoogleFonts $googleFonts) {
+            $themeData = resolve(ThemeManager::class)->getActiveTheme()->getCustomData();
+            if (array_get($themeData, 'font-download')) {
+                config()->set('google-fonts.fonts.default', array_get($themeData, 'font-url'));
+            }
+        });
+
+        Event::listen('assets.combiner.afterBuildBundles', function (Assets $assets, Theme $theme) {
+            if (array_get($theme->getCustomData(), 'font-download')) {
+                config()->set('google-fonts.fonts.default', array_get($theme->getCustomData(), 'font-url'));
+
+                app(GoogleFonts::class)->load('default', forceDownload: true);
+            }
+        });
+
+        Route::middleware(config('igniter-routes.middleware', []))
+            ->domain(config('igniter-routes.domain'))
+            ->name('igniter.theme.')
+            ->prefix(Igniter::uri())
+            ->group(function ($router) {
+                $router->get('logout', Logout::class)->name('account.logout');
+            });
     }
 
-    protected function registerComponents()
+    protected function loadLivewireComponents(): void
     {
-        return [
-            Components\Menu::class => [
-                'code' => 'localMenu',
-                'name' => 'lang:igniter.orange::default.menu_component_desc',
-            ],
-            Components\Categories::class => [
-                'code' => 'categories',
-                'name' => 'lang:igniter.orange::default.categories_component_desc',
-            ],
-            Components\CartBox::class => [
-                'code' => 'cartBox',
-                'name' => 'lang:igniter.orange::default.text_component_desc',
-            ],
-            Components\Checkout::class => [
-                'code' => 'checkout',
-                'name' => 'lang:igniter.orange::default.text_checkout_component_desc',
-            ],
-            Components\Orders::class => [
-                'code' => 'accountOrders',
-                'name' => 'lang:igniter.orange::default.orders_component_desc',
-            ],
-            Components\Order::class => [
-                'code' => 'orderPage',
-                'name' => 'lang:igniter.orange::default.order_component_desc',
-            ],
+        $components = (new Finder)->files()->in(__DIR__.'/Livewire')
+            ->name('*.php')
+            ->ignoreDotFiles(true)
+            ->ignoreVCS(true);
 
-            Components\Banners::class => [
-                'code' => 'banners',
-                'name' => 'lang:igniter.orange::default.banners_component_desc',
-            ],
-            Components\Contact::class => [
-                'code' => 'contact',
-                'name' => 'lang:igniter.orange::default.contact_component_desc',
-            ],
-            Components\Slider::class => [
-                'code' => 'slider',
-                'name' => 'lang:igniter.orange::default.slider_component_desc',
-            ],
-            Components\Newsletter::class => [
-                'code' => 'newsletter',
-                'name' => 'lang:igniter.orange::default.newsletter_component_desc',
-            ],
-            Components\FeaturedItems::class => [
-                'code' => 'featuredItems',
-                'name' => 'lang:igniter.orange::default.featured_component_desc',
-            ],
-            Components\Captcha::class => [
-                'code' => 'captcha',
-                'name' => 'lang:igniter.orange::default.captcha_component_desc',
-            ],
+        foreach ($components as $component) {
+            $componentName = Str::of($component->getRelativePathname())->before('.php')->kebab()->replace('/-', '.');
+            $componentClass = Str::of($component->getRelativePathname())->before('.php')->replace('/', '\\')->start('Igniter\\Orange\\Livewire\\');
 
-            Components\LocalBox::class => [
-                'code' => 'localBox',
-                'name' => 'lang:igniter.orange::local_component_desc',
-            ],
-            Components\Search::class => [
-                'code' => 'localSearch',
-                'name' => 'lang:igniter.orange::default.search_component_desc',
-            ],
-            Components\Review::class => [
-                'code' => 'localReview',
-                'name' => 'lang:igniter.orange::default.review_component_desc',
-            ],
-            Components\Info::class => [
-                'code' => 'localInfo',
-                'name' => 'lang:igniter.orange::default.info_component_desc',
-            ],
-            Components\Gallery::class => [
-                'code' => 'localGallery',
-                'name' => 'lang:igniter.orange::default.gallery_component_desc',
-            ],
-            Components\LocalList::class => [
-                'code' => 'localList',
-                'name' => 'lang:igniter.orange::default.list_component_desc',
-            ],
-
-            Components\Booking::class => [
-                'code' => 'booking',
-                'name' => 'lang:igniter.orange::default.booking_component_desc',
-            ],
-            Components\Reservations::class => [
-                'code' => 'accountReservations',
-                'name' => 'lang:igniter.orange::default.reservations_component_desc',
-            ],
-
-            Components\StaticPage::class => [
-                'code' => 'staticPage',
-                'name' => 'lang:igniter.orange::default.static_page_component_desc',
-            ],
-            Components\StaticMenu::class => [
-                'code' => 'staticMenu',
-                'name' => 'lang:igniter.orange::default.static_menu_component_desc',
-            ],
-
-            Components\Socialite::class => [
-                'code' => 'socialite',
-                'name' => 'Displays the social networks login buttons',
-            ],
-            Components\LocalePicker::class => [
-                'code' => 'localePicker',
-                'name' => 'Displays a dropdown to select a front-end language.',
-            ],
-
-            Components\Session::class => [
-                'code' => 'session',
-                'name' => 'lang:igniter.orange::default.session_component_desc',
-            ],
-            Components\Account::class => [
-                'code' => 'account',
-                'name' => 'lang:igniter.orange::default.account_component_desc',
-            ],
-            Components\ResetPassword::class => [
-                'code' => 'resetPassword',
-                'name' => 'lang:igniter.orange::default.reset_component_desc',
-            ],
-            Components\AddressBook::class => [
-                'code' => 'accountAddressBook',
-                'name' => 'lang:igniter.orange::default.addressbook_component_desc',
-            ],
-        ];
+            Livewire::component('igniter-orange::'.$componentName, (string)$componentClass);
+        }
     }
 }
