@@ -1,0 +1,34 @@
+<nav class="navbar navbar-light navbar-top navbar-expand-md py-2">
+    <div class="container">
+        <a class="navbar-brand" href="{{ page_url('home') }}" wire:navigate>
+            @if ($theme->logo_image)
+                <img
+                    class="img-logo"
+                    alt="{{ setting('site_name') }}"
+                    src="{{ uploads_url($theme->logo_image) }}"
+                />
+            @elseif ($theme->logo_text)
+                <span class="text-logo">{{ $theme->logo_text }}</span>
+            @else
+                <img
+                    class="img-logo"
+                    alt="{{ $site_name }}"
+                    src="{{ media_url($site_logo) }}"
+                />
+            @endif
+        </a>
+        <button
+            class="navbar-toggler border-0"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarMainHeader"
+            aria-controls="navbarMainHeader"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        ><span class="navbar-toggler-icon"></span></button>
+
+        <div class="justify-content-end collapse navbar-collapse" id="navbarMainHeader">
+            <x-igniter-orange::nav code="main-menu" />
+        </div>
+    </div>
+</nav>

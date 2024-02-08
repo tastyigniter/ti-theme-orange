@@ -1,0 +1,34 @@
+<div>
+    @if (count($items))
+        <div id="featured-menu-box" class="module-box py-5">
+            <div class="container text-center">
+                <h2 class="mb-3">@lang($title)</h2>
+
+                <div class="row g-3">
+                    @foreach ($items as $featuredItem)
+                        <div class="col-sm-{{ round(12 / $itemsPerRow) }} mb-3 mb-sm-0">
+                            <div class="card rounded-5 h-100">
+                                @if ($featuredItem->hasMedia())
+                                    <img
+                                        class="card-img-top"
+                                        src="{{ $featuredItem->getThumb([
+                                        'width' => $itemWidth,
+                                        'height' => $itemHeight,
+                                    ]) }}" alt="{{ $featuredItem->getBuyableName() }}"
+                                    />
+                                @endif
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        {{ $featuredItem->getBuyableName() }}
+                                        <small>{{ currency_format($featuredItem->getBuyablePrice()) }}</small>
+                                    </h4>
+                                    <p class="card-text">{{ $featuredItem['menu_description'] }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    @endif
+</div>

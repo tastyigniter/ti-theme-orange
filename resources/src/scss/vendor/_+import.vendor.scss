@@ -1,0 +1,18 @@
+// ======================================================================== //
+// Import vendors
+// ======================================================================== //
+
+@import "bootstrap-partials";
+//
+// Raty
+@import "jquery.raty";
+// Animate.css
+@import "animate";
+
+@import "intlTelInput";
+
+.iti__flag {background-image: url("path/to/flags.png");}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .iti__flag {background-image: url("path/to/flags@2x.png");}
+}
