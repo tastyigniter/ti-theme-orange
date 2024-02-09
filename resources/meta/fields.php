@@ -292,13 +292,13 @@ return [
                 'gdpr_background_color' => [
                     'label' => 'Cookie banner CSS background color attribute',
                     'type' => 'colorpicker',
-                    'default' => '#FFF',
+                    'default' => '#000',
                     'rules' => 'required|string',
                 ],
                 'gdpr_text_color' => [
                     'label' => 'Cookie banner CSS text color attribute',
                     'type' => 'colorpicker',
-                    'default' => '#000',
+                    'default' => '#FFF',
                     'rules' => 'required|string',
                 ],
             ],

@@ -1,4 +1,4 @@
-<div class="d-flex align-items-center fs-5">
+<div class="d-flex align-items-center fs-6 fw-bold">
     <i class="far fa-clock me-2"></i>
     {{ $activeOrderType->getLabel() }}&nbsp;·
     @if ($isAsap)

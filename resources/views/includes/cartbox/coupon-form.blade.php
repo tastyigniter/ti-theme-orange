@@ -5,13 +5,13 @@
                 <input
                     x-model="couponCode"
                     type="text"
-                    class="form-control rounded-pill"
+                    class="form-control rounded"
                     placeholder="@lang('igniter.cart::default.text_apply_coupon')"
                 />
 
                 <button
                     type="submit"
-                    class="btn btn btn-secondary rounded-pill ms-2"
+                    class="btn btn btn-secondary rounded ms-2"
                     data-replace-loading="fa fa-spinner fa-spin"
                 ><i class="fa fa-check"></i></button>
             </div>
