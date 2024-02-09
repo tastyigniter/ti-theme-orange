@@ -1,6 +1,6 @@
 <div>
     @if ($reservation)
-        @if ($showReviews && !empty($reviewable))
+        @if ($allowReviews && !empty($reviewable))
             <div class="mb-3">
                 <livewire:igniter-orange::leave-review />
             </div>

@@ -10,7 +10,7 @@
         <h1 class="h3 mb-1">{{ $locationInfo->name }}</h1>
         <div style="--bs-breadcrumb-divider: '·';">
             <div class="breadcrumb mb-1">
-                @if ($showReviews)
+                @if ($allowReviews)
                     <div class="breadcrumb-item">
                         <div class="rating rating-sm">
                             @for ($value = 1; $value<6; $value++)

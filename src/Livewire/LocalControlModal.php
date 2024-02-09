@@ -8,8 +8,8 @@ use Igniter\Flame\Exception\ApplicationException;
 use Igniter\Local\Models\Location;
 use Igniter\System\Facades\Assets;
 use Igniter\User\Facades\Auth;
-use Igniter\Orange\Support\Url;
 use Illuminate\Support\Collection;
+use Livewire\Livewire;
 
 class LocalControlModal extends \Livewire\Component
 {
@@ -89,7 +89,7 @@ class LocalControlModal extends \Livewire\Component
 
         $this->location->updateScheduleTimeSlot($timeSlotDateTime, $this->isAsap);
 
-        return $this->redirect(Url::current(), navigate: true);
+        return $this->redirect(Livewire::originalUrl(), navigate: true);
     }
 
     protected function getDeliveryAddress()

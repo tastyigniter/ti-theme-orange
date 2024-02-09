@@ -29,7 +29,7 @@
                         </div>
                     </div>
                 @else
-                    @if ($showReviews && !empty($reviewable))
+                    @if ($allowReviews && !empty($reviewable))
                         <div class="card mb-1">
                             <div class="card-body">
                                 <livewire:igniter-orange::leave-review />

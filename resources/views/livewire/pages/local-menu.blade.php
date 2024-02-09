@@ -17,7 +17,7 @@
                 </div>
                 <div class="col-md-4 mt-4 mt-md-0">
                     <div class="local-control float-md-end">
-                        <div class="d-inline-block border rounded py-2 px-3">
+                        <div class="d-inline-block rounded py-3 px-3 bg-light">
                             <x-igniter-orange::local-control />
                         </div>
                     </div>

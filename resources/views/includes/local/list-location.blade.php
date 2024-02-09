@@ -17,7 +17,7 @@
                 <div class="no-spacing">
                     <div class="d-flex flex-row mb-2">
                         <h2 class="h5 mb-0 text-body">{{ $locationData->name }}</h2>
-                        @if($showReviews)
+                        @if($allowReviews)
                             <div class="rating rating-sm text-muted">
                                 @for ($value = 1; $value<6; $value++)
                                     <span @class(['fa-star', 'fa' => $value <= $locationData->reviewsScore(), 'far' => $value >= $locationData->reviewsScore()])></span>
