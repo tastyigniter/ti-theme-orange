@@ -2,9 +2,8 @@
     <div class="col-sm-6">
         <div @class(['form-floating', 'is-invalid' => has_form_error('first_name')])>
             <input
-                wire:model="form.firstName"
+                wire:model="form.first_name"
                 type="text"
-                name="firstName"
                 id="firstName"
                 @class(['form-control', 'is-invalid' => has_form_error('first_name')])
                 placeholder="@lang('igniter.cart::default.checkout.label_first_name')"
@@ -13,14 +12,13 @@
             />
             <label for="firstName">@lang('igniter.cart::default.checkout.label_first_name')</label>
         </div>
-        <x-igniter-orange::forms.error field="form.firstName" id="firstNameFeedback" class="text-danger" />
+        <x-igniter-orange::forms.error field="form.first_name" id="firstNameFeedback" class="text-danger" />
     </div>
     <div class="col-sm-6">
         <div @class(['form-floating', 'is-invalid' => has_form_error('last_name')])>
             <input
-                wire:model="form.lastName"
+                wire:model="form.last_name"
                 type="text"
-                name="lastName"
                 id="lastName"
                 @class(['form-control', 'is-invalid' => has_form_error('last_name')])
                 placeholder="@lang('igniter.cart::default.checkout.label_last_name')"
@@ -29,14 +27,13 @@
             />
             <label for="lastName">@lang('igniter.cart::default.checkout.label_last_name')</label>
         </div>
-        <x-igniter-orange::forms.error field="form.lastName" id="lastNameFeedback" class="text-danger" />
+        <x-igniter-orange::forms.error field="form.last_name" id="lastNameFeedback" class="text-danger" />
     </div>
     <div class="col-sm-6">
         <div @class(['form-floating', 'is-invalid' => has_form_error('email')])>
             <input
                 wire:model="form.email"
                 type="text"
-                name="email"
                 id="email"
                 @class(['form-control', 'is-invalid' => has_form_error('email')])
                 placeholder="@lang('igniter.cart::default.checkout.label_email')"

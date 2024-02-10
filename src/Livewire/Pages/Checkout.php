@@ -17,6 +17,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Redirect;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Url;
 use Livewire\Livewire;
 
 class Checkout extends \Livewire\Component
@@ -57,7 +58,7 @@ class Checkout extends \Livewire\Component
     public bool $showDeliveryCommentField = true;
 
     /** The permalink slug for the agree checkout terms page */
-    public string $agreeTermsSlug = '';
+    public string $agreeTermsSlug = 'terms-and-conditions';
 
     /** The checkout page */
     public string $menusPage = 'local'.DIRECTORY_SEPARATOR.'menus';
@@ -68,6 +69,7 @@ class Checkout extends \Livewire\Component
     /** Page to redirect to when checkout is successful */
     public string $successPage = 'checkout'.DIRECTORY_SEPARATOR.'success';
 
+    #[Url(as: 'step')]
     public string $checkoutStep = 'details';
 
     /**
@@ -97,13 +99,13 @@ class Checkout extends \Livewire\Component
 
     public function mount()
     {
-        //        if ($redirect = $this->isOrderMarkedAsProcessed()) {
-        //            return $redirect;
-        //        }
-        //
-        //        if ($this->checkCheckoutSecurity()) {
-        //            return $this->redirect(restaurant_url($this->menusPage), navigate: true);
-        //        }
+        if ($redirect = $this->isOrderMarkedAsProcessed()) {
+            return $redirect;
+        }
+
+        if ($this->checkCheckoutSecurity()) {
+            return $this->redirect(restaurant_url($this->menusPage), navigate: true);
+        }
 
         Assets::addJs('js/checkout.js', 'checkout-js');
 
@@ -112,23 +114,21 @@ class Checkout extends \Livewire\Component
         }
 
         $order = $this->getOrder();
-        $this->form->firstName = $order->first_name;
-        $this->form->lastName = $order->last_name;
+        $this->form->first_name = $order->first_name;
+        $this->form->last_name = $order->last_name;
         $this->form->email = $order->email;
         $this->form->telephone = $order->telephone;
         $this->form->comment = $order->comment;
-        $this->form->deliveryComment = $order->delivery_comment;
-        $this->form->addressId = $order->address_id;
+        $this->form->delivery_comment = $order->delivery_comment;
+        $this->form->address_id = $order->address_id;
         $this->form->payment = $order->payment;
-        $this->form->address = $order->address?->toArray();
+        $this->form->address = $order->address?->toArray() ?? [];
     }
 
     public function boot()
     {
         $this->orderManager = resolve(OrderManager::class);
         $this->cartManager = resolve(CartManager::class);
-
-        //        $this->checkoutStep = $this->param($this->property('stepParamName'), 'details');
     }
 
     public function updating($property, $value)
@@ -192,13 +192,20 @@ class Checkout extends \Livewire\Component
 
     public function onConfirm()
     {
+        if ($this->checkCheckoutSecurity()) {
+            return $this->redirect(restaurant_url($this->menusPage), navigate: true);
+        }
+
         if ($redirect = $this->isOrderMarkedAsProcessed()) {
             return $redirect;
         }
 
-        $this->validateCheckoutSecurity();
+        $order = $this->getOrder();
 
         $this->prepareDeliveryAddress();
+
+        $this->form->requiresAddress = $order->isDeliveryType();
+        $this->form->requiresPayment = (!$this->isTwoStepCheckout || $this->checkoutStep === static::STEP_PAY);
 
         $data = $this->form->validate();
 
@@ -206,14 +213,12 @@ class Checkout extends \Livewire\Component
         $data['successPage'] = $this->successPage;
 
         try {
-            $order = $this->getOrder();
-
             $this->validateCheckout($order, $data);
 
             $this->orderManager->saveOrder($order, $data);
 
             if (!$this->canConfirmCheckout()) {
-                return redirect()->to(Livewire::originalUrl().'?step=pay');
+                return redirect()->to(Livewire::originalUrl().'?step='.static::STEP_PAY);
             }
 
             if (($redirect = $this->orderManager->processPayment($order, $data)) === false) {
@@ -314,7 +319,7 @@ class Checkout extends \Livewire\Component
 
     protected function prepareDeliveryAddress()
     {
-        $addressId = $this->form->addressId;
+        $addressId = $this->form->address_id;
         if ($addressId && $address = $this->orderManager->findDeliveryAddress($addressId)) {
             $this->form->address = $address->toArray();
         }
@@ -334,6 +339,6 @@ class Checkout extends \Livewire\Component
             return true;
         }
 
-        return $this->checkoutStep === 'pay';
+        return $this->checkoutStep === self::STEP_PAY;
     }
 }

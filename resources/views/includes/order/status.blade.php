@@ -1,7 +1,7 @@
 <div class="label label-secondary mb-3">
     <span class="h6">
         <i class="fa fa-clock"></i>&nbsp;
-        {{ $order->order_datetime->isoFormat($orderDateTimeFormat) }}
+        {{ $order->order_datetime->isoFormat(lang('igniter::system.moment.date_time_format_short')) }}
     </span>
 </div>
 <h5>@lang('igniter.cart::default.checkout.text_order_no'){{$order->order_id}}</h5>
@@ -9,7 +9,7 @@
     <div class="row justify-content-center">
         <div class="col-sm-6 py-3">
             <div class="row">
-                @foreach ($__SELF__->getStatusWidthForProgressBars() as $group => $width)
+                @foreach ($this->getStatusWidthForProgressBars() as $group => $width)
                     <div class="col-4">
                         <div class="progress" style="height: 8px">
                             <div
@@ -36,18 +36,15 @@
 <div class="mt-3">
     @if (!$hideReorderBtn)
         <button
+            type="button"
             class="btn btn-primary re-order"
-            data-request="{{ $__SELF__.'::onReOrder' }}"
-            data-request-data="orderId: {{ $order->order_id }}"
-            data-attach-loading
+            wire:click="onReOrder({{ $order->order_id }})"
         >@lang('igniter.cart::default.orders.button_reorder')</button>
     @endif
-    @if ($__SELF__->showCancelButton())
+    @if ($this->showCancelButton())
         <button
             class="btn btn-light text-danger"
-            data-request="{{ $__SELF__.'::onCancel' }}"
-            data-request-data="orderId: {{ $order->order_id }}"
-            data-attach-loading
+            wire:click="onCancel('{{ $order->order_id }}')"
         >@lang('igniter.cart::default.orders.button_cancel')</button>
     @endif
 </div>

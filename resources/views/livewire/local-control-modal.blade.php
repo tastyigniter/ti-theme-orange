@@ -50,7 +50,7 @@
                                 >@lang('igniter.local::default.search.text_change')</a>
                             </h6>
                             <div class="p-2 border rounded bg-white w-100">
-                                <div class="pe-2 text-truncate">{{ $deliveryAddress }}</div>
+                                <div class="pe-2 text-truncate">{{ $deliveryAddress ?? lang('igniter.local::default.alert_no_search_query') }}</div>
                             </div>
                         </div>
                     </div>

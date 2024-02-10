@@ -9,26 +9,45 @@ use Igniter\Cart\Facades\Cart;
 use Igniter\Cart\Models\Menu;
 use Igniter\Cart\Models\Order as OrderModel;
 use Igniter\Flame\Exception\ApplicationException;
+use Igniter\Main\Helpers\MainHelper;
 use Igniter\User\Facades\Auth;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Redirect;
 
 class ShowOrder extends \Livewire\Component
 {
+    /** The parameter name used for the order hash code */
     public string $hashParamName = 'hash';
 
     public string $loginPage = 'account'.DIRECTORY_SEPARATOR.'login';
 
+    /** Account Orders Page */
+    public string $ordersPage = 'account'.DIRECTORY_SEPARATOR.'orders';
+
+    public string $checkoutPage = 'checkout'.DIRECTORY_SEPARATOR.'checkout';
+
+    /** Menus Page, page to redirect to when a user clicks the re-order button */
+    public string $menusPage = 'local'.DIRECTORY_SEPARATOR.'menus';
+
     public string $loginUrl = '';
+
+    /** Whether to hide the reorder button, should be hidden on the checkout success page */
+    public bool $hideReorderBtn = true;
 
     /**
      * @var \Igniter\Cart\Classes\OrderManager
      */
     protected $orderManager;
 
+    protected null|Model $order = null;
+
     public function render()
     {
-        return view('igniter-orange::livewire.pages.show-order', ['order' => $this->getOrder()]);
+        return view('igniter-orange::livewire.pages.show-order', [
+            'customer' => Auth::customer(),
+            'order' => $this->getProcessedOrder(),
+        ]);
     }
 
     public function boot()
@@ -39,45 +58,21 @@ class ShowOrder extends \Livewire\Component
     public function mount()
     {
         $this->loginUrl = $this->getLoginPageUrl();
-    }
 
-    public function defineProperties(): array
-    {
-        return [
-            'ordersPage' => [
-                'label' => 'Account Orders Page',
-                'type' => 'select',
-                'default' => 'account'.DIRECTORY_SEPARATOR.'orders',
-                'options' => [static::class, 'getThemePageOptions'],
-                'validationRule' => 'required|regex:/^[a-z0-9\-_\/]+$/i',
-            ],
-            'menusPage' => [
-                'label' => 'Menus Page, page to redirect to when a user clicks the re-order button',
-                'type' => 'select',
-                'default' => 'local'.DIRECTORY_SEPARATOR.'menus',
-                'options' => [static::class, 'getThemePageOptions'],
-                'validationRule' => 'required|regex:/^[a-z0-9\-_\/]+$/i',
-            ],
-            'hideReorderBtn' => [
-                'label' => 'Whether to hide the reorder button, should be hidden on the checkout success page',
-                'type' => 'switch',
-                'default' => false,
-                'validationRule' => 'required|boolean',
-            ],
-            'hashParamName' => [
-                'label' => 'The parameter name used for the order hash code',
-                'type' => 'text',
-                'default' => 'hash',
-                'validationRule' => 'required|regex:/^[a-z0-9]+$/i',
-            ],
-        ];
+        if (!$processedOrder = $this->getProcessedOrder()) {
+            return Redirect::to(MainHelper::pageUrl(Auth::customer() ? $this->ordersPage : $this->checkoutPage));
+        }
+
+        if ($this->orderManager->isCurrentOrderId($processedOrder?->order_id)) {
+            $this->orderManager->clearOrder();
+        }
     }
 
     public function getStatusWidthForProgressBars()
     {
         $result = [];
 
-        $order = $this->getOrder();
+        $order = $this->getProcessedOrder();
 
         $result['default'] = 0;
         $result['processing'] = 0;
@@ -103,7 +98,7 @@ class ShowOrder extends \Livewire\Component
 
     public function showCancelButton($order = null)
     {
-        if (is_null($order) && !$order = $this->getOrder()) {
+        if (is_null($order) && !$order = $this->getProcessedOrder()) {
             return false;
         }
 
@@ -117,7 +112,7 @@ class ShowOrder extends \Livewire\Component
         $this->page['orderDateTimeFormat'] = lang('system::lang.moment.date_time_format_short');
 
         $this->page['hashParam'] = $this->param('hash');
-        $this->page['order'] = $order = $this->getOrder();
+        $this->page['order'] = $order = $this->getProcessedOrder();
 
         $this->addJs('js/order.js', 'checkout-js');
 
@@ -130,13 +125,9 @@ class ShowOrder extends \Livewire\Component
         }
     }
 
-    public function onReOrder()
+    public function onReOrder($orderId = null)
     {
-        if (!is_numeric($orderId = input('orderId'))) {
-            return;
-        }
-
-        if (!$order = OrderModel::find($orderId)) {
+        if (!$orderId || !$order = OrderModel::find($orderId)) {
             return;
         }
 
@@ -183,13 +174,22 @@ class ShowOrder extends \Livewire\Component
         return redirect()->back();
     }
 
-    protected function getOrder()
+    protected function getProcessedOrder()
     {
-        if (!is_string($hash = request()->input($this->hashParamName))) {
+        if ($this->order) {
+            return $this->order;
+        }
+
+        if (!is_string($hash = request()->route($this->hashParamName))) {
             return null;
         }
 
-        return $this->orderManager->getOrderByHash($hash, Auth::customer());
+        $order = $this->orderManager->getOrderByHash($hash, Auth::customer());
+        if ($order && !$order->isPaymentProcessed()) {
+            return null;
+        }
+
+        return $this->order = $order;
     }
 
     protected function addCartItem($menuModel, $orderMenu): void
