@@ -14,7 +14,6 @@
                             type="radio"
                             id="payment-{{ $paymentMethod->code }}"
                             class="form-check-input"
-                            name="payment"
                             value="{{ $paymentMethod->code }}"
                             @checked($paymentIsSelected)
                             @disabled($paymentIsNotApplicable)

@@ -8,9 +8,9 @@ use Livewire\Form;
 
 class CheckoutForm extends Form
 {
-    public ?string $firstName = null;
+    public ?string $first_name = null;
 
-    public ?string $lastName = null;
+    public ?string $last_name = null;
 
     public ?string $email = null;
 
@@ -18,15 +18,19 @@ class CheckoutForm extends Form
 
     public ?string $comment = null;
 
-    public ?string $deliveryComment = null;
+    public ?string $delivery_comment = null;
 
-    public ?string $addressId = null;
+    public ?string $address_id = null;
 
-    public ?array $address = null;
+    public array $address = [];
 
     public ?string $payment = null;
 
     public bool $termsAgreed = false;
+
+    public bool $requiresAddress = false;
+
+    public bool $requiresPayment = false;
 
     public function validationAttributes()
     {
@@ -54,23 +58,23 @@ class CheckoutForm extends Form
     public function rules()
     {
         return [
-            'firstName' => 'required|between:1,48',
-            'lastName' => 'required|between:1,48',
+            'first_name' => ['required', 'between:1,48'],
+            'last_name' => ['required', 'between:1,48'],
             'email' => ['sometimes', 'required', 'email:filter', 'max:96', Rule::unique('customers', 'email')->ignore(Auth::customer()?->getKey(), 'customer_id')],
-            'telephone' => 'sometimes|required|regex:/^([0-9\s\-\+\(\)]*)$/i',
-            'comment' => 'max:500',
-            'deliveryComment' => 'max:500',
-            'addressId' => 'required|integer',
-            'address' => 'array',
-            'address.address_id' => 'sometimes|integer',
-            'address.address_1' => 'required|min:3|max:128',
-            'address.address_2' => 'nullable|min:3|max:128',
-            'address.city' => 'nullable|min:2|max:128',
-            'address.state' => 'nullable|max:128',
-            'address.country_id' => 'nullable|string',
-            'address.postcode' => 'nullable|integer',
-            'payment' => 'sometimes|required|alpha_dash',
-            'termsAgreed' => 'sometimes|boolean',
+            'telephone' => ['sometimes', 'required', 'regex:/^([0-9\s\-\+\(\)]*)$/i'],
+            'comment' => ['max:500'],
+            'delivery_comment' => ['max:500'],
+            'address_id' => ['exclude_unless:form.requiresAddress,true', 'nullable', 'integer'],
+            'address' => ['exclude_unless:form.requiresAddress,true', 'array'],
+            'address.address_id' => ['exclude_unless:form.requiresAddress,true', 'integer'],
+            'address.address_1' => ['exclude_unless:form.requiresAddress,true', 'required', 'min:3', 'max:128'],
+            'address.address_2' => ['exclude_unless:form.requiresAddress,true', 'nullable', 'min:3', 'max:128'],
+            'address.city' => ['exclude_unless:form.requiresAddress,true', 'nullable', 'min:2', 'max:128'],
+            'address.state' => ['exclude_unless:form.requiresAddress,true', 'nullable', 'max:128'],
+            'address.country_id' => ['exclude_unless:form.requiresAddress,true', 'nullable', 'integer'],
+            'address.postcode' => ['exclude_unless:form.requiresAddress,true', 'nullable', 'string'],
+            'payment' => ['exclude_unless:form.requiresPayment,true', 'required', 'alpha_dash'],
+            'termsAgreed' => ['accepted_if:form.requiresPayment,true'],
         ];
     }
 }

@@ -1,5 +1,5 @@
 @if ($order->isDeliveryType())
-    <div class="card mb-1">
+    <div class="card shadow-sm mb-3">
         <div class="card-body">
             <h2 class="h4 fw-normal">@lang('igniter.cart::default.checkout.text_delivery_address')</h2>
             <b>{{ $order->customer_name }}</b><br>
@@ -8,14 +8,14 @@
     </div>
 @endif
 
-<div class="card mb-1">
+<div class="card shadow-sm mb-3">
     <div class="card-body">
         <h2 class="h4 fw-normal">@lang('igniter.cart::default.checkout.text_comment')</h2>
         <p class="mb-0">{{ !empty($order->comment) ? $order->comment : lang('igniter.cart::default.checkout.text_no_comment') }}</p>
     </div>
 </div>
 
-<div class="card">
+<div class="card shadow-sm mb-3">
     <div class="card-body">
         <h2 class="h4 fw-normal">@lang('igniter.cart::default.checkout.label_payment_method')</h2>
         <p class="mb-0">

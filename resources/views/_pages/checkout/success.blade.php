@@ -6,7 +6,7 @@ permalink: /checkout/success/:hash?
 <div class="container">
     <div class="row py-4">
         <div class="col-sm-9 m-auto">
-            @@componentPartial('orderPage')
+            <livewire:igniter-orange::pages.show-order />
         </div>
     </div>
 </div>

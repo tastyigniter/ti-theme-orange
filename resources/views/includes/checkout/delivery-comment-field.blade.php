@@ -1,15 +1,14 @@
 <div class="mb-4">
-    <div @class(['form-floating', 'is-invalid' => has_form_error('deliveryComment')])>
+    <div @class(['form-floating', 'is-invalid' => has_form_error('delivery_comment')])>
             <textarea
-                wire:model="form.deliveryComment"
-                name="deliveryComment"
+                wire:model="form.delivery_comment"
                 id="deliveryComment"
                 rows="3"
-                @class(['form-control', 'is-invalid' => has_form_error('deliveryComment')])
+                @class(['form-control', 'is-invalid' => has_form_error('delivery_comment')])
                 placeholder="@lang('igniter.cart::default.checkout.label_comment')"
                 aria-describedby="deliveryCommentFeedback"
             ></textarea>
         <label for="deliveryComment">@lang('igniter.cart::default.checkout.label_delivery_comment')</label>
     </div>
-    <x-igniter-orange::forms.error field="form.deliveryComment" id="deliveryCommentFeedback" class="text-danger" />
+    <x-igniter-orange::forms.error field="form.delivery_comment" id="deliveryCommentFeedback" class="text-danger" />
 </div>
