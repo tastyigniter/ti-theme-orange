@@ -14,16 +14,16 @@
     "orange"
   ],
   "require": {
-    "livewire/livewire": "v3.0.0",
+    "livewire/livewire": "^v3.0.0",
     "spatie/laravel-google-fonts": "^1.2",
-    "tastyigniter/ti-ext-cart": "v4.x-dev",
-    "tastyigniter/ti-ext-coupons": "v4.x-dev",
-    "tastyigniter/ti-ext-frontend": "v4.x-dev",
-    "tastyigniter/ti-ext-local": "v4.x-dev",
-    "tastyigniter/ti-ext-pages": "v4.x-dev",
-    "tastyigniter/ti-ext-payregister": "v4.x-dev",
-    "tastyigniter/ti-ext-reservation": "v4.x-dev",
-    "tastyigniter/ti-ext-user": "v4.x-dev"
+    "tastyigniter/ti-ext-cart": "v4.x-dev as v4.0",
+    "tastyigniter/ti-ext-coupons": "v4.x-dev as v4.0",
+    "tastyigniter/ti-ext-frontend": "v4.x-dev as v4.0",
+    "tastyigniter/ti-ext-local": "v4.x-dev as v4.0",
+    "tastyigniter/ti-ext-pages": "v4.x-dev as v4.0",
+    "tastyigniter/ti-ext-payregister": "v4.x-dev as v4.0",
+    "tastyigniter/ti-ext-reservation": "v4.x-dev as v4.0",
+    "tastyigniter/ti-ext-user": "v4.x-dev as v4.0"
   },
   "require-dev": {
     "laravel/pint": "^1.2",
