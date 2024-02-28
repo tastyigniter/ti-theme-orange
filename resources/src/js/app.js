@@ -20,5 +20,4 @@ window.PhotoSwipeLightbox = PhotoSwipeLightbox;
 require('./partials/scripts');
 require('./partials/cookie-banner');
 require('./partials/telephone');
-require('../../../../core/resources/js/partials/flashmessage');
 
