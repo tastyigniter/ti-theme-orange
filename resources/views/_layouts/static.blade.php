@@ -15,7 +15,7 @@ description: Static layout for static pages
 
 <main role="main">
     <div id="page-wrapper">
-        <div class="container py-4">
+        <div class="container pb-5">
             <div id="heading" class="heading-section py-5">
                 <h2>{{ $this->page->title }}</h2>
             </div>

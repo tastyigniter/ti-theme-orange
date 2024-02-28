@@ -4,8 +4,8 @@ namespace Igniter\Orange\Livewire;
 
 use Igniter\Cart\Facades\Cart;
 use Igniter\Flame\Exception\ApplicationException;
-use Igniter\User\Facades\Auth;
 use Igniter\Orange\Livewire\Forms\SettingsForm;
+use Igniter\User\Facades\Auth;
 use Livewire\Component;
 
 class AccountSettings extends Component
@@ -19,7 +19,7 @@ class AccountSettings extends Component
 
     public function mount()
     {
-        $this->form->fill(Auth::customer());
+        $this->form->fillFrom(Auth::customer());
     }
 
     public function cartCount()

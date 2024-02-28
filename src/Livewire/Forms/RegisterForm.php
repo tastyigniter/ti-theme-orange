@@ -2,34 +2,53 @@
 
 namespace Igniter\Orange\Livewire\Forms;
 
-use Livewire\Attributes\Rule;
 use Livewire\Form;
 
 class RegisterForm extends Form
 {
-    #[Rule('required|between:1,48', as: 'igniter.user::default.settings.label_first_name')]
     public string $first_name;
 
-    #[Rule('required|between:1,48', as: 'igniter.user::default.settings.label_last_name')]
     public string $last_name;
 
-    #[Rule('required|email:filter|max:96|unique:customers,email', as: 'igniter.user::default.settings.label_email')]
     public string $email;
 
-    #[Rule('required|min:6|max:32|confirmed', as: 'igniter.user::default.login.label_password')]
     public string $password;
 
-    #[Rule('required', as: 'igniter.user::default.login.label_password_confirm')]
     public string $password_confirmation;
 
-    #[Rule('required', as: 'igniter.user::default.settings.label_telephone')]
     public string $telephone;
 
-    #[Rule('boolean', as: 'igniter.user::default.login.label_subscribe')]
     public string $newsletter;
 
-    #[Rule('sometimes|boolean', as: 'igniter.user::default.login.label_i_agree')]
     public string $terms;
 
     public bool $status = true;
+
+    public function validationAttributes()
+    {
+        return [
+            'first_name' => lang('igniter.user::default.settings.label_first_name'),
+            'last_name' => lang('igniter.user::default.settings.label_last_name'),
+            'email' => lang('igniter.user::default.settings.label_email'),
+            'password' => lang('igniter.user::default.login.label_password'),
+            'password_confirmation' => lang('igniter.user::default.login.label_password_confirm'),
+            'telephone' => lang('igniter.user::default.settings.label_telephone'),
+            'newsletter' => lang('igniter.user::default.login.label_subscribe'),
+            'terms' => lang('igniter.user::default.login.label_i_agree'),
+        ];
+    }
+
+    public function rules()
+    {
+        return [
+            'first_name' => ['required', 'between:1,48'],
+            'last_name' => ['required', 'between:1,48'],
+            'email' => ['required', 'email:filter', 'max:96', 'unique:customers,email'],
+            'password' => ['required', 'min:6', 'max:32', 'confirmed'],
+            'password_confirmation' => ['required'],
+            'telephone' => ['required'],
+            'newsletter' => ['boolean'],
+            'terms' => ['sometimes', 'boolean'],
+        ];
+    }
 }

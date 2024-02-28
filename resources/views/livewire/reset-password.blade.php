@@ -1,5 +1,9 @@
 <div>
-    @if ($resetCode)
+    @if($message)
+        <div class="alert alert-info">
+            {{ $message }}
+        </div>
+    @elseif($resetCode)
         <x-igniter-orange::forms.form wire:submit="onResetPassword">
             <input wire:model="resetCode" name="resetCode" type="hidden" />
             <div class="form-group">

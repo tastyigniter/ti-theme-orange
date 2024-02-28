@@ -4,5 +4,5 @@ layout: default
 permalink: :location/reservation/success/:hash?
 ---
 <div class="container">
-    <livewire:igniter-orange::pages.show-reservation />
+    <livewire:igniter-orange::reservation-preview />
 </div>

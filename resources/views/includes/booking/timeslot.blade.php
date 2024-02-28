@@ -10,7 +10,7 @@
         <button
             type="button"
             wire:click="onSelectTime('{{ $slot->dateTime->format('H:i') }}')"
-            @class(['btn btn-primary rounded-pill me-3', 'disabled' => $slot->fullyBooked])
+            @class(['btn btn-primary rounded me-3', 'disabled' => $slot->fullyBooked])
             id="time{{$key}}"
         >{{ $slot->dateTime->isoFormat(lang('system::lang.moment.time_format')) }}</button>
     @empty

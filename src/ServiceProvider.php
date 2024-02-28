@@ -2,15 +2,15 @@
 
 namespace Igniter\Orange;
 
+use Igniter\Cart\Http\Middleware\CartMiddleware;
 use Igniter\Flame\Igniter;
-use Igniter\Local\Facades\Location;
+use Igniter\Local\Http\Middleware\CheckLocation;
 use Igniter\Main\Classes\MainController;
 use Igniter\Main\Classes\Theme;
 use Igniter\Main\Classes\ThemeManager;
 use Igniter\Orange\Http\Controllers\Logout;
 use Igniter\System\Libraries\Assets;
 use Igniter\User\Facades\Auth;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +32,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         $this->loadLivewireComponents();
 
+        Livewire::addPersistentMiddleware([
+            CheckLocation::class,
+            CartMiddleware::class,
+        ]);
+
         if (!Igniter::runningInAdmin()) {
             ViewFacade::composer('*', function (View $view) {
                 $view->with([
@@ -40,11 +45,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
                 ]);
             });
 
-            Route::matched(function () {
-                if (App::bound('location')) {
-                    Location::currentOrDefault();
-                }
-            });
+            //            Route::matched(function () {
+            //                if (App::bound('location')) {
+            //                    Location::currentOrDefault();
+            //                }
+            //            });
 
             MainController::extend(function ($controller) {
                 $controller->bindEvent('page.init', function ($page) {

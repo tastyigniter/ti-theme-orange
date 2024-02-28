@@ -1,7 +1,7 @@
 <div class="form-row mb-4">
     <div class="col-sm-3">
         <h5 class="text-muted">@lang('igniter.reservation::default.label_guest_num')</h5>
-        <h4 class="font-weight-normal">@lang($guest > 1 ? 'igniter.reservation::default.text_people' : 'igniter.reservation::default.text_person')</h4>
+        <h4 class="font-weight-normal">{{$guest}} @lang($guest > 1 ? 'igniter.reservation::default.text_people' : 'igniter.reservation::default.text_person')</h4>
     </div>
     <div class="col-sm-2">
         <h5 class="text-muted">@lang('igniter.reservation::default.label_date')</h5>

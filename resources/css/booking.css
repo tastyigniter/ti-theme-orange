@@ -38,6 +38,7 @@ span.flatpickr-weekday,
 }
 
 .flatpickr-day {
+    border-radius: 5px;
     width: auto;
     max-width: 100%;
     height: auto;

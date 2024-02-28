@@ -1,10 +1,7 @@
 <div class="d-sm-flex">
     @if ($location->hasMedia('thumb'))
         <div class="w-sm-25 d-none d-sm-block me-sm-4">
-            <img
-                class="img-fluid"
-                src="{{ $location->getThumb() }}"
-            >
+            <img class="img-fluid" src="{{ $location->getThumb() }}" />
         </div>
     @endif
 
@@ -22,5 +19,4 @@
             </dd>
         </dl>
     </div>
-
 </div>

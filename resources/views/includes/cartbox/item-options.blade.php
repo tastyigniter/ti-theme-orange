@@ -11,7 +11,7 @@
                     {{ $menuOption->option_name }}
                     @if ($menuOption->isRequired())
                         <span
-                            class="small pull-right text-muted">@lang('igniter.cart::default.text_required')</span>
+                            class="fs-6 pull-right text-muted">@lang('igniter.cart::default.text_required')</span>
                     @endif
                 </h5>
                 @if ($menuOption->min_selected > 0 || $menuOption->max_selected > 0)

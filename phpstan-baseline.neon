@@ -1,0 +1,791 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to static method current\\(\\) on an unknown class Location\\.$#"
+			count: 2
+			path: resources/views/_pages/local/menus.blade.php
+
+		-
+			message: "#^Call to static method getUser\\(\\) on an unknown class AdminAuth\\.$#"
+			count: 1
+			path: resources/views/_pages/local/menus.blade.php
+
+		-
+			message: "#^Call to static method current\\(\\) on an unknown class Location\\.$#"
+			count: 1
+			path: resources/views/_pages/local/reviews.blade.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Local\\\\Models\\\\Location\\:\\:\\$distance\\.$#"
+			count: 1
+			path: src/Data/LocationData.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Local\\\\Models\\\\Location\\:\\:\\$permalink_slug\\.$#"
+			count: 1
+			path: src/Data/LocationData.php
+
+		-
+			message: "#^Call to an undefined method Igniter\\\\Local\\\\Models\\\\Location\\:\\:hasCollection\\(\\)\\.$#"
+			count: 1
+			path: src/Data/LocationData.php
+
+		-
+			message: "#^Call to an undefined method Igniter\\\\Local\\\\Models\\\\Location\\:\\:hasDelivery\\(\\)\\.$#"
+			count: 1
+			path: src/Data/LocationData.php
+
+		-
+			message: "#^Call to an undefined method Igniter\\\\Local\\\\Models\\\\Location\\:\\:listAvailablePayments\\(\\)\\.$#"
+			count: 1
+			path: src/Data/LocationData.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:getWeekDaysOptions\\(\\)\\.$#"
+			count: 1
+			path: src/Data/LocationData.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:current\\(\\)\\.$#"
+			count: 1
+			path: src/Data/LocationData.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:getOrderType\\(\\)\\.$#"
+			count: 1
+			path: src/Data/LocationData.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:getOrderTypes\\(\\)\\.$#"
+			count: 1
+			path: src/Data/LocationData.php
+
+		-
+			message: "#^Unsafe usage of new static\\(\\)\\.$#"
+			count: 1
+			path: src/Data/LocationData.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Cart\\\\Models\\\\Menu\\:\\:\\$ingredients\\.$#"
+			count: 1
+			path: src/Data/MenuItemData.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Cart\\\\Models\\\\Menu\\:\\:\\$menu_price\\.$#"
+			count: 3
+			path: src/Data/MenuItemData.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Cart\\\\Models\\\\Menu\\:\\:\\$special\\.$#"
+			count: 3
+			path: src/Data/MenuItemData.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:orderDateTime\\(\\)\\.$#"
+			count: 1
+			path: src/Data/MenuItemData.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:getUser\\(\\)\\.$#"
+			count: 1
+			path: src/Http/Controllers/Logout.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:logout\\(\\)\\.$#"
+			count: 1
+			path: src/Http/Controllers/Logout.php
+
+		-
+			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Facades\\\\Event\\:\\:fire\\(\\)\\.$#"
+			count: 1
+			path: src/Http/Controllers/Logout.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Cart\\\\Facades\\\\Cart\\:\\:count\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/AccountSettings.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Cart\\\\Facades\\\\Cart\\:\\:total\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/AccountSettings.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:customer\\(\\)\\.$#"
+			count: 2
+			path: src/Livewire/AccountSettings.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:logout\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/AccountSettings.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:customer\\(\\)\\.$#"
+			count: 7
+			path: src/Livewire/AddressBook.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:current\\(\\)\\.$#"
+			count: 3
+			path: src/Livewire/Booking.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addCss\\(\\)\\.$#"
+			count: 3
+			path: src/Livewire/Booking.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addJs\\(\\)\\.$#"
+			count: 3
+			path: src/Livewire/Booking.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:customer\\(\\)\\.$#"
+			count: 2
+			path: src/Livewire/Booking.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Orange\\\\Livewire\\\\Captcha\\:\\:\\$page\\.$#"
+			count: 1
+			path: src/Livewire/Captcha.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Frontend\\\\Models\\\\CaptchaSettings\\:\\:instance\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/Captcha.php
+
+		-
+			message: "#^Call to an undefined method Igniter\\\\Orange\\\\Livewire\\\\CartBox\\:\\:removeCartItem\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/CartBox.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Cart\\\\Models\\\\CartSettings\\:\\:get\\(\\)\\.$#"
+			count: 3
+			path: src/Livewire/CartBox.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:checkNoOrderTypeAvailable\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/CartBox.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:checkOrderTime\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/CartBox.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:getById\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/CartBox.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/CartBox.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:orderType\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/CartBox.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:setCurrent\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/CartBox.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addJs\\(\\)\\.$#"
+			count: 2
+			path: src/Livewire/CartBox.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Cart\\\\Models\\\\Menu\\:\\:\\$minimum_qty\\.$#"
+			count: 2
+			path: src/Livewire/CartItemModal.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/CartItemModal.php
+
+		-
+			message: "#^Cannot call method search\\(\\) on array\\.$#"
+			count: 1
+			path: src/Livewire/CartItemModal.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Orange\\\\Livewire\\\\Checkout\\:\\:\\$paymentGateways\\.$#"
+			count: 1
+			path: src/Livewire/Checkout.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\PayRegister\\\\Classes\\\\BasePaymentGateway\\|Igniter\\\\PayRegister\\\\Models\\\\Payment\\:\\:\\$code\\.$#"
+			count: 1
+			path: src/Livewire/Checkout.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:current\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/Checkout.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:getOrderTypes\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/Checkout.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:userPosition\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/Checkout.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addJs\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/Checkout.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:customer\\(\\)\\.$#"
+			count: 2
+			path: src/Livewire/Checkout.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:getUser\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/Checkout.php
+
+		-
+			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Facades\\\\Event\\:\\:fire\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/Checkout.php
+
+		-
+			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Facades\\\\Mail\\:\\:queueTemplate\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/Contact.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:customer\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/Forms/BookingForm.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:customer\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/Forms/CheckoutForm.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:user\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/Forms/SettingsForm.php
+
+		-
+			message: "#^Call to an undefined method Igniter\\\\Local\\\\Contracts\\\\LocationInterface\\:\\:searchDeliveryArea\\(\\)\\.$#"
+			count: 2
+			path: src/Livewire/FulfillmentModal.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Flame\\\\Geolite\\\\Facades\\\\Geocoder\\:\\:geocode\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/FulfillmentModal.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Flame\\\\Geolite\\\\Facades\\\\Geocoder\\:\\:getLogs\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/FulfillmentModal.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Flame\\\\Geolite\\\\Facades\\\\Geocoder\\:\\:reverse\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/FulfillmentModal.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:getSession\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/FulfillmentModal.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:putSession\\(\\)\\.$#"
+			count: 3
+			path: src/Livewire/FulfillmentModal.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:searchByCoordinates\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/FulfillmentModal.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:updateNearbyArea\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/FulfillmentModal.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:updateUserPosition\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/FulfillmentModal.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addJs\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/FulfillmentModal.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:customer\\(\\)\\.$#"
+			count: 2
+			path: src/Livewire/FulfillmentModal.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Local\\\\Models\\\\Review\\:\\:\\$author\\.$#"
+			count: 1
+			path: src/Livewire/LeaveReview.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Local\\\\Models\\\\Review\\:\\:\\$customer_id\\.$#"
+			count: 1
+			path: src/Livewire/LeaveReview.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Local\\\\Models\\\\Review\\:\\:\\$delivery\\.$#"
+			count: 1
+			path: src/Livewire/LeaveReview.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Local\\\\Models\\\\Review\\:\\:\\$location_id\\.$#"
+			count: 1
+			path: src/Livewire/LeaveReview.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Local\\\\Models\\\\Review\\:\\:\\$quality\\.$#"
+			count: 1
+			path: src/Livewire/LeaveReview.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Local\\\\Models\\\\Review\\:\\:\\$review_status\\.$#"
+			count: 1
+			path: src/Livewire/LeaveReview.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Local\\\\Models\\\\Review\\:\\:\\$review_text\\.$#"
+			count: 1
+			path: src/Livewire/LeaveReview.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Local\\\\Models\\\\Review\\:\\:\\$sale_id\\.$#"
+			count: 1
+			path: src/Livewire/LeaveReview.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Local\\\\Models\\\\Review\\:\\:\\$sale_type\\.$#"
+			count: 1
+			path: src/Livewire/LeaveReview.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Local\\\\Models\\\\Review\\:\\:\\$service\\.$#"
+			count: 1
+			path: src/Livewire/LeaveReview.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:getRatingOptions\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/LeaveReview.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Models\\\\Review\\:\\:whereReviewable\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/LeaveReview.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Models\\\\ReviewSettings\\:\\:autoApproveReviews\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/LeaveReview.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addCss\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/LeaveReview.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addJs\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/LeaveReview.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:customer\\(\\)\\.$#"
+			count: 4
+			path: src/Livewire/LeaveReview.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Flame\\\\Geolite\\\\Facades\\\\Geocoder\\:\\:geocode\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/LocalSearch.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Flame\\\\Geolite\\\\Facades\\\\Geocoder\\:\\:getLogs\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/LocalSearch.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Flame\\\\Geolite\\\\Facades\\\\Geocoder\\:\\:reverse\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/LocalSearch.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:checkDeliveryCoverage\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/LocalSearch.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:getSession\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/LocalSearch.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:orderTypeIsDelivery\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/LocalSearch.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:putSession\\(\\)\\.$#"
+			count: 3
+			path: src/Livewire/LocalSearch.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:requiresUserPosition\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/LocalSearch.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:searchByCoordinates\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/LocalSearch.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:updateNearbyArea\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/LocalSearch.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:updateUserPosition\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/LocalSearch.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:userPosition\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/LocalSearch.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:customer\\(\\)\\.$#"
+			count: 2
+			path: src/Livewire/LocalSearch.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Orange\\\\Livewire\\\\LocationList\\:\\:\\$sorters\\.$#"
+			count: 2
+			path: src/Livewire/LocationList.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:userPosition\\(\\)\\.$#"
+			count: 2
+			path: src/Livewire/LocationList.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Models\\\\Location\\:\\:getOrderTypeOptions\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/LocationList.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Models\\\\Location\\:\\:withCount\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/LocationList.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\AdminAuth\\:\\:getUser\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/LocationList.php
+
+		-
+			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Facades\\\\Event\\:\\:fire\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/LocationList.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:check\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/Login.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:getUser\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/Login.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:listFrontEnd\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/MenuItemsList.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:current\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/MenuItemsList.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:orderType\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/MenuItemsList.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addJs\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/Modal.php
+
+		-
+			message: "#^Call to an undefined static method UnitEnum\\:\\:tryFrom\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/Modal.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Frontend\\\\Models\\\\MailchimpSettings\\:\\:get\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/NewsletterSubscribeForm.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Frontend\\\\Models\\\\Subscriber\\:\\:firstOrCreate\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/NewsletterSubscribeForm.php
+
+		-
+			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Facades\\\\Event\\:\\:fire\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/NewsletterSubscribeForm.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addJs\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/Offcanvas.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Cart\\\\Facades\\\\Cart\\:\\:add\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/OrderPreview.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:customer\\(\\)\\.$#"
+			count: 3
+			path: src/Livewire/OrderPreview.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:listFrontEnd\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/ReservationList.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:customer\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/ReservationList.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:customer\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/ReservationPreview.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Models\\\\Customer\\:\\:whereEmail\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/ResetPassword.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Models\\\\Customer\\:\\:whereResetCode\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/ResetPassword.php
+
+		-
+			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Facades\\\\Mail\\:\\:queueTemplate\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/ResetPassword.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:isApproved\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/ReviewsList.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:getRatingOptions\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/ReviewsList.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:current\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/ReviewsList.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addCss\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/ReviewsList.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addJs\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/ReviewsList.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:isApproved\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/ReviewsOffcanvas.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:getRatingOptions\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/ReviewsOffcanvas.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:current\\(\\)\\.$#"
+			count: 2
+			path: src/Livewire/ReviewsOffcanvas.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addCss\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/ReviewsOffcanvas.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addJs\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/ReviewsOffcanvas.php
+
+		-
+			message: "#^Class Igniter\\\\Socialite\\\\Classes\\\\ProviderManager not found\\.$#"
+			count: 2
+			path: src/Livewire/Socialite.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:check\\(\\)\\.$#"
+			count: 1
+			path: src/ServiceProvider.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Cart\\\\Facades\\\\Cart\\:\\:count\\(\\)\\.$#"
+			count: 1
+			path: src/View/Components/AccountDashboard.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Cart\\\\Facades\\\\Cart\\:\\:total\\(\\)\\.$#"
+			count: 1
+			path: src/View/Components/AccountDashboard.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:getUser\\(\\)\\.$#"
+			count: 1
+			path: src/View/Components/AccountDashboard.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Frontend\\\\Models\\\\Banners\\:\\:\\$custom_code\\.$#"
+			count: 1
+			path: src/View/Components/BannerPreview.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Frontend\\\\Models\\\\Banners\\:\\:\\$image_code\\.$#"
+			count: 1
+			path: src/View/Components/BannerPreview.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Frontend\\\\Models\\\\Banners\\:\\:\\$type\\.$#"
+			count: 1
+			path: src/View/Components/BannerPreview.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Orange\\\\View\\\\Components\\\\BannerPreview\\:\\:\\$page\\.$#"
+			count: 1
+			path: src/View/Components/BannerPreview.php
+
+		-
+			message: "#^Call to an undefined method Igniter\\\\Orange\\\\View\\\\Components\\\\BannerPreview\\:\\:property\\(\\)\\.$#"
+			count: 3
+			path: src/View/Components/BannerPreview.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:isEnabled\\(\\)\\.$#"
+			count: 1
+			path: src/View/Components/BannerPreview.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Frontend\\\\Models\\\\Banners\\:\\:whereIsEnabled\\(\\)\\.$#"
+			count: 1
+			path: src/View/Components/BannerPreview.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:whereIsEnabled\\(\\)\\.$#"
+			count: 1
+			path: src/View/Components/CategoriesList.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Cart\\\\Models\\\\Category\\:\\:whereIsEnabled\\(\\)\\.$#"
+			count: 1
+			path: src/View/Components/CategoriesList.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:current\\(\\)\\.$#"
+			count: 2
+			path: src/View/Components/CategoriesList.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:whereIsEnabled\\(\\)\\.$#"
+			count: 1
+			path: src/View/Components/FeaturedItems.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:getOrderType\\(\\)\\.$#"
+			count: 1
+			path: src/View/Components/LocalControl.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:orderDateTime\\(\\)\\.$#"
+			count: 1
+			path: src/View/Components/LocalControl.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:orderTimeIsAsap\\(\\)\\.$#"
+			count: 1
+			path: src/View/Components/LocalControl.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:current\\(\\)\\.$#"
+			count: 1
+			path: src/View/Components/LocalHeader.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addCss\\(\\)\\.$#"
+			count: 1
+			path: src/View/Components/LocalHeader.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addJs\\(\\)\\.$#"
+			count: 1
+			path: src/View/Components/LocalHeader.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:whereCode\\(\\)\\.$#"
+			count: 1
+			path: src/View/Components/Nav.php
+
+		-
+			message: "#^Call to static method active\\(\\) on an unknown class Laravel\\\\Pennant\\\\Feature\\.$#"
+			count: 1
+			path: src/View/Components/Nav.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:customer\\(\\)\\.$#"
+			count: 1
+			path: src/View/Components/OrdersList.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Frontend\\\\Models\\\\Slider\\:\\:whereCode\\(\\)\\.$#"
+			count: 1
+			path: src/View/Components/Slider.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:getRatingOptions\\(\\)\\.$#"
+			count: 1
+			path: src/View/Components/StarRating.php

@@ -2,7 +2,7 @@
     <div id="cart-box" class="module-box bg-white border shadow-sm rounded-3 p-3">
         <div id="cart-items">
             @if ($cart->count())
-                <h5 class="mb-4">@lang('igniter.cart::default.text_heading')</h5>
+                <h5 class="mb-4">@lang('igniter.cart::default.text_basket')</h5>
                 @include('igniter-orange::includes.cartbox.items')
             @else
                 <div class="p-3 text-center">
@@ -17,7 +17,7 @@
         @includeWhen($cart->count(), 'igniter-orange::includes.cartbox.totals')
 
         <div id="cart-buttons" class="mt-3">
-            @if (isset($location) && $cart->count() && $location->orderTypeIsDelivery() && ($minOrderTotal = $location->minimumOrder($cart->subtotal())))
+            @if($minOrderTotal = $location->minimumOrderTotal())
                 <p class="text-muted text-center mb-3">
                     @lang('igniter.local::default.text_min_total'): {{ currency_format($minOrderTotal) }}
                 </p>

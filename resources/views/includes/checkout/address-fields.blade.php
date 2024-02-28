@@ -1,11 +1,12 @@
-<div class="mb-4">
+<div class="p-3 border-top">
     @if(!count($this->customerAddresses))
         <h5 class="card-title fw-normal mb-3">@lang('igniter.cart::default.checkout.label_address')</h5>
     @else
         <div class="form-group">
             <div class="form-floating">
                 <select
-                    wire:model.live="form.address_id"
+                    wire:model.change="form.address_id"
+                    data-checkout-control="address_id"
                     class="form-select"
                     aria-describedby="addressIdFeedback"
                 >
@@ -24,91 +25,92 @@
     @endif
 
     <div @class(['mt-3'])>
-        <input
-            wire:model.fill="form.address.address_id"
-            type="hidden"
-        >
         <div class="row g-3 mb-1">
             <div class="col-sm-6">
-                <div @class(['form-floating', 'is-invalid' => has_form_error('address.address_1')])>
+                <div @class(['form-floating', 'is-invalid' => has_form_error('form.address_1')])>
                     <input
-                        wire:model="form.address.address_1"
+                        wire:model="form.address_1"
+                        data-checkout-control="address_1"
                         type="text"
-                        @class(['form-control', 'is-invalid' => has_form_error('address.address_1')])
+                        @class(['form-control', 'is-invalid' => has_form_error('form.address_1')])
                         placeholder="@lang('igniter.cart::default.checkout.label_address_1')"
                         aria-describedby="addressOneFeedback"
                         required
                     />
                     <label for="">@lang('igniter.cart::default.checkout.label_address_1')</label>
                 </div>
-                <x-igniter-orange::forms.error field="form.address.address_1" id="addressOneFeedback" class="text-danger" />
+                <x-igniter-orange::forms.error field="form.address_1" id="addressOneFeedback" class="text-danger" />
             </div>
             @if ($showAddress2Field)
                 <div class="col-sm-6">
-                    <div @class(['form-floating', 'is-invalid' => has_form_error('address.address_2')])>
+                    <div @class(['form-floating', 'is-invalid' => has_form_error('form.address_2')])>
                         <input
-                            wire:model="form.address.address_2"
+                            wire:model="form.address_2"
+                            data-checkout-control="address_2"
                             type="text"
-                            @class(['form-control', 'is-invalid' => has_form_error('address.address_2')])
+                            @class(['form-control', 'is-invalid' => has_form_error('form.address_2')])
                             placeholder="@lang('igniter.cart::default.checkout.label_address_2')"
                             aria-describedby="addressTwoFeedback"
                         />
                         <label for="">@lang('igniter.cart::default.checkout.label_address_2')</label>
                     </div>
-                    <x-igniter-orange::forms.error field="form.address.address_2" id="addressTwoFeedback" class="text-danger" />
+                    <x-igniter-orange::forms.error field="form.address_2" id="addressTwoFeedback" class="text-danger" />
                 </div>
             @endif
             @if ($showCityField)
                 <div class="col-sm-4">
-                    <div @class(['form-floating', 'is-invalid' => has_form_error('address.city')])>
+                    <div @class(['form-floating', 'is-invalid' => has_form_error('form.city')])>
                         <input
-                            wire:model="form.address.city"
+                            wire:model="form.city"
+                            data-checkout-control="city"
                             type="text"
-                            @class(['form-control', 'is-invalid' => has_form_error('address.city')])
+                            @class(['form-control', 'is-invalid' => has_form_error('form.city')])
                             placeholder="@lang('igniter.cart::default.checkout.label_city')"
                             aria-describedby="cityFeedback"
                         />
                         <label for="">@lang('igniter.cart::default.checkout.label_city')</label>
                     </div>
-                    <x-igniter-orange::forms.error field="form.address.city" id="cityFeedback" class="text-danger" />
+                    <x-igniter-orange::forms.error field="form.city" id="cityFeedback" class="text-danger" />
                 </div>
             @endif
             @if ($showStateField)
                 <div class="col-sm-4">
-                    <div @class(['form-floating', 'is-invalid' => has_form_error('address.state')])>
+                    <div @class(['form-floating', 'is-invalid' => has_form_error('form.state')])>
                         <input
-                            wire:model="form.address.state"
+                            wire:model="form.state"
+                            data-checkout-control="state"
                             type="text"
-                            @class(['form-control', 'is-invalid' => has_form_error('address.state')])
+                            @class(['form-control', 'is-invalid' => has_form_error('form.state')])
                             placeholder="@lang('igniter.cart::default.checkout.label_state')"
                             aria-describedby="stateFeedback"
                         />
                         <label for="">@lang('igniter.cart::default.checkout.label_state')</label>
                     </div>
-                    <x-igniter-orange::forms.error field="form.address.state" id="stateFeedback" class="text-danger" />
+                    <x-igniter-orange::forms.error field="form.state" id="stateFeedback" class="text-danger" />
                 </div>
             @endif
             @if ($showPostcodeField)
                 <div class="col-sm-4">
-                    <div @class(['form-floating', 'is-invalid' => has_form_error('address.postcode')])>
+                    <div @class(['form-floating', 'is-invalid' => has_form_error('form.postcode')])>
                         <input
-                            wire:model="form.address.postcode"
+                            wire:model="form.postcode"
+                            data-checkout-control="postcode"
                             type="text"
-                            @class(['form-control', 'is-invalid' => has_form_error('address.postcode')])
-                            value="{{ set_value('address[postcode]', $order->address['postcode'] ?? '') }}"
+                            @class(['form-control', 'is-invalid' => has_form_error('form.postcode')])
                             placeholder="@lang('igniter.cart::default.checkout.label_postcode')"
                             aria-describedby="postcodeFeedback"
                         />
                         <label for="">@lang('igniter.cart::default.checkout.label_postcode')</label>
                     </div>
-                    <x-igniter-orange::forms.error field="form.address.postcode" id="postcodeFeedback" class="text-danger" />
+                    <x-igniter-orange::forms.error field="form.postcode" id="postcodeFeedback" class="text-danger" />
                 </div>
             @endif
             @if ($showCountryField)
-                <div @class(['form-floating', 'is-invalid' => has_form_error('address.country_id')])>
+                <div @class(['form-floating', 'is-invalid' => has_form_error('form.country_id')])>
                     <select
-                        wire:model="form.address.country_id"
-                        @class(['form-select', 'is-invalid' => has_form_error('address.country_id')])
+                        wire:model="form.country_id"
+                        data-checkout-control="country_id"
+                        @class(['form-select', 'is-invalid' => has_form_error('form.country_id')])
                         aria-describedby="countryFeedback"
                     >
                         @foreach (countries('country_name') as $key => $value)
@@ -120,7 +122,7 @@
                     </select>
                     <label for="">@lang('igniter.cart::default.checkout.label_country')</label>
                 </div>
-                <x-igniter-orange::forms.error field="form.address.country_id" id="countryFeedback" class="text-danger" />
+                <x-igniter-orange::forms.error field="form.country_id" id="countryFeedback" class="text-danger" />
             @endif
         </div>
     </div>

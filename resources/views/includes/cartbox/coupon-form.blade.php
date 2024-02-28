@@ -1,9 +1,9 @@
-<div x-data="{couponCode: '{{ $cart->getCondition('coupon')?->getMetaData('code') }}'}" id="cart-coupon" class="py-3">
-    <x-igniter-orange::forms.form id="coupon-form" wire:submit="onApplyCoupon(couponCode)">
+<div id="cart-coupon" class="py-3 border-top border-bottom">
+    <x-igniter-orange::forms.form id="coupon-form" wire:submit="onApplyCoupon">
         <div class="cart-coupon">
-            <div class="input-group input-group-lg">
+            <div class="input-group">
                 <input
-                    x-model="couponCode"
+                    wire:model="couponCode"
                     type="text"
                     class="form-control rounded"
                     placeholder="@lang('igniter.cart::default.text_apply_coupon')"

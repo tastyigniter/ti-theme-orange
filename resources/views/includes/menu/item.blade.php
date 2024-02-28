@@ -9,7 +9,7 @@
         @if($menuItemData->hasOptions())
             wire:click="$dispatch('openModal', {component: 'igniter-orange::cart-item-modal', arguments: {menuId: {{ $menuItemData->id }}}})"
         @else
-            wire:click="$dispatch('cart-box::add-item', {menuId: {{ $menuItemData->id }}})"
+            wire:click="$dispatch('cart-box:add-item', {menuId: {{ $menuItemData->id }}})"
         @endif
     @endif
 >
@@ -22,13 +22,15 @@
             'far fa-clock' => !$menuItemData->mealtimeIsAvailable()
         ])
            wire:loading.class="fa-spinner fa-spin"
-           wire:target="onAddToCart"
+           @unless($menuItemData->hasOptions())
+           wire:target="$dispatch('cart-box:add-item', {menuId: {{ $menuItemData->id }}})"
+           @endunless
         ></i>
     </button>
     <div class="d-flex flex-row">
         <div class="menu-content flex-grow-1 me-3">
             <h6 class="menu-name fw-bold">{{ $menuItemData->name }}</h6>
-            <p class="menu-desc text-muted">
+            <p class="menu-desc text-muted mb-2">
                 {!! $menuItemData->description !!}
             </p>
         </div>
@@ -45,7 +47,7 @@
         @endif
     </div>
     <div style="--bs-breadcrumb-divider: '·';">
-        <div class="breadcrumb mb-1">
+        <div class="breadcrumb mb-3">
             <div class="breadcrumb-item">
                 <span class="menu-price">
                     @if ($menuItemData->specialIsActive())
@@ -70,8 +72,8 @@
         </div>
     </div>
     <div class="layout-scrollable w-100">
-        @includeWhen($menuItemData->hasAllergens(), 'igniter-orange::includes.menu.allergens', [
-            'allergens' => $menuItemData->allergens()
+        @includeWhen($menuItemData->hasIngredients(), 'igniter-orange::includes.menu.ingredients', [
+            'ingredients' => $menuItemData->ingredients()
         ])
     </div>
 </div>

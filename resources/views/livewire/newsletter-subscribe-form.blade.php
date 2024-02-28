@@ -3,21 +3,22 @@
         <x-igniter-orange::forms.form
             id="subscribeForm"
             class="subscribe-form"
-            wire:sumbit="onSubscribe"
+            wire:submit="onSubscribe"
         >
             <div class="input-group subscribe-group">
                 <input
                     wire:model="email"
                     name="email"
                     type="text"
-                    class="form-control rounded-pill"
+                    class="form-control rounded"
                 >
                 <button
                     type="submit"
                     id="subscribeButton"
-                    class="btn btn btn-light rounded-pill ms-2"
+                    class="btn btn btn-light rounded ms-2"
                 ><i class="fa fa-paper-plane"></i></button>
             </div>
+            <x-igniter-orange::forms.error field="email" class="text-danger" />
         </x-igniter-orange::forms.form>
     @else
         <div class="alert alert-success">

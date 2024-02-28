@@ -1,5 +1,5 @@
-<div class="mb-4 border-bottom border-2">
-    <h5 class="card-title fw-normal mb-2">@lang('igniter.cart::default.checkout.label_payment_method')</h5>
+<div class="p-3 border-bottom border-top">
+    <h5 class="card-title mb-2">@lang('igniter.cart::default.checkout.label_payment_method')</h5>
     <div data-toggle="payments" class="progress-indicator-container">
         <div class="list-group list-group-flush">
             @foreach ($this->paymentGateways as $paymentMethod)
@@ -7,17 +7,22 @@
                     $paymentIsSelected = ($this->form->payment == $paymentMethod->code);
                     $paymentIsNotApplicable = !$paymentMethod->isApplicable($order->order_total, $paymentMethod);
                 @endphp
-                <div class="list-group-item px-0">
+                <div
+                    class="list-group-item px-0"
+                    data-checkout-control="choose-payment"
+                    data-payment-code="{{ $paymentMethod->code }}"
+                >
                     <div class="form-check">
                         <input
-                            wire:model.live="form.payment"
+                            data-checkout-control="payment"
+                            data-pre-validate-checkout="{{ $paymentMethod->completesPaymentOnClient() ? 'true' : 'false' }}"
                             type="radio"
+                            name="form.payment"
                             id="payment-{{ $paymentMethod->code }}"
                             class="form-check-input"
                             value="{{ $paymentMethod->code }}"
                             @checked($paymentIsSelected)
                             @disabled($paymentIsNotApplicable)
-                            data-pre-validate-checkout="{{ $paymentMethod->completesPaymentOnClient() ? 'true' : 'false' }}"
                             autocomplete="off"
                         />
                         <label
@@ -25,12 +30,12 @@
                             for="payment-{{ $paymentMethod->code }}"
                         >
                             <div class="">{{ $paymentMethod->name }}</div>
-                            @if (strlen($paymentMethod->description))
+                            @if(strlen($paymentMethod->description))
                                 <div class="small text-muted fw-normal">
                                     {!! $paymentMethod->description !!}
                                 </div>
                             @endif
-                            @if ($paymentIsNotApplicable)
+                            @if($paymentIsNotApplicable)
                                 <div class="small text-muted fw-normal">
                                     <em>
                                         {!! sprintf(
@@ -41,7 +46,7 @@
                                     </em>
                                 </div>
                             @endif
-                            @if ($paymentMethod->hasApplicableFee())
+                            @if($paymentMethod->hasApplicableFee())
                                 <div class="small text-muted fw-normal">
                                     <em>
                                         {!! sprintf(
@@ -53,8 +58,8 @@
                                 </div>
                             @endif
                         </label>
+                        @includeWhen(($viewName = $paymentMethod->getPaymentFormViewName()) && $paymentIsSelected, $viewName)
                     </div>
-                    @includeWhen(($viewName = $this->paymentFormViewName($paymentMethod->code)) && $paymentIsSelected, $viewName)
                 </div>
             @endforeach
         </div>

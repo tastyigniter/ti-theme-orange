@@ -23,6 +23,7 @@
     "tastyigniter/ti-ext-pages": "v4.x-dev as v4.0",
     "tastyigniter/ti-ext-payregister": "v4.x-dev as v4.0",
     "tastyigniter/ti-ext-reservation": "v4.x-dev as v4.0",
+    "tastyigniter/ti-ext-socialite": "v4.x-dev as v4.0",
     "tastyigniter/ti-ext-user": "v4.x-dev as v4.0"
   },
   "require-dev": {

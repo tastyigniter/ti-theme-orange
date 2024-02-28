@@ -13,6 +13,8 @@ class Socialite extends Component
 
     public string $confirmEmailPage = 'account'.DIRECTORY_SEPARATOR.'socialite';
 
+    public bool $confirm = false;
+
     public array $links = [];
 
     public function render()

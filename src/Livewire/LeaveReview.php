@@ -2,129 +2,112 @@
 
 namespace Igniter\Orange\Livewire;
 
-use Igniter\Admin\Traits\ValidatesForm;
 use Igniter\Cart\Classes\OrderManager;
-use Igniter\Flame\Exception\ApplicationException;
-use Igniter\Local\Facades\Location;
+use Igniter\Flame\Database\Model;
 use Igniter\Local\Models\Review as ReviewModel;
 use Igniter\Local\Models\ReviewSettings;
 use Igniter\Main\Traits\UsesPage;
 use Igniter\Reservation\Classes\BookingManager;
+use Igniter\System\Facades\Assets;
 use Igniter\User\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\ValidationException;
 
 class LeaveReview extends \Livewire\Component
 {
     use UsesPage;
-    use ValidatesForm;
 
-    public function defineProperties(): array
+    public string $type = 'order';
+
+    /** The parameter name used for the review hash code */
+    public string $hashParamName = 'hash';
+
+    public string $reviewableHash;
+
+    public ?string $comment = null;
+
+    public int $delivery = 0;
+
+    public int $quality = 0;
+
+    public int $service = 0;
+
+    protected ?Model $reviewable = null;
+
+    protected ?Model $customerReview = null;
+
+    public function render()
     {
-        return [
-            'pageLimit' => [
-                'label' => 'Reviews Per Page',
-                'type' => 'number',
-                'default' => 20,
-                'validationRule' => 'required|integer',
-            ],
-            'sort' => [
-                'label' => 'Sort reviews list by',
-                'type' => 'text',
-                'default' => 'created_at asc',
-                'validationRule' => 'required|string',
-            ],
-            'reviewableType' => [
-                'label' => 'Whether the review form is loaded on an order or reservation page, use by the review form',
-                'type' => 'select',
-                'default' => 'order',
-                'options' => [
-                    'order' => 'Leave order reviews',
-                    'reservation' => 'Leave reservation reviews',
-                ],
-                'validationRule' => 'required|in:order,reservation',
-            ],
-            'reviewableHash' => [
-                'label' => 'Review sale identifier(hash), use by the review form',
-                'type' => 'text',
-                'default' => '{{ :hash }}',
-                'validationRule' => 'required',
-            ],
-            'redirectPage' => [
-                'label' => 'Page to redirect to when reviews is disabled',
-                'type' => 'select',
-                'default' => 'local'.DIRECTORY_SEPARATOR.'menus',
-                'options' => [static::class, 'getThemePageOptions'],
-                'validationRule' => 'regex:/^[a-z0-9\-_\/]+$/i',
-            ],
-        ];
+        return view('igniter-orange::livewire.leave-review', [
+            'allowReviews' => ReviewSettings::allowReviews(),
+            'reviewable' => $this->reviewable(),
+            'hasCustomerReview' => (bool)$this->loadReview(),
+            'reviewRatingHints' => $this->getHints(),
+        ]);
     }
 
-    public function initialize()
+    public function mount()
     {
-        $this->addCss('../formwidgets/starrating/assets/vendor/raty/jquery.raty.css', 'jquery-raty-css');
-        $this->addJs('../formwidgets/starrating/assets/vendor/raty/jquery.raty.js', 'jquery-raty-js');
+        Assets::addCss('igniter.local::/css/starrating.css', 'starrating-css');
+        Assets::addJs('igniter.local::/js/starrating.js', 'starrating-js');
 
-        $this->addCss('../formwidgets/starrating/assets/css/starrating.css', 'starrating-css');
-        $this->addJs('../formwidgets/starrating/assets/js/starrating.js', 'starrating-js');
-    }
+        $this->reviewableHash = request()->route($this->hashParamName);
 
-    public function onRun()
-    {
-        $this->page['reviewDateFormat'] = lang('system::lang.moment.date_format_short');
-        $this->page['reviewRatingHints'] = $this->getHints();
-
-        $this->page['reviewList'] = $this->loadReviewList();
-        $this->page['reviewable'] = $reviewable = $this->loadReviewable();
-        $this->page['customerReview'] = $this->loadReview($reviewable);
+        $customerReview = $this->loadReview();
+        $this->quality = $customerReview->quality ?? 0;
+        $this->delivery = $customerReview->delivery ?? 0;
+        $this->service = $customerReview->service ?? 0;
+        $this->comment = $customerReview->review_text ?? '';
     }
 
     public function onLeaveReview()
     {
-        if (!ReviewSettings::allowReviews()) {
-            throw new ApplicationException(lang('igniter.local::default.review.alert_review_disabled'));
-        }
+        $this->validate([
+            'comment' => ['required', 'min:2', 'max:1028'],
+            'delivery' => ['required', 'integer', 'min:0'],
+            'quality' => ['required', 'integer', 'min:0'],
+            'service' => ['required', 'integer', 'min:0'],
+        ], [], [
+            'comment' => lang('igniter.local::default.review.label_review'),
+            'delivery' => lang('igniter.local::default.review.label_delivery'),
+            'quality' => lang('igniter.local::default.review.label_quality'),
+            'service' => lang('igniter.local::default.review.label_service'),
+        ]);
 
-        if (!$customer = Auth::customer()) {
-            throw new ApplicationException(lang('igniter.local::default.review.alert_expired_login'));
-        }
+        throw_unless(ReviewSettings::allowReviews(), ValidationException::withMessages([
+            'comment' => lang('igniter.local::default.review.alert_review_disabled'),
+        ]));
 
-        $reviewable = $this->getReviewable();
-        if (!$reviewable || !$reviewable->isCompleted()) {
-            throw new ApplicationException(lang('igniter.local::default.review.alert_review_status_history'));
-        }
+        throw_unless($customer = Auth::customer(), ValidationException::withMessages([
+            'comment' => lang('igniter.local::default.review.alert_expired_login'),
+        ]));
 
-        if ($this->checkReviewableExists($reviewable)) {
-            throw new ApplicationException(lang('igniter.local::default.review.alert_review_duplicate'));
-        }
+        throw_unless($reviewable = $this->getReviewable(), ValidationException::withMessages([
+            'comment' => lang('igniter.local::default.review.alert_review_not_found'),
+        ]));
 
-        $data = post();
+        throw_unless($reviewable->isCompleted(), ValidationException::withMessages([
+            'comment' => lang('igniter.local::default.review.alert_review_status_history'),
+        ]));
 
-        $rules = [
-            ['rating.quality', 'lang:igniter.local::default.review.label_quality', 'required|integer'],
-            ['rating.delivery', 'lang:igniter.local::default.review.label_delivery', 'required|integer'],
-            ['rating.service', 'lang:igniter.local::default.review.label_service', 'required|integer'],
-            ['review_text', 'lang:igniter.local::default.review.label_review', 'required|min:2|max:1028'],
-        ];
+        throw_if($this->checkReviewableExists($reviewable), ValidationException::withMessages([
+            'comment' => lang('igniter.local::default.review.alert_review_duplicate'),
+        ]));
 
-        $this->validate($data, $rules);
-
-        $model = new Review();
+        $model = new ReviewModel();
         $model->location_id = $reviewable->location_id;
         $model->customer_id = $customer->customer_id;
         $model->author = $customer->full_name;
         $model->sale_id = $reviewable->getKey();
         $model->sale_type = $reviewable->getMorphClass();
-        $model->quality = array_get($data, 'rating.quality');
-        $model->delivery = array_get($data, 'rating.delivery');
-        $model->service = array_get($data, 'rating.service');
-        $model->review_text = array_get($data, 'review_text');
-        $model->review_status = !(bool)ReviewSettings::get('approve_reviews', false) ? 1 : 0;
+        $model->quality = $this->quality;
+        $model->delivery = $this->delivery;
+        $model->service = $this->service;
+        $model->review_text = $this->comment;
+        $model->review_status = ReviewSettings::autoApproveReviews();
 
         $model->save();
 
         flash()->success(lang('igniter.local::default.review.alert_review_success'))->now();
-
-        return Redirect::back();
     }
 
     /**
@@ -135,54 +118,23 @@ class LeaveReview extends \Livewire\Component
         return ReviewModel::make()->getRatingOptions();
     }
 
-    protected function loadReviewList()
+    protected function reviewable()
     {
-        if (!$location = Location::current()) {
-            return null;
-        }
-
-        return ReviewModel::with(['customer', 'customer.address'])
-            ->isApproved()
-            ->listFrontEnd([
-                'page' => $this->param('page'),
-                'pageLimit' => $this->property('pageLimit'),
-                'sort' => $this->property('sort', 'created_at asc'),
-                'location' => $location->getKey(),
-            ]);
+        return $this->reviewable ??= $this->getReviewable();
     }
 
-    protected function loadReviewable()
+    protected function loadReview()
     {
-        $reviewable = $this->getReviewable();
-
-        if (!$reviewable || !$reviewable->isCompleted()) {
-            return null;
-        }
-
-        return $reviewable;
-    }
-
-    protected function loadReview($reviewable)
-    {
-        if (!$reviewable) {
-            return null;
-        }
-
-        return ReviewModel::whereReviewable($reviewable)->first();
+        return $this->customerReview ??= ($this->reviewable() ? ReviewModel::whereReviewable($this->reviewable())->first() : null);
     }
 
     protected function getReviewable()
     {
-        $reviewableHash = $this->param('hash', $this->property('reviewableHash'));
-
-        $reviewable = null;
-        if ($this->property('reviewableType') == 'reservation') {
-            $reviewable = resolve(BookingManager::class)->getReservationByHash($reviewableHash, Auth::customer());
-        } elseif ($this->property('reviewableType') == 'order') {
-            $reviewable = resolve(OrderManager::class)->getOrderByHash($reviewableHash, Auth::customer());
-        }
-
-        return $reviewable;
+        return match ($this->type) {
+            'reservation' => resolve(BookingManager::class)->getReservationByHash($this->reviewableHash, Auth::customer()),
+            'order' => resolve(OrderManager::class)->getOrderByHash($this->reviewableHash, Auth::customer()),
+            default => null,
+        };
     }
 
     protected function checkReviewableExists($reviewable)

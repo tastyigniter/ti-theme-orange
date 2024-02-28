@@ -7,7 +7,7 @@ security: guest
 <div class="container">
     <div class="row">
         <div class="col-sm-4 mx-auto my-5">
-            <livewire:igniter-orange::pages.login />
+            <livewire:igniter-orange::login />
         </div>
     </div>
 </div>

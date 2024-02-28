@@ -38,13 +38,15 @@
         <button
             type="button"
             class="btn btn-primary re-order"
-            wire:click="onReOrder({{ $order->order_id }})"
+            wire:click="onReOrder"
         >@lang('igniter.cart::default.orders.button_reorder')</button>
+        <x-igniter-orange::forms.error field="onReOrder" class="text-danger text-center" />
     @endif
-    @if ($this->showCancelButton())
+    @if ($showCancelButton)
         <button
             class="btn btn-light text-danger"
-            wire:click="onCancel('{{ $order->order_id }}')"
+            wire:click="onCancel"
         >@lang('igniter.cart::default.orders.button_cancel')</button>
+        <x-igniter-orange::forms.error field="onCancel" class="text-danger text-center" />
     @endif
 </div>

@@ -1,3 +1,4 @@
+@props(['field', 'bag' => 'default'])
 @error($field, $bag)
 <div {{ $attributes }}>
     @if ($slot->isEmpty())

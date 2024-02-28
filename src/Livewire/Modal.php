@@ -2,12 +2,13 @@
 
 namespace Igniter\Orange\Livewire;
 
-use Igniter\System\Facades\Assets;
 use Igniter\Orange\Contracts\ModalComponentInterface;
+use Igniter\System\Facades\Assets;
 use Illuminate\Contracts\Routing\UrlRoutable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Reflector;
 use Illuminate\View\View;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\Mechanisms\ComponentRegistry;
 use ReflectionClass;
@@ -29,6 +30,7 @@ class Modal extends Component
         $this->activeComponent = null;
     }
 
+    #[On('openModal')]
     public function openModal($component, $arguments = [], $modalAttributes = []): void
     {
         $requiredInterface = ModalComponentInterface::class;
@@ -107,17 +109,10 @@ class Modal extends Component
             ->filter();
     }
 
+    #[On('destroyComponent')]
     public function destroyComponent($id): void
     {
         unset($this->components[$id]);
-    }
-
-    public function getListeners(): array
-    {
-        return [
-            'openModal',
-            'destroyComponent',
-        ];
     }
 
     public function render(): View

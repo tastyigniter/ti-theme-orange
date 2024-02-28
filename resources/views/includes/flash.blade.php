@@ -12,8 +12,9 @@
         <div
             class="alert alert-{{ $message['level'] }}{{ $message['important'] ? ' alert-important' : '' }}"
             data-control="flash-message"
+            data-text="{{ array_get($message, 'message') }}"
             data-allow-dismiss="{{ $message['important'] ? 'false' : 'true' }}"
             role="alert"
-        >{!! $message['message'] !!}</div>
+        ></div>
     @endif
 @endforeach

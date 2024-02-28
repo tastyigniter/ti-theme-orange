@@ -1,8 +1,9 @@
-<div class="mb-4">
+<div class="p-3">
     <div class="form-group">
         <div class="form-check">
             <input
-                wire:model.live="form.termsAgreed"
+                wire:model="form.termsAgreed"
+                data-checkout-control="termsAgreed"
                 id="terms-condition"
                 type="checkbox"
                 value="1"

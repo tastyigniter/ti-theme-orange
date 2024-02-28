@@ -41,10 +41,10 @@ window.OrangeModal = () => {
                 Livewire.dispatch('modalClosed', componentName);
             }
 
-            if (this.getActiveComponentModalAttribute('destroyOnClose') === true) {
+            // if (this.getActiveComponentModalAttribute('destroyOnClose') === true) {
                 this.bsModal.dispose()
                 Livewire.dispatch('destroyComponent', {id: this.activeComponent});
-            }
+            // }
 
             if (skipPreviousModals > 0) {
                 for (var i = 0; i < skipPreviousModals; i++) {
