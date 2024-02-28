@@ -9,6 +9,7 @@ use Igniter\Local\Classes\CoveredArea;
 use Igniter\Local\Classes\WorkingSchedule;
 use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\Location as LocationModel;
+use Igniter\Local\Models\Review;
 use Igniter\Local\Models\WorkingHour;
 use Illuminate\Support\Collection;
 
@@ -60,9 +61,14 @@ class LocationData
         return $this->model->distance;
     }
 
-    public function gallery(): array
+    public function gallery(): Collection
     {
         return $this->model->getGallery();
+    }
+
+    public function hasGallery(): bool
+    {
+        return $this->model->hasGallery();
     }
 
     public function hasThumb(): bool
@@ -92,7 +98,7 @@ class LocationData
 
     public function reviewsScore(): float
     {
-        return $this->model->reviews_score();
+        return Review::getScoreForLocation($this->model->getKey());
     }
 
     public function reviewsCount(): int

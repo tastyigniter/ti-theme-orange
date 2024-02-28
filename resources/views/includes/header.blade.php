@@ -1,6 +1,6 @@
-<nav class="navbar navbar-light navbar-top navbar-expand-md py-2">
+<nav class="navbar navbar-light navbar-top navbar-expand-md py-sm-2 py-md-0">
     <div class="container">
-        <a class="navbar-brand" href="{{ page_url('home') }}" wire:navigate>
+        <a class="navbar-brand" href="{{ page_url('home') }}">
             @if ($theme->logo_image)
                 <img
                     class="img-logo"

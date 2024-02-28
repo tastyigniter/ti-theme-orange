@@ -22,15 +22,27 @@ class CheckoutForm extends Form
 
     public ?string $address_id = null;
 
-    public array $address = [];
+    public ?string $address_1 = null;
+
+    public ?string $address_2 = null;
+
+    public ?string $city = null;
+
+    public ?string $state = null;
+
+    public ?string $postcode = null;
+
+    public ?string $country_id = null;
 
     public ?string $payment = null;
 
+    public int $pay_from_profile = 0;
+
+    public int $create_payment_profile = 0;
+
     public bool $termsAgreed = false;
 
-    public bool $requiresAddress = false;
-
-    public bool $requiresPayment = false;
+    public ?bool $requiresAddress = null;
 
     public function validationAttributes()
     {
@@ -41,15 +53,13 @@ class CheckoutForm extends Form
             'telephone' => lang('igniter.cart::default.checkout.label_telephone'),
             'comment' => lang('igniter.cart::default.checkout.label_comment'),
             'deliveryComment' => lang('igniter.cart::default.checkout.label_delivery_comment'),
-            'addressId' => lang('igniter.cart::default.checkout.label_address'),
-            'address' => lang('igniter.cart::default.checkout.label_address'),
-            'address.address_id' => lang('igniter.cart::default.checkout.label_address_id'),
-            'address.address_1' => lang('igniter.cart::default.checkout.label_address_1'),
-            'address.address_2' => lang('igniter.cart::default.checkout.label_address_2'),
-            'address.city' => lang('igniter.cart::default.checkout.label_city'),
-            'address.state' => lang('igniter.cart::default.checkout.label_state'),
-            'address.country_id' => lang('igniter.cart::default.checkout.label_country'),
-            'address.postcode' => lang('igniter.cart::default.checkout.label_postcode'),
+            'address_id' => lang('igniter.cart::default.checkout.label_address_id'),
+            'address_1' => lang('igniter.cart::default.checkout.label_address_1'),
+            'address_2' => lang('igniter.cart::default.checkout.label_address_2'),
+            'city' => lang('igniter.cart::default.checkout.label_city'),
+            'state' => lang('igniter.cart::default.checkout.label_state'),
+            'country_id' => lang('igniter.cart::default.checkout.label_country'),
+            'postcode' => lang('igniter.cart::default.checkout.label_postcode'),
             'payment' => lang('igniter.cart::default.checkout.label_payment_method'),
             'termsAgreed' => lang('igniter.cart::default.checkout.label_checkout_terms'),
         ];
@@ -64,17 +74,17 @@ class CheckoutForm extends Form
             'telephone' => ['sometimes', 'required', 'regex:/^([0-9\s\-\+\(\)]*)$/i'],
             'comment' => ['max:500'],
             'delivery_comment' => ['max:500'],
-            'address_id' => ['exclude_unless:form.requiresAddress,true', 'nullable', 'integer'],
-            'address' => ['exclude_unless:form.requiresAddress,true', 'array'],
-            'address.address_id' => ['exclude_unless:form.requiresAddress,true', 'integer'],
-            'address.address_1' => ['exclude_unless:form.requiresAddress,true', 'required', 'min:3', 'max:128'],
-            'address.address_2' => ['exclude_unless:form.requiresAddress,true', 'nullable', 'min:3', 'max:128'],
-            'address.city' => ['exclude_unless:form.requiresAddress,true', 'nullable', 'min:2', 'max:128'],
-            'address.state' => ['exclude_unless:form.requiresAddress,true', 'nullable', 'max:128'],
-            'address.country_id' => ['exclude_unless:form.requiresAddress,true', 'nullable', 'integer'],
-            'address.postcode' => ['exclude_unless:form.requiresAddress,true', 'nullable', 'string'],
-            'payment' => ['exclude_unless:form.requiresPayment,true', 'required', 'alpha_dash'],
-            'termsAgreed' => ['accepted_if:form.requiresPayment,true'],
+            'address_id' => ['exclude_unless:requiresAddress,true', 'nullable', 'integer'],
+            //            'address_1' => ['exclude_unless:requiresAddress,true', 'required', 'min:3', 'max:128'],
+            'address_2' => ['exclude_unless:requiresAddress,true', 'nullable', 'min:3', 'max:128'],
+            'city' => ['exclude_unless:requiresAddress,true', 'nullable', 'min:2', 'max:128'],
+            'state' => ['exclude_unless:requiresAddress,true', 'nullable', 'max:128'],
+            'postcode' => ['exclude_unless:requiresAddress,true', 'nullable', 'string'],
+            'country_id' => ['exclude_unless:requiresAddress,true', 'nullable', 'integer'],
+            'payment' => ['required', 'alpha_dash'],
+            'termsAgreed' => ['accepted'],
+            'pay_from_profile' => ['sometimes', 'integer'],
+            'create_payment_profile' => ['sometimes', 'integer'],
         ];
     }
 }

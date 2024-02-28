@@ -9,14 +9,15 @@ use Igniter\Frontend\Models\MailchimpSettings;
 use Igniter\Frontend\Models\Subscriber;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
-use Livewire\Attributes\Rule;
+use Illuminate\Validation\ValidationException;
+use Livewire\Attributes\Validate;
 
 class NewsletterSubscribeForm extends \Livewire\Component
 {
     /** MailChimp List/Audience ID - Overrides the admin settings value */
     public ?string $listId = null;
 
-    #[Rule('required|email:filter|max:96', as: 'igniter.frontend::default.newsletter.label_email')]
+    #[Validate('required|email:filter|max:96', as: 'igniter.frontend::default.newsletter.label_email')]
     public ?string $email = null;
 
     public ?string $message = null;
@@ -50,7 +51,7 @@ class NewsletterSubscribeForm extends \Livewire\Component
     protected function listSubscribe($subscribe, $data)
     {
         if (!MailChimpSettings::isConfigured()) {
-            throw new ApplicationException('MailChimp List ID is missing. Enter your mailchimp api key and list ID from the admin settings page');
+            throw ValidationException::withMessages(['email' => 'MailChimp List ID is missing. Enter your mailchimp api key and list ID from the admin settings page']);
         }
 
         $options = [
@@ -64,16 +65,17 @@ class NewsletterSubscribeForm extends \Livewire\Component
         }
 
         try {
-            $listId = $this->property('listId', MailChimpSettings::get('list_id'));
+            $listId = $this->listId ?? (string)MailChimpSettings::get('list_id');
 
             $response = resolve(MailChimp::class)->post("lists/$listId/members", $options);
 
             $errorMessage = array_get($response, 'detail', '');
-            if (strlen($errorMessage) && array_get($response, 'status') !== 200) {
-                Log::error($response);
-            }
+
+            throw_if(strlen($errorMessage) && array_get($response, 'status') !== 200, new ApplicationException($errorMessage));
         } catch (Exception $e) {
-            throw new ApplicationException('MailChimp returned the following error: '.$e->getMessage());
+            Log::error($e);
+
+            throw ValidationException::withMessages(['email' => 'MailChimp returned the following error: '.$e->getMessage()]);
         }
     }
 }

@@ -7,9 +7,9 @@
                     <div class="form-group">
                         <div @class(['form-floating'])>
                             <input
+                                wire:model="form.first_name"
                                 class="form-control"
                                 name="first_name"
-                                wire:model="form.first_name"
                             />
                             <label for="firstName">@lang('igniter.user::default.settings.label_first_name')</label>
                         </div>
@@ -35,11 +35,9 @@
                     <div class="form-group">
                         <div @class(['form-floating'])>
                             <input
-                                class="form-control"
                                 wire:model="form.telephone"
                                 data-control="country-code-picker"
-                                data-initial-country="gb"
-                                :placeholder="@lang('igniter.user::default.settings.label_telephone')"
+                                class="form-control"
                             />
                             <label for="telephone">@lang('igniter.user::default.settings.label_telephone')</label>
                         </div>
@@ -50,11 +48,10 @@
                     <div class="form-group">
                         <div @class(['form-floating'])>
                             <input
+                                wire:model="form.email"
                                 class="form-control"
                                 type="email"
-                                wire:model="form.email"
                                 :placeholder="@lang('igniter.user::default.settings.label_email')"
-                                disabled
                             />
                             <label for="email">@lang('igniter.user::default.settings.label_email')</label>
                         </div>

@@ -13,7 +13,7 @@ security: customer
         <div class="col-sm-9">
             <div class="card">
                 <div class="card-body">
-                    <x-igniter-orange::list-orders/>
+                    <x-igniter-orange::orders-list/>
                 </div>
             </div>
         </div>

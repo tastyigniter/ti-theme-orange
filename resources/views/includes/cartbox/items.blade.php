@@ -29,27 +29,40 @@
                             ></i>
                         </button>
                     </div>
-                @endunless
-                <button
-                    class="btn flex-grow-1 text-start fw-normal p-0"
-                    wire:click="onOpenItemModal('{{ $cartItem->rowId }}', {{ $cartItem->id }})"
-                    wire:loading.class="disabled"
-                >
-                    <p class="mb-1">
-                        @if ($cartItem->qty > 1)
-                            <span class="fw-bolder">
-                                    {{ $cartItem->qty }} @lang('igniter.cart::default.text_times')
-                                </span>
-                        @endif
-                        {{ $cartItem->name }}
-                    </p>
-                    @includeWhen($cartItem->hasOptions(), 'igniter-orange::includes.cartbox.list-item-options', ['itemOptions' => $cartItem->options])
-                    @if (!empty($cartItem->comment))
-                        <p class="bg-light small mt-2 mb-0 px-3 py-1 rounded-pill">
-                            {{ $cartItem->comment }}
+                    <button
+                        class="btn flex-grow-1 text-start fw-normal p-0"
+                        wire:click="onOpenItemModal('{{ $cartItem->rowId }}', {{ $cartItem->id }})"
+                        wire:loading.class="disabled"
+                    >
+                        <p class="mb-1">
+                            @if ($cartItem->qty > 1)
+                                <span class="fw-bolder">{{ $cartItem->qty }} @lang('igniter.cart::default.text_times')</span>
+                            @endif
+                            {{ $cartItem->name }}
                         </p>
-                    @endif
-                </button>
+                        @includeWhen($cartItem->hasOptions(), 'igniter-orange::includes.cartbox.list-item-options', ['itemOptions' => $cartItem->options])
+                        @if (!empty($cartItem->comment))
+                            <p class="bg-light small mt-2 mb-0 px-3 py-1 rounded-pill">
+                                {{ $cartItem->comment }}
+                            </p>
+                        @endif
+                    </button>
+                @else
+                    <div class="flex-grow-1 text-start fw-normal p-0">
+                        <p class="mb-1">
+                            @if ($cartItem->qty > 1)
+                                <span class="fw-bolder">{{ $cartItem->qty }} @lang('igniter.cart::default.text_times')</span>
+                            @endif
+                            {{ $cartItem->name }}
+                        </p>
+                        @includeWhen($cartItem->hasOptions(), 'igniter-orange::includes.cartbox.list-item-options', ['itemOptions' => $cartItem->options])
+                        @if (!empty($cartItem->comment))
+                            <p class="bg-light small mt-2 mb-0 px-3 py-1 rounded-pill">
+                                {{ $cartItem->comment }}
+                            </p>
+                        @endif
+                    </div>
+                @endunless
                 <div class="price ms-3">
                     @if ($cartItem->hasConditions())
                         <s class="text-muted">{{currency_format($cartItem->subtotalWithoutConditions())}}</s>/

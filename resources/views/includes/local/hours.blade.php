@@ -1,7 +1,6 @@
-<div class="border rounded p-3">
-    <h5>@lang('igniter.local::default.text_hours')</h5>
-
-    <ul class="nav nav-pills justify-content-center">
+<h5>@lang('igniter.local::default.text_hours')</h5>
+<div class="border rounded p-3 mb-4">
+    <ul class="nav nav-pills justify-content-center border-bottom pb-3">
         @foreach ($locationInfo->scheduleTypes() as $code => $definition)
             <li class="nav-item">
                 <a
@@ -13,7 +12,7 @@
             </li>
         @endforeach
     </ul>
-    <div class="tab-content border-top mt-4">
+    <div class="tab-content">
         @foreach ($locationInfo->scheduleItems() as $code => $schedules)
             <div
                 @class(['tab-pane', 'active' => $code == $locationInfo->orderType()->getCode()])

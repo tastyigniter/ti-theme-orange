@@ -4,7 +4,6 @@
             @foreach ($topItem->items as $item)
                 <li class="nav-item">
                     <a
-                        wire:navigate
                         class="nav-link{{ ($item->isActive || $item->isChildActive) ? ' active fw-bold' : '' }}"
                         href="{{ $item->url }}"
                         {!! $item->extraAttributes !!}

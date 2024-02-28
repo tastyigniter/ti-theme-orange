@@ -23,6 +23,9 @@ mix.setPublicPath('./public').options({
 mix.copyDirectory(
     'node_modules/bootstrap/scss',
     `${src}/scss/vendor/bootstrap`
+).copyDirectory(
+    'node_modules/intl-tel-input/build/img',
+    `${dist}/images/iti`
 );
 
 mix.copy(
@@ -40,6 +43,9 @@ mix.copy(
 ).copy(
     'node_modules/intl-tel-input/build/css/intlTelInput.css',
     `${src}/scss/vendor/intlTelInput.scss`
+).copy(
+    'node_modules/photoswipe/dist/photoswipe.css',
+    `${src}/scss/vendor/photoswipe.scss`
 )
 
 //  Build SCSS

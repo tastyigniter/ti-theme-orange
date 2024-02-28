@@ -4,15 +4,24 @@
 
 @import "bootstrap-partials";
 //
-// Raty
-@import "jquery.raty";
+// Sweetalert2
+@import "sweetalert2";
 // Animate.css
 @import "animate";
-
+//
+// PhotoSwipe
+@import "photoswipe";
+//
+// INTL Tel Input
 @import "intlTelInput";
 
-.iti__flag {background-image: url("path/to/flags.png");}
+.iti {width: 100%;}
+
+.iti__flag {background-image: url("vendor/igniter-orange/images/iti/flags.png");}
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-    .iti__flag {background-image: url("path/to/flags@2x.png");}
+    .iti__flag {background-image: url("vendor/igniter-orange/images/iti/flags@2x.png");}
+}
+.iti--separate-dial-code .iti__selected-flag {
+    background-color: transparent;
 }

@@ -38,14 +38,14 @@ class MenuItemData
             : $this->model->menu_price;
     }
 
-    public function hasAllergens()
+    public function hasIngredients()
     {
-        return $this->allergens()->isNotEmpty();
+        return $this->ingredients()->isNotEmpty();
     }
 
-    public function allergens()
+    public function ingredients()
     {
-        return $this->model->ingredients->where('status', 1)->where('is_allergen', 1);
+        return $this->model->ingredients->where('status', 1);
     }
 
     public function mealtimeIsAvailable()

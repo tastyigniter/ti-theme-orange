@@ -4,5 +4,13 @@ layout: default
 permalink: /account/order/:hash
 ---
 <div class="container">
-    <livewire:igniter-orange::pages.show-order />
+    <div class="row py-4">
+        <div class="col-sm-3">
+            <x-igniter-orange::nav code="account-menu"/>
+        </div>
+
+        <div class="col-sm-9">
+            <livewire:igniter-orange::order-preview/>
+        </div>
+    </div>
 </div>

@@ -61,7 +61,6 @@ class CartItemModal extends ModalComponent
         $this->menuId = $menuId;
         $this->rowId = $rowId;
 
-        $this->cartManager = resolve(CartManager::class)->checkStock($this->checkStockCheckout);
         $this->getCartItem();
         $this->getMenuItem();
 
@@ -71,10 +70,13 @@ class CartItemModal extends ModalComponent
         $this->comment = $this->cartItem?->comment;
     }
 
+    public function boot()
+    {
+        $this->cartManager = resolve(CartManager::class);
+    }
+
     public function onSave()
     {
-        $this->cartManager = resolve(CartManager::class)->checkStock($this->checkStockCheckout);
-
         $this->cartManager->addOrUpdateCartItem([
             'menuId' => $this->menuId,
             'rowId' => $this->rowId,

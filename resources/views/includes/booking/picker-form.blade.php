@@ -40,7 +40,7 @@
             <div class="form-group">
                 <button
                     type="submit"
-                    @class(['btn btn-primary w-100', 'disabled' => $isSlotUnavailable])
+                    @class(['btn btn-primary btn-lg w-100', 'disabled' => $isSlotUnavailable])
                 >@lang('igniter.reservation::default.button_find_table')</button>
 
                 <x-igniter-orange::forms.error field="date" class="text-danger"/>

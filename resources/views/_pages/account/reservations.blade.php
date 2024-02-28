@@ -13,7 +13,7 @@ security: customer
         <div class="col-sm-9">
             <div class="card">
                 <div class="card-body">
-                    <livewire:igniter-orange::list-reservations />
+                    <livewire:igniter-orange::reservation-list />
                 </div>
             </div>
         </div>

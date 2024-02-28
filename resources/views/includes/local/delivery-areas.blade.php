@@ -1,5 +1,5 @@
-<div class="border rounded p-3 mb-3">
-    <h5>@lang('igniter.local::default.text_delivery_areas')</h5>
+<h5>@lang('igniter.local::default.text_delivery_areas')</h5>
+<div class="border rounded p-3 mb-4">
     <div class="list-group list-group-flush">
         @if (count($deliveryAreas = $locationInfo->deliveryAreas()))
             <div class="list-group-item">

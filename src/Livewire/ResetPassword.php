@@ -5,6 +5,7 @@ namespace Igniter\Orange\Livewire;
 use Igniter\Flame\Exception\ApplicationException;
 use Igniter\User\Models\Customer;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
 class ResetPassword extends Component
@@ -44,9 +45,9 @@ class ResetPassword extends Component
         ]);
 
         if ($customer = Customer::whereEmail($this->email)->first()) {
-            throw_unless($code = $customer->resetPassword(), new ApplicationException(
-                lang('igniter.user::default.reset.alert_reset_error')
-            ));
+            throw_unless($code = $customer->resetPassword(), ValidationException::withMessages([
+                'email' => lang('igniter.user::default.reset.alert_reset_error'),
+            ]));
 
             $link = page_url($this->resetPage, ['code' => $code]);
             $this->sendResetPasswordMail($customer, $code, $link);
@@ -77,7 +78,7 @@ class ResetPassword extends Component
 
         flash()->success(lang('igniter.user::default.reset.alert_reset_success'));
 
-        return $this->redirect(page_url($this->loginPage), navigate: true);
+        return $this->redirect(page_url($this->loginPage));
     }
 
     protected function sendResetPasswordMail($customer, $code, $link)

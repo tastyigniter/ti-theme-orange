@@ -8,7 +8,6 @@
                         @foreach ($navItem->items as $item)
                             <li>
                                 <a
-                                    wire:navigate
                                     href="{{ $item->url }}"
                                     {!! $item->extraAttributes !!}
                                 >@lang($item->title)</a>

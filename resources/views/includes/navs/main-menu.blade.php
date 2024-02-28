@@ -7,9 +7,8 @@
                 @class(['nav-item', 'dropdown' => $navItem->items])
             >
                 <a
-                    @unless($navItem->items) wire:navigate @endunless
                     id="navbar-{{ $navItem->code }}"
-                    @class(['nav-link', 'dropdown-toggle' => $navItem->items, 'active text-primary' => $navItem->isActive || $navItem->isChildActive])
+                    @class(['nav-link fw-bold', 'dropdown-toggle' => $navItem->items, 'active text-primary' => $navItem->isActive || $navItem->isChildActive])
                     href="{{ $navItem->items ? '#' : $navItem->url }}"
                     @if ($navItem->items) data-bs-toggle="dropdown" @endif
                     {!! $navItem->extraAttributes !!}

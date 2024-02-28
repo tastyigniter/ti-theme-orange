@@ -3,13 +3,13 @@ window.OrangeLocalControl = (timeslot) => {
         orderDate: null,
         orderTime: null,
         timeslot: timeslot,
-        showAddressPicker: false,
+        hideDeliveryAddress: false,
         showTimePicker: false,
         init() {
             this.orderDate = this.$wire.get('orderDate');
             this.orderTime = this.$wire.get('orderTime');
 
-            this.showAddressPicker = this.$wire.get('orderType') === 'delivery';
+            this.hideDeliveryAddress = this.$wire.get('orderType') !== 'delivery';
             this.showTimePicker = this.$wire.get('isAsap') == 0;
 
             this.$wire.$watch('orderDate', value => {
@@ -17,7 +17,7 @@ window.OrangeLocalControl = (timeslot) => {
             });
 
             this.$wire.$watch('orderType', value => {
-                this.showAddressPicker = value === 'delivery';
+                this.hideDeliveryAddress = value !== 'delivery';
             });
 
             this.$wire.$watch('isAsap', value => {

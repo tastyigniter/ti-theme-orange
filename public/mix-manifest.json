@@ -41,9 +41,12 @@
     "/resources/src/scss/vendor/bootstrap/bootstrap-reboot.scss": "/resources/src/scss/vendor/bootstrap/bootstrap-reboot.scss",
     "/resources/src/scss/vendor/bootstrap/bootstrap-utilities.scss": "/resources/src/scss/vendor/bootstrap/bootstrap-utilities.scss",
     "/resources/src/scss/vendor/bootstrap/bootstrap.scss": "/resources/src/scss/vendor/bootstrap/bootstrap.scss",
+    "/images/iti/flags.png": "/images/iti/flags.png",
+    "/images/iti/flags@2x.png": "/images/iti/flags@2x.png",
     "/js/bootstrap.min.js.map": "/js/bootstrap.min.js.map",
     "/resources/src/scss/vendor/jquery.raty.scss": "/resources/src/scss/vendor/jquery.raty.scss",
     "/resources/src/scss/vendor/animate.scss": "/resources/src/scss/vendor/animate.scss",
     "/resources/src/scss/vendor/sweetalert2.scss": "/resources/src/scss/vendor/sweetalert2.scss",
-    "/resources/src/scss/vendor/intlTelInput.scss": "/resources/src/scss/vendor/intlTelInput.scss"
+    "/resources/src/scss/vendor/intlTelInput.scss": "/resources/src/scss/vendor/intlTelInput.scss",
+    "/resources/src/scss/vendor/photoswipe.scss": "/resources/src/scss/vendor/photoswipe.scss"
 }

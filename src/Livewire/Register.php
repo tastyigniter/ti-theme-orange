@@ -3,8 +3,8 @@
 namespace Igniter\Orange\Livewire;
 
 use Igniter\Flame\Exception\ApplicationException;
-use Igniter\User\Actions\RegisterUser;
 use Igniter\Orange\Livewire\Forms\RegisterForm;
+use Igniter\User\Actions\RegisterUser;
 use Livewire\Attributes\Url;
 
 class Register extends \Livewire\Component
@@ -22,7 +22,7 @@ class Register extends \Livewire\Component
 
     public bool $requireRegistrationTerms = false;
 
-    public bool $canRegister = true;
+    public bool $registrationAllowed = true;
 
     public string $redirectPage = 'account'.DIRECTORY_SEPARATOR.'account';
 
@@ -37,7 +37,7 @@ class Register extends \Livewire\Component
 
     public function mount()
     {
-        $this->canRegister = (bool)setting('allow_registration', true);
+        $this->registrationAllowed = (bool)setting('allow_registration', true);
         $this->requireRegistrationTerms = !empty($this->agreeTermsSlug);
 
         if ($this->activationCode) {
@@ -47,7 +47,7 @@ class Register extends \Livewire\Component
 
     public function onRegister()
     {
-        throw_unless($this->canRegister,
+        throw_unless($this->registrationAllowed,
             new ApplicationException(lang('igniter.user::default.login.alert_registration_disabled')));
 
         $this->form->validate();

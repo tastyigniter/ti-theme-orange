@@ -3,18 +3,20 @@
 namespace Igniter\Orange\Livewire;
 
 use Igniter\Flame\Exception\ApplicationException;
+use Igniter\Orange\Livewire\Forms\AddressBookForm;
 use Igniter\System\Models\Country;
 use Igniter\User\Facades\Auth;
-use Igniter\Orange\Livewire\Forms\AddressBookForm;
 use Livewire\WithPagination;
 
 class AddressBook extends \Livewire\Component
 {
     use WithPagination;
 
-    public ?string $addressId = null;
+    public ?int $addressId = null;
 
     public ?int $defaultAddressId;
+
+    public bool $showModal = false;
 
     public AddressBookForm $form;
 
@@ -25,40 +27,55 @@ class AddressBook extends \Livewire\Component
     public function render()
     {
         if ($address = $this->getAddress($this->addressId)) {
-            $this->form->fill($address);
+            $this->form->fillFrom($address, Auth::customer()->address_id);
         }
 
         return view('igniter-orange::livewire.address-book', [
-            'address' => $address,
+            'selectAddress' => $address,
             'addresses' => $this->loadAddressBook(),
         ]);
     }
 
     public function mount()
     {
-        $this->defaultAddressId = Auth::customer()?->address?->getKey();
+        $this->defaultAddressId = Auth::customer()?->address_id;
         $this->form->country_id = Country::getDefaultKey();
+    }
+
+    public function updated($property, $value)
+    {
+        if ($property === 'addressId') {
+            $this->showModal = !empty($value);
+            $this->form->reset();
+            $this->resetErrorBag();
+        }
     }
 
     public function onSave()
     {
-        $this->form->validate();
-
         throw_unless($customer = Auth::customer(),
             new ApplicationException('You must be logged in to manage your address book')
         );
+
+        $this->form->validate();
 
         if ($this->addressId) {
             $address = $this->getAddress($this->addressId);
             $address->fill($this->form->except('address_id'));
             $address->save();
         } else {
-            $customer->addresses()->create($this->form->except('address_id'));
+            $address = $customer->addresses()->create($this->form->except('address_id'));
+        }
+
+        if ($this->form->is_default) {
+            $customer->address_id = $address->address_id;
+            $customer->saveQuietly();
         }
 
         flash()->success(lang('igniter.user::default.account.alert_updated_success'))->now();
 
         $this->addressId = null;
+        $this->showModal = false;
     }
 
     public function onSetDefault(string $addressId)

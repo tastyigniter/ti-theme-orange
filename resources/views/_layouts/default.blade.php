@@ -23,6 +23,7 @@ description: Default layout
     @include('igniter-orange::includes.footer')
 </footer>
 <livewire:igniter-orange::modal />
+<livewire:igniter-orange::offcanvas />
 <div id="notification">
     @include('igniter-orange::includes.flash')
 </div>

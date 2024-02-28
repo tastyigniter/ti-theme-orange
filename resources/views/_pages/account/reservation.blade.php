@@ -1,7 +1,7 @@
 ---
 title: main::lang.account.reservations.title
 layout: default
-permalink: /account/reservations/:hash
+permalink: /account/reservation/:hash
 ---
 <div class="container">
     <div class="row py-5">
@@ -10,7 +10,9 @@ permalink: /account/reservations/:hash
         </div>
 
         <div class="col-sm-9">
-            <livewire:igniter-orange::pages.show-reservation />
+            <livewire:igniter-orange::reservation-preview />
+
+            <livewire:igniter-orange::leave-review type="reservation" />
         </div>
     </div>
 </div>

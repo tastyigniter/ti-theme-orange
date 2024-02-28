@@ -1,5 +1,5 @@
 <a
-    class="card w-100 p-3 mb-2 text-decoration-none"
+    class="card w-100 p-3 mb-3 shadow-sm text-decoration-none"
     href="{{ $locationData->url($menusPage) }}"
 >
     <div class="boxes d-sm-flex g-0">
@@ -15,22 +15,19 @@
                     </div>
                 @endif
                 <div class="no-spacing">
-                    <div class="d-flex flex-row mb-2">
-                        <h2 class="h5 mb-0 text-body">{{ $locationData->name }}</h2>
-                        @if($allowReviews)
-                            <div class="rating rating-sm text-muted">
-                                @for ($value = 1; $value<6; $value++)
-                                    <span @class(['fa-star', 'fa' => $value <= $locationData->reviewsScore(), 'far' => $value >= $locationData->reviewsScore()])></span>
-                                @endfor
+                    <h2 class="h5 mb-1 text-body">{{ $locationData->name }}</h2>
+                    @if($allowReviews)
+                        <div class="rating rating-sm small text-muted mb-1">
+                            <x-igniter-orange::star-rating :score="$locationData->reviewsScore()">
                                 <span class="small">({{ $locationData->reviewsCount() }})</span>
-                            </div>
-                        @endif
-                    </div>
+                            </x-igniter-orange::star-rating>
+                        </div>
+                    @endif
                     <div class="text-muted text-truncate">
                         {{ format_address($locationData->address) }}
                     </div>
                     @if($locationData->distance())
-                        <div>
+                        <div class="my-1">
                             <span
                                 class="text-muted small"
                             ><i class="fa fa-map-marker"></i>&nbsp;&nbsp;{{ number_format($locationData->distance(), 1) }} {{ $distanceUnit }}</span>
@@ -40,16 +37,18 @@
             </div>
         </div>
         <div class="col-12 col-sm-5">
-            <dl class="no-spacing">
+            <div>
                 @if ($locationData->openingSchedule()->isOpen())
-                    <dt>@lang('igniter.local::default.text_is_opened')</dt>
+                    @lang('igniter.local::default.text_is_opened')
                 @elseif ($locationData->openingSchedule()->isOpening())
-                    <dt class="text-muted">{!! sprintf(lang('igniter.local::default.text_opening_time'), make_carbon($locationData->openingSchedule()->getOpenTime()())->isoFormat(lang('igniter::system.moment.day_time_format_short'))) !!}</dt>
+                    <span class="text-muted">{!! sprintf(lang('igniter.local::default.text_opening_time'), make_carbon($locationData->openingSchedule()->getOpenTime()())->isoFormat(lang('igniter::system.moment.day_time_format_short'))) !!}</span>
                 @else
-                    <dt class="text-muted">@lang('igniter.local::default.text_closed')</dt>
+                    <span class="text-muted">@lang('igniter.local::default.text_closed')</span>
                 @endif
+            </div>
+            <div>
                 @foreach($locationData->orderTypes() as $code => $orderType)
-                    <dd class="text-muted">
+                    <div class="text-muted">
                         @if($orderType->isDisabled())
                             {!! $orderType->getDisabledDescription() !!}
                         @elseif($orderType->getSchedule()->isOpen())
@@ -59,9 +58,9 @@
                         @else
                             {!! $orderType->getClosedDescription() !!}
                         @endif
-                    </dd>
+                    </div>
                 @endforeach
-            </dl>
+            </div>
         </div>
     </div>
 </a>
