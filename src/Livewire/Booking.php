@@ -146,7 +146,7 @@ class Booking extends Component
     public function timeslots(): Collection
     {
         return $this->manager->makeTimeSlots(make_carbon($this->date))
-            ->map(fn($dateTime) => make_carbon($dateTime));
+            ->map(fn ($dateTime) => make_carbon($dateTime));
     }
 
     public function reducedTimeslots()

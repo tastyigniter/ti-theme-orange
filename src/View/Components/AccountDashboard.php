@@ -16,8 +16,7 @@ class AccountDashboard extends Component
 
     public function __construct(
         public string $customerName = '',
-    )
-    {
+    ) {
         $customer = Auth::getUser();
         $this->customerName = $customer?->full_name ?? '';
         $this->hasDefaultAddress = !is_null($customer?->address);
