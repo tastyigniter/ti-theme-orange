@@ -226,11 +226,11 @@ class Checkout extends \Livewire\Component
     public function onChoosePayment($code)
     {
         throw_unless($code, ValidationException::withMessages([
-            'form.payment' => lang('igniter.cart::default.checkout.error_invalid_payment')
+            'form.payment' => lang('igniter.cart::default.checkout.error_invalid_payment'),
         ]));
 
         throw_unless($payment = $this->orderManager->getPayment($code), ValidationException::withMessages([
-            'form.payment' => lang('igniter.cart::default.checkout.error_invalid_payment')
+            'form.payment' => lang('igniter.cart::default.checkout.error_invalid_payment'),
         ]));
 
         $this->form->payment = $code;
@@ -244,7 +244,7 @@ class Checkout extends \Livewire\Component
         $payment = $this->orderManager->getPayment($code);
 
         throw_if(!$payment || !$payment->paymentProfileExists($customer), ValidationException::withMessages([
-            'form.payment' => lang('igniter.cart::default.checkout.error_invalid_payment')
+            'form.payment' => lang('igniter.cart::default.checkout.error_invalid_payment'),
         ]));
 
         $payment->deletePaymentProfile($customer);
@@ -344,7 +344,7 @@ class Checkout extends \Livewire\Component
             $this->form->city = $address->city;
             $this->form->state = $address->state;
             $this->form->postcode = $address->postcode;
-        } else if ($userPosition = Location::userPosition()) {
+        } elseif ($userPosition = Location::userPosition()) {
             $this->form->address_1 = $userPosition->getStreetNumber().' '.$userPosition->getStreetName();
             $this->form->city = $userPosition->getSubLocality();
             $this->form->state = $userPosition->getLocality();

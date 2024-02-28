@@ -90,7 +90,7 @@ class MenuItemsList extends \Livewire\Component
         ]);
 
         $list->setCollection($list->getCollection()
-            ->map(fn($menuItem) => new MenuItemData($menuItem)));
+            ->map(fn ($menuItem) => new MenuItemData($menuItem)));
 
         if (!strlen($this->selectedCategorySlug) && $this->isGrouped) {
             $this->groupListByCategory($list);

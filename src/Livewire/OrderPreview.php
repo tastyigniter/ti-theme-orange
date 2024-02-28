@@ -39,7 +39,7 @@ class OrderPreview extends \Livewire\Component
 
     protected OrderManager $orderManager;
 
-    protected null|Model $order = null;
+    protected ?Model $order = null;
 
     public function render()
     {

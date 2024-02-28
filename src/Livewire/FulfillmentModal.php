@@ -78,20 +78,20 @@ class FulfillmentModal extends \Livewire\Component
         ]);
 
         throw_unless($this->location->current(), ValidationException::withMessages([
-            'orderType' => lang('igniter.local::default.alert_location_required')
+            'orderType' => lang('igniter.local::default.alert_location_required'),
         ]));
 
         throw_unless($orderType = $this->location->getOrderType($this->orderType), ValidationException::withMessages([
-            'orderType' => lang('igniter.local::default.alert_order_type_required')
+            'orderType' => lang('igniter.local::default.alert_order_type_required'),
         ]));
 
         throw_if($orderType->isDisabled(), ValidationException::withMessages([
-            'orderType' => $orderType->getDisabledDescription()
+            'orderType' => $orderType->getDisabledDescription(),
         ]));
 
         $timeSlotDateTime = $this->isAsap ? now() : make_carbon($this->orderDate.' '.$this->orderTime);
         throw_unless($this->location->checkOrderTime($timeSlotDateTime), ValidationException::withMessages([
-            'isAsap' => sprintf(lang('igniter.local::default.alert_order_is_unavailable'), $this->location->getOrderType()->getLabel())
+            'isAsap' => sprintf(lang('igniter.local::default.alert_order_is_unavailable'), $this->location->getOrderType()->getLabel()),
         ]));
 
         $this->location->updateOrderType($orderType->getCode());
@@ -111,7 +111,7 @@ class FulfillmentModal extends \Livewire\Component
             }
         }
 
-        $this->showAddressPicker = FALSE;
+        $this->showAddressPicker = false;
 
         return $this->redirect(Livewire::originalUrl(), navigate: true);
     }

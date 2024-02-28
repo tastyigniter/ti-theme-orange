@@ -14,10 +14,9 @@ class LocalHeader extends Component
         public bool $showThumb = true,
         public int $localThumbWidth = 80,
         public int $localThumbHeight = 80,
-    )
-    {
+    ) {
         Location::current()->loadCount([
-            'reviews' => fn($q) => $q->isApproved(),
+            'reviews' => fn ($q) => $q->isApproved(),
         ]);
     }
 
