@@ -9,7 +9,6 @@
         </li>
 
         @foreach ($categories->toFlatTree() as $category)
-            @continue(in_array($category->getKey(), $hiddenCategories))
             @continue($hideEmptyCategory && $category->count_menus < 1)
 
             <li class="nav-item">

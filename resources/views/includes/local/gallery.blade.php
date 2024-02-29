@@ -7,6 +7,8 @@
                     <div class="col-sm-4">
                         <a
                             href="{{ $media->getPath() }}"
+                            data-pswp-width="{{$media->width}}"
+                            data-pswp-height="{{$media->height}}"
                             target="_blank"
                         >
                             <img class="img-fluid img-rounded" src="{{ $media->getThumb() }}"/>
@@ -20,9 +22,8 @@
     </div>
 </div>
 
-@script
 <script type="text/javascript">
-    $(document).ready(function () {
+    document.addEventListener('DOMContentLoaded', function () {
         const lightbox = new PhotoSwipeLightbox({
             gallery: '#localGallery',
             children: 'a',
@@ -31,4 +32,3 @@
         lightbox.init();
     });
 </script>
-@endscript

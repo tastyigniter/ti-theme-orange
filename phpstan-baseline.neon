@@ -16,6 +16,41 @@ parameters:
 			path: resources/views/_pages/local/reviews.blade.php
 
 		-
+			message: "#^Access to an undefined property Igniter\\\\Frontend\\\\Models\\\\Banners\\:\\:\\$alt_text\\.$#"
+			count: 1
+			path: src/Data/BannerData.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Frontend\\\\Models\\\\Banners\\:\\:\\$banner_id\\.$#"
+			count: 1
+			path: src/Data/BannerData.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Frontend\\\\Models\\\\Banners\\:\\:\\$click_url\\.$#"
+			count: 3
+			path: src/Data/BannerData.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Frontend\\\\Models\\\\Banners\\:\\:\\$code\\.$#"
+			count: 2
+			path: src/Data/BannerData.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Frontend\\\\Models\\\\Banners\\:\\:\\$custom_code\\.$#"
+			count: 1
+			path: src/Data/BannerData.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Frontend\\\\Models\\\\Banners\\:\\:\\$image_code\\.$#"
+			count: 2
+			path: src/Data/BannerData.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Frontend\\\\Models\\\\Banners\\:\\:\\$type\\.$#"
+			count: 2
+			path: src/Data/BannerData.php
+
+		-
 			message: "#^Access to an undefined property Igniter\\\\Local\\\\Models\\\\Location\\:\\:\\$distance\\.$#"
 			count: 1
 			path: src/Data/LocationData.php
@@ -176,22 +211,7 @@ parameters:
 			path: src/Livewire/CartBox.php
 
 		-
-			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:getById\\(\\)\\.$#"
-			count: 1
-			path: src/Livewire/CartBox.php
-
-		-
 			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:getId\\(\\)\\.$#"
-			count: 1
-			path: src/Livewire/CartBox.php
-
-		-
-			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:orderType\\(\\)\\.$#"
-			count: 1
-			path: src/Livewire/CartBox.php
-
-		-
-			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:setCurrent\\(\\)\\.$#"
 			count: 1
 			path: src/Livewire/CartBox.php
 
@@ -671,37 +691,7 @@ parameters:
 			path: src/View/Components/AccountDashboard.php
 
 		-
-			message: "#^Access to an undefined property Igniter\\\\Frontend\\\\Models\\\\Banners\\:\\:\\$custom_code\\.$#"
-			count: 1
-			path: src/View/Components/BannerPreview.php
-
-		-
-			message: "#^Access to an undefined property Igniter\\\\Frontend\\\\Models\\\\Banners\\:\\:\\$image_code\\.$#"
-			count: 1
-			path: src/View/Components/BannerPreview.php
-
-		-
-			message: "#^Access to an undefined property Igniter\\\\Frontend\\\\Models\\\\Banners\\:\\:\\$type\\.$#"
-			count: 1
-			path: src/View/Components/BannerPreview.php
-
-		-
-			message: "#^Access to an undefined property Igniter\\\\Orange\\\\View\\\\Components\\\\BannerPreview\\:\\:\\$page\\.$#"
-			count: 1
-			path: src/View/Components/BannerPreview.php
-
-		-
-			message: "#^Call to an undefined method Igniter\\\\Orange\\\\View\\\\Components\\\\BannerPreview\\:\\:property\\(\\)\\.$#"
-			count: 3
-			path: src/View/Components/BannerPreview.php
-
-		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:isEnabled\\(\\)\\.$#"
-			count: 1
-			path: src/View/Components/BannerPreview.php
-
-		-
-			message: "#^Call to an undefined static method Igniter\\\\Frontend\\\\Models\\\\Banners\\:\\:whereIsEnabled\\(\\)\\.$#"
 			count: 1
 			path: src/View/Components/BannerPreview.php
 

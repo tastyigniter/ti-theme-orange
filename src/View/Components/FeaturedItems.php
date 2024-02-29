@@ -7,15 +7,14 @@ use Illuminate\View\Component;
 
 class FeaturedItems extends Component
 {
-    public string $title = 'igniter.frontend::default.featured.text_featured_menus';
-
-    public int $limit = 6;
-
-    public int $itemsPerRow = 3;
-
-    public int $itemWidth = 400;
-
-    public int $itemHeight = 300;
+    public function __construct(
+        public string $title = 'igniter.frontend::default.featured.text_featured_menus',
+        public int $limit = 6,
+        public int $itemsPerRow = 3,
+        public int $itemWidth = 400,
+        public int $itemHeight = 300
+    ) {
+    }
 
     public function render()
     {

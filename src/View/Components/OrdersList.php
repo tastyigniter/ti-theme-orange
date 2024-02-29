@@ -7,11 +7,12 @@ use Illuminate\View\Component;
 
 class OrdersList extends Component
 {
-    public int $itemsPerPage = 20;
-
-    public string $sortOrder = 'created_at desc';
-
-    public string $orderPage = 'account'.DIRECTORY_SEPARATOR.'order';
+    public function __construct(
+        public int $itemsPerPage = 20,
+        public string $sortOrder = 'created_at desc',
+        public string $orderPage = 'account'.DIRECTORY_SEPARATOR.'order',
+    ) {
+    }
 
     protected function loadOrders()
     {
