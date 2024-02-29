@@ -9,15 +9,15 @@ use Illuminate\View\Component;
 
 class CategoriesList extends Component
 {
-    public string $menusPage = 'local'.DIRECTORY_SEPARATOR.'menus';
+    protected static ?Collection $categoriesCache = null;
 
-    public bool $hideEmptyCategory = false;
+    protected static ?Category $selectedCategoryCache = null;
 
-    public array $hiddenCategories = [];
-
-    public static ?Collection $categoriesCache = null;
-
-    public static ?Category $selectedCategoryCache = null;
+    public function __construct(
+        public string $menusPage = 'local'.DIRECTORY_SEPARATOR.'menus',
+        public bool $hideEmptyCategory = false
+    ) {
+    }
 
     public function render()
     {

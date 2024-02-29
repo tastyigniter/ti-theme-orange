@@ -1,66 +1,70 @@
 <div class="module-box">
-    @if ($banner)
-        @if ($banner->isCustom)
-            {!! $banner->value !!}
-        @else
-            @if ($banner->type != 'carousel')
-                @foreach ($banner->value as $image)
-                    <div
-                        class="thumbnail"
-                        data-width="{{ $image['width'] }}"
-                        data-height="{{ $image['height'] }}"
-                    >
-                        <a href="{{ $banner->clickUrl }}">
-                            <img
-                                alt="{{ $banner->altText }}"
-                                src="{{ $image['url'] }}"
-                                class="thumb img-fluid"
-                            />
-                        </a>
-                    </div>
-                @endforeach
-            @else
-                <div class="thumbnail">
-                    <div id="{{ $banner->id }}" class="carousel slide" data-bs-ride="carousel">
-                        <ol class="carousel-indicators">
-                            @for ($i = 0; $i < count($banner->value); $i++)
-                                <li
-                                    data-bs-target="#{{ $banner->id }}"
-                                    data-bs-slide-to="{{ $i }}"
-                                    class="{{ $i === 0 ? 'active' : '' }}"
-                                ></li>
-                            @endfor
-                        </ol>
-
-                        <div class="carousel-inner">
-                            @foreach ($banner->value as $image)
-                                <div
-                                    class="item {{ $loop->index === 0 ? 'active' : '' }}"
-                                    data-width="{{ $image['width'] }}"
-                                    data-height="{{ $image['height'] }}"
-                                >
-                                    <a href="{{ $banner->clickUrl }}">
-                                        <img
-                                            class="img-fluid"
-                                            alt="{{ $banner->altText }}"
-                                            src="{{ $image['url'] }}"
-                                        />
-                                    </a>
-                                </div>
-                            @endforeach
-                        </div>
-
-                        <a
-                            class="left carousel-control"
-                            href="#{{ $banner->id }}"
-                            data-bs-slide="prev"><span class="fa fa-chevron-left"></span></a>
-                        <a
-                            class="right carousel-control"
-                            href="#{{ $banner->id }}"
-                            data-bs-slide="next"><span class="fa fa-chevron-right"></span></a>
-                    </div>
+    @if($bannerData->isCustom())
+        {!! $bannerData->markup !!}
+    @elseif($bannerData->isCarousel())
+        <a href="{{ $bannerData->clickUrl }}">
+            <div id="{{ $bannerData->id }}" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    @for ($i = 0; $i < count($bannerData->imageUrls()); $i++)
+                        <button
+                            data-bs-target="#{{ $bannerData->id }}"
+                            data-bs-slide-to="{{ $i }}"
+                            class="{{ $i === 0 ? 'active' : '' }}"
+                        ></button>
+                    @endfor
                 </div>
-            @endif
-        @endif
+
+                <div class="carousel-inner">
+                    @foreach ($bannerData->imageUrls() as $imageUrl)
+                        <div
+                            class="carousel-item {{ $loop->index === 0 ? 'active' : '' }}"
+                            data-width="{{ $bannerData->imageWidth }}"
+                            data-height="{{ $bannerData->imageHeight }}"
+                        >
+                            <img
+                                class="d-block w-100"
+                                alt="{{ $bannerData->altText }}"
+                                src="{{ $imageUrl }}"
+                            />
+                        </div>
+                    @endforeach
+                </div>
+
+                <button
+                    class="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#{{ $bannerData->id }}"
+                    data-bs-slide="prev"
+                >
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button
+                    class="carousel-control-next"
+                    type="button"
+                    data-bs-target="#{{ $bannerData->id }}"
+                    data-bs-slide="next"
+                >
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </a>
+    @elseif($bannerData->isImage())
+        @foreach ($bannerData->imageUrls() as $imageUrl)
+            <div
+                class="thumbnail"
+                data-width="{{ $bannerData->imageWidth }}"
+                data-height="{{ $bannerData->imageHeight }}"
+            >
+                <a href="{{ $bannerData->clickUrl }}">
+                    <img
+                        alt="{{ $bannerData->altText }}"
+                        src="{{ $imageUrl }}"
+                        class="thumb img-fluid"
+                    />
+                </a>
+            </div>
+        @endforeach
     @endif
 </div>
