@@ -41,7 +41,7 @@ description: Static layout for static pages
     @include('igniter-orange::includes.footer')
 </footer>
 <div id="notification">
-    @include('igniter-orange::includes.flash')
+    <livewire:igniter-orange::utils.flash-message />
 </div>
 @include('igniter-orange::includes.eucookiebanner')
 @livewireScripts

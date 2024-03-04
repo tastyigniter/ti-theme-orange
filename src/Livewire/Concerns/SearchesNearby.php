@@ -73,6 +73,8 @@ trait SearchesNearby
 
         $userLocation = $this->geocodeSearchQuery($searchQuery, false);
 
+        $this->searchQuery = null;
+
         if (!isset($this->location)) {
             $nearByLocation = $this->findNearByLocation($userLocation);
 

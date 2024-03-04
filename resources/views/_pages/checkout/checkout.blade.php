@@ -8,3 +8,4 @@ permalink: /checkout
         <livewire:igniter-orange::checkout />
     </div>
 </div>
+<livewire:igniter-orange::fulfillment-modal :hideDeliveryAddress="true" />

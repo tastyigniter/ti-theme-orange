@@ -1,27 +1,16 @@
 <div class="panel-local d-md-flex">
-    @if ($showThumb && $locationInfo->hasThumb())
+    @if ($showThumb)
         <img
             class="img-fluid rounded me-4"
             src="{{ $locationInfo->getThumb(['width' => $localThumbWidth, 'height' => $localThumbHeight]) }}"
             alt="{{ $locationInfo->name }}"
+            style="width: {{ $localThumbWidth }}px; height: {{ $localThumbHeight }}px;"
         />
     @endif
     <div>
         <h1 class="h3 mb-2">{{ $locationInfo->name }}</h1>
         <div style="--bs-breadcrumb-divider: '·';">
             <div class="breadcrumb mb-2">
-                @if ($allowReviews)
-                    <div class="breadcrumb-item">
-                        <div class="rating rating-sm">
-                            <x-igniter-orange::star-rating :score="$locationInfo->reviewsScore()">
-                                <a
-                                    wire:click="$dispatch('openOffcanvas', {component: 'igniter-orange::local-reviews-offcanvas'})"
-                                    class="link-primary cursor-pointer"
-                                ><span class="small">({{ $locationInfo->reviewsCount() }}) @lang('igniter.orange::default.text_reviews')</span></a>
-                            </x-igniter-orange::star-rating>
-                        </div>
-                    </div>
-                @endif
                 <div class="breadcrumb-item fw-bold">
                     @if ($locationInfo->orderType()->getSchedule()->isOpen())
                         @lang('igniter.local::default.text_is_opened')
@@ -55,6 +44,19 @@
         <div class="text-muted">
             {!! format_address($locationInfo->address, FALSE) !!}
         </div>
+        @if ($allowReviews)
+            <div class="rating rating-sm mt-2">
+                <x-igniter-orange::star-rating :score="$locationInfo->reviewsScore()">
+                    <a
+                        data-bs-toggle="offcanvas"
+                        data-bs-target="#reviewsOffCanvas"
+                        aria-controls="reviewsOffCanvas"
+                        class="link-primary cursor-pointer"
+                    ><span class="small">({{ $locationInfo->reviewsCount() }}) @lang('igniter.orange::default.text_reviews')</span></a>
+                </x-igniter-orange::star-rating>
+            </div>
+        @endif
     </div>
-    @include('igniter-orange::includes.local.info-canvas')
+    @include('igniter-orange::includes.local.info-offcanvas')
+    @include('igniter-orange::includes.local.reviews-offcanvas')
 </div>

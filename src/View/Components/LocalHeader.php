@@ -5,15 +5,18 @@ namespace Igniter\Orange\View\Components;
 use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\ReviewSettings;
 use Igniter\Orange\Data\LocationData;
+use Igniter\Orange\Livewire\Concerns\WithReviews;
 use Igniter\System\Facades\Assets;
 use Illuminate\View\Component;
 
 class LocalHeader extends Component
 {
+    use WithReviews;
+
     public function __construct(
         public bool $showThumb = true,
-        public int $localThumbWidth = 80,
-        public int $localThumbHeight = 80,
+        public int $localThumbWidth = 320,
+        public int $localThumbHeight = 160,
     ) {
         Location::current()->loadCount([
             'reviews' => fn ($q) => $q->isApproved(),
@@ -34,5 +37,10 @@ class LocalHeader extends Component
             'locationInfo' => LocationData::current(),
             'allowReviews' => ReviewSettings::allowReviews(),
         ]);
+    }
+
+    public function listReviews()
+    {
+        return $this->loadReviewList(1);
     }
 }

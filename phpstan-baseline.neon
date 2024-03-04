@@ -106,13 +106,23 @@ parameters:
 			path: src/Data/MenuItemData.php
 
 		-
+			message: "#^Access to an undefined property Igniter\\\\Cart\\\\Models\\\\Menu\\:\\:\\$menu_options\\.$#"
+			count: 1
+			path: src/Data/MenuItemData.php
+
+		-
 			message: "#^Access to an undefined property Igniter\\\\Cart\\\\Models\\\\Menu\\:\\:\\$menu_price\\.$#"
-			count: 3
+			count: 1
+			path: src/Data/MenuItemData.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Cart\\\\Models\\\\Menu\\:\\:\\$minimum_qty\\.$#"
+			count: 1
 			path: src/Data/MenuItemData.php
 
 		-
 			message: "#^Access to an undefined property Igniter\\\\Cart\\\\Models\\\\Menu\\:\\:\\$special\\.$#"
-			count: 3
+			count: 2
 			path: src/Data/MenuItemData.php
 
 		-
@@ -211,7 +221,22 @@ parameters:
 			path: src/Livewire/CartBox.php
 
 		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:getById\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/CartBox.php
+
+		-
 			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/CartBox.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:orderType\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/CartBox.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:setCurrent\\(\\)\\.$#"
 			count: 1
 			path: src/Livewire/CartBox.php
 
@@ -219,11 +244,6 @@ parameters:
 			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addJs\\(\\)\\.$#"
 			count: 2
 			path: src/Livewire/CartBox.php
-
-		-
-			message: "#^Access to an undefined property Igniter\\\\Cart\\\\Models\\\\Menu\\:\\:\\$minimum_qty\\.$#"
-			count: 2
-			path: src/Livewire/CartItemModal.php
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:getId\\(\\)\\.$#"
@@ -446,28 +466,13 @@ parameters:
 			path: src/Livewire/LocalSearch.php
 
 		-
-			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:checkDeliveryCoverage\\(\\)\\.$#"
-			count: 1
-			path: src/Livewire/LocalSearch.php
-
-		-
 			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:getSession\\(\\)\\.$#"
-			count: 1
-			path: src/Livewire/LocalSearch.php
-
-		-
-			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:orderTypeIsDelivery\\(\\)\\.$#"
 			count: 1
 			path: src/Livewire/LocalSearch.php
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:putSession\\(\\)\\.$#"
 			count: 3
-			path: src/Livewire/LocalSearch.php
-
-		-
-			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:requiresUserPosition\\(\\)\\.$#"
-			count: 1
 			path: src/Livewire/LocalSearch.php
 
 		-
@@ -482,11 +487,6 @@ parameters:
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:updateUserPosition\\(\\)\\.$#"
-			count: 1
-			path: src/Livewire/LocalSearch.php
-
-		-
-			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:userPosition\\(\\)\\.$#"
 			count: 1
 			path: src/Livewire/LocalSearch.php
 
@@ -551,16 +551,6 @@ parameters:
 			path: src/Livewire/MenuItemsList.php
 
 		-
-			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addJs\\(\\)\\.$#"
-			count: 1
-			path: src/Livewire/Modal.php
-
-		-
-			message: "#^Call to an undefined static method UnitEnum\\:\\:tryFrom\\(\\)\\.$#"
-			count: 1
-			path: src/Livewire/Modal.php
-
-		-
 			message: "#^Call to an undefined static method Igniter\\\\Frontend\\\\Models\\\\MailchimpSettings\\:\\:get\\(\\)\\.$#"
 			count: 1
 			path: src/Livewire/NewsletterSubscribeForm.php
@@ -574,11 +564,6 @@ parameters:
 			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Facades\\\\Event\\:\\:fire\\(\\)\\.$#"
 			count: 1
 			path: src/Livewire/NewsletterSubscribeForm.php
-
-		-
-			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addJs\\(\\)\\.$#"
-			count: 1
-			path: src/Livewire/Offcanvas.php
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\Cart\\\\Facades\\\\Cart\\:\\:add\\(\\)\\.$#"
@@ -646,32 +631,27 @@ parameters:
 			path: src/Livewire/ReviewsList.php
 
 		-
-			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:isApproved\\(\\)\\.$#"
+			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addJs\\(\\)\\.$#"
 			count: 1
-			path: src/Livewire/ReviewsOffcanvas.php
+			path: src/Livewire/Utils/Modal.php
 
 		-
-			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:getRatingOptions\\(\\)\\.$#"
+			message: "#^Call to an undefined static method UnitEnum\\:\\:tryFrom\\(\\)\\.$#"
 			count: 1
-			path: src/Livewire/ReviewsOffcanvas.php
-
-		-
-			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:current\\(\\)\\.$#"
-			count: 2
-			path: src/Livewire/ReviewsOffcanvas.php
-
-		-
-			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addCss\\(\\)\\.$#"
-			count: 1
-			path: src/Livewire/ReviewsOffcanvas.php
+			path: src/Livewire/Utils/Modal.php
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addJs\\(\\)\\.$#"
 			count: 1
-			path: src/Livewire/ReviewsOffcanvas.php
+			path: src/Livewire/Utils/Offcanvas.php
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:check\\(\\)\\.$#"
+			count: 1
+			path: src/ServiceProvider.php
+
+		-
+			message: "#^Call to an undefined static method Livewire\\\\Livewire\\:\\:componentHook\\(\\)\\.$#"
 			count: 1
 			path: src/ServiceProvider.php
 
@@ -718,31 +698,36 @@ parameters:
 		-
 			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:getOrderType\\(\\)\\.$#"
 			count: 1
-			path: src/View/Components/LocalControl.php
+			path: src/View/Components/Fulfillment.php
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:orderDateTime\\(\\)\\.$#"
 			count: 1
-			path: src/View/Components/LocalControl.php
+			path: src/View/Components/Fulfillment.php
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:orderTimeIsAsap\\(\\)\\.$#"
 			count: 1
-			path: src/View/Components/LocalControl.php
+			path: src/View/Components/Fulfillment.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:isApproved\\(\\)\\.$#"
+			count: 1
+			path: src/View/Components/LocalHeader.php
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:current\\(\\)\\.$#"
-			count: 1
+			count: 2
 			path: src/View/Components/LocalHeader.php
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addCss\\(\\)\\.$#"
-			count: 1
+			count: 2
 			path: src/View/Components/LocalHeader.php
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addJs\\(\\)\\.$#"
-			count: 1
+			count: 2
 			path: src/View/Components/LocalHeader.php
 
 		-

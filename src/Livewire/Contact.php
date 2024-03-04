@@ -4,7 +4,6 @@ namespace Igniter\Orange\Livewire;
 
 use Igniter\Local\Models\Location;
 use Illuminate\Support\Facades\Mail;
-use Livewire\Attributes\Rule;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -19,7 +18,7 @@ class Contact extends Component
     #[Validate('required|min:2|max:255', as: 'igniter.frontend::default.contact.label_full_name')]
     public $fullName;
 
-    #[Rule('required', as: 'igniter.frontend::default.contact.label_telephone')]
+    #[Validate('required', as: 'igniter.frontend::default.contact.label_telephone')]
     public $telephone;
 
     #[Validate('max:1500', as: 'igniter.frontend::default.contact.label_comment')]

@@ -1,4 +1,4 @@
-<div class="d-lg-flex align-items-center fs-6 fw-bold">
+<div class="d-flex align-items-center">
     <div>
         <i class="far fa-clock me-2"></i>
         {{ $activeOrderType->getLabel() }}&nbsp;·
@@ -29,6 +29,6 @@
         role="button"
         class="small text-primary"
         data-bs-toggle="modal"
-        data-bs-target="#localControlModal"
+        data-bs-target="#fulfillmentModal"
     >@lang('igniter.local::default.search.text_change')</a>
 </div>

@@ -26,6 +26,12 @@ class LocationList extends \Livewire\Component
 
     public string $sortOrder = 'menu_priority asc';
 
+    public bool $showThumb = true;
+
+    public int $thumbWidth = 95;
+
+    public int $thumbHeight = 80;
+
     #[Url]
     public string $sortBy = 'distance';
 

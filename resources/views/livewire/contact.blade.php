@@ -3,14 +3,8 @@
         @if ($locationDefault)
             <div class="card-body">
                 <h1 class="h3 card-title">{{ $locationDefault->getName() }}</h1>
-                <div class="row contact-info mb-2">
-                    <div class="col-1"><i class="fa fa-globe"></i></div>
-                    <div class="col">{{format_address($locationDefault->getAddress())}}</div>
-                </div>
-                <div class="row contact-info">
-                    <div class="col-1"><i class="fa fa-phone"></i></div>
-                    <div class="col">{{ $locationDefault->getTelephone() }}</div>
-                </div>
+                <div class="mb-2"><i class="fa fa-globe me-2"></i>{{format_address($locationDefault->getAddress())}}</div>
+                <div class="mb-2"><i class="fa fa-phone me-2"></i>{{ $locationDefault->getTelephone() }}</div>
             </div>
         @endif
     </div>
@@ -56,7 +50,7 @@
                         </div>
                         <div class="col-sm-6 col-md-6">
                             <div class="form-group">
-                                <div @class(['form-floating', 'is-invalid' => has_form_error('full_name')])>
+                                <div @class(['form-floating', 'is-invalid' => has_form_error('fullName')])>
                                     <input
                                         wire:model="fullName"
                                         type="text"

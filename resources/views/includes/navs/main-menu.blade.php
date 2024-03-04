@@ -8,20 +8,20 @@
             >
                 <a
                     id="navbar-{{ $navItem->code }}"
-                    @class(['nav-link fw-bold', 'dropdown-toggle' => $navItem->items, 'active text-primary' => $navItem->isActive || $navItem->isChildActive])
+                    @class(['nav-link fw-medium', 'dropdown-toggle' => $navItem->items, 'active fw-bold text-primary' => $navItem->isActive || $navItem->isChildActive])
                     href="{{ $navItem->items ? '#' : $navItem->url }}"
                     @if ($navItem->items) data-bs-toggle="dropdown" @endif
                     {!! $navItem->extraAttributes !!}
                 >@lang($navItem->title) @if ($navItem->items) <span class="caret"></span> @endif</a>
                 @if ($navItem->items)
                     <div
-                        class="dropdown-menu px-3"
+                        class="dropdown-menu px-2"
                         aria-labelledby="navbar-{{ $navItem->code }}"
                         role="menu"
                     >
                         @foreach ($navItem->items as $item)
                             <a
-                                @class(['dropdown-item py-2 rounded', 'active' => $item->isActive, 'border-bottom' => !$loop->last])
+                                @class(['dropdown-item py-2 rounded', 'active' => $item->isActive])
                                 href="{{ $item->url }}"
                                 {!! $item->extraAttributes !!}
                             >@lang($item->title)</a>

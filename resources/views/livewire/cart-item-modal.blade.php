@@ -2,35 +2,35 @@
     x-data="OrangeCartItem()"
     class="modal-dialog"
     data-control="cart-item"
-    data-min-quantity="{{ $menuItem->minimum_qty }}"
-    data-price-amount="{{ $cartItem ? $cartItem->price : $menuItem->getBuyablePrice() }}"
+    data-min-quantity="{{ $minQuantity }}"
+    data-price-amount="{{ $price }}"
 >
     <form method="POST" wire:submit="onSave">
         <div class="modal-content">
             <div class="modal-header border-0">
-                <h4 class="modal-title">{{ $menuItem->getBuyableName() }}</h4>
+                <h4 class="modal-title">{{ $menuItemData->name }}</h4>
                 <button
                     type="button"
                     class="btn-close px-2"
                     data-bs-dismiss="modal"
                 ></button>
             </div>
-            @if ($showThumb && $menuItem->hasMedia('thumb'))
+            @if ($showThumb)
                 <div class="modal-top">
                     <img
-                        class="img-fluid"
-                        src="{!! $menuItem->thumb->getThumb([
+                        class="img-fluid w-100"
+                        src="{!! $menuItemData->getThumb([
                               'width' => $thumbWidth,
                               'height' => $thumbHeight,
                             ]) !!}"
-                        alt="{{ $menuItem->getBuyableName() }}"
+                        alt="{{ $menuItemData->name }}"
                     />
                 </div>
             @endif
 
             <div class="modal-body">
-                @if (strlen($menuItem->menu_description))
-                    <p class="text-muted">{!! nl2br($menuItem->menu_description) !!}</p>
+                @if (strlen($menuItemData->description))
+                    <p class="text-muted">{!! $menuItemData->description !!}</p>
                 @endif
 
                 <input type="hidden" wire:model="menuId" />
@@ -88,8 +88,7 @@
                     <div class="col-sm-7 ps-sm-3">
                         <button type="submit" class="btn btn-primary btn-lg text-white w-100" data-attach-loading>
                             <div class="d-flex align-items-center">
-                                <div class="col"></div>
-                                <div class="col px-3 text-nowrap">{!! $cartItem
+                                <div class="col text-nowrap">{!! $cartItem
                                     ? lang('igniter.cart::default.button_update')
                                     : lang('igniter.cart::default.button_add_to_order')
                                 !!}</div>

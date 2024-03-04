@@ -56,9 +56,9 @@ class Booking extends Component
     #[Url]
     public ?string $time = null;
 
-    protected $startDate;
+    public $startDate;
 
-    protected $endDate;
+    public $endDate;
 
     /**
      * @var \Igniter\Reservation\Classes\BookingManager

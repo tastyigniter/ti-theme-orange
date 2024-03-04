@@ -4,8 +4,8 @@
             wire:ignore
             class="col-md-8 pr-md-4"
             data-control="booking"
-            data-min-date="{{ $this->startDate->format('Y-m-d') }}"
-            data-max-date="{{ $this->endDate->format('Y-m-d') }}"
+            data-min-date="{{ $startDate->format('Y-m-d') }}"
+            data-max-date="{{ $endDate->format('Y-m-d') }}"
             data-days-of-week-disabled='@json($this->disabledDaysOfWeek())'
             data-disable='@json($this->disabledDates())'
             data-week-start="{{ $weekStartOn }}"

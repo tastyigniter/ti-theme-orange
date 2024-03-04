@@ -55,14 +55,9 @@
                 <x-igniter-orange::forms.error field="email" class="text-danger"/>
             </div>
             <div class="clearfix">
-                <a
-                    wire:navigate
-                    class="btn btn-link btn-lg pull-left"
-                    href="{{ page_url($loginPage) }}"
-                >@lang('igniter.user::default.reset.button_login')</a>
                 <button
                     type="submit"
-                    class="btn btn-primary btn-lg pull-right"
+                    class="btn btn-primary btn-lg w-100 pull-right"
                 >@lang('igniter.user::default.reset.button_reset')</button>
             </div>
         </x-igniter-orange::forms.form>

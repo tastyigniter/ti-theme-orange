@@ -34,7 +34,7 @@
                 {!! $menuItemData->description !!}
             </p>
         </div>
-        @if($showThumb == 1 && $menuItemData->hasThumb())
+        @if($showThumb)
             <div
                 class="col-3 p-0 me-3 menu-item-image align-self-center"
                 style="

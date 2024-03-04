@@ -19,18 +19,43 @@
                 @include('igniter-orange::includes.local.list-filter-items', ['filters' => $this->orderTypes, 'field' => 'orderType'])
             </div>
             <div class="bg-white border rounded p-3 mb-3">
-                @include('igniter-orange::includes.local.list-filters', ['filters' => $this->sorters, 'field' => 'sortBy'])
+                <div
+                    role="button"
+                    class="bg-white accordion-button shadow-none p-0 fw-bold"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseExample"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >@lang('igniter.orange::default.text_sort')</div>
+                <div class="collapse show" id="collapseExample">
+                    <div class="pt-3">
+                        @include('igniter-orange::includes.local.list-filter-items', ['filters' => $this->sorters, 'field' => 'sortBy'])
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-sm-9">
             <div class="mb-4">
-                @include('igniter-orange::includes.local.list-search')
+                <div class="input-group input-group-lg bg-white rounded border p-1 mb-3 mb-lg-0">
+                    <input
+                        wire:model.live="search"
+                        wire:loading.attr="disabled"
+                        type="search"
+                        class="bg-white form-control shadow-none border-none"
+                        name="search"
+                        placeholder="@lang('igniter.local::default.text_filter_search')"
+                    />
+                    <button
+                        class="btn btn-secondary btn-lg fw-bold ms-lg-3 rounded"
+                        type="button"
+                    ><i class="fa fa-search"></i></button>
+                </div>
             </div>
 
             @if (count($locationsList))
                 <div class="local-group">
                     @foreach ($locationsList as $locationData)
-                        @include('igniter-orange::includes.local.list-location')
+                        @include('igniter-orange::includes.local.location-card')
                     @endforeach
                 </div>
 
@@ -46,5 +71,4 @@
             @endif
         </div>
     </div>
-    <livewire:igniter-orange::fulfillment-modal/>
 </div>

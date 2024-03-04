@@ -1,9 +1,9 @@
-<div x-data='OrangeLocalControl(@json($timeslotTimes))'>
+<div x-data='OrangeFulfillment(@json($timeslotTimes))'>
     <div
         @class(['modal fade', 'show' => $showAddressPicker])
-        id="localControlModal"
+        id="fulfillmentModal"
         tabindex="-1"
-        aria-labelledby="localControlModalLabel"
+        aria-labelledby="fulfillmentModalLabel"
         aria-hidden="true"
         style="display: {{ $showAddressPicker ? 'block' : 'none' }};"
     >
@@ -12,13 +12,12 @@
                 <div class="modal-content">
                     <div class="modal-header px-4 border-bottom-0">
                         <h5 class="modal-title"
-                            id="localControlModalLabel">@lang('igniter.orange::default.text_control_title')</h5>
+                            id="fulfillmentModalLabel">@lang('igniter.orange::default.text_control_title')</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body p-4 py-2">
-                        <div class="pb-3">
+                        <div class="border rounded px-2 mb-3">
                             @foreach($orderTypes as $orderType)
-                                @continue($orderType->isDisabled())
                                 <div @class(['form-check py-2', 'border-bottom' => !$loop->last])>
                                     <input
                                         wire:model="orderType"
@@ -38,7 +37,9 @@
                         </div>
                         <div id="local-timeslot" class="pb-3">
                             <h6 class="mt-3">@lang('igniter.orange::default.text_pick_time')</h6>
-                            @include('igniter-orange::includes.local.timeslot')
+                            <div class="border rounded px-2">
+                                @include('igniter-orange::includes.local.timeslot')
+                            </div>
                         </div>
                         @unless($hideDeliveryAddress)
                             <div x-cloak x-show="!hideDeliveryAddress" class="pb-3">
@@ -60,13 +61,17 @@
                                         placeholder="@lang('igniter.local::default.label_search_query')"
                                     />
 
-                                    <x-igniter-orange::forms.error field="searchQuery" id="searchQueryFeedback"
-                                                                   class="text-danger"/>
+                                    <x-igniter-orange::forms.error
+                                        field="searchQuery"
+                                        id="searchQueryFeedback"
+                                        class="text-danger"
+                                    />
                                     @include('igniter-orange::includes.local.saved-address-picker')
                                 @else
                                     <div class="p-2 border rounded bg-white w-100">
                                         <div
-                                            class="pe-2 text-truncate">{{ $searchQuery ?? $deliveryAddress ?? lang('igniter.local::default.alert_no_search_query') }}</div>
+                                            class="pe-2 text-truncate"
+                                        >{{ $searchQuery ?? $deliveryAddress ?? lang('igniter.local::default.alert_no_search_query') }}</div>
                                     </div>
                                 @endif
                             </div>

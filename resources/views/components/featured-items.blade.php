@@ -7,22 +7,22 @@
                 <div class="row g-3">
                     @foreach ($items as $featuredItem)
                         <div class="col-sm-{{ round(12 / $itemsPerRow) }} mb-3 mb-sm-0">
-                            <div class="card rounded-5 h-100">
-                                @if ($featuredItem->hasMedia())
+                            <div class="card text-left rounded-5 h-100">
+                                @if ($showThumb)
                                     <img
-                                        class="card-img-top"
+                                        class="card-img-top rounded-5"
                                         src="{{ $featuredItem->getThumb([
                                         'width' => $itemWidth,
                                         'height' => $itemHeight,
-                                    ]) }}" alt="{{ $featuredItem->getBuyableName() }}"
+                                    ]) }}" alt="{{ $featuredItem->name }}"
                                     />
                                 @endif
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        {{ $featuredItem->getBuyableName() }}
-                                        <small>{{ currency_format($featuredItem->getBuyablePrice()) }}</small>
-                                    </h4>
-                                    <p class="card-text">{{ $featuredItem['menu_description'] }}</p>
+                                <div class="card-body p-4">
+                                    <h5 class="card-title">
+                                        {{ $featuredItem->name }}
+                                        <span class="float-end">{{ currency_format($featuredItem->price()) }}</span>
+                                    </h5>
+                                    <p class="card-text">{{ $featuredItem->description }}</p>
                                 </div>
                             </div>
                         </div>

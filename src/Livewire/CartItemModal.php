@@ -5,6 +5,7 @@ namespace Igniter\Orange\Livewire;
 use Igniter\Cart\Classes\CartManager;
 use Igniter\Local\Facades\Location;
 use Igniter\Orange\Contracts\ModalComponent;
+use Igniter\Orange\Data\MenuItemData;
 use Livewire\Livewire;
 
 class CartItemModal extends ModalComponent
@@ -26,7 +27,7 @@ class CartItemModal extends ModalComponent
     public ?int $minQuantity = null;
 
     /** Show cart menu item image in the popup */
-    public bool $showThumb = false;
+    public bool $showThumb = true;
 
     /** Cart item image width */
     public int $thumbWidth = 720;
@@ -46,13 +47,13 @@ class CartItemModal extends ModalComponent
 
     protected ?\Igniter\Cart\CartItem $cartItem = null;
 
-    protected ?\Igniter\Cart\Models\Menu $menuItem = null;
+    protected ?MenuItemData $menuItemData = null;
 
     public function render()
     {
         return view('igniter-orange::livewire.cart-item-modal', [
             'cartItem' => $this->getCartItem(),
-            'menuItem' => $this->getMenuItem(),
+            'menuItemData' => $this->getMenuItemData(),
         ]);
     }
 
@@ -62,11 +63,11 @@ class CartItemModal extends ModalComponent
         $this->rowId = $rowId;
 
         $this->getCartItem();
-        $this->getMenuItem();
+        $this->getMenuItemData();
 
-        $this->minQuantity = $this->menuItem->minimum_qty;
-        $this->price = $this->menuItem->getBuyablePrice();
-        $this->quantity = $this->cartItem->qty ?? $this->menuItem->minimum_qty;
+        $this->minQuantity = $this->menuItemData->minimumQuantity;
+        $this->price = $this->cartItem->price ?? $this->menuItemData->price();
+        $this->quantity = $this->cartItem->qty ?? $this->menuItemData->minimumQuantity;
         $this->comment = $this->cartItem?->comment;
     }
 
@@ -118,12 +119,12 @@ class CartItemModal extends ModalComponent
         return $this->cartItem = $this->rowId ? $this->cartManager->getCartItem($this->rowId) : null;
     }
 
-    protected function getMenuItem(): \Igniter\Cart\Models\Menu
+    protected function getMenuItemData(): MenuItemData
     {
-        if (!is_null($this->menuItem)) {
-            return $this->menuItem;
+        if (!is_null($this->menuItemData)) {
+            return $this->menuItemData;
         }
 
-        return $this->menuItem = $this->cartManager->findMenuItem($this->menuId);
+        return $this->menuItemData = new MenuItemData($this->cartManager->findMenuItem($this->menuId));
     }
 }
