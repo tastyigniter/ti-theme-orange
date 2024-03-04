@@ -17,6 +17,8 @@ class MenuItemData
 
     public ?float $priceBeforeSpecial = null;
 
+    public ?int $minimumQuantity = 0;
+
     protected ?bool $mealtimeIsAvailable = null;
 
     public function __construct(public Menu $model)
@@ -25,6 +27,7 @@ class MenuItemData
         $this->name = $model->getBuyableName();
         $this->description = nl2br($model->menu_description ?? '');
         $this->priceBeforeSpecial = $model->menu_price;
+        $this->minimumQuantity = $model->minimum_qty;
     }
 
     public function price()
@@ -33,9 +36,7 @@ class MenuItemData
             return $this->price;
         }
 
-        return $this->price = $this->model->special?->active()
-            ? $this->model->special->getMenuPrice($this->model->menu_price)
-            : $this->model->menu_price;
+        return $this->price = $this->model->getBuyablePrice();
     }
 
     public function hasIngredients()
@@ -62,6 +63,11 @@ class MenuItemData
         return $this->model->hasOptions();
     }
 
+    public function getOptions()
+    {
+        return $this->model->menu_options->sortBy('priority');
+    }
+
     public function hasThumb()
     {
         return $this->model->hasMedia('thumb');
@@ -69,7 +75,7 @@ class MenuItemData
 
     public function getThumb(array $options = [], ?string $tag = null)
     {
-        return $this->model->getThumb($options, $tag);
+        return $this->model->getThumbOrBlank($options, $tag);
     }
 
     public function specialIsActive()

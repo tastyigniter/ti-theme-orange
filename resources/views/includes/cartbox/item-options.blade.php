@@ -1,4 +1,4 @@
-@foreach ($menuItem->menu_options->sortBy('priority') as $index => $menuOption)
+@foreach ($menuItemData->getOptions() as $index => $menuOption)
     <div
         x-data="OrangeCartItemOptions({{ $menuOption->min_selected }}, {{ $menuOption->max_selected }})"
         class="menu-option mb-3"

@@ -3,17 +3,14 @@
 namespace Igniter\Orange;
 
 use Igniter\Cart\Http\Middleware\CartMiddleware;
-use Igniter\Flame\Exception\ApplicationException;
 use Igniter\Flame\Igniter;
 use Igniter\Local\Http\Middleware\CheckLocation;
 use Igniter\Main\Classes\MainController;
 use Igniter\Main\Classes\Theme;
 use Igniter\Main\Classes\ThemeManager;
-use Igniter\Orange\Exceptions\ReportableException;
 use Igniter\Orange\Http\Controllers\Logout;
 use Igniter\System\Libraries\Assets;
 use Igniter\User\Facades\Auth;
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
@@ -28,7 +25,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     public function register()
     {
-        $this->app[ExceptionHandler::class]->map(ApplicationException::class, ReportableException::class);
+        Livewire::componentHook(\Igniter\Orange\Livewire\Features\SupportFlashMessages::class);
     }
 
     public function boot()

@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card border">
     <div class="card-body">
         <h1 class="card-title h4 mb-4 font-weight-normal">
             @lang('main::lang.account.login.text_login')
@@ -15,7 +15,7 @@
                     />
                     <span class="input-group-text">@</span>
                 </div>
-                <x-igniter-orange::forms.error field="form.email" class="text-danger" />
+                <x-igniter-orange::forms.error field="form.email" class="text-danger"/>
             </div>
 
             <div class="form-group">
@@ -29,24 +29,30 @@
                     />
                     <span class="input-group-text"><i class="fa fa-lock"></i></span>
                 </div>
-                <x-igniter-orange::forms.error field="form.password" class="text-danger" />
+                <x-igniter-orange::forms.error field="form.password" class="text-danger"/>
             </div>
 
             <div class="form-group">
-                <div class="form-check">
-                    <input
-                        id="rememberLogin"
-                        class="form-check-input"
-                        type="checkbox"
-                        wire:model="form.remember"
-                        name="remember"
-                        value="1"
-                    />
-                    <label class="form-check-label" for="rememberLogin">
-                        @lang('igniter.user::default.login.label_remember')
-                    </label>
+                <div class="d-md-flex justify-content-between">
+                    <div class="form-check">
+                        <input
+                            id="rememberLogin"
+                            class="form-check-input"
+                            type="checkbox"
+                            wire:model="form.remember"
+                            name="remember"
+                            value="1"
+                        />
+                        <label class="form-check-label" for="rememberLogin">
+                            @lang('igniter.user::default.login.label_remember')
+                        </label>
+                    </div>
+                    <a
+                        class="text-link text-nowrap"
+                        href="{{ site_url('account/reset') }}"
+                    >@lang('main::lang.account.login.text_forgot')</a>
                 </div>
-                <x-igniter-orange::forms.error field="form.remember" class="text-danger" />
+                <x-igniter-orange::forms.error field="form.remember" class="text-danger"/>
             </div>
 
             <div class="form-group">
@@ -61,21 +67,17 @@
                 </div>
             </div>
         </x-igniter-orange::forms.form>
-        <livewire:igniter-orange::socialite />
-        <div class="row">
-            <div class="col-md-5 p-sm-0">
-                <a wire:navigate class="btn btn-link btn-lg" href="{{ site_url('account/reset') }}">
-                    <span class="small">@lang('main::lang.account.login.text_forgot')</span>
-                </a>
-            </div>
+
+        <livewire:igniter-orange::socialite/>
+
+        <div class="text-center">
             @if ((bool)$registrationAllowed)
-                <div class="col-sm-7">
-                    <a
-                        wire:navigate
-                        class="btn btn-outline-default w-100 btn-lg"
-                        href="{{ site_url('account/register') }}"
-                    >@lang('main::lang.account.login.button_register')</a>
-                </div>
+                @lang('igniter.orange::default.text_signup_no_account')
+                <a
+                    wire:navigate
+                    class=""
+                    href="{{ site_url('account/register') }}"
+                >@lang('main::lang.account.login.button_register')</a>
             @endif
         </div>
     </div>

@@ -1,4 +1,4 @@
-window.OrangeLocalControl = (timeslot) => {
+window.OrangeFulfillment = (timeslot) => {
     return {
         orderDate: null,
         orderTime: null,

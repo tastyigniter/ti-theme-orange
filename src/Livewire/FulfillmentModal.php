@@ -44,13 +44,13 @@ class FulfillmentModal extends \Livewire\Component
     public function render()
     {
         return view('igniter-orange::livewire.fulfillment-modal', [
-            'orderTypes' => $this->location->getOrderTypes(),
+            'orderTypes' => collect($this->location->getOrderTypes() ?? [])->filter(fn ($orderType) => !$orderType->isDisabled()),
         ]);
     }
 
     public function mount()
     {
-        Assets::addJs('igniter-orange::/js/local-control.js', 'local-control-js');
+        Assets::addJs('igniter-orange::/js/fulfillment.js', 'fulfillment-js');
 
         $this->parseTimeslot($this->location->scheduleTimeslot());
         $this->updateCurrentOrderType();

@@ -114,11 +114,9 @@ class CartBox extends \Livewire\Component
 
     public function onProceedToCheckout(int $locationId)
     {
-        flash()->error('This is a test error message');
-
-        //        if (!$locationId || !($location = Location::getById($locationId)) || !$location->location_status) {
-        throw new ApplicationException(lang('igniter.local::default.alert_location_required'));
-        //        }
+        if (!$locationId || !($location = Location::getById($locationId)) || !$location->location_status) {
+            throw new ApplicationException(lang('igniter.local::default.alert_location_required'));
+        }
 
         Location::setCurrent($location);
 

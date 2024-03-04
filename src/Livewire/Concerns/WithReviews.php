@@ -5,9 +5,12 @@ namespace Igniter\Orange\Livewire\Concerns;
 use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\Review as ReviewModel;
 use Igniter\System\Facades\Assets;
+use Livewire\WithPagination;
 
 trait WithReviews
 {
+    use WithPagination;
+
     public int $itemPerPage = 20;
 
     public string $sortOrder = 'menu_priority asc';
@@ -20,7 +23,7 @@ trait WithReviews
         Assets::addJs('igniter.local::/js/starrating.js', 'starrating-js');
     }
 
-    protected function loadReviewList()
+    protected function loadReviewList($page = null)
     {
         if (!$location = Location::current()) {
             return null;
@@ -29,7 +32,7 @@ trait WithReviews
         return ReviewModel::with(['customer', 'customer.address'])
             ->isApproved()
             ->listFrontEnd([
-                'page' => $this->getPage(),
+                'page' => $page ?? $this->getPage(),
                 'pageLimit' => $this->itemPerPage,
                 'sort' => $this->sortOrder,
                 'location' => $location->getKey(),

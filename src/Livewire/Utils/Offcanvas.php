@@ -1,6 +1,6 @@
 <?php
 
-namespace Igniter\Orange\Livewire;
+namespace Igniter\Orange\Livewire\Utils;
 
 use Igniter\Orange\Contracts\OffcanvasComponentInterface;
 use Igniter\System\Facades\Assets;
@@ -51,6 +51,6 @@ class Offcanvas extends Component
 
     public function render()
     {
-        return view('igniter-orange::livewire.offcanvas');
+        return view('igniter-orange::livewire.utils.offcanvas');
     }
 }

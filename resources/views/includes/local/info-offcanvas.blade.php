@@ -17,7 +17,7 @@
         </div>
 
         @foreach($locationInfo->orderTypes() as $code => $orderType)
-            <div class="border rounded p-3 mb-3">
+            <div class="bg-white border rounded p-3 mb-3">
                 @if ($orderType->isDisabled())
                     {!! $orderType->getDisabledDescription() !!}
                 @elseif ($orderType->getSchedule()->isOpen())
@@ -30,14 +30,14 @@
             </div>
         @endforeach
         @if ($locationInfo->hasDelivery)
-            <div class="border rounded p-3 mb-4">
+            <div class="bg-white border rounded p-3 mb-4">
                 @lang('igniter.local::default.text_last_order_time')&nbsp;
                 <b>{{ $locationInfo->lastOrderTime()->isoFormat(lang('system::lang.moment.day_time_format')) }}</b>
             </div>
         @endif
         @if ($locationInfo->payments())
             <h5><i class="fas fa-credit-card fa-fw text-muted"></i>&nbsp;@lang('igniter.local::default.text_payments')</h5>
-            <div class="border rounded p-3 mb-4">
+            <div class="bg-white border rounded p-3 mb-4">
                 {!! implode(', ', $locationInfo->payments()) !!}.
             </div>
         @endif

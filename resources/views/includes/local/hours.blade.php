@@ -1,5 +1,5 @@
 <h5>@lang('igniter.local::default.text_hours')</h5>
-<div class="border rounded p-3 mb-4">
+<div class="bg-white border rounded p-3 mb-4">
     <ul class="nav nav-pills justify-content-center border-bottom pb-3">
         @foreach ($locationInfo->scheduleTypes() as $code => $definition)
             <li class="nav-item">

@@ -30,7 +30,7 @@
                         </button>
                     </div>
                     <button
-                        class="btn flex-grow-1 text-start fw-normal p-0"
+                        class="btn shadow-none flex-grow-1 text-start fw-normal p-0"
                         wire:click="onOpenItemModal('{{ $cartItem->rowId }}', {{ $cartItem->id }})"
                         wire:loading.class="disabled"
                     >

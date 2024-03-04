@@ -2,7 +2,7 @@
     @foreach ($ingredients as $ingredient)
         <span
             @class([
-                'badge badge-light text-dark px-2',
+                'bg-light rounded small fw-bold px-2',
                 'py-1' => !$ingredient->hasMedia('thumb'),
                 'me-2' => !$loop->last
             ])
@@ -11,7 +11,7 @@
         >
         @if ($ingredient->hasMedia('thumb'))
                 <img
-                    class="img-fluid rounded-pill"
+                    class="img-fluid rounded"
                     alt="{{ $ingredient->name }}"
                     src="{{ $ingredient->getThumb(['width' => $ingredientThumbWidth, 'height' => $ingredientThumbHeight]) }}"
                 />

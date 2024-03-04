@@ -1,6 +1,6 @@
 <?php
 
-namespace Igniter\Orange\Livewire;
+namespace Igniter\Orange\Livewire\Utils;
 
 use Igniter\Orange\Contracts\ModalComponentInterface;
 use Igniter\System\Facades\Assets;
@@ -117,6 +117,6 @@ class Modal extends Component
 
     public function render(): View
     {
-        return view('igniter-orange::livewire.modal');
+        return view('igniter-orange::livewire.utils.modal');
     }
 }

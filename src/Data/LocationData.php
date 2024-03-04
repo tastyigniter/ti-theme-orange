@@ -78,7 +78,7 @@ class LocationData
 
     public function getThumb(array $options = [], ?string $tag = null): ?string
     {
-        return $this->model->getThumb($options, $tag);
+        return $this->model->getThumbOrBlank($options, $tag);
     }
 
     public function orderType(): ?AbstractOrderType

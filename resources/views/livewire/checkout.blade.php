@@ -29,5 +29,4 @@
             <x-igniter-orange::cart-preview />
         </div>
     </div>
-    <livewire:igniter-orange::fulfillment-modal :hideDeliveryAddress="true" />
 </div>

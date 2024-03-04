@@ -29,7 +29,7 @@
     >@lang('igniter.local::default.text_later')</label>
 </div>
 <div x-cloak x-show="showTimePicker">
-    <div class="row gx-3 mt-2 mx-4">
+    <div class="row gx-3 mt-2 mx-4 mb-3">
         <div class="col">
             <div class="form-floating">
                 <select
