@@ -329,7 +329,7 @@ class Checkout extends \Livewire\Component
             return false;
         }
 
-        return $this->redirect($order->getUrl($this->successPage), navigate: true);
+        return $this->redirect($order->getUrl($this->successPage));
     }
 
     protected function prepareDeliveryAddress()

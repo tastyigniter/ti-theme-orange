@@ -1,5 +1,5 @@
 <div>
-    @if ($allowReviews && $reviewable)
+    @if ($allowReviews && $reviewable && $reviewable->isCompleted())
         <div class="card shadow-sm mb-3">
             <div class="card-body">
                 <h4 class="text-center fw-normal">
