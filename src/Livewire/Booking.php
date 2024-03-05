@@ -140,13 +140,13 @@ class Booking extends Component
 
         $this->reset();
 
-        return $this->redirect(page_url($this->successPage, ['hash' => $reservation->hash]), navigate: true);
+        return $this->redirect(page_url($this->successPage, ['hash' => $reservation->hash]));
     }
 
     public function timeslots(): Collection
     {
         return $this->manager->makeTimeSlots(make_carbon($this->date))
-            ->map(fn ($dateTime) => make_carbon($dateTime));
+            ->map(fn($dateTime) => make_carbon($dateTime));
     }
 
     public function reducedTimeslots()
