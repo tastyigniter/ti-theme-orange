@@ -4,26 +4,32 @@
     $(document).render(function () {
         $(document).find('[data-control="country-code-picker"]').each(function () {
             var $el = $(this),
-                options = $.extend({
+                $telephoneInput = $('#' + $el.data('hiddenInputId')),
+                $feedbackEl = $('<div>').attr('class', 'text-danger'),
+                errorMessages = $el.data('errorMessages') || {},
+                options = {
                     initialCountry: (app.country.iso_code_2 || '').toLowerCase(),
                     separateDialCode: true,
                     nationalMode: true,
                     utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.4/js/utils.js"
-                }, $el.data()),
-                $telephoneInput = $('<input>').attr({
-                    type: 'hidden',
-                    id: 'hidden-input-' + $el.attr('id'),
-                    name: $el.attr('name'),
-                    value: $el.val(),
-                });
+                };
 
-            $el.removeAttr('name')
-            $el.after($telephoneInput)
+            $telephoneInput.after($feedbackEl)
 
-            var telephonePicker = intlTelInput($el.get(0), options);
+            var telephonePicker = intlTelInput($el.get(0), $.extend(options, $el.data()));
 
-            $el.on('input countrychange', function () {
-                $telephoneInput.val(telephonePicker.getNumber())
+            $el.on('keyup change', function () {
+                const event = new Event('telephoneChange');
+
+                if ($el.val() && telephonePicker.isValidNumber()) {
+                    $feedbackEl.text('')
+                    $telephoneInput.val(telephonePicker.getNumber())
+                } else {
+                    const errorCode = telephonePicker.getValidationError()
+                    $feedbackEl.text(errorMessages[errorCode] || "Invalid number")
+                }
+
+                $telephoneInput.get(0).dispatchEvent(event)
             })
         });
     });

@@ -33,16 +33,12 @@
             <div class="form-row">
                 <div class="col col-sm-6">
                     <div class="form-group">
-                        <div @class(['form-group form-control py-0', 'is-invalid' => has_form_error('form.telephone')])>
-                            <label for="telephone">@lang('igniter.user::default.settings.label_telephone')</label>
-                            <input
-                                wire:model="form.telephone"
-                                data-control="country-code-picker"
-                                data-container-class="w-100"
-                                @class(['form-control shadow-none border-none'])
-                            />
-                        </div>
-                        <x-igniter-orange::forms.error field="form.telephone" class="text-danger"/>
+                        <x-igniter-orange::forms.telephone
+                            id="input-telephone"
+                            :number="$form->telephone"
+                            field="form.telephone"
+                            :label="lang('igniter.user::default.settings.label_telephone')"
+                        />
                     </div>
                 </div>
                 <div class="col col-sm-6">
