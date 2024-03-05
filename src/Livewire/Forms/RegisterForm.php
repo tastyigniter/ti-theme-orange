@@ -6,21 +6,21 @@ use Livewire\Form;
 
 class RegisterForm extends Form
 {
-    public string $first_name;
+    public string $first_name = '';
 
-    public string $last_name;
+    public string $last_name = '';
 
-    public string $email;
+    public string $email = '';
 
-    public string $password;
+    public string $password = '';
 
-    public string $password_confirmation;
+    public string $password_confirmation = '';
 
-    public string $telephone;
+    public string $telephone = '';
 
-    public string $newsletter;
+    public string $newsletter = '';
 
-    public string $terms;
+    public string $terms = '';
 
     public bool $status = true;
 

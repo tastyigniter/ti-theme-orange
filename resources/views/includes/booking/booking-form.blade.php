@@ -46,19 +46,12 @@
             <x-igniter-orange::forms.error field="form.email" id="emailFeedback" class="text-danger" />
         </div>
         <div class="col-sm-6">
-            <div @class(['form-group form-control py-0', 'is-invalid' => has_form_error('form.telephone')])>
-                <label for="telephone">@lang('igniter.reservation::default.label_telephone')</label>
-                <input
-                    wire:model="form.telephone"
-                    data-control="country-code-picker"
-                    type="text"
-                    id="telephone"
-                    @class(['form-control shadow-none border-none'])
-                    aria-describedby="telephoneFeedback"
-                    required
-                />
-            </div>
-            <x-igniter-orange::forms.error field="form.telephone" id="telephoneFeedback" class="text-danger" />
+            <x-igniter-orange::forms.telephone
+                id="input-telephone"
+                :number="$form->telephone"
+                field="form.telephone"
+                :label="lang('igniter.reservation::default.label_telephone')"
+            />
         </div>
     </div>
 

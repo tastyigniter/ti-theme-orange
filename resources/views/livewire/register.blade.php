@@ -6,77 +6,77 @@
 
         @if ($registrationAllowed)
             <x-igniter-orange::forms.form id="register-form" wire:submit="onRegister">
-                <div class="form-row">
+                <div class="form-row mb-3">
                     <div class="col-sm-6">
-                        <div class="form-group">
+                        <div @class(['form-floating', 'is-invalid' => has_form_error('form.first_name')])>
                             <input
-                                id="first-name"
-                                class="form-control input-lg"
                                 wire:model="form.first_name"
-                                placeholder="@lang('igniter.user::default.settings.label_first_name')"
+                                id="first-name"
+                                class="form-control"
                             />
-                            <x-igniter-orange::forms.error field="form.first_name" class="text-danger"/>
+                            <label for="first_name">@lang('igniter.user::default.settings.label_first_name')</label>
                         </div>
+                        <x-igniter-orange::forms.error field="form.first_name" class="text-danger"/>
                     </div>
                     <div class="col-sm-6">
-                        <div class="form-group">
+                        <div @class(['form-floating', 'is-invalid' => has_form_error('form.last_name')])>
                             <input
-                                id="last-name"
-                                class="form-control input-lg"
                                 wire:model="form.last_name"
-                                placeholder="@lang('igniter.user::default.settings.label_last_name')"
+                                id="last-name"
+                                class="form-control"
                             />
-                            <x-igniter-orange::forms.error field="form.last_name" class="text-danger"/>
+                            <label for="last_name">@lang('igniter.user::default.settings.label_last_name')</label>
                         </div>
+                        <x-igniter-orange::forms.error field="form.last_name" class="text-danger"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <input
-                        type="email"
-                        id="email"
-                        class="form-control input-lg"
-                        wire:model="form.email"
-                        placeholder="@lang('igniter.user::default.settings.label_email')"
-                    />
+                    <div @class(['form-floating', 'is-invalid' => has_form_error('form.email')])>
+                        <input
+                            wire:model="form.email"
+                            type="email"
+                            id="email"
+                            class="form-control"
+                        />
+                        <label for="email">@lang('igniter.user::default.settings.label_email')</label>
+                    </div>
                     <x-igniter-orange::forms.error field="form.email" class="text-danger"/>
                 </div>
-                <div class="form-row">
+                <div class="form-row mb-3">
                     <div class="col-sm-6">
-                        <div class="form-group">
+                        <div @class(['form-floating', 'is-invalid' => has_form_error('form.password')])>
                             <input
                                 type="password"
                                 id="password"
                                 class="form-control input-lg"
                                 wire:model="form.password"
-                                placeholder="@lang('igniter.user::default.login.label_password')"
                             />
-                            <x-igniter-orange::forms.error field="form.password" class="text-danger"/>
+                            <label for="password">@lang('igniter.user::default.login.label_password')</label>
                         </div>
+                        <x-igniter-orange::forms.error field="form.password" class="text-danger"/>
                     </div>
                     <div class="col-sm-6">
-                        <div class="form-group">
+                        <div @class(['form-floating', 'is-invalid' => has_form_error('form.password_confirmation')])>
                             <input
                                 type="password"
                                 id="password-confirm"
                                 class="form-control input-lg"
                                 wire:model="form.password_confirmation"
-                                placeholder="@lang('igniter.user::default.login.label_password_confirm')"
                             />
-                            <x-igniter-orange::forms.error field="form.password_confirmation" class="text-danger"/>
+                            <label for="password-confirm">@lang('igniter.user::default.login.label_password_confirm')</label>
                         </div>
+                        <x-igniter-orange::forms.error field="form.password_confirmation" class="text-danger"/>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <input
-                        id="telephone"
-                        class="form-control input-lg"
-                        wire:model="form.telephone"
-                        data-control="country-code-picker"
+                    <x-igniter-orange::forms.telephone
+                        id="input-telephone"
+                        :number="$form->telephone"
+                        field="form.telephone"
+                        :label="lang('igniter.user::default.settings.label_telephone')"
                     />
-                    <x-igniter-orange::forms.error field="form.telephone" class="text-danger"/>
                 </div>
-
                 <div class="form-group">
                     <div class="form-check">
                         <input
