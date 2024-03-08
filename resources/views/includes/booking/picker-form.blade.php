@@ -10,7 +10,7 @@
             data-disable='@json($this->disabledDates())'
             data-week-start="{{ $weekStartOn }}"
             data-date-format="Y-m-d"
-            data-language={{ app()->getLocale() }}
+            data-locale={{ $calendarLocale }}
         >
             <input
                 wire:model="date"
