@@ -3,6 +3,7 @@
 namespace Igniter\Orange\Livewire;
 
 use Carbon\Carbon;
+use Igniter\Flame\Support\Facades\File;
 use Igniter\Local\Facades\Location;
 use Igniter\Orange\Livewire\Forms\BookingForm;
 use Igniter\Reservation\Classes\BookingManager;
@@ -44,6 +45,8 @@ class Booking extends Component
 
     public int $noOfSlots = 6;
 
+    public ?string $calendarLocale = null;
+
     /** Page to redirect to when checkout is successful */
     public string $successPage = 'reservation'.DIRECTORY_SEPARATOR.'success';
 
@@ -75,10 +78,13 @@ class Booking extends Component
 
     public function mount()
     {
-        Assets::addJs('$/igniter/js/vendor.datetime.js', 'vendor-datetime-js');
         Assets::addCss('$/igniter/css/vendor.css', 'vendor-css');
-        if (($locale = app()->getLocale()) != 'en') {
-            Assets::addJs('$/igniter/js/locales/datepicker/bootstrap-datepicker.'.strtolower(str_replace('_', '-', $locale)).'.min.js', 'bootstrap-datepicker-js');
+
+        $this->calendarLocale = strtolower(str_before(str_before(app()->getLocale(), '_'), '-'));
+        if ($this->calendarLocale != 'en') {
+            if (File::symbolizePath($localPath = '$/igniter-orange/js/locales/flatpickr/'.$this->calendarLocale.'.js')) {
+                Assets::addJs($localPath, 'flatpickr-locale-js');
+            }
         }
 
         Assets::addCss('igniter.admin::css/formwidgets/datepicker.css', 'datepicker-css');
@@ -146,7 +152,7 @@ class Booking extends Component
     public function timeslots(): Collection
     {
         return $this->manager->makeTimeSlots(make_carbon($this->date))
-            ->map(fn ($dateTime) => make_carbon($dateTime));
+            ->map(fn($dateTime) => make_carbon($dateTime));
     }
 
     public function reducedTimeslots()

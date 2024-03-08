@@ -15,7 +15,7 @@
 >
     <button
         type="button"
-        class="btn btn-secondary rounded-circle shadow-sm py-1 px-2 float-end"
+        class="btn btn-outline-secondary rounded-circle py-1 px-2 float-end"
     >
         <i @class([
             'fa fa-plus' => $menuItemData->mealtimeIsAvailable(),

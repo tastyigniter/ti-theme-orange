@@ -13,6 +13,7 @@ window.intlTelInput = intlTelInput;
 
 window.currency = require('currency.js');
 require('jquery-raty-js');
+require('flatpickr')
 
 window.PhotoSwipe = require('photoswipe');
 window.PhotoSwipeLightbox = PhotoSwipeLightbox;

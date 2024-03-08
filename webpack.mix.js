@@ -26,6 +26,9 @@ mix.copyDirectory(
 ).copyDirectory(
     'node_modules/intl-tel-input/build/img',
     `${dist}/images/iti`
+).copyDirectory(
+    'node_modules/flatpickr/dist/l10n',
+    `${dist}/js/locales/flatpickr`
 );
 
 mix.copy(
