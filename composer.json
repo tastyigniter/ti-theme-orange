@@ -1,79 +1,79 @@
 {
-  "name": "tastyigniter/ti-theme-orange",
-  "type": "tastyigniter-package",
-  "description": "Free Modern, Responsive and Clean TastyIgniter Theme based on Livewire and Bootstrap.",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "TastyIgniter Dev Team"
-    }
-  ],
-  "keywords": [
-    "tastyigniter",
-    "theme",
-    "orange"
-  ],
-  "require": {
-    "livewire/livewire": "^v3.0.0",
-    "spatie/laravel-google-fonts": "^1.2",
-    "tastyigniter/ti-ext-cart": "v4.x-dev as v4.0",
-    "tastyigniter/ti-ext-coupons": "v4.x-dev as v4.0",
-    "tastyigniter/ti-ext-frontend": "v4.x-dev as v4.0",
-    "tastyigniter/ti-ext-local": "v4.x-dev as v4.0",
-    "tastyigniter/ti-ext-pages": "v4.x-dev as v4.0",
-    "tastyigniter/ti-ext-payregister": "v4.x-dev as v4.0",
-    "tastyigniter/ti-ext-reservation": "v4.x-dev as v4.0",
-    "tastyigniter/ti-ext-socialite": "v4.x-dev as v4.0",
-    "tastyigniter/ti-ext-user": "v4.x-dev as v4.0"
-  },
-  "require-dev": {
-    "laravel/pint": "^1.2",
-    "nunomaduro/larastan": "^2.4.0",
-    "orchestra/testbench": "^8.5",
-    "pestphp/pest-plugin-laravel": "^2.0",
-    "tastyigniter/core": "dev-master"
-  },
-  "autoload": {
-    "psr-4": {
-      "Igniter\\Orange\\": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Igniter\\Orange\\Tests\\": "tests/"
-    }
-  },
-  "extra": {
-    "laravel": {
-      "providers": [
-        "Igniter\\Orange\\ServiceProvider"
-      ]
+    "name": "tastyigniter/ti-theme-orange",
+    "type": "tastyigniter-package",
+    "description": "Free Modern, Responsive and Clean TastyIgniter Theme based on Livewire and Bootstrap.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "TastyIgniter Dev Team"
+        }
+    ],
+    "keywords": [
+        "tastyigniter",
+        "theme",
+        "orange"
+    ],
+    "require": {
+        "livewire/livewire": "^v3.0.0",
+        "spatie/laravel-google-fonts": "^1.2",
+        "tastyigniter/core": "dev-master",
+        "tastyigniter/ti-ext-cart": "*",
+        "tastyigniter/ti-ext-coupons": "*",
+        "tastyigniter/ti-ext-frontend": "*",
+        "tastyigniter/ti-ext-local": "*",
+        "tastyigniter/ti-ext-pages": "*",
+        "tastyigniter/ti-ext-payregister": "*",
+        "tastyigniter/ti-ext-reservation": "*",
+        "tastyigniter/ti-ext-socialite": "*",
+        "tastyigniter/ti-ext-user": "*"
     },
-    "tastyigniter-theme": {
-      "code": "igniter-orange",
-      "name": "Orange Theme",
-      "locked": true,
-      "source-path": "/resources/views",
-      "meta-path": "/resources/meta",
-      "publish-paths": [
-        "/public"
-      ]
-    }
-  },
-  "scripts": {
-    "test": "vendor/bin/pest",
-    "test-coverage": "vendor/bin/pest --coverage",
-    "format": "vendor/bin/pint",
-    "static": "vendor/bin/phpstan analyse --ansi --memory-limit 1056M"
-  },
-  "config": {
-    "sort-packages": true,
-    "allow-plugins": {
-      "pestphp/pest-plugin": true,
-      "php-http/discovery": true,
-      "composer/installers": true
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true
+    "require-dev": {
+        "laravel/pint": "^1.2",
+        "nunomaduro/larastan": "^2.4.0",
+        "orchestra/testbench": "^8.5",
+        "pestphp/pest-plugin-laravel": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Igniter\\Orange\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Igniter\\Orange\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Igniter\\Orange\\ServiceProvider"
+            ]
+        },
+        "tastyigniter-theme": {
+            "code": "igniter-orange",
+            "name": "Orange Theme",
+            "locked": true,
+            "source-path": "/resources/views",
+            "meta-path": "/resources/meta",
+            "publish-paths": [
+                "/public"
+            ]
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint",
+        "static": "vendor/bin/phpstan analyse --ansi --memory-limit 1056M"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true,
+            "composer/installers": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
