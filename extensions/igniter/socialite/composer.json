@@ -1,0 +1,38 @@
+{
+  "name": "tastyigniter/ti-ext-socialite",
+  "type": "tastyigniter-extension",
+  "description": "Allows visitors to register/sign in with their social media accounts.",
+  "keywords": [
+    "tastyigniter",
+    "social",
+    "login",
+    "facebook",
+    "twitter",
+    "google"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Sam Poyigi",
+      "email": "sam@sampoyigi.com"
+    }
+  ],
+  "require": {
+    "laravel/socialite": "~5.2"
+  },
+  "extra": {
+    "tastyigniter-extension": {
+      "code": "igniter.socialite",
+      "name": "Socialite",
+      "icon": {
+        "class": "fa fa-users",
+        "color": "#1F4E62",
+        "backgroundColor": "#4FC3F7"
+      },
+      "homepage": "https://tastyigniter.com/marketplace/item/igniter-socialite",
+      "require": {
+        "igniter.user": "*"
+      }
+    }
+  }
+}

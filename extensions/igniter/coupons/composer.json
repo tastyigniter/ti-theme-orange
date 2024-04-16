@@ -1,0 +1,29 @@
+{
+  "name": "tastyigniter/ti-ext-coupons",
+  "type": "tastyigniter-extension",
+  "description": "Extend the checkout experience with coupons and discount codes.",
+  "keywords": [
+    "tastyigniter",
+    "coupons",
+    "discounts"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Sam Poyigi",
+      "email": "sam@sampoyigi.com"
+    }
+  ],
+  "extra": {
+    "tastyigniter-extension": {
+      "code": "igniter.coupons",
+      "name": "Coupons",
+      "icon": {
+        "class": "fa fa-percent",
+        "color": "#FFF",
+        "backgroundColor": "#ED561A"
+      },
+      "homepage": "https://tastyigniter.com/marketplace/item/igniter-coupons"
+    }
+  }
+}
