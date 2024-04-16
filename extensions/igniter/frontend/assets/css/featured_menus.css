@@ -1,0 +1,49 @@
+.featured-menu {
+	color: #ED561A;
+	font-size: 12px;
+	margin-top: 5px;
+}
+.featured-menu {
+	position: relative;
+	margin-bottom: 30px;
+	overflow: hidden;
+}
+.featured-menu .menu-thumb {
+	overflow: hidden;
+	position: relative;
+	padding-right: 0;
+	margin-right: 0;
+	height: auto;
+}
+.featured-menu .menu-thumb img {
+	width: 100%;
+}
+.featured-menu .menu-content {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.7);
+	color: #FFF;
+	padding: 15px;
+}
+.featured-menu .content-show a {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 16px;
+	font-weight: 700;
+	color: #FFF;
+	text-transform: uppercase;
+}
+.featured-menu .content-show span {
+	color: #ED561A;
+}
+.featured-menu .content-hide {
+	margin-top: 15px;
+	display: none;
+}
+.featured-menu .content-hide p {
+	color: #FFF;
+}
+.featured-menu .menu-content:hover .content-hide {
+	display: block;
+}

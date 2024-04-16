@@ -1,0 +1,24 @@
+{
+  "name": "tastyigniter/ti-ext-pages",
+  "type": "tastyigniter-extension",
+  "description": "Provides static pages and navigation menus for your TastyIgniter application.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Sam Poyigi",
+      "email": "sam@sampoyigi.com"
+    }
+  ],
+  "extra": {
+    "tastyigniter-extension": {
+      "code": "igniter.pages",
+      "name": "Static Pages",
+      "icon": {
+        "class": "fa fa-files-o",
+        "color": "#664500",
+        "backgroundColor": "#FECC4D"
+      },
+      "homepage": "https://tastyigniter.com/marketplace/item/igniter-pages"
+    }
+  }
+}

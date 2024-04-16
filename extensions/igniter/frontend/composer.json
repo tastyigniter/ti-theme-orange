@@ -1,0 +1,30 @@
+{
+  "name": "tastyigniter/ti-ext-frontend",
+  "type": "tastyigniter-extension",
+  "description": "Manage basic components like Slider, Featured Menu Items, Banners and Newsletter",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Sam Poyigi",
+      "email": "sam@sampoyigi.com"
+    }
+  ],
+  "require": {
+    "mailchimp/mailchimp": "^2.0"
+  },
+  "extra": {
+    "tastyigniter-extension": {
+      "code": "igniter.frontend",
+      "name": "FrontEnd",
+      "icon": {
+        "image": "icon.svg",
+        "color": "#664500",
+        "backgroundColor": "#FECC4D"
+      },
+      "homepage": "https://tastyigniter.com/marketplace/item/igniter-frontend",
+      "require": {
+        "igniter.cart": "*"
+      }
+    }
+  }
+}
