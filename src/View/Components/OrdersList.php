@@ -11,7 +11,8 @@ class OrdersList extends Component
         public int $itemsPerPage = 20,
         public string $sortOrder = 'created_at desc',
         public string $orderPage = 'account'.DIRECTORY_SEPARATOR.'order',
-    ) {
+    )
+    {
     }
 
     protected function loadOrders()
@@ -20,13 +21,13 @@ class OrdersList extends Component
             return [];
         }
 
-        return $customer->orders()->with(['location', 'status'])
+        return $customer->orders()
+            ->with(['location', 'status'])
             ->whereProcessed(true)
             ->listFrontEnd([
                 'page' => request()->input('page', 1),
                 'pageLimit' => $this->itemsPerPage,
                 'sort' => $this->sortOrder,
-                'customer' => $customer,
             ]);
     }
 

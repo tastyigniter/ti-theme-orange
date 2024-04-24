@@ -3,7 +3,6 @@
 namespace Igniter\Orange\Livewire;
 
 use Igniter\Local\Models\ReviewSettings;
-use Igniter\Reservation\Models\Reservation;
 use Igniter\User\Facades\Auth;
 use Livewire\WithPagination;
 
@@ -29,11 +28,12 @@ class ReservationList extends \Livewire\Component
             return [];
         }
 
-        return Reservation::with(['location', 'status', 'tables'])->listFrontEnd([
-            'page' => $this->getPage(),
-            'pageLimit' => $this->itemsPerPage,
-            'sort' => $this->sortOrder,
-            'customer' => $customer,
-        ]);
+        return $customer->reservations()
+            ->with(['location', 'status', 'tables'])
+            ->listFrontEnd([
+                'page' => $this->getPage(),
+                'pageLimit' => $this->itemsPerPage,
+                'sort' => $this->sortOrder,
+            ]);
     }
 }

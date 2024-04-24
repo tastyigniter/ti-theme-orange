@@ -2,8 +2,8 @@
 
 namespace Igniter\Orange\Livewire;
 
+use Igniter\Frontend\Actions\SendContactMail;
 use Igniter\Local\Models\Location;
-use Illuminate\Support\Facades\Mail;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -51,9 +51,7 @@ class Contact extends Component
             'contact_message' => $this->comment,
         ];
 
-        Mail::queueTemplate('igniter.frontend::mail.contact', $data, [
-            setting('site_email'), setting('site_name'),
-        ]);
+        (new SendContactMail())($data);
 
         $this->reset();
 
