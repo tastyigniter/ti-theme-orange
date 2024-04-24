@@ -290,7 +290,7 @@ return [
                     'type' => 'textarea',
                     'default' => 'We use own and third party cookies to improve our services. If you continue to browse, consider accepting its use',
                     'rules' => 'required|string',
-                    'attribute' => [
+                    'attributes' => [
                         'rows' => '10',
                     ],
                 ],

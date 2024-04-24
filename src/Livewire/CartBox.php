@@ -79,11 +79,6 @@ class CartBox extends \Livewire\Component
         $this->cartManager->updateCartItemQty($rowId, $action);
     }
 
-    public function onRemoveItem(string $rowId)
-    {
-        return $this->removeCartItem($rowId);
-    }
-
     public function onApplyCoupon()
     {
         $this->cartManager->applyCouponCondition($this->couponCode);

@@ -80,23 +80,22 @@ class AddressBook extends \Livewire\Component
 
     public function onSetDefault(string $addressId)
     {
-        $customer = Auth::customer();
-        throw_unless($customer?->addresses()->find($addressId),
-            new ApplicationException('Address not found')
+        throw_unless($customer = Auth::customer(),
+            new ApplicationException('You must be logged in to manage your address book')
         );
 
-        $customer->address_id = $this->defaultAddressId = $addressId;
-        $customer->save();
+        $customer->saveDefaultAddress($addressId);
+
+        $this->defaultAddressId = $addressId;
     }
 
     public function onDelete(string $addressId)
     {
-        $customer = Auth::customer();
-        throw_unless($address = $customer?->addresses()->find($addressId),
-            new ApplicationException('Address not found'));
+        throw_unless($customer = Auth::customer(),
+            new ApplicationException('You must be logged in to manage your address book')
+        );
 
-        $address->customer_id = null;
-        $address->save();
+        $customer->deleteCustomerAddress($addressId);
 
         flash()->success(lang('igniter.user::default.account.alert_deleted_success'))->now();
 

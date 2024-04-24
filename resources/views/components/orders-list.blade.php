@@ -22,7 +22,7 @@
                     <td>
                         <a
                             class="btn btn-light"
-                            href="{{ site_url($orderPage, ['orderId' => $order->order_id, 'hash' => $order->hash]) }}"
+                            href="{{ page_url($orderPage, ['orderId' => $order->order_id, 'hash' => $order->hash]) }}"
                         ><i class="fa fa-receipt"></i>&nbsp;&nbsp;@lang('igniter.cart::default.orders.button_view_order')
                         </a>
                     </td>
