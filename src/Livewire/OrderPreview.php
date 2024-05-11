@@ -107,8 +107,9 @@ class OrderPreview extends \Livewire\Component
         ]));
 
         rescue(function () use ($order) {
-            if ($notes = resolve(CartManager::class)->addOrderMenus($order))
+            if ($notes = resolve(CartManager::class)->addOrderMenus($order)) {
                 throw new ApplicationException(implode(PHP_EOL, $notes));
+            }
         }, function (Exception $ex) {
             throw ValidationException::withMessages(['onReOrder' => $ex->getMessage()]);
         });
