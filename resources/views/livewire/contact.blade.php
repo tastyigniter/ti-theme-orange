@@ -11,7 +11,7 @@
 
     <div class="card">
         <div class="card-body">
-            <h4 class="contact-title mb-3">@lang('igniter.frontend::default.contact.text_summary')</h4>
+            <h4 class="contact-title mb-3">@lang('igniter.orange::default.contact.text_summary')</h4>
             @if($message)
                 <p>{{$message}}</p>
             @else
@@ -25,13 +25,13 @@
                                         name="subject"
                                         class="form-select"
                                     >
-                                        <option>@lang('igniter.frontend::default.contact.text_select_subject')</option>
+                                        <option>@lang('igniter.orange::default.contact.text_select_subject')</option>
                                         @foreach ($subjects as $subject)
                                             <option value="@lang($subject)">@lang($subject)</option>
                                         @endforeach
                                     </select>
                                     <label
-                                        for="subject">@lang('igniter.frontend::default.contact.label_subject')</label>
+                                        for="subject">@lang('igniter.orange::default.contact.label_subject')</label>
                                 </div>
                                 <x-igniter-orange::forms.error field="subject" class="text-danger"/>
                             </div>
@@ -43,7 +43,7 @@
                                         name="email"
                                         class="form-control"
                                     />
-                                    <label for="email">@lang('igniter.frontend::default.contact.label_email')</label>
+                                    <label for="email">@lang('igniter.orange::default.contact.label_email')</label>
                                 </div>
                                 <x-igniter-orange::forms.error field="email" class="text-danger"/>
                             </div>
@@ -58,7 +58,7 @@
                                         class="form-control"
                                     />
                                     <label
-                                        for="fullName">@lang('igniter.frontend::default.contact.label_full_name')</label>
+                                        for="fullName">@lang('igniter.orange::default.contact.label_full_name')</label>
                                 </div>
                                 <x-igniter-orange::forms.error field="fullName" class="text-danger"/>
                             </div>
@@ -71,7 +71,7 @@
                                         class="form-control"
                                     />
                                     <label
-                                        for="telephone">@lang('igniter.frontend::default.contact.label_telephone')</label>
+                                        for="telephone">@lang('igniter.orange::default.contact.label_telephone')</label>
                                 </div>
                                 <x-igniter-orange::forms.error field="telephone" class="text-danger"/>
                             </div>
@@ -85,7 +85,7 @@
                                 class="form-control"
                                 rows="5"
                             ></textarea>
-                            <label for="telephone">@lang('igniter.frontend::default.contact.label_comment')</label>
+                            <label for="telephone">@lang('igniter.orange::default.contact.label_comment')</label>
                         </div>
                         <x-igniter-orange::forms.error field="comment" class="text-danger"/>
                     </div>
@@ -94,7 +94,7 @@
                         <button
                             type="submit"
                             class="btn btn-primary w-100"
-                        >@lang('igniter.frontend::default.contact.button_send')</button>
+                        >@lang('igniter.orange::default.contact.button_send')</button>
                     </div>
                 </x-igniter-orange::forms.form>
             @endif

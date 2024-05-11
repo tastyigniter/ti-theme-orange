@@ -2,7 +2,7 @@
 
 namespace Igniter\Orange\View\Components;
 
-use Igniter\Frontend\Models\Banners as BannerModel;
+use Igniter\Frontend\Models\Banner;
 use Igniter\Orange\Data\BannerData;
 use Illuminate\View\Component;
 
@@ -14,7 +14,8 @@ class BannerPreview extends Component
         public string $code,
         public int $width = 960,
         public int $height = 360,
-    ) {
+    )
+    {
     }
 
     public function render()
@@ -35,7 +36,7 @@ class BannerPreview extends Component
             return $this->banner;
         }
 
-        $model = BannerModel::query()->isEnabled()->whereCode($this->code)->first();
+        $model = Banner::query()->isEnabled()->whereCode($this->code)->first();
 
         return $this->banner = $model ? tap(new BannerData($model), function ($bannerData) {
             $bannerData->imageWidth = $this->width;

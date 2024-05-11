@@ -9,25 +9,25 @@ use Livewire\Component;
 
 class Contact extends Component
 {
-    #[Validate('required|max:128', as: 'igniter.frontend::default.contact.text_select_subject')]
+    #[Validate('required|max:128', as: 'igniter.orange::default.contact.text_select_subject')]
     public $subject;
 
-    #[Validate('required|email:filter|max:96', as: 'igniter.frontend::default.contact.label_email')]
+    #[Validate('required|email:filter|max:96', as: 'igniter.orange::default.contact.label_email')]
     public $email;
 
-    #[Validate('required|min:2|max:255', as: 'igniter.frontend::default.contact.label_full_name')]
+    #[Validate('required|min:2|max:255', as: 'igniter.orange::default.contact.label_full_name')]
     public $fullName;
 
-    #[Validate('required', as: 'igniter.frontend::default.contact.label_telephone')]
+    #[Validate('required', as: 'igniter.orange::default.contact.label_telephone')]
     public $telephone;
 
-    #[Validate('max:1500', as: 'igniter.frontend::default.contact.label_comment')]
+    #[Validate('max:1500', as: 'igniter.orange::default.contact.label_comment')]
     public $comment;
 
     public $subjects = [
-        'igniter.frontend::default.contact.text_general_enquiry',
-        'igniter.frontend::default.contact.text_comment',
-        'igniter.frontend::default.contact.text_technical_issues',
+        'igniter.orange::default.contact.text_general_enquiry',
+        'igniter.orange::default.contact.text_comment',
+        'igniter.orange::default.contact.text_technical_issues',
     ];
 
     public ?string $message = null;
@@ -55,6 +55,6 @@ class Contact extends Component
 
         $this->reset();
 
-        $this->message = lang('igniter.frontend::default.contact.alert_contact_sent');
+        $this->message = lang('igniter.orange::default.contact.alert_contact_sent');
     }
 }

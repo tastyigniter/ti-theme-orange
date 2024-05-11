@@ -7,18 +7,24 @@ use Livewire\Component;
 
 class Captcha extends Component
 {
-    /**
-     * Settings instance
-     * @var \Igniter\Frontend\Models\CaptchaSettings
-     */
-    public $settings;
+    public string $apiKey = '';
 
-    /**
-     * Prepares variables for the widget rendering
-     */
-    public function onRun()
+    public string $lang = '';
+
+    public string $version = '';
+
+    public string $theme = '';
+
+    public function mount()
     {
-        $this->settings = CaptchaSettings::instance();
-        $this->page['captchaSettings'] = $this->settings;
+        $this->apiKey = CaptchaSettings::get('api_site_key');
+        $this->lang = CaptchaSettings::get('lang', 'en');
+        $this->version = CaptchaSettings::get('version', 'v2');
+        $this->theme = CaptchaSettings::get('theme', 'light');
+    }
+
+    public function render()
+    {
+        return view('igniter-orange::livewire.captcha');
     }
 }

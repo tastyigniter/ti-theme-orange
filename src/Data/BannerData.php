@@ -2,7 +2,6 @@
 
 namespace Igniter\Orange\Data;
 
-use Igniter\Frontend\Models\Banners;
 use Igniter\Main\Helpers\ImageHelper;
 
 class BannerData

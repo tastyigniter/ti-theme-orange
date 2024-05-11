@@ -34,7 +34,7 @@ class Nav extends Component
         }
 
         if ($menu = Menu::with(['items'])->whereCode($this->code)->where('theme_code', $themeCode)->first()) {
-            $this->menuItems = resolve(MenuManager::class)->generateReferences($menu, controller()->getPage());
+            $this->menuItems = resolve(MenuManager::class)->generateReferences($menu, controller()->getLayout());
         }
 
         return $this->menuItems;
