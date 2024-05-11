@@ -5,11 +5,9 @@ namespace Igniter\Orange\Livewire;
 use Exception;
 use Igniter\Cart\Classes\CartManager;
 use Igniter\Cart\Classes\OrderManager;
-use Igniter\Cart\Facades\Cart;
-use Igniter\Cart\Models\Menu;
+use Igniter\Flame\Exception\ApplicationException;
 use Igniter\Main\Helpers\MainHelper;
 use Igniter\User\Facades\Auth;
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\ValidationException;
 
@@ -108,13 +106,12 @@ class OrderPreview extends \Livewire\Component
             'onReOrder' => lang('igniter.cart::default.orders.alert_reorder_failed'),
         ]));
 
-        foreach ($order->getOrderMenus() as $orderMenu) {
-            if (!$menuModel = Menu::findBy($orderMenu->menu_id)) {
-                continue;
-            }
-
-            $this->addCartItem($menuModel, $orderMenu);
-        }
+        rescue(function () use ($order) {
+            if ($notes = resolve(CartManager::class)->addOrderMenus($order))
+                throw new ApplicationException(implode(PHP_EOL, $notes));
+        }, function (Exception $ex) {
+            throw ValidationException::withMessages(['onReOrder' => $ex->getMessage()]);
+        });
 
         flash()->success(sprintf(
             lang('igniter.cart::default.orders.alert_reorder_success'), $order->order_id
@@ -146,51 +143,6 @@ class OrderPreview extends \Livewire\Component
     protected function getProcessedOrder()
     {
         return $this->order ??= $this->orderManager->getOrderByHash($this->hash, Auth::customer());
-    }
-
-    protected function addCartItem($menuModel, $orderMenu): void
-    {
-        try {
-            resolve(CartManager::class)->validateCartMenuItem($menuModel, $orderMenu->quantity);
-
-            if (is_string($orderMenu->option_values)) {
-                $orderMenu->option_values = @unserialize($orderMenu->option_values);
-            }
-
-            if ($orderMenu->option_values instanceof Arrayable) {
-                $orderMenu->option_values = $orderMenu->option_values->toArray();
-            }
-
-            $options = $this->prepareCartItemOptions($menuModel, $orderMenu->option_values);
-
-            Cart::add($menuModel, $orderMenu->quantity, $options, $orderMenu->comment);
-        } catch (Exception $ex) {
-            throw ValidationException::withMessages(['onReOrder' => $ex->getMessage()]);
-        }
-    }
-
-    protected function prepareCartItemOptions($menuModel, $optionValues)
-    {
-        $options = [];
-        foreach ($optionValues as $cartOption) {
-            if (!$menuOption = $menuModel->menu_options->keyBy('menu_option_id')->get($cartOption['id'])) {
-                continue;
-            }
-
-            try {
-                resolve(CartManager::class)->validateMenuItemOption($menuOption, $cartOption['values']->toArray());
-
-                $cartOption['values'] = $cartOption['values']->filter(function ($cartOptionValue) use ($menuOption) {
-                    return $menuOption->menu_option_values->keyBy('menu_option_value_id')->has($cartOptionValue->id);
-                })->toArray();
-
-                $options[] = $cartOption;
-            } catch (Exception $ex) {
-                flash()->warning($ex->getMessage());
-            }
-        }
-
-        return $options;
     }
 
     protected function getLoginPageUrl()

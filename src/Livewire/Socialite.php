@@ -29,7 +29,9 @@ class Socialite extends Component
 
     public function onConfirmEmail()
     {
-        if (!$sessionData = session()->get('igniter_socialite_provider')) {
+        $manager = resolve(ProviderManager::class);
+
+        if (!$providerData = $manager->getProviderData()) {
             return;
         }
 
@@ -37,25 +39,15 @@ class Socialite extends Component
             ['email', 'lang:igniter.user::default.reset.label_email', 'required|email:filter|max:96|unique:customers,email'],
         ]);
 
-        $sessionData['user']->email = $validated['email'];
+        $providerData['user']->email = $validated['email'];
 
-        session()->put('igniter_socialite_provider', $sessionData);
+        $manager->setProviderData($providerData);
 
-        return resolve(ProviderManager::class)->completeCallback();
+        return $manager->completeCallback();
     }
 
     protected function loadLinks()
     {
-        $result = [];
-        $manager = resolve(ProviderManager::class);
-        $providers = $manager->listProviders();
-        foreach ($providers as $className => $info) {
-            $provider = $manager->makeProvider($className, $info);
-            if ($provider->isEnabled()) {
-                $result[$info['code']] = $provider->makeEntryPointUrl('auth');
-            }
-        }
-
-        return $result;
+        return resolve(ProviderManager::class)->listProviderLinks();
     }
 }

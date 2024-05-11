@@ -163,24 +163,12 @@ class CartBox extends \Livewire\Component
 
     public function tippingEnabled()
     {
-        return (bool)CartSettings::get('enable_tipping');
+        return CartSettings::tippingEnabled();
     }
 
     public function tippingAmounts()
     {
-        $result = [];
-
-        $tipValueType = CartSettings::get('tip_value_type', 'F');
-        $amounts = (array)CartSettings::get('tip_amounts', []);
-
-        $amounts = sort_array($amounts, 'priority');
-
-        foreach ($amounts as $index => $amount) {
-            $amount['valueType'] = $tipValueType;
-            $result[$index] = (object)$amount;
-        }
-
-        return $result;
+        return CartSettings::tippingAmounts();
     }
 
     protected function prepareProps()
