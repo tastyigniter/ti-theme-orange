@@ -2,6 +2,7 @@
 
 namespace Igniter\Orange\Data;
 
+use Igniter\Frontend\Models\Banner;
 use Igniter\Main\Helpers\ImageHelper;
 
 class BannerData
@@ -22,7 +23,7 @@ class BannerData
 
     public int $imageHeight = 0;
 
-    public function __construct(protected Banners $model)
+    public function __construct(protected Banner $model)
     {
         $this->code = $model->code;
         $this->id = $model->code.'-'.$model->banner_id.'-'.str_random(4);
