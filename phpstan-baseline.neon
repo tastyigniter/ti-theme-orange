@@ -16,37 +16,37 @@ parameters:
 			path: resources/views/_pages/local/reviews.blade.php
 
 		-
-			message: "#^Access to an undefined property Igniter\\\\Frontend\\\\Models\\\\Banners\\:\\:\\$alt_text\\.$#"
+			message: "#^Access to an undefined property Igniter\\\\Frontend\\\\Models\\\\Banner\\:\\:\\$alt_text\\.$#"
 			count: 1
 			path: src/Data/BannerData.php
 
 		-
-			message: "#^Access to an undefined property Igniter\\\\Frontend\\\\Models\\\\Banners\\:\\:\\$banner_id\\.$#"
+			message: "#^Access to an undefined property Igniter\\\\Frontend\\\\Models\\\\Banner\\:\\:\\$banner_id\\.$#"
 			count: 1
 			path: src/Data/BannerData.php
 
 		-
-			message: "#^Access to an undefined property Igniter\\\\Frontend\\\\Models\\\\Banners\\:\\:\\$click_url\\.$#"
+			message: "#^Access to an undefined property Igniter\\\\Frontend\\\\Models\\\\Banner\\:\\:\\$click_url\\.$#"
 			count: 3
 			path: src/Data/BannerData.php
 
 		-
-			message: "#^Access to an undefined property Igniter\\\\Frontend\\\\Models\\\\Banners\\:\\:\\$code\\.$#"
+			message: "#^Access to an undefined property Igniter\\\\Frontend\\\\Models\\\\Banner\\:\\:\\$code\\.$#"
 			count: 2
 			path: src/Data/BannerData.php
 
 		-
-			message: "#^Access to an undefined property Igniter\\\\Frontend\\\\Models\\\\Banners\\:\\:\\$custom_code\\.$#"
+			message: "#^Access to an undefined property Igniter\\\\Frontend\\\\Models\\\\Banner\\:\\:\\$custom_code\\.$#"
 			count: 1
 			path: src/Data/BannerData.php
 
 		-
-			message: "#^Access to an undefined property Igniter\\\\Frontend\\\\Models\\\\Banners\\:\\:\\$image_code\\.$#"
+			message: "#^Access to an undefined property Igniter\\\\Frontend\\\\Models\\\\Banner\\:\\:\\$image_code\\.$#"
 			count: 2
 			path: src/Data/BannerData.php
 
 		-
-			message: "#^Access to an undefined property Igniter\\\\Frontend\\\\Models\\\\Banners\\:\\:\\$type\\.$#"
+			message: "#^Access to an undefined property Igniter\\\\Frontend\\\\Models\\\\Banner\\:\\:\\$type\\.$#"
 			count: 2
 			path: src/Data/BannerData.php
 
@@ -131,21 +131,6 @@ parameters:
 			path: src/Data/MenuItemData.php
 
 		-
-			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:getUser\\(\\)\\.$#"
-			count: 1
-			path: src/Http/Controllers/Logout.php
-
-		-
-			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:logout\\(\\)\\.$#"
-			count: 1
-			path: src/Http/Controllers/Logout.php
-
-		-
-			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Facades\\\\Event\\:\\:fire\\(\\)\\.$#"
-			count: 1
-			path: src/Http/Controllers/Logout.php
-
-		-
 			message: "#^Call to an undefined static method Igniter\\\\Cart\\\\Facades\\\\Cart\\:\\:count\\(\\)\\.$#"
 			count: 1
 			path: src/Livewire/AccountSettings.php
@@ -196,19 +181,9 @@ parameters:
 			path: src/Livewire/Booking.php
 
 		-
-			message: "#^Access to an undefined property Igniter\\\\Orange\\\\Livewire\\\\Captcha\\:\\:\\$page\\.$#"
-			count: 1
+			message: "#^Call to an undefined static method Igniter\\\\Frontend\\\\Models\\\\CaptchaSettings\\:\\:get\\(\\)\\.$#"
+			count: 4
 			path: src/Livewire/Captcha.php
-
-		-
-			message: "#^Call to an undefined static method Igniter\\\\Frontend\\\\Models\\\\CaptchaSettings\\:\\:instance\\(\\)\\.$#"
-			count: 1
-			path: src/Livewire/Captcha.php
-
-		-
-			message: "#^Call to an undefined static method Igniter\\\\Cart\\\\Models\\\\CartSettings\\:\\:get\\(\\)\\.$#"
-			count: 3
-			path: src/Livewire/CartBox.php
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:checkNoOrderTypeAvailable\\(\\)\\.$#"
@@ -243,6 +218,16 @@ parameters:
 		-
 			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addJs\\(\\)\\.$#"
 			count: 2
+			path: src/Livewire/CartBox.php
+
+		-
+			message: "#^Static call to instance method Igniter\\\\Cart\\\\Models\\\\CartSettings\\:\\:tippingAmounts\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/CartBox.php
+
+		-
+			message: "#^Static call to instance method Igniter\\\\Cart\\\\Models\\\\CartSettings\\:\\:tippingEnabled\\(\\)\\.$#"
+			count: 1
 			path: src/Livewire/CartBox.php
 
 		-
@@ -371,56 +356,6 @@ parameters:
 			path: src/Livewire/FulfillmentModal.php
 
 		-
-			message: "#^Access to an undefined property Igniter\\\\Local\\\\Models\\\\Review\\:\\:\\$author\\.$#"
-			count: 1
-			path: src/Livewire/LeaveReview.php
-
-		-
-			message: "#^Access to an undefined property Igniter\\\\Local\\\\Models\\\\Review\\:\\:\\$customer_id\\.$#"
-			count: 1
-			path: src/Livewire/LeaveReview.php
-
-		-
-			message: "#^Access to an undefined property Igniter\\\\Local\\\\Models\\\\Review\\:\\:\\$delivery\\.$#"
-			count: 1
-			path: src/Livewire/LeaveReview.php
-
-		-
-			message: "#^Access to an undefined property Igniter\\\\Local\\\\Models\\\\Review\\:\\:\\$location_id\\.$#"
-			count: 1
-			path: src/Livewire/LeaveReview.php
-
-		-
-			message: "#^Access to an undefined property Igniter\\\\Local\\\\Models\\\\Review\\:\\:\\$quality\\.$#"
-			count: 1
-			path: src/Livewire/LeaveReview.php
-
-		-
-			message: "#^Access to an undefined property Igniter\\\\Local\\\\Models\\\\Review\\:\\:\\$review_status\\.$#"
-			count: 1
-			path: src/Livewire/LeaveReview.php
-
-		-
-			message: "#^Access to an undefined property Igniter\\\\Local\\\\Models\\\\Review\\:\\:\\$review_text\\.$#"
-			count: 1
-			path: src/Livewire/LeaveReview.php
-
-		-
-			message: "#^Access to an undefined property Igniter\\\\Local\\\\Models\\\\Review\\:\\:\\$sale_id\\.$#"
-			count: 1
-			path: src/Livewire/LeaveReview.php
-
-		-
-			message: "#^Access to an undefined property Igniter\\\\Local\\\\Models\\\\Review\\:\\:\\$sale_type\\.$#"
-			count: 1
-			path: src/Livewire/LeaveReview.php
-
-		-
-			message: "#^Access to an undefined property Igniter\\\\Local\\\\Models\\\\Review\\:\\:\\$service\\.$#"
-			count: 1
-			path: src/Livewire/LeaveReview.php
-
-		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:getRatingOptions\\(\\)\\.$#"
 			count: 1
 			path: src/Livewire/LeaveReview.php
@@ -442,7 +377,7 @@ parameters:
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:customer\\(\\)\\.$#"
-			count: 4
+			count: 3
 			path: src/Livewire/LeaveReview.php
 
 		-
@@ -546,26 +481,6 @@ parameters:
 			path: src/Livewire/MenuItemsList.php
 
 		-
-			message: "#^Call to an undefined static method Igniter\\\\Frontend\\\\Models\\\\MailchimpSettings\\:\\:get\\(\\)\\.$#"
-			count: 1
-			path: src/Livewire/NewsletterSubscribeForm.php
-
-		-
-			message: "#^Call to an undefined static method Igniter\\\\Frontend\\\\Models\\\\Subscriber\\:\\:firstOrCreate\\(\\)\\.$#"
-			count: 1
-			path: src/Livewire/NewsletterSubscribeForm.php
-
-		-
-			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Facades\\\\Event\\:\\:fire\\(\\)\\.$#"
-			count: 1
-			path: src/Livewire/NewsletterSubscribeForm.php
-
-		-
-			message: "#^Call to an undefined static method Igniter\\\\Cart\\\\Facades\\\\Cart\\:\\:add\\(\\)\\.$#"
-			count: 1
-			path: src/Livewire/OrderPreview.php
-
-		-
 			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:customer\\(\\)\\.$#"
 			count: 3
 			path: src/Livewire/OrderPreview.php
@@ -587,11 +502,6 @@ parameters:
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\User\\\\Models\\\\Customer\\:\\:whereResetCode\\(\\)\\.$#"
-			count: 1
-			path: src/Livewire/ResetPassword.php
-
-		-
-			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Facades\\\\Mail\\:\\:queueTemplate\\(\\)\\.$#"
 			count: 1
 			path: src/Livewire/ResetPassword.php
 
