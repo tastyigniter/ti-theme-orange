@@ -14,8 +14,7 @@ class BannerPreview extends Component
         public string $code,
         public int $width = 960,
         public int $height = 360,
-    )
-    {
+    ) {
     }
 
     public function render()
