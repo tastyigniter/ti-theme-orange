@@ -256,13 +256,7 @@ class Checkout extends \Livewire\Component
             return $this->order;
         }
 
-        $order = $this->orderManager->loadOrder();
-
-        if (!$order->isPaymentProcessed()) {
-            $this->orderManager->applyRequiredAttributes($order);
-        }
-
-        return $this->order = $order;
+        return $this->order = $this->orderManager->loadOrder();
     }
 
     protected function checkCheckoutSecurity()

@@ -61,6 +61,18 @@ class LeaveReview extends \Livewire\Component
 
     public function onLeaveReview()
     {
+        throw_unless(Auth::customer(), ValidationException::withMessages([
+            'comment' => lang('igniter.local::default.review.alert_expired_login'),
+        ]));
+
+        throw_unless(ReviewSettings::allowReviews(), ValidationException::withMessages([
+            'comment' => lang('igniter.local::default.review.alert_review_disabled'),
+        ]));
+
+        throw_unless($reviewable = $this->getReviewable(), ValidationException::withMessages([
+            'comment' => lang('igniter.local::default.review.alert_review_not_found'),
+        ]));
+
         $this->validate([
             'comment' => ['required', 'min:2', 'max:1028'],
             'delivery' => ['required', 'integer', 'min:0'],
@@ -73,39 +85,18 @@ class LeaveReview extends \Livewire\Component
             'service' => lang('igniter.local::default.review.label_service'),
         ]);
 
-        throw_unless(ReviewSettings::allowReviews(), ValidationException::withMessages([
-            'comment' => lang('igniter.local::default.review.alert_review_disabled'),
-        ]));
-
-        throw_unless($customer = Auth::customer(), ValidationException::withMessages([
-            'comment' => lang('igniter.local::default.review.alert_expired_login'),
-        ]));
-
-        throw_unless($reviewable = $this->getReviewable(), ValidationException::withMessages([
-            'comment' => lang('igniter.local::default.review.alert_review_not_found'),
-        ]));
-
-        throw_unless($reviewable->isCompleted(), ValidationException::withMessages([
-            'comment' => lang('igniter.local::default.review.alert_review_status_history'),
-        ]));
-
-        throw_if($this->checkReviewableExists($reviewable), ValidationException::withMessages([
-            'comment' => lang('igniter.local::default.review.alert_review_duplicate'),
-        ]));
-
-        $model = new ReviewModel();
-        $model->location_id = $reviewable->location_id;
-        $model->customer_id = $customer->customer_id;
-        $model->author = $customer->full_name;
-        $model->sale_id = $reviewable->getKey();
-        $model->sale_type = $reviewable->getMorphClass();
-        $model->quality = $this->quality;
-        $model->delivery = $this->delivery;
-        $model->service = $this->service;
-        $model->review_text = $this->comment;
-        $model->review_status = ReviewSettings::autoApproveReviews();
-
-        $model->save();
+        rescue(function () use ($reviewable) {
+            ReviewModel::leaveReview($reviewable, [
+                'quality' => $this->quality,
+                'delivery' => $this->delivery,
+                'service' => $this->service,
+                'review_text' => $this->comment,
+            ]);
+        }, function (\Throwable $e) {
+            throw ValidationException::withMessages([
+                'comment' => $e->getMessage(),
+            ]);
+        });
 
         flash()->success(lang('igniter.local::default.review.alert_review_success'))->now();
     }
@@ -135,14 +126,5 @@ class LeaveReview extends \Livewire\Component
             'order' => resolve(OrderManager::class)->getOrderByHash($this->reviewableHash, Auth::customer()),
             default => null,
         };
-    }
-
-    protected function checkReviewableExists($reviewable)
-    {
-        if (!$customer = Auth::customer()) {
-            return false;
-        }
-
-        return ReviewModel::checkReviewed($reviewable, $customer);
     }
 }
