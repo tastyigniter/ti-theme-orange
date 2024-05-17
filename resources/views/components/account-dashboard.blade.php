@@ -13,7 +13,7 @@
                     <a
                         wire:navigate
                         class="btn btn-light edit-address pull-right"
-                        href="{{ site_url('account/address') }}"
+                        href="{{ page_url('account.address') }}"
                     >@lang('igniter.user::default.text_edit')</a>
                 </h5>
                 <address class="text-left text-overflow">{{ $formattedAddress }}</address>
@@ -33,7 +33,7 @@
             @endif
             <a
                 wire:navigate
-                class="btn btn-light" href="{{ page_url('local/menus') }}">
+                class="btn btn-light" href="{{ page_url('local.menus') }}">
                 @lang('igniter.user::default.text_order')
             </a>
         </div>

@@ -1,7 +1,10 @@
 ---
-title: main::lang.cart.title
+title: igniter.orange::default.cart_title
 layout: default
 permalink: /cart
+
+'[igniter-orange::local-header]': []
+'[igniter-orange::cart-box]': []
 ---
 <div class="container py-5">
     <div class="row">
@@ -11,7 +14,7 @@ permalink: /cart
                     <div class="mb-3" wire:ignore>
                         <a
                             class="text-decoration-none"
-                            href="{{page_url('local/menus')}}"
+                            href="{{page_url('local.menus')}}"
                         >
                             <i class="fa fa-arrow-left-long"></i>&nbsp;&nbsp;
                             @lang('igniter.orange::default.button_back')

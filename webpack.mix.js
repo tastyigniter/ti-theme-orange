@@ -49,6 +49,9 @@ mix.copy(
 ).copy(
     'node_modules/photoswipe/dist/photoswipe.css',
     `${src}/scss/vendor/photoswipe.scss`
+).copy(
+    'node_modules/flatpickr/dist/flatpickr.min.css',
+    `${src}/scss/vendor/flatpickr.scss`
 )
 
 //  Build SCSS

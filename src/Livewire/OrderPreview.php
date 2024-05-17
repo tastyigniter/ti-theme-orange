@@ -7,26 +7,31 @@ use Igniter\Cart\Classes\CartManager;
 use Igniter\Cart\Classes\OrderManager;
 use Igniter\Flame\Exception\ApplicationException;
 use Igniter\Main\Helpers\MainHelper;
+use Igniter\Main\Traits\ConfigurableComponent;
+use Igniter\Main\Traits\UsesPage;
 use Igniter\User\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\ValidationException;
 
 class OrderPreview extends \Livewire\Component
 {
+    use ConfigurableComponent;
+    use UsesPage;
+
     /** The parameter name used for the order hash code */
     public string $hashParamName = 'hash';
 
     public string $hash;
 
-    public string $loginPage = 'account'.DIRECTORY_SEPARATOR.'login';
+    public string $loginPage = 'account.login';
 
     /** Account Orders Page */
-    public string $ordersPage = 'account'.DIRECTORY_SEPARATOR.'orders';
+    public string $ordersPage = 'account.orders';
 
-    public string $checkoutPage = 'checkout'.DIRECTORY_SEPARATOR.'checkout';
+    public string $checkoutPage = 'checkout.checkout';
 
     /** Menus Page, page to redirect to when a user clicks the re-order button */
-    public string $menusPage = 'local'.DIRECTORY_SEPARATOR.'menus';
+    public string $menusPage = 'local.menus';
 
     public string $loginUrl = '';
 
@@ -38,6 +43,50 @@ class OrderPreview extends \Livewire\Component
     protected OrderManager $orderManager;
 
     protected ?Model $order = null;
+
+    public static function componentMeta(): array
+    {
+        return [
+            'code' => 'igniter-orange::order-preview',
+            'name' => 'igniter.orange::default.component_order_preview_title',
+            'description' => 'igniter.orange::default.component_order_preview_desc',
+        ];
+    }
+
+    public function defineProperties(): array
+    {
+        return [
+            'hashParamName' => [
+                'label' => 'Order Hash Parameter Name',
+                'type' => 'text',
+                'validationRule' => 'required|alpha',
+            ],
+            'loginPage' => [
+                'label' => 'Login page to redirect to when viewing as guest',
+                'type' => 'select',
+                'options' => [static::class, 'getThemePageOptions'],
+                'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
+            ],
+            'ordersPage' => [
+                'label' => 'Page to redirect to as a customer when an order is incomplete',
+                'type' => 'select',
+                'options' => [static::class, 'getThemePageOptions'],
+                'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
+            ],
+            'checkoutPage' => [
+                'label' => 'Page to redirect to as guest when an order is incomplete',
+                'type' => 'select',
+                'options' => [static::class, 'getThemePageOptions'],
+                'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
+            ],
+            'menusPage' => [
+                'label' => 'Menus page to redirect to when re-ordering',
+                'type' => 'select',
+                'options' => [static::class, 'getThemePageOptions'],
+                'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
+            ],
+        ];
+    }
 
     public function render()
     {
@@ -106,11 +155,11 @@ class OrderPreview extends \Livewire\Component
             'onReOrder' => lang('igniter.cart::default.orders.alert_reorder_failed'),
         ]));
 
-        rescue(function () use ($order) {
+        rescue(function() use ($order) {
             if ($notes = resolve(CartManager::class)->addOrderMenus($order)) {
                 throw new ApplicationException(implode(PHP_EOL, $notes));
             }
-        }, function (Exception $ex) {
+        }, function(Exception $ex) {
             throw ValidationException::withMessages(['onReOrder' => $ex->getMessage()]);
         });
 

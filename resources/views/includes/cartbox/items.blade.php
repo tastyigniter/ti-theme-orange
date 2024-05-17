@@ -2,7 +2,7 @@
     <ul class="list-unstyled user-select-none mb-0">
         @foreach ($cart->content()->reverse() as $cartItem)
             <li @class(['d-flex align-items-start', 'mb-3' => !$loop->last])>
-                @unless($pageIsCheckout)
+                @unless($previewMode)
                     <div class="me-3 text-nowrap">
                         <button
                             wire:click="onUpdateItemQuantity('{{ $cartItem->rowId }}', 'minus')"

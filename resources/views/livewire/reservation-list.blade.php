@@ -24,7 +24,7 @@
                             <td>
                                 <a
                                     class="btn btn-light"
-                                    href="{{ page_url('account/reservation', ['reservationId' => $reservation->reservation_id, 'hash' => $reservation->hash]) }}"
+                                    href="{{ page_url('account.reservation', ['reservationId' => $reservation->reservation_id, 'hash' => $reservation->hash]) }}"
                                 ><i class="fa fa-receipt"></i>&nbsp;&nbsp;@lang('igniter.reservation::default.btn_view')
                                 </a>
                             </td>

@@ -3,24 +3,30 @@
 namespace Igniter\Orange\Livewire;
 
 use Igniter\Frontend\Models\CaptchaSettings;
+use Igniter\Main\Traits\ConfigurableComponent;
 use Livewire\Component;
 
 class Captcha extends Component
 {
+    use ConfigurableComponent;
+
     public string $apiKey = '';
 
     public string $lang = '';
 
-    public string $version = '';
-
-    public string $theme = '';
+    public static function componentMeta(): array
+    {
+        return [
+            'code' => 'igniter-orange::captcha',
+            'name' => 'igniter.orange::default.component_captcha_title',
+            'description' => 'igniter.orange::default.component_captcha_desc',
+        ];
+    }
 
     public function mount()
     {
         $this->apiKey = CaptchaSettings::get('api_site_key');
         $this->lang = CaptchaSettings::get('lang', 'en');
-        $this->version = CaptchaSettings::get('version', 'v2');
-        $this->theme = CaptchaSettings::get('theme', 'light');
     }
 
     public function render()

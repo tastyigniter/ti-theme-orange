@@ -7,7 +7,7 @@
 
             <div class="col-lg-3 mt-4 mt-lg-0">
                 <div class="social-bottom">
-                    <h6 class="footer-title">@lang('main::lang.text_follow_us')</h6>
+                    <h6 class="footer-title">@lang('igniter::main.text_follow_us')</h6>
                     @include('igniter-orange::includes.social-icons')
                 </div>
             </div>
@@ -33,7 +33,7 @@
         <div class="row">
             <div class="col p-2">
                 {!! sprintf(
-                    lang('main::lang.site_copyright'),
+                    lang('igniter::main.site_copyright'),
                     date('Y'),
                     $site_name,
                     lang('system::lang.system_name')

@@ -1,8 +1,10 @@
 ---
-title: main::lang.account.reservations.title
+title: igniter.orange::default.account_reservations_title
 layout: default
 permalink: /account/reservations
 security: customer
+
+'[igniter-orange::reservation-list]': []
 ---
 <div class="container">
     <div class="row py-5">

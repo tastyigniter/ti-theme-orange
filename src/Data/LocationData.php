@@ -93,7 +93,7 @@ class LocationData
 
     public function orderTypes(): Collection
     {
-        return Location::getOrderTypes();
+        return $this->model->availableOrderTypes();
     }
 
     public function reviewsScore(): float

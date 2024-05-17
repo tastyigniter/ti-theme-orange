@@ -3,17 +3,22 @@
 namespace Igniter\Orange\Livewire;
 
 use Igniter\Flame\Exception\ApplicationException;
+use Igniter\Main\Traits\ConfigurableComponent;
+use Igniter\Main\Traits\UsesPage;
 use Igniter\User\Models\Customer;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
 class ResetPassword extends Component
 {
+    use ConfigurableComponent;
+    use UsesPage;
+
     /** The reset password page*/
-    public string $resetPage = 'account'.DIRECTORY_SEPARATOR.'reset';
+    public string $resetPage = 'account.reset';
 
     /** The login page*/
-    public string $loginPage = 'account'.DIRECTORY_SEPARATOR.'login';
+    public string $loginPage = 'account.login';
 
     public ?string $email = null;
 
@@ -24,6 +29,33 @@ class ResetPassword extends Component
     public ?string $password_confirmation = null;
 
     public ?string $message = null;
+
+    public static function componentMeta(): array
+    {
+        return [
+            'code' => 'igniter-orange::reset-password',
+            'name' => 'igniter.orange::default.component_reset_password_title',
+            'description' => 'igniter.orange::default.component_reset_password_desc',
+        ];
+    }
+
+    public function defineProperties(): array
+    {
+        return [
+            'resetPage' => [
+                'label' => 'The reset password page',
+                'type' => 'select',
+                'options' => [static::class, 'getThemePageOptions'],
+                'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
+            ],
+            'loginPage' => [
+                'label' => 'The login page',
+                'type' => 'select',
+                'options' => [static::class, 'getThemePageOptions'],
+                'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
+            ],
+        ];
+    }
 
     public function render()
     {

@@ -4,24 +4,24 @@ return [
     'name' => 'Footer menu',
     'items' => [
         [
-            'title' => 'TastyIgniter',
+            'title' => 'igniter.orange::default.text_restaurant',
             'code' => '',
             'type' => 'header',
             'items' => [
                 [
-                    'title' => 'main::lang.menu_menu',
+                    'title' => 'igniter.orange::default.menu_menu',
                     'code' => '',
                     'type' => 'theme-page',
-                    'reference' => 'local'.DIRECTORY_SEPARATOR.'menus',
+                    'reference' => 'local.menus',
                 ],
                 [
-                    'title' => 'main::lang.menu_reservation',
+                    'title' => 'igniter.orange::default.menu_reservation',
                     'code' => '',
                     'type' => 'theme-page',
-                    'reference' => 'reservation'.DIRECTORY_SEPARATOR.'reservation',
+                    'reference' => 'reservation.reservation',
                 ],
                 [
-                    'title' => 'main::lang.menu_locations',
+                    'title' => 'igniter.orange::default.menu_locations',
                     'code' => '',
                     'type' => 'theme-page',
                     'reference' => 'locations',
@@ -29,12 +29,12 @@ return [
             ],
         ],
         [
-            'title' => 'main::lang.text_information',
+            'title' => 'igniter.orange::default.text_information',
             'code' => '',
             'type' => 'header',
             'items' => [
                 [
-                    'title' => 'main::lang.menu_contact',
+                    'title' => 'igniter.orange::default.menu_contact',
                     'code' => '',
                     'type' => 'theme-page',
                     'reference' => 'contact',

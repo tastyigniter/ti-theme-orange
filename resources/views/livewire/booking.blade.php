@@ -18,7 +18,7 @@
         <div class="card-body">
             {!! $customer
                 ? sprintf(lang('igniter.orange::default.text_logged_out'), e($customer->first_name), url('logout'))
-                : sprintf(lang('igniter.orange::default.text_logged_in'), page_url('account/login'))
+                : sprintf(lang('igniter.orange::default.text_logged_in'), page_url('account.login'))
             !!}
         </div>
     </div>

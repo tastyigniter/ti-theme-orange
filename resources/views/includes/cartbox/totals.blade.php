@@ -1,6 +1,6 @@
 <div
     id="cart-totals"
-    @class(['mt-3', 'border-top pt-2' => $pageIsCheckout])
+    @class(['mt-3', 'border-top pt-2' => $previewMode])
 >
     <div class="table-responsive">
         <table class="table table-sm table-borderless mb-0">
@@ -11,7 +11,7 @@
             </tr>
 
             @foreach ($cart->conditions() as $id => $condition)
-                @continue(!$pageIsCheckout && $id === 'tip' && $tipConditionValue = $condition->getValue())
+                @continue(!$previewMode && $id === 'tip' && $tipConditionValue = $condition->getValue())
                 <tr>
                     <td>
                         {{ $condition->getLabel() }}:
@@ -36,7 +36,7 @@
             </tbody>
         </table>
     </div>
-    @if (!$pageIsCheckout && $this->tippingEnabled())
+    @if (!$previewMode && $this->tippingEnabled())
         @php $tipCondition = $cart->getCondition('tip') @endphp
         <div class="border-top border-bottom my-2 pt-2 pb-2">
             <div class="table-responsive">

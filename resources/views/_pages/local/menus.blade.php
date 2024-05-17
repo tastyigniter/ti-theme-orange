@@ -1,23 +1,15 @@
 ---
-title: 'main::lang.local.menus.title'
+title: igniter.orange::default.menus_title
 permalink: '/:location?local/menus/:category?'
 description: ''
 layout: default
----
-<?php
 
-function onStart()
-{
-    if (request()->route()->parameter('location') !== Location::current()->permalink_slug) {
-        return redirect()->to(page_url('home'));
-    }
-
-    if ((!Location::current()?->isEnabled() && !AdminAuth::getUser()?->hasPermission('Admin.Locations'))) {
-        flash()->error(lang('igniter.local::default.alert_location_required'));
-        return redirect()->to(page_url('home'));
-    }
-}
-?>
+'[igniter-orange::local-header]': []
+'[igniter-orange::fulfillment]': []
+'[igniter-orange::category-list]': []
+'[igniter-orange::menu-item-list]': []
+'[igniter-orange::cart-box]': []
+'[igniter-orange::fulfillment-modal]': []
 ---
 <div class="bg-white border-bottom border-1">
     <div class="container py-4">
@@ -46,13 +38,13 @@ function onStart()
 </div>
 <div class="bg-white border-bottom border-1">
     <div class="container">
-        <x-igniter-orange::categories-list/>
+        <x-igniter-orange::category-list/>
     </div>
 </div>
 <div class="container pt-3 pb-5">
     <div class="row">
         <div class="col-lg-8">
-            <livewire:igniter-orange::menu-items-list/>
+            <livewire:igniter-orange::menu-item-list/>
         </div>
 
         <div class="col-lg-4 d-none d-lg-inline-block">

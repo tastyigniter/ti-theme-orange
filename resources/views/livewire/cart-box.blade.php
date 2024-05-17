@@ -22,7 +22,7 @@
                     @lang('igniter.local::default.text_min_total'): {{ currency_format($minOrderTotal) }}
                 </p>
             @endif
-            @includeWhen($showCheckoutButton, 'igniter-orange::includes.cartbox.buttons')
+            @include('igniter-orange::includes.cartbox.buttons')
         </div>
     </div>
 </div>

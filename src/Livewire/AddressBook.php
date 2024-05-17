@@ -3,13 +3,16 @@
 namespace Igniter\Orange\Livewire;
 
 use Igniter\Flame\Exception\ApplicationException;
+use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Livewire\Forms\AddressBookForm;
 use Igniter\System\Models\Country;
 use Igniter\User\Facades\Auth;
+use Livewire\Component;
 use Livewire\WithPagination;
 
-class AddressBook extends \Livewire\Component
+class AddressBook extends Component
 {
+    use ConfigurableComponent;
     use WithPagination;
 
     public ?int $addressId = null;
@@ -23,6 +26,15 @@ class AddressBook extends \Livewire\Component
     public int $itemsPerPage = 20;
 
     public string $sortOrder = 'created_at desc';
+
+    public static function componentMeta(): array
+    {
+        return [
+            'code' => 'igniter-orange::address-book',
+            'name' => 'igniter.orange::default.component_address_book_title',
+            'description' => 'igniter.orange::default.component_address_book_desc',
+        ];
+    }
 
     public function render()
     {

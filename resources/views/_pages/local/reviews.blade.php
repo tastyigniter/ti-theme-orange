@@ -1,11 +1,14 @@
 ---
-title: 'main::lang.local.menus.title'
+title: igniter.orange::default.reviews_title
 permalink: '/:location?local/reviews'
 description: ''
 layout: default
+
+'[igniter-orange::local-header]': []
+'[igniter-orange::reviews-list]': []
+'[igniter-orange::cart-box]': []
 ---
 <?php
-
 function onStart()
 {
     if (request()->route()->parameter('location') !== Location::current()->permalink_slug) {
@@ -24,7 +27,7 @@ function onStart()
         <div class="mb-3" wire:ignore>
             <a
                 class="text-decoration-none"
-                href="{{page_url('local/menus')}}"
+                href="{{page_url('local.menus')}}"
             >
                 <i class="fa fa-arrow-left-long"></i>&nbsp;&nbsp;
                 @lang('igniter.orange::default.button_back')

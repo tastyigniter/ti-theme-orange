@@ -1,7 +1,7 @@
 <div class="card border">
     <div class="card-body">
         <h1 class="card-title h4 mb-4 font-weight-normal">
-            @lang('main::lang.account.login.text_register')
+            @lang('igniter.orange::default.text_register')
         </h1>
 
         @if ($registrationAllowed)
@@ -117,13 +117,13 @@
                             type="submit"
                             class="btn btn-primary w-100 btn-lg"
                             wire:loading.class="disabled"
-                        >@lang('igniter.user::default.login.button_register')</button>
+                        >@lang('igniter.orange::default.button_register')</button>
                     </div>
                 </div>
             </x-igniter-orange::forms.form>
             <div class="text-center">
                                 <a
-                    href="{{ site_url('account/login') }}"
+                    href="{{ page_url('account.login') }}"
                     class="btn btn-link"
                 >@lang('igniter.orange::default.text_login_has_account')</a>
             </div>

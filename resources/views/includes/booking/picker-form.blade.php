@@ -6,8 +6,8 @@
             data-control="booking"
             data-min-date="{{ $startDate->format('Y-m-d') }}"
             data-max-date="{{ $endDate->format('Y-m-d') }}"
-            data-days-of-week-disabled='@json($this->disabledDaysOfWeek())'
-            data-disable='@json($this->disabledDates())'
+            data-days-of-week-disabled='@json($this->disabledDaysOfWeek)'
+            data-disable='@json($this->disabledDates)'
             data-week-start="{{ $weekStartOn }}"
             data-date-format="Y-m-d"
             data-locale={{ $calendarLocale }}
@@ -40,7 +40,7 @@
             <div class="form-group">
                 <button
                     type="submit"
-                    @class(['btn btn-primary btn-lg w-100', 'disabled' => $isSlotUnavailable])
+                    @class(['btn btn-primary btn-lg w-100'])
                 >@lang('igniter.reservation::default.button_find_table')</button>
 
                 <x-igniter-orange::forms.error field="date" class="text-danger"/>

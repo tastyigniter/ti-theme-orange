@@ -19,7 +19,7 @@ trait SearchesNearby
 
     public ?array $searchPoint = null;
 
-    public string $menusPage = 'local'.DIRECTORY_SEPARATOR.'menus';
+    public string $menusPage = 'local.menus';
 
     public ?string $deliveryAddress = null;
 
@@ -27,6 +27,18 @@ trait SearchesNearby
     public ?int $savedAddressId = null;
 
     protected string $searchField = 'searchQuery';
+
+    public function definePropertiesSearchNearby()
+    {
+        return [
+            'menusPage' => [
+                'label' => 'Page to redirect to when a location is found',
+                'type' => 'select',
+                'options' => [static::class, 'getThemePageOptions'],
+                'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
+            ],
+        ];
+    }
 
     public function mountSearchesNearby()
     {

@@ -6,7 +6,7 @@ use Igniter\Cart\Classes\OrderManager;
 use Igniter\Flame\Database\Model;
 use Igniter\Local\Models\Review as ReviewModel;
 use Igniter\Local\Models\ReviewSettings;
-use Igniter\Main\Traits\UsesPage;
+use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Reservation\Classes\BookingManager;
 use Igniter\System\Facades\Assets;
 use Igniter\User\Facades\Auth;
@@ -14,7 +14,7 @@ use Illuminate\Validation\ValidationException;
 
 class LeaveReview extends \Livewire\Component
 {
-    use UsesPage;
+    use ConfigurableComponent;
 
     public string $type = 'order';
 
@@ -34,6 +34,30 @@ class LeaveReview extends \Livewire\Component
     protected ?Model $reviewable = null;
 
     protected ?Model $customerReview = null;
+
+    public static function componentMeta(): array
+    {
+        return [
+            'code' => 'igniter-orange::leave-review',
+            'name' => 'Leave Review',
+            'description' => 'Allow customers to leave reviews for orders and reservations',
+        ];
+    }
+
+    public function defineProperties(): array
+    {
+        return [
+            'type' => [
+                'label' => 'Review Type',
+                'type' => 'select',
+                'default' => 'order',
+                'options' => [
+                    'order' => 'Order',
+                    'reservation' => 'Reservation',
+                ],
+            ],
+        ];
+    }
 
     public function render()
     {

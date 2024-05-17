@@ -3,30 +3,107 @@
 namespace Igniter\Orange\View\Components;
 
 use Igniter\Cart\Models\Menu;
+use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Data\MenuItemData;
 use Illuminate\View\Component;
 
 class FeaturedItems extends Component
 {
+    use ConfigurableComponent;
+
     public function __construct(
         public string $title = 'igniter.frontend::default.featured.text_featured_menus',
+        public array $items = [],
         public int $limit = 6,
         public int $itemsPerRow = 3,
-        public int $itemWidth = 400,
-        public int $itemHeight = 300,
         public bool $showThumb = true,
-    ) {
+        public ?int $itemWidth = 400,
+        public ?int $itemHeight = 300,
+    )
+    {
+    }
+
+    public static function componentMeta(): array
+    {
+        return [
+            'code' => 'igniter-orange::featured-items',
+            'name' => 'igniter.orange::default.component_featured_items_title',
+            'description' => 'igniter.orange::default.component_featured_items_desc',
+        ];
+    }
+
+    public function defineProperties(): array
+    {
+        return [
+            'title' => [
+                'label' => 'Title',
+                'type' => 'text',
+                'validationRule' => 'string',
+            ],
+            'items' => [
+                'label' => 'lang:igniter.frontend::default.featured.label_menus',
+                'type' => 'selectlist',
+                'mode' => 'checkbox',
+                'validationRule' => 'required|array',
+            ],
+            'limit' => [
+                'label' => 'lang:igniter.frontend::default.featured.label_limit',
+                'span' => 'left',
+                'type' => 'number',
+                'validationRule' => 'required|integer',
+            ],
+            'itemsPerRow' => [
+                'label' => 'lang:igniter.frontend::default.featured.label_items_per_row',
+                'span' => 'right',
+                'type' => 'select',
+                'options' => [
+                    1 => 'One',
+                    2 => 'Two',
+                    3 => 'Three',
+                    4 => 'Four',
+                    5 => 'Five',
+                    6 => 'Six',
+                ],
+                'validationRule' => 'required|integer',
+            ],
+            'itemWidth' => [
+                'label' => 'lang:igniter.frontend::default.featured.label_dimension_w',
+                'span' => 'left',
+                'type' => 'number',
+                'validationRule' => 'integer',
+            ],
+            'itemHeight' => [
+                'label' => 'lang:igniter.frontend::default.featured.label_dimension_h',
+                'span' => 'right',
+                'type' => 'number',
+                'validationRule' => 'integer',
+            ],
+            'showThumb' => [
+                'label' => 'Show thumbnail image',
+                'type' => 'switch',
+                'validationRule' => 'required|boolean',
+            ],
+        ];
+    }
+
+    public static function getItemsOptions()
+    {
+        return Menu::whereIsEnabled()->dropdown('menu_name');
     }
 
     public function render()
     {
         return view('igniter-orange::components.featured-items', [
-            'items' => $this->loadItems(),
+            'featuredItems' => $this->loadItems(),
         ]);
     }
 
     protected function loadItems()
     {
-        return Menu::query()->whereIsEnabled()->take($this->limit)->get()->mapInto(MenuItemData::class);
+        return Menu::query()
+            ->whereIn('menu_id', $this->items)
+            ->take($this->limit)
+            ->get()
+            ->mapInto(MenuItemData::class);
     }
 }

@@ -3,12 +3,14 @@
 namespace Igniter\Orange\Livewire;
 
 use Igniter\Flame\Exception\ApplicationException;
+use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Livewire\Forms\RegisterForm;
 use Igniter\User\Actions\RegisterUser;
 use Livewire\Attributes\Url;
 
 class Register extends \Livewire\Component
 {
+    use ConfigurableComponent;
     use \Igniter\Main\Traits\UsesPage;
 
     public RegisterForm $form;
@@ -16,19 +18,57 @@ class Register extends \Livewire\Component
     #[Url(as: 'code')]
     public string $activationCode = '';
 
-    public string $activationPage = 'account'.DIRECTORY_SEPARATOR.'register';
+    public string $activationPage = 'account.register';
 
-    public string $agreeTermsSlug = 'null';
+    public ?string $agreeTermsSlug = null;
 
     public bool $requireRegistrationTerms = false;
 
     public bool $registrationAllowed = true;
 
-    public string $redirectPage = 'account'.DIRECTORY_SEPARATOR.'account';
+    public string $redirectPage = 'account.account';
 
-    public string $registerPage = 'account'.DIRECTORY_SEPARATOR.'register';
+    public string $loginPage = 'account.login';
 
-    public string $loginPage = 'account'.DIRECTORY_SEPARATOR.'login';
+    public static function componentMeta(): array
+    {
+        return [
+            'code' => 'igniter-orange::register',
+            'name' => 'igniter.orange::default.component_register_title',
+            'description' => 'igniter.orange::default.component_register_desc',
+        ];
+    }
+
+    public function defineProperties()
+    {
+        return [
+            'agreeTermsSlug' => [
+                'label' => 'The permalink slug for the agree registration terms page',
+                'type' => 'select',
+                'options' => [static::class, 'getStaticPageOptions'],
+                'comment' => 'If set, require customers to agree to terms before registering',
+                'validationRule' => 'sometimes|alpha_dash',
+            ],
+            'redirectPage' => [
+                'label' => 'Page to redirect to after registration',
+                'type' => 'select',
+                'options' => [static::class, 'getThemePageOptions'],
+                'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
+            ],
+            'activationPage' => [
+                'label' => 'The activation page used for the activation link',
+                'type' => 'select',
+                'options' => [static::class, 'getThemePageOptions'],
+                'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
+            ],
+            'loginPage' => [
+                'label' => 'The login page used for the account login link and to redirect after registration',
+                'type' => 'select',
+                'options' => [static::class, 'getThemePageOptions'],
+                'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
+            ],
+        ];
+    }
 
     public function render()
     {
@@ -59,7 +99,7 @@ class Register extends \Livewire\Component
             $action->notifyRegistered(['account_login_link' => page_url($this->loginPage)]);
         } else {
             $action->notifyActivated([
-                'account_activation_link' => page_url($this->registerPage).'?code='.$customer->getActivationCode(),
+                'account_activation_link' => page_url($this->activationPage).'?code='.$customer->getActivationCode(),
             ]);
         }
 

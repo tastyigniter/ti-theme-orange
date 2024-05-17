@@ -15,7 +15,7 @@
                 <p id="eu-cookie-message" class="mb-0">
                     <span>{!! $theme->gdpr_cookie_message !!}</span>
                     <a
-                        href="{{ site_url($privacyPage ? $privacyPage->permalink_slug : '') }}"
+                        href="{{ page_url($privacyPage ? $privacyPage->permalink_slug : '') }}"
                     >{{ $theme->gdpr_more_info_text }}</a>
                 </p>
                 <a

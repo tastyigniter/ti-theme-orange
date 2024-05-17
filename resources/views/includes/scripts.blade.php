@@ -1,5 +1,5 @@
 {!! Assets::getJsVars() !!}
-@scripts
+@themeScripts
 @stack('scripts')
 {!! $theme->ga_tracking_code !!}
 @if (!empty($theme->custom_js))

@@ -4,6 +4,7 @@ namespace Igniter\Orange\Livewire;
 
 use DateTime;
 use Igniter\Local\Models\Location;
+use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Livewire\Concerns\SearchesNearby;
 use Igniter\System\Facades\Assets;
 use Illuminate\Support\Collection;
@@ -13,6 +14,7 @@ use Livewire\Livewire;
 
 class FulfillmentModal extends \Livewire\Component
 {
+    use ConfigurableComponent;
     use SearchesNearby;
 
     public array $timeslotDates = [];
@@ -41,10 +43,24 @@ class FulfillmentModal extends \Livewire\Component
      */
     protected $location;
 
+    public static function componentMeta(): array
+    {
+        return [
+            'code' => 'igniter-orange::fulfillment-modal',
+            'name' => 'igniter.orange::default.component_fulfillment_modal_title',
+            'description' => 'igniter.orange::default.component_fulfillment_modal_desc',
+        ];
+    }
+
+    public function defineProperties()
+    {
+        return $this->definePropertiesSearchNearby();
+    }
+
     public function render()
     {
         return view('igniter-orange::livewire.fulfillment-modal', [
-            'orderTypes' => collect($this->location->getOrderTypes() ?? [])->filter(fn ($orderType) => !$orderType->isDisabled()),
+            'orderTypes' => collect($this->location->getOrderTypes() ?? [])->filter(fn($orderType) => !$orderType->isDisabled()),
         ]);
     }
 
@@ -59,7 +75,7 @@ class FulfillmentModal extends \Livewire\Component
         $this->isAsap = $this->location->orderTimeIsAsap();
         $this->orderDate = $this->location->orderDateTime()?->format('Y-m-d');
         $this->orderTime = $this->location->orderDateTime()?->format('H:i');
-        $this->hideDeliveryAddress = $this->hideDeliveryAddress ?? !$this->location->orderTypeIsDelivery();
+        $this->hideDeliveryAddress = !$this->location->orderTypeIsDelivery();
     }
 
     public function boot()
@@ -118,7 +134,7 @@ class FulfillmentModal extends \Livewire\Component
 
     protected function parseTimeslot(Collection $timeslot)
     {
-        $timeslot->collapse()->each(function (DateTime $slot) {
+        $timeslot->collapse()->each(function(DateTime $slot) {
             $dateKey = $slot->format('Y-m-d');
             $hourKey = $slot->format('H:i');
             $dateValue = make_carbon($slot)->isoFormat(lang('system::lang.moment.day_format'));
@@ -142,7 +158,7 @@ class FulfillmentModal extends \Livewire\Component
 
         $orderType = $this->defaultOrderType;
         if (!$this->location->hasOrderType($orderType)) {
-            $orderType = optional($this->location->getOrderTypes()->first(function ($orderType) {
+            $orderType = optional($this->location->getOrderTypes()->first(function($orderType) {
                 return !$orderType->isDisabled();
             }))->getCode();
         }

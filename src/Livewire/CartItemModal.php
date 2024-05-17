@@ -4,12 +4,15 @@ namespace Igniter\Orange\Livewire;
 
 use Igniter\Cart\Classes\CartManager;
 use Igniter\Local\Facades\Location;
+use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Contracts\ModalComponent;
 use Igniter\Orange\Data\MenuItemData;
 use Livewire\Livewire;
 
 class CartItemModal extends ModalComponent
 {
+    use ConfigurableComponent;
+
     public ?int $menuId = null;
 
     public ?string $rowId = null;
@@ -48,6 +51,46 @@ class CartItemModal extends ModalComponent
     protected ?\Igniter\Cart\CartItem $cartItem = null;
 
     protected ?MenuItemData $menuItemData = null;
+
+    public static function componentMeta(): array
+    {
+        return [
+            'code' => 'igniter-orange::cart-item-modal',
+            'name' => 'igniter.orange::default.component_cart_item_modal_title',
+            'description' => 'igniter.orange::default.component_cart_item_modal_desc',
+        ];
+    }
+
+    public function defineProperties(): array
+    {
+        return [
+            'showThumb' => [
+                'label' => 'Show cart menu item image in the popup',
+                'type' => 'switch',
+                'validationRule' => 'required|boolean',
+            ],
+            'thumbWidth' => [
+                'label' => 'Cart item image width',
+                'type' => 'number',
+                'validationRule' => 'nullable|required_if:showThumb,1|integer',
+            ],
+            'thumbHeight' => [
+                'label' => 'Cart item image height',
+                'type' => 'number',
+                'validationRule' => 'nullable|required_if:showThumb,1|integer',
+            ],
+            'checkStockCheckout' => [
+                'label' => 'lang:igniter.cart::default.help_stock_checkout',
+                'type' => 'switch',
+                'validationRule' => 'required|boolean',
+            ],
+            'hideZeroOptionPrices' => [
+                'label' => 'Whether to hide zero prices on options',
+                'type' => 'switch',
+                'validationRule' => 'required|boolean',
+            ],
+        ];
+    }
 
     public function render()
     {

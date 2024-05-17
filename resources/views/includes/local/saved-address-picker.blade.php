@@ -24,7 +24,7 @@
 @else
     <p class="mt-2 ms-3 mb-0">
         <a
-            href="{{ site_url('account/login') }}"
-        >@lang('igniter::main.account.login.text_login')</a> @lang('igniter.orange::default.text_for_saved_addresses')
+            href="{{ page_url('account.login') }}"
+        >@lang('igniter.orange::default.text_login')</a> @lang('igniter.orange::default.text_for_saved_addresses')
     </p>
 @endauth

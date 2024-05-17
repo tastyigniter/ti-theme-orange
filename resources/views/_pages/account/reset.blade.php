@@ -1,8 +1,10 @@
 ---
-title: main::lang.account.reset.title
+title: igniter.orange::default.account_reset_title
 layout: default
 permalink: /forgot-password/:code?
 security: guest
+
+'[igniter-orange::reset-password]': []
 ---
 <div class="container">
     <div class="row">
@@ -10,7 +12,7 @@ security: guest
             <div class="card border">
                 <div class="card-body">
                     <h1 class="card-title h4 mb-4 font-weight-normal">
-                        @lang('main::lang.account.reset.text_heading')
+                        @lang('igniter.orange::default.account_reset_title')
                     </h1>
 
                     <livewire:igniter-orange::reset-password />

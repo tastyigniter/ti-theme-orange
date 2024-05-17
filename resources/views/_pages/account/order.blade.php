@@ -1,7 +1,12 @@
 ---
-title: main::lang.account.orders.title
+title: igniter.orange::default.account_order_title
 layout: default
 permalink: /account/order/:hash
+security: all
+
+'[igniter-orange::order-preview]': []
+'[igniter-orange::leave-review]':
+    type: order
 ---
 <div class="container">
     <div class="row py-4">

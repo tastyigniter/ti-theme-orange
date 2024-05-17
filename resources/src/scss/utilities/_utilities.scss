@@ -2,19 +2,24 @@ html {
   position: relative;
   min-height: 100%;
 }
+
 html, html a {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 .hide {
   display: none !important;
 }
+
 .border-none {
   border: 0 none;
 }
+
 .radius-none {
   border-radius: 0;
 }
+
 dl.no-spacing {
   margin-bottom: 0;
 
@@ -28,10 +33,12 @@ dl.no-spacing {
     margin-bottom: 0;
   }
 }
+
 .layout-scrollable {
   overflow-x: auto;
   display: block;
 }
+
 body::-webkit-scrollbar {
   width: 1em;
 }
@@ -45,4 +52,10 @@ body::-webkit-scrollbar-thumb {
   outline: 1px solid slategrey;
 }
 
-[x-cloak] { display: none !important; }
+[x-cloak] {
+  display: none !important;
+}
+
+.text-muted {
+  color: lighten($gray-600, 5%);
+}

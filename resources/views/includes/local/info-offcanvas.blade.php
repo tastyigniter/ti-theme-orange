@@ -6,7 +6,7 @@
     aria-hidden="true"
 >
     <div class="offcanvas-header">
-        <h3 class="offcanvas-title" id="localInfoCanvasLabel">@lang('main::lang.local.text_tab_info')</h3>
+        <h3 class="offcanvas-title" id="localInfoCanvasLabel">@lang('igniter.orange::default.text_local_tab_info')</h3>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">

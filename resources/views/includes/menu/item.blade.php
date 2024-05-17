@@ -47,13 +47,13 @@
         @endif
     </div>
     <div style="--bs-breadcrumb-divider: '·';">
-        <div class="breadcrumb mb-3">
+        <div class="breadcrumb">
             <div class="breadcrumb-item">
                 <span class="menu-price">
                     @if ($menuItemData->specialIsActive())
                         <s class="text-muted">{!! currency_format($menuItemData->priceBeforeSpecial) !!}</s>
                     @endif
-                    {!! $menuItemData->price() > 0 ? currency_format($menuItemData->price()) : lang('main::lang.text_free') !!}
+                    {!! $menuItemData->price() > 0 ? currency_format($menuItemData->price()) : lang('igniter::main.text_free') !!}
                 </span>
             </div>
             @if ($menuItemData->specialIsActive() && $menuItemData->specialDaysRemaining())

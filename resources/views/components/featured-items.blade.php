@@ -1,11 +1,11 @@
 <div>
-    @if (count($items))
+    @if (count($featuredItems))
         <div id="featured-menu-box" class="module-box py-5">
             <div class="container text-center">
                 <h2 class="mb-3">@lang($title)</h2>
 
                 <div class="row g-3">
-                    @foreach ($items as $featuredItem)
+                    @foreach ($featuredItems as $featuredItem)
                         <div class="col-sm-{{ round(12 / $itemsPerRow) }} mb-3 mb-sm-0">
                             <div class="card text-left rounded-5 h-100">
                                 @if ($showThumb)

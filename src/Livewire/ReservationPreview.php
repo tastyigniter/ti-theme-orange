@@ -2,6 +2,7 @@
 
 namespace Igniter\Orange\Livewire;
 
+use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Reservation\Classes\BookingManager;
 use Igniter\Reservation\Models\Reservation;
 use Igniter\User\Facades\Auth;
@@ -10,6 +11,8 @@ use Livewire\Component;
 
 class ReservationPreview extends Component
 {
+    use ConfigurableComponent;
+
     public string $hashParamName = 'hash';
 
     public string $hash;
@@ -22,6 +25,26 @@ class ReservationPreview extends Component
     protected $manager;
 
     protected ?Reservation $reservation = null;
+
+    public static function componentMeta(): array
+    {
+        return [
+            'code' => 'igniter-orange::reservation-preview',
+            'name' => 'igniter.orange::default.component_reservation_preview_title',
+            'description' => 'igniter.orange::default.component_reservation_preview_desc',
+        ];
+    }
+
+    public function defineProperties(): array
+    {
+        return [
+            'hashParamName' => [
+                'label' => 'Reservation Hash Parameter Name',
+                'type' => 'text',
+                'validationRule' => 'required|alpha',
+            ],
+        ];
+    }
 
     public function render()
     {

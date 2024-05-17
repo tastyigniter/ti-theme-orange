@@ -3,11 +3,11 @@
 @if (trim($favicon = $theme->favicon, '/'))
     <link href="{{ media_url($favicon) }}" rel="shortcut icon" type="image/ico">
 @elseif ($site_logo !== 'no_photo.png')
-        <link href="{{ media_thumb($site_logo, ['width' => 64, 'height' => 64]) }}" rel="shortcut icon" type="image/ico">
+    <link href="{{ media_thumb($site_logo, ['width' => 64, 'height' => 64]) }}" rel="shortcut icon" type="image/ico">
 @else
     {!! get_favicon() !!}
 @endif
-<title>{{ sprintf(lang('main::lang.site_title'), lang(get_title()), setting('site_name')) }}</title>
+<title>{{ lang(get_title()).lang('igniter.orange::default.title_separator').setting('site_name') }}</title>
 @if ($page->description)
     <meta name="description" content="{{ $page->description }}">
 @endif
@@ -22,7 +22,7 @@
     @googlefonts
 @endunless
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-@styles
+@themeStyles
 @if (!empty($theme->custom_css))
     <style>{{$theme->custom_css}}</style>
 @endif

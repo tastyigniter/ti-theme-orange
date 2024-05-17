@@ -2,20 +2,62 @@
 
 namespace Igniter\Orange\Livewire;
 
+use Igniter\Main\Traits\ConfigurableComponent;
+use Igniter\Main\Traits\UsesPage;
 use Igniter\Socialite\Classes\ProviderManager;
 use Livewire\Component;
 
 class Socialite extends Component
 {
-    public string $errorPage = 'account'.DIRECTORY_SEPARATOR.'login';
+    use ConfigurableComponent;
+    use UsesPage;
 
-    public string $successPage = 'account'.DIRECTORY_SEPARATOR.'account';
+    public string $errorPage = 'account.login';
 
-    public string $confirmEmailPage = 'account'.DIRECTORY_SEPARATOR.'socialite';
+    public string $successPage = 'account.account';
+
+    public string $confirmEmailPage = 'account.socialite';
 
     public bool $confirm = false;
 
     public array $links = [];
+
+    public static function componentMeta(): array
+    {
+        return [
+            'code' => 'igniter-orange::socialite',
+            'name' => 'igniter.orange::default.component_socialite_title',
+            'description' => 'igniter.orange::default.component_socialite_desc',
+        ];
+    }
+
+    public function defineProperties(): array
+    {
+        return [
+            'errorPage' => [
+                'label' => 'The error page',
+                'type' => 'select',
+                'options' => [static::class, 'getThemePageOptions'],
+                'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
+            ],
+            'successPage' => [
+                'label' => 'The success page',
+                'type' => 'select',
+                'options' => [static::class, 'getThemePageOptions'],
+                'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
+            ],
+            'confirm' => [
+                'label' => 'Display email confirmation form',
+                'type' => 'switch',
+            ],
+            'confirmEmailPage' => [
+                'label' => 'The confirm email page',
+                'type' => 'select',
+                'options' => [static::class, 'getThemePageOptions'],
+                'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
+            ],
+        ];
+    }
 
     public function render()
     {
