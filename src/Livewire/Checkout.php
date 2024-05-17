@@ -9,6 +9,8 @@ use Igniter\Cart\Models\Order;
 use Igniter\Flame\Exception\ApplicationException;
 use Igniter\Flame\Traits\EventEmitter;
 use Igniter\Local\Facades\Location;
+use Igniter\Main\Traits\ConfigurableComponent;
+use Igniter\Main\Traits\UsesPage;
 use Igniter\Orange\Livewire\Forms\CheckoutForm;
 use Igniter\System\Facades\Assets;
 use Igniter\System\Models\Country;
@@ -20,11 +22,14 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
+use Livewire\Component;
 use Livewire\Livewire;
 
-class Checkout extends \Livewire\Component
+class Checkout extends Component
 {
     use EventEmitter;
+    use ConfigurableComponent;
+    use UsesPage;
 
     public const STEP_DETAILS = 'details';
 
@@ -32,8 +37,8 @@ class Checkout extends \Livewire\Component
 
     public CheckoutForm $form;
 
-    /** Whether to use a multi step checkout */
-    public bool $isTwoStepCheckout = false;
+    /** Whether to use a two page checkout */
+    public bool $isTwoPageCheckout = false;
 
     /** Whether to display the address 2 form field */
     public bool $showAddress2Field = true;
@@ -59,17 +64,20 @@ class Checkout extends \Livewire\Component
     /** Whether to display the delivery comment form field */
     public bool $showDeliveryCommentField = true;
 
+    /** Whether the telephone field should be required */
+    public bool $telephoneIsRequired = true;
+
     /** The permalink slug for the agree checkout terms page */
     public string $agreeTermsSlug = 'terms-and-conditions';
 
     /** The checkout page */
-    public string $menusPage = 'local'.DIRECTORY_SEPARATOR.'menus';
+    public string $menusPage = 'local.menus';
 
     /** The checkout page */
-    public string $checkoutPage = 'checkout'.DIRECTORY_SEPARATOR.'checkout';
+    public string $checkoutPage = 'checkout.checkout';
 
     /** Page to redirect to when checkout is successful */
-    public string $successPage = 'checkout'.DIRECTORY_SEPARATOR.'success';
+    public string $successPage = 'checkout.success';
 
     #[Url(as: 'step')]
     public string $checkoutStep = 'details';
@@ -88,6 +96,96 @@ class Checkout extends \Livewire\Component
      * @var \Igniter\Cart\Models\Order
      */
     protected $order;
+
+    public static function componentMeta(): array
+    {
+        return [
+            'code' => 'igniter-orange::checkout',
+            'name' => 'igniter.orange::default.component_checkout_title',
+            'description' => 'igniter.orange::default.component_checkout_desc',
+        ];
+    }
+
+    public function defineProperties(): array
+    {
+        return [
+            'isTwoPageCheckout' => [
+                'label' => 'Whether to use a multi step checkout',
+                'type' => 'switch',
+                'validationRule' => 'required|boolean',
+            ],
+            'showAddress2Field' => [
+                'label' => 'Whether to display the address 2 checkout form field',
+                'type' => 'switch',
+                'validationRule' => 'required|boolean',
+            ],
+            'showCityField' => [
+                'label' => 'Whether to display the city checkout form field',
+                'type' => 'switch',
+                'validationRule' => 'required|boolean',
+            ],
+            'showStateField' => [
+                'label' => 'Whether to display the state checkout form field',
+                'type' => 'switch',
+                'validationRule' => 'required|boolean',
+            ],
+            'showPostcodeField' => [
+                'label' => 'Whether to display the postcode checkout form field',
+                'type' => 'switch',
+                'validationRule' => 'required|boolean',
+            ],
+            'showTelephoneField' => [
+                'label' => 'Whether to display the telephone checkout form field',
+                'type' => 'switch',
+                'validationRule' => 'required|boolean',
+            ],
+            'showCountryField' => [
+                'label' => 'Whether to display the country checkout form field',
+                'type' => 'switch',
+                'validationRule' => 'required|boolean',
+            ],
+            'showCommentField' => [
+                'label' => 'Whether to display the comment checkout form field',
+                'type' => 'switch',
+                'validationRule' => 'required|boolean',
+            ],
+            'showDeliveryCommentField' => [
+                'label' => 'Whether to display the delivery comment checkout form field',
+                'type' => 'switch',
+                'validationRule' => 'required|boolean',
+            ],
+            'telephoneIsRequired' => [
+                'label' => 'Whether the telephone field should be required',
+                'type' => 'switch',
+                'validationRule' => 'required|boolean',
+            ],
+            'agreeTermsSlug' => [
+                'label' => 'The permalink slug for the agree checkout terms page',
+                'type' => 'select',
+                'options' => [static::class, 'getStaticPageOptions'],
+                'comment' => 'If set, require customers to agree to terms before checkout',
+                'validationRule' => 'sometimes|alpha_dash',
+            ],
+            'menusPage' => [
+                'label' => 'Page to redirect to when checkout can not be performed',
+                'type' => 'select',
+                'options' => [static::class, 'getThemePageOptions'],
+                'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
+            ],
+            'checkoutPage' => [
+                'label' => 'Page to redirect to when checkout fails',
+                'type' => 'select',
+                'options' => [static::class, 'getThemePageOptions'],
+                'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
+            ],
+            'successPage' => [
+                'label' => 'Page to redirect to when checkout is successful',
+                'type' => 'select',
+                'options' => [static::class, 'getThemePageOptions'],
+                'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
+            ],
+        ];
+    }
 
     public function render()
     {
@@ -201,7 +299,7 @@ class Checkout extends \Livewire\Component
 
         $this->orderManager->saveOrder($order, $data);
 
-        if ($this->isTwoStepCheckout && $this->checkoutStep !== self::STEP_PAY) {
+        if ($this->isTwoPageCheckout && $this->checkoutStep !== self::STEP_PAY) {
             return redirect()->to(Livewire::originalUrl().'?step='.static::STEP_PAY);
         }
 
@@ -262,8 +360,6 @@ class Checkout extends \Livewire\Component
     protected function checkCheckoutSecurity()
     {
         try {
-            $this->fireSystemEvent('igniter.cart.beforeCheckCheckoutSecurity', [$this]);
-
             $this->cartManager->validateContents();
 
             $this->orderManager->validateCustomer(Auth::getUser());
@@ -280,6 +376,8 @@ class Checkout extends \Livewire\Component
             if ($this->cartManager->deliveryChargeIsUnavailable()) {
                 return true;
             }
+
+            Event::dispatch('igniter.orange.checkCheckoutSecurity', [$this]);
         } catch (Exception $ex) {
             flash()->warning($ex->getMessage())->now();
 
@@ -290,13 +388,14 @@ class Checkout extends \Livewire\Component
     protected function validateCheckout(Order $order)
     {
         $this->form->requiresAddress = $order->isDeliveryType();
+        $this->form->telephoneIsRequired = $this->telephoneIsRequired;
 
-        $this->form->withValidator(function ($validator) use ($order) {
-            $validator->after(function ($validator) use ($order) {
+        $this->form->withValidator(function($validator) use ($order) {
+            $validator->after(function($validator) use ($order) {
                 if ($order->isDeliveryType()) {
-                    rescue(function () {
+                    rescue(function() {
                         $this->orderManager->validateDeliveryAddress($this->form->toArray());
-                    }, function (\Exception $ex) use ($validator) {
+                    }, function(\Exception $ex) use ($validator) {
                         $validator->errors()->add('address_1', $ex->getMessage());
                     });
                 }
@@ -311,7 +410,7 @@ class Checkout extends \Livewire\Component
 
         $this->orderManager->applyCurrentPaymentFee($this->form->payment);
 
-        Event::fire('igniter.checkout.afterValidate', [$data, $order]);
+        Event::dispatch('igniter.orange.validateCheckout', [$data, $order]);
 
         return $data;
     }

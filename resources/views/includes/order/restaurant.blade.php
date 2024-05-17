@@ -14,8 +14,8 @@
             <dd>{{ $location->location_telephone }}</dd>
             <dd>
                 <a
-                    href="{{ page_url('local/menus', ['location' => $location->permalink_slug]) }}"
-                >@lang('main::lang.menu_menu')</a>
+                    href="{{ page_url('local.menus', ['location' => $location->permalink_slug]) }}"
+                >@lang('igniter.orange::default.menu_menu')</a>
             </dd>
         </dl>
     </div>

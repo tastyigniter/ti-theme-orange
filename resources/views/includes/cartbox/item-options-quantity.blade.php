@@ -42,7 +42,7 @@
         <label class="form-quantity-label ps-3 w-100">
             {{ $optionValue->name }}
             @if ($optionValue->price > 0 || !$hideZeroOptionPrices)
-                <span class="float-end fw-light">@lang('main::lang.text_plus')<span x-html="app.currencyFormat(optionQuantity < 1 ? optionPrice : optionQuantity*optionPrice)"></span></span>
+                <span class="float-end fw-light">@lang('igniter::main.text_plus')<span x-html="app.currencyFormat(optionQuantity < 1 ? optionPrice : optionQuantity*optionPrice)"></span></span>
             @endif
         </label>
     </div>

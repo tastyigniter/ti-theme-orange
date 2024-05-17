@@ -184,5 +184,6 @@
     "/resources/src/scss/vendor/animate.scss": "/resources/src/scss/vendor/animate.scss",
     "/resources/src/scss/vendor/sweetalert2.scss": "/resources/src/scss/vendor/sweetalert2.scss",
     "/resources/src/scss/vendor/intlTelInput.scss": "/resources/src/scss/vendor/intlTelInput.scss",
-    "/resources/src/scss/vendor/photoswipe.scss": "/resources/src/scss/vendor/photoswipe.scss"
+    "/resources/src/scss/vendor/photoswipe.scss": "/resources/src/scss/vendor/photoswipe.scss",
+    "/resources/src/scss/vendor/flatpickr.scss": "/resources/src/scss/vendor/flatpickr.scss"
 }

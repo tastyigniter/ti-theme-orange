@@ -4,24 +4,56 @@ namespace Igniter\Orange\View\Components;
 
 use Igniter\Cart\Models\Category;
 use Igniter\Local\Facades\Location;
+use Igniter\Main\Traits\ConfigurableComponent;
+use Igniter\Main\Traits\UsesPage;
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 
-class CategoriesList extends Component
+class CategoryList extends Component
 {
+    use ConfigurableComponent;
+    use UsesPage;
+
     protected static ?Collection $categoriesCache = null;
 
     protected static ?Category $selectedCategoryCache = null;
 
     public function __construct(
-        public string $menusPage = 'local'.DIRECTORY_SEPARATOR.'menus',
+        public string $menusPage = 'local.menus',
         public bool $hideEmptyCategory = false
-    ) {
+    )
+    {
+    }
+
+    public static function componentMeta(): array
+    {
+        return [
+            'code' => 'igniter-orange::category-list',
+            'name' => 'igniter.orange::default.component_category_list_title',
+            'description' => 'igniter.orange::default.component_category_list_desc',
+        ];
+    }
+
+    public function defineProperties(): array
+    {
+        return [
+            'menusPage' => [
+                'label' => 'lang:igniter.local::default.menus.text_menus_page',
+                'type' => 'select',
+                'options' => [static::class, 'getThemePageOptions'],
+                'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
+            ],
+            'hideEmptyCategory' => [
+                'label' => 'Hide categories with no items from the list',
+                'type' => 'switch',
+                'validationRule' => 'required|boolean',
+            ],
+        ];
     }
 
     public function render()
     {
-        return view('igniter-orange::components.categories-list', [
+        return view('igniter-orange::components.category-list', [
             'categories' => $this->loadCategories(),
             'selectedCategory' => $this->findSelectedCategory(),
         ]);

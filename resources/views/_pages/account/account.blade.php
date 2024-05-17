@@ -1,8 +1,11 @@
 ---
-title: main::lang.account.title
+title: igniter.orange::default.account_title
 permalink: /account
 layout: default
 security: customer
+
+'[igniter-orange::account-dashboard]': []
+'[igniter-orange::account-settings]': []
 ---
 <div class="container">
     <div class="row py-5">

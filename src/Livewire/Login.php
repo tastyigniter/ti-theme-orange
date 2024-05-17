@@ -2,19 +2,43 @@
 
 namespace Igniter\Orange\Livewire;
 
+use Igniter\Main\Traits\ConfigurableComponent;
+use Igniter\Main\Traits\UsesPage;
 use Igniter\Orange\Livewire\Forms\LoginForm;
 use Igniter\User\Actions\LoginUser;
 use Igniter\User\Facades\Auth;
 
 class Login extends \Livewire\Component
 {
-    use \Igniter\Main\Traits\UsesPage;
+    use ConfigurableComponent;
+    use UsesPage;
 
     public LoginForm $form;
 
     public bool $registrationAllowed = true;
 
-    public string $redirectPage = 'account'.DIRECTORY_SEPARATOR.'account';
+    public string $redirectPage = 'account.account';
+
+    public static function componentMeta(): array
+    {
+        return [
+            'code' => 'igniter-orange::login',
+            'name' => 'igniter.orange::default.component_login_title',
+            'description' => 'igniter.orange::default.component_login_desc',
+        ];
+    }
+
+    public function defineProperties()
+    {
+        return [
+            'redirectPage' => [
+                'label' => 'Redirect Page',
+                'type' => 'select',
+                'options' => [static::class, 'getThemePageOptions'],
+                'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
+            ],
+        ];
+    }
 
     public function render()
     {

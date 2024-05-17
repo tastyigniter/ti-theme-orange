@@ -13,9 +13,7 @@ trait WithReviews
 
     public int $itemPerPage = 20;
 
-    public string $sortOrder = 'menu_priority asc';
-
-    public string $menusPage = 'local'.DIRECTORY_SEPARATOR.'menus';
+    public string $sortOrder = 'created_at desc';
 
     public function mountListReviews()
     {
@@ -37,5 +35,12 @@ trait WithReviews
                 'sort' => $this->sortOrder,
                 'location' => $location->getKey(),
             ]);
+    }
+
+    public static function getSortOrderOptionsWithReviews(): array
+    {
+        return collect(ReviewModel::make()->queryModifierGetSorts())->mapWithKeys(function ($value, $key) {
+            return [$value => $value];
+        })->all();
     }
 }

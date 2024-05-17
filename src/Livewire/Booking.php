@@ -5,16 +5,23 @@ namespace Igniter\Orange\Livewire;
 use Carbon\Carbon;
 use Igniter\Flame\Support\Facades\File;
 use Igniter\Local\Facades\Location;
+use Igniter\Main\Traits\ConfigurableComponent;
+use Igniter\Main\Traits\UsesPage;
 use Igniter\Orange\Livewire\Forms\BookingForm;
 use Igniter\Reservation\Classes\BookingManager;
 use Igniter\System\Facades\Assets;
 use Igniter\User\Facades\Auth;
 use Illuminate\Support\Collection;
+use Livewire\Attributes\Computed;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 
 class Booking extends Component
 {
+    use ConfigurableComponent;
+    use UsesPage;
+
     public const STEP_PICKER = 'picker';
 
     public const STEP_TIMESLOT = 'timeslot';
@@ -22,11 +29,6 @@ class Booking extends Component
     public const STEP_BOOKING = 'booking';
 
     public BookingForm $form;
-
-    public bool $isSlotUnavailable = false;
-
-    #[Url(as: 'step')]
-    public string $pickerStep = 'start';
 
     /** Enable to display a calendar view for date selection */
     public bool $useCalendarView = true;
@@ -45,10 +47,13 @@ class Booking extends Component
 
     public int $noOfSlots = 6;
 
+    /** Page to redirect to when checkout is successful */
+    public string $successPage = 'reservation.success';
+
     public ?string $calendarLocale = null;
 
-    /** Page to redirect to when checkout is successful */
-    public string $successPage = 'reservation'.DIRECTORY_SEPARATOR.'success';
+    #[Url(as: 'step')]
+    public string $pickerStep = 'start';
 
     #[Url]
     public ?string $date = null;
@@ -67,6 +72,57 @@ class Booking extends Component
      * @var \Igniter\Reservation\Classes\BookingManager
      */
     protected $manager;
+
+    public static function componentMeta(): array
+    {
+        return [
+            'code' => 'igniter-orange::booking',
+            'name' => 'igniter.orange::default.component_booking_title',
+            'description' => 'igniter.orange::default.component_booking_desc',
+        ];
+    }
+
+    public function defineProperties(): array
+    {
+        return [
+            'useCalendarView' => [
+                'label' => 'Enable to display a calendar view for date selection',
+                'type' => 'switch',
+                'validationRule' => 'required|boolean',
+            ],
+            'weekStartOn' => [
+                'label' => 'Day of the week start the calendar. 0 (Sunday) to 6 (Saturday).',
+                'type' => 'number',
+                'validationRule' => 'required|integer|between:0,6',
+            ],
+            'minGuestSize' => [
+                'label' => 'The minimum guest size',
+                'type' => 'number',
+                'validationRule' => 'required|integer',
+            ],
+            'maxGuestSize' => [
+                'label' => 'The maximum guest size',
+                'type' => 'number',
+                'validationRule' => 'required|integer',
+            ],
+            'noOfSlots' => [
+                'label' => 'Number of slots to display in the reduced timeslots view',
+                'type' => 'number',
+                'validationRule' => 'required|integer',
+            ],
+            'telephoneIsRequired' => [
+                'label' => 'Whether the telephone field should be required',
+                'type' => 'switch',
+                'validationRule' => 'required|boolean',
+            ],
+            'successPage' => [
+                'label' => 'Page to redirect to when checkout is successful',
+                'type' => 'select',
+                'options' => [static::class, 'getThemePageOptions'],
+                'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
+            ],
+        ];
+    }
 
     public function render()
     {
@@ -149,15 +205,17 @@ class Booking extends Component
         return $this->redirect(page_url($this->successPage, ['hash' => $reservation->hash]));
     }
 
+    #[Computed, Locked]
     public function timeslots(): Collection
     {
         return $this->manager->makeTimeSlots(make_carbon($this->date))
-            ->map(fn ($dateTime) => make_carbon($dateTime));
+            ->map(fn($dateTime) => make_carbon($dateTime));
     }
 
+    #[Computed, Locked]
     public function reducedTimeslots()
     {
-        $timeslots = $this->timeslots()->values();
+        $timeslots = $this->timeslots->values();
 
         $selectedIndex = $timeslots->search(function (Carbon $slot) {
             return $slot->isSameAs('Y-m-d H:i', make_carbon($this->date.' '.$this->time));
@@ -177,11 +235,13 @@ class Booking extends Component
             });
     }
 
+    #[Computed, Locked]
     public function disabledDaysOfWeek()
     {
         return [];
     }
 
+    #[Computed, Locked]
     public function disabledDates()
     {
         $result = [];
@@ -197,6 +257,7 @@ class Booking extends Component
         return $result;
     }
 
+    #[Computed, Locked]
     public function dates()
     {
         $start = $this->startDate->copy();

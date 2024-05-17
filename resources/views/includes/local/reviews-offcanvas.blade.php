@@ -17,7 +17,7 @@
 
             @if($loop->last)
                 <a
-                    href="{{ restaurant_url('local/reviews') }}"
+                    href="{{ restaurant_url($reviewsPage) }}"
                     class="btn btn-link w-100"
                 >@lang('igniter.orange::default.button_more_reviews')</a>
             @endif

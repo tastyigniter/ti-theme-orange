@@ -6,7 +6,6 @@ use Igniter\Pages\Classes\MenuManager;
 use Igniter\Pages\Models\Menu;
 use IgniterLabs\MultiSite\Environment;
 use Illuminate\View\Component;
-use Laravel\Pennant\Feature;
 
 class Nav extends Component
 {
@@ -29,7 +28,7 @@ class Nav extends Component
     protected function menuItems()
     {
         $themeCode = controller()->getTheme()->getName();
-        if (class_exists(Environment::class) && Feature::active('multisite::global-static-pages-enabled')) {
+        if (class_exists(Environment::class) && \Laravel\Pennant\Feature::active('multisite::global-static-pages-enabled')) {
             $themeCode = controller()->getTheme()->getParentName();
         }
 

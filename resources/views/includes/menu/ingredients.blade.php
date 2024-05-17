@@ -1,4 +1,4 @@
-<div class="d-flex align-items-center ingredients">
+<div class="d-flex align-items-center ingredients mt-3">
     @foreach ($ingredients as $ingredient)
         <span
             @class([

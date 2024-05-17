@@ -1,10 +1,15 @@
 ---
-title: 'main::lang.home.title'
-permalink: /
+title: igniter.orange::default.home_title
 description: ''
+permalink: /
 layout: default
+
+'[igniter-orange::slider]':
+    code: home-slider
+'[igniter-orange::local-search]': []
+'[igniter-orange::featured-items]': []
 ---
-<x-igniter-orange::slider code="home-slider"/>
+<x-igniter-orange::slider />
 
 <div class="border-bottom">
     <div class="container">

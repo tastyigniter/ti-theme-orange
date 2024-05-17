@@ -4,13 +4,25 @@ namespace Igniter\Orange\Livewire;
 
 use Igniter\Cart\Facades\Cart;
 use Igniter\Flame\Exception\ApplicationException;
+use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Livewire\Forms\SettingsForm;
 use Igniter\User\Facades\Auth;
 use Livewire\Component;
 
 class AccountSettings extends Component
 {
+    use ConfigurableComponent;
+
     public SettingsForm $form;
+
+    public static function componentMeta(): array
+    {
+        return [
+            'code' => 'igniter-orange::account-settings',
+            'name' => 'igniter.orange::default.component_account_settings_title',
+            'description' => 'igniter.orange::default.component_account_settings_desc',
+        ];
+    }
 
     public function render()
     {

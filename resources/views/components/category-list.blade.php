@@ -3,7 +3,7 @@
         <li class="nav-item">
             <a
                 @class(['nav-link rounded py-1 text-nowrap', 'active fw-bold' => !$selectedCategory])
-                href="{{ page_url('local/menus', ['category' => null]) }}"
+                href="{{ page_url('local.menus', ['category' => null]) }}"
                 wire:navigate
             >@lang('igniter.local::default.text_all_categories')</a>
         </li>
@@ -14,7 +14,7 @@
             <li class="nav-item">
                 <a
                     @class(['nav-link rounded py-1', 'active fw-bold' => ($selectedCategory && $category->permalink_slug == $selectedCategory->permalink_slug)])
-                    href="{{ page_url('local/menus', ['category' => $category->permalink_slug]) }}"
+                    href="{{ page_url($menusPage, ['category' => $category->permalink_slug]) }}"
                     wire:navigate
                 >{{ $category->name }}</a>
             </li>

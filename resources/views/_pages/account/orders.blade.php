@@ -1,8 +1,10 @@
 ---
-title: main::lang.account.orders.title
+title: igniter.orange::default.account_orders_title
 layout: default
 permalink: /account/orders
 security: customer
+
+'[igniter-orange::order-list]': []
 ---
 <div class="container">
     <div class="row py-5">
@@ -13,7 +15,7 @@ security: customer
         <div class="col-sm-9">
             <div class="card">
                 <div class="card-body">
-                    <x-igniter-orange::orders-list/>
+                    <x-igniter-orange::order-list/>
                 </div>
             </div>
         </div>

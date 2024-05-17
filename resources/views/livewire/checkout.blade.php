@@ -5,7 +5,7 @@
         <div class="my-3">
             {!! $customer
                 ? sprintf(lang('igniter.orange::default.text_logged_out'), e($customer->first_name), url('logout'))
-                : sprintf(lang('igniter.orange::default.text_logged_in'), page_url('account/login'))
+                : sprintf(lang('igniter.orange::default.text_logged_in'), page_url('account.login'))
             !!}
         </div>
     </div>
@@ -20,8 +20,8 @@
                 data-choose-payment-event="checkout::choose-payment"
                 data-delete-payment-profile-event="checkout::delete-payment-profile"
             >
-                @includeWhen($isTwoStepCheckout, 'igniter-orange::includes.checkout.two-step-form')
-                @includeUnless($isTwoStepCheckout, 'igniter-orange::includes.checkout.one-step-form')
+                @includeWhen($isTwoPageCheckout, 'igniter-orange::includes.checkout.two-step-form')
+                @includeUnless($isTwoPageCheckout, 'igniter-orange::includes.checkout.one-step-form')
             </div>
         </div>
 

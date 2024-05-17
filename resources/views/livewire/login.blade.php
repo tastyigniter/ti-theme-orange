@@ -1,7 +1,7 @@
 <div class="card border">
     <div class="card-body">
         <h1 class="card-title h4 mb-4 font-weight-normal">
-            @lang('main::lang.account.login.text_login')
+            @lang('igniter.orange::default.text_login')
         </h1>
         <x-igniter-orange::forms.form id="login-form" wire:submit="onLogin">
             <div class="form-group">
@@ -49,8 +49,8 @@
                     </div>
                     <a
                         class="text-link text-nowrap"
-                        href="{{ site_url('account/reset') }}"
-                    >@lang('main::lang.account.login.text_forgot')</a>
+                        href="{{ page_url('account.reset') }}"
+                    >@lang('igniter.orange::default.text_forgot')</a>
                 </div>
                 <x-igniter-orange::forms.error field="form.remember" class="text-danger"/>
             </div>
@@ -76,8 +76,8 @@
                 <a
                     wire:navigate
                     class=""
-                    href="{{ site_url('account/register') }}"
-                >@lang('main::lang.account.login.button_register')</a>
+                    href="{{ page_url('account.register') }}"
+                >@lang('igniter.orange::default.button_register')</a>
             @endif
         </div>
     </div>

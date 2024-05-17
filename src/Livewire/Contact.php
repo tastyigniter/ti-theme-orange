@@ -4,11 +4,14 @@ namespace Igniter\Orange\Livewire;
 
 use Igniter\Frontend\Actions\SendContactMail;
 use Igniter\Local\Models\Location;
+use Igniter\Main\Traits\ConfigurableComponent;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class Contact extends Component
 {
+    use ConfigurableComponent;
+
     #[Validate('required|max:128', as: 'igniter.orange::default.contact.text_select_subject')]
     public $subject;
 
@@ -31,6 +34,15 @@ class Contact extends Component
     ];
 
     public ?string $message = null;
+
+    public static function componentMeta(): array
+    {
+        return [
+            'code' => 'igniter-orange::contact',
+            'name' => 'igniter.orange::default.component_contact_title',
+            'description' => 'igniter.orange::default.component_contact_desc',
+        ];
+    }
 
     public function render()
     {

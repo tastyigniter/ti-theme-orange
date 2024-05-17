@@ -6,20 +6,20 @@ use Igniter\Cart\Classes\CartManager;
 use Igniter\Cart\Models\CartSettings;
 use Igniter\Flame\Exception\ApplicationException;
 use Igniter\Local\Facades\Location;
+use Igniter\Main\Traits\ConfigurableComponent;
+use Igniter\Main\Traits\UsesPage;
 use Igniter\System\Facades\Assets;
 use Illuminate\Support\Facades\Redirect;
 use Livewire\Attributes\On;
+use Livewire\Component;
 
-class CartBox extends \Livewire\Component
+class CartBox extends Component
 {
-    /** Whether this component is loaded on the checkout page */
-    public bool $pageIsCheckout = false;
-
-    /** Whether to show the proceed to checkout button */
-    public bool $showCheckoutButton = true;
+    use ConfigurableComponent;
+    use UsesPage;
 
     /** Checkout Page */
-    public string $checkoutPage = 'checkout'.DIRECTORY_SEPARATOR.'checkout';
+    public string $checkoutPage = 'checkout.checkout';
 
     public int|float $tipAmount = 0;
 
@@ -32,9 +32,32 @@ class CartBox extends \Livewire\Component
      */
     protected $cartManager;
 
+    public static function componentMeta(): array
+    {
+        return [
+            'code' => 'igniter-orange::cart-box',
+            'name' => 'igniter.orange::default.component_cartbox_title',
+            'description' => 'igniter.orange::default.component_cartbox_desc',
+        ];
+    }
+
+    public function defineProperties(): array
+    {
+        return [
+            'checkoutPage' => [
+                'label' => 'Checkout Page',
+                'type' => 'select',
+                'options' => [static::class, 'getThemePageOptions'],
+                'default' => 'checkout.checkout',
+                'validationRule' => 'required|regex:/^[a-z0-9\-_\/]+$/i',
+            ],
+        ];
+    }
+
     public function render()
     {
         return view('igniter-orange::livewire.cart-box', [
+            'previewMode' => false,
             'location' => Location::getFacadeRoot(),
             'cart' => $this->cartManager->getCart(),
         ]);
@@ -141,19 +164,11 @@ class CartBox extends \Livewire\Component
             return lang('igniter.cart::default.text_is_closed');
         }
 
-        if (!$this->pageIsCheckout && $this->cartManager->getCart()->count()) {
+        if ($this->cartManager->getCart()->count()) {
             return lang('igniter.cart::default.button_order').' · '.currency_format($this->cartManager->getCart()->total());
         }
 
-        if (!$this->pageIsCheckout) {
-            return lang('igniter.cart::default.button_order');
-        }
-
-        if ($checkoutComponent && !$checkoutComponent->canConfirmCheckout()) {
-            return lang('igniter.cart::default.button_payment');
-        }
-
-        return lang('igniter.cart::default.button_confirm');
+        return lang('igniter.cart::default.button_order');
     }
 
     public function getLocationId()

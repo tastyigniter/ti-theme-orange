@@ -6,7 +6,7 @@
 </p>
 
 <x-igniter-orange::forms.form id="picker-form">
-    @forelse($this->reducedTimeslots() as $key => $slot)
+    @forelse($this->reducedTimeslots as $key => $slot)
         <button
             type="button"
             wire:click="onSelectTime('{{ $slot->dateTime->format('H:i') }}')"

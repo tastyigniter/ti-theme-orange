@@ -17,7 +17,7 @@
         >
             {!! $optionValue->name !!}
             @if ($optionValue->price > 0 || !$hideZeroOptionPrices)
-                <span class="float-end fw-light">@lang('main::lang.text_plus'){{ currency_format($optionValue->price) }}</span>
+                <span class="float-end fw-light">@lang('igniter::main.text_plus'){{ currency_format($optionValue->price) }}</span>
             @endif
         </label>
     </div>

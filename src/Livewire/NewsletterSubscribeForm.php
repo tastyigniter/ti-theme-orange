@@ -4,11 +4,14 @@ namespace Igniter\Orange\Livewire;
 
 use Exception;
 use Igniter\Frontend\Models\Subscriber;
+use Igniter\Main\Traits\ConfigurableComponent;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Validate;
 
 class NewsletterSubscribeForm extends \Livewire\Component
 {
+    use ConfigurableComponent;
+
     /** MailChimp List/Audience ID - Overrides the admin settings value */
     public ?string $listId = null;
 
@@ -16,6 +19,26 @@ class NewsletterSubscribeForm extends \Livewire\Component
     public ?string $email = null;
 
     public ?string $message = null;
+
+    public static function componentMeta(): array
+    {
+        return [
+            'code' => 'igniter-orange::newsletter-subscribe-form',
+            'name' => 'igniter.orange::default.component_newsletter_subscribe_form_title',
+            'description' => 'igniter.orange::default.component_newsletter_subscribe_form_desc',
+        ];
+    }
+
+    public function defineProperties()
+    {
+        return [
+            'listId' => [
+                'label' => 'MailChimp List ID',
+                'type' => 'text',
+                'validationRule' => 'nullable|string|max:255',
+            ],
+        ];
+    }
 
     public function render()
     {

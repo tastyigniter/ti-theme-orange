@@ -3,25 +3,38 @@
 namespace Igniter\Orange\View\Components;
 
 use Igniter\Cart\Facades\Cart;
+use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\User\Facades\Auth;
 use Illuminate\View\Component;
 
 class AccountDashboard extends Component
 {
+    use ConfigurableComponent;
+
     public bool $hasDefaultAddress;
 
     public ?int $defaultAddressId;
 
-    public string $formattedAddress;
+    public string $formattedAddress = '';
 
-    public function __construct(
-        public string $customerName = '',
-    ) {
+    public string $customerName = '';
+
+    public function __construct()
+    {
         $customer = Auth::getUser();
         $this->customerName = $customer?->full_name ?? '';
         $this->hasDefaultAddress = !is_null($customer?->address);
         $this->defaultAddressId = $customer?->address?->getKey();
         $this->formattedAddress = $this->hasDefaultAddress ? format_address($customer?->address) : '';
+    }
+
+    public static function componentMeta(): array
+    {
+        return [
+            'code' => 'igniter-orange::account-dashboard',
+            'name' => 'igniter.orange::default.component_account_dashboard_title',
+            'description' => 'igniter.orange::default.component_account_dashboard_desc',
+        ];
     }
 
     public function cartCount()
