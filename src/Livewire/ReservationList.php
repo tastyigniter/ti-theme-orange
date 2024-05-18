@@ -48,7 +48,7 @@ class ReservationList extends \Livewire\Component
     public static function getPropertyOptions(Form $form, FormField $field): array|Collection
     {
         return match ($field->getConfig('property')) {
-            'sortOrder' => collect(Reservation::make()->queryModifierGetSorts())->mapWithKeys(function($value, $key) {
+            'sortOrder' => collect(Reservation::make()->queryModifierGetSorts())->mapWithKeys(function ($value, $key) {
                 return [$value => $value];
             })->all(),
             default => [],

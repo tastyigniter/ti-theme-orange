@@ -21,8 +21,7 @@ class CategoryList extends Component
     public function __construct(
         public string $menusPage = 'local.menus',
         public bool $hideEmptyCategory = false
-    )
-    {
+    ) {
     }
 
     public static function componentMeta(): array

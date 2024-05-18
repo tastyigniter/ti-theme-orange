@@ -21,8 +21,8 @@ use Livewire\WithPagination;
 class LocationList extends \Livewire\Component
 {
     use ConfigurableComponent;
-    use WithPagination;
     use UsesPage;
+    use WithPagination;
 
     /** Distance unit to use, mi or km */
     public string $distanceUnit = 'mi';
@@ -183,8 +183,8 @@ class LocationList extends \Livewire\Component
             : array_get($this->sorters, $this->sortBy.'.condition');
 
         $query = LocationModel::withCount([
-            'reviews' => fn($q) => $q->isApproved(),
-        ])->with(['media', 'delivery_areas', 'settings', 'working_hours', 'reviews' => fn($q) => $q->isApproved()]);
+            'reviews' => fn ($q) => $q->isApproved(),
+        ])->with(['media', 'delivery_areas', 'settings', 'working_hours', 'reviews' => fn ($q) => $q->isApproved()]);
 
         $filterByDeliveryAreas = $this->orderType == 'delivery';
 
@@ -194,8 +194,8 @@ class LocationList extends \Livewire\Component
         $coordinates = Location::userPosition()->getCoordinates();
 
         $collection = $results->getCollection()
-            ->filter(fn($location) => $this->filterQueryResult($location, $coordinates, $filterByDeliveryAreas))
-            ->map(fn($location) => new LocationData($location));
+            ->filter(fn ($location) => $this->filterQueryResult($location, $coordinates, $filterByDeliveryAreas))
+            ->map(fn ($location) => new LocationData($location));
 
         return $results->setCollection($collection);
     }

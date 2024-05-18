@@ -8,7 +8,6 @@ use Igniter\Cart\Models\Menu as MenuModel;
 use Igniter\Local\Facades\Location;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Data\MenuItemData;
-use Igniter\User\Facades\AdminAuth;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Url;
 use Livewire\WithPagination;
@@ -137,7 +136,7 @@ class MenuItemList extends \Livewire\Component
     public static function getPropertyOptions(Form $form, FormField $field): array|Collection
     {
         return match ($field->getConfig('property')) {
-            'sortOrder' => collect(MenuModel::make()->queryModifierGetSorts())->mapWithKeys(function ($value, $key) {
+            'sortOrder' => collect(MenuModel::make()->queryModifierGetSorts())->mapWithKeys(function($value, $key) {
                 return [$value => $value];
             })->all(),
             default => [],
@@ -154,15 +153,6 @@ class MenuItemList extends \Livewire\Component
 
     public function mount()
     {
-        if (request()->route()->parameter('location') !== Location::current()->permalink_slug) {
-            return redirect()->to(page_url('home'));
-        }
-
-        if ((!Location::current()?->isEnabled() && !AdminAuth::getUser()?->hasPermission('Admin.Locations'))) {
-            flash()->error(lang('igniter.local::default.alert_location_required'));
-            return redirect()->to(page_url('home'));
-        }
-
         $this->selectedCategorySlug = request()->route()->parameter('category', '');
     }
 
@@ -184,7 +174,7 @@ class MenuItemList extends \Livewire\Component
 
         $list = MenuModel::with([
             'mealtimes', 'menu_options',
-            'categories' => function ($query) use ($location) {
+            'categories' => function($query) use ($location) {
                 $query->whereHasOrDoesntHaveLocation($location);
             }, 'categories.media',
             'special', 'media', 'ingredients.media',
@@ -228,7 +218,7 @@ class MenuItemList extends \Livewire\Component
         }
 
         $collection = collect($groupedList)
-            ->sortBy(function ($menuItems, $categoryId) {
+            ->sortBy(function($menuItems, $categoryId) {
                 if (isset($this->menuListCategories[$categoryId])) {
                     return $this->menuListCategories[$categoryId]->priority;
                 }
