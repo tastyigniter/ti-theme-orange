@@ -17,8 +17,7 @@ class OrderList extends Component
         public int $itemsPerPage = 20,
         public string $sortOrder = 'created_at desc',
         public string $orderPage = 'account.order',
-    )
-    {
+    ) {
     }
 
     public static function componentMeta(): array

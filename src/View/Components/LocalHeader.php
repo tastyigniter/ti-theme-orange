@@ -24,8 +24,7 @@ class LocalHeader extends Component
         public int $reviewPerPage = 10,
         public string $reviewSortOrder = 'created_at desc',
         public string $reviewsPage = 'local.reviews',
-    )
-    {
+    ) {
         $this->itemPerPage = $this->reviewPerPage;
         $this->sortOrder = $this->reviewSortOrder;
     }
@@ -85,7 +84,7 @@ class LocalHeader extends Component
         Assets::addJs('igniter.local::/js/starrating.js', 'starrating-js');
 
         Location::current()->loadCount([
-            'reviews' => fn($q) => $q->isApproved(),
+            'reviews' => fn ($q) => $q->isApproved(),
         ]);
 
         return view('igniter-orange::components.local-header', [

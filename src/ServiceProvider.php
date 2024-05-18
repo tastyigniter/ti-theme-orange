@@ -144,7 +144,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
                     'options' => [
                         'all' => 'igniter.orange::default.text_all',
                         'customer' => 'igniter.orange::default.text_customer',
-                        'guest' => 'igniter.orange::default.text_guest'
+                        'guest' => 'igniter.orange::default.text_guest',
                     ],
                     'comment' => 'igniter.orange::default.help_security',
                 ],
