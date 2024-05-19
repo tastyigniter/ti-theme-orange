@@ -39,7 +39,7 @@ trait WithReviews
 
     public static function getSortOrderOptionsWithReviews(): array
     {
-        return collect(ReviewModel::make()->queryModifierGetSorts())->mapWithKeys(function ($value, $key) {
+        return collect(ReviewModel::make()->queryModifierGetSorts())->mapWithKeys(function($value, $key) {
             return [$value => $value];
         })->all();
     }

@@ -11,7 +11,7 @@ class FlashMessage extends Component
 
     public function mount()
     {
-        $this->messages = flash()->all()->map(function (Message $message) {
+        $this->messages = flash()->all()->map(function(Message $message) {
             return (object)$message->toArray();
         })->all();
     }

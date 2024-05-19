@@ -183,7 +183,7 @@ trait SearchesNearby
     {
         $nearByLocation = Location::searchByCoordinates(
             $userLocation->getCoordinates()
-        )->first(function ($location) use ($userLocation) {
+        )->first(function($location) use ($userLocation) {
             if ($area = $location->searchDeliveryArea($userLocation->getCoordinates())) {
                 Location::updateNearbyArea($area);
 

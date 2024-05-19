@@ -100,7 +100,7 @@ class LocationList extends \Livewire\Component
     public static function getPropertyOptions(Form $form, FormField $field): array|Collection
     {
         return match ($field->getConfig('property')) {
-            'sortBy' => collect((new static)->sorters())->mapWithKeys(function ($sorter, $key) {
+            'sortBy' => collect((new static)->sorters())->mapWithKeys(function($sorter, $key) {
                 return [$key => array_get($sorter, 'name')];
             })->all(),
             'orderType' => (new static)->orderTypes(),
@@ -183,8 +183,8 @@ class LocationList extends \Livewire\Component
             : array_get($this->sorters, $this->sortBy.'.condition');
 
         $query = LocationModel::withCount([
-            'reviews' => fn ($q) => $q->isApproved(),
-        ])->with(['media', 'delivery_areas', 'settings', 'working_hours', 'reviews' => fn ($q) => $q->isApproved()]);
+            'reviews' => fn($q) => $q->isApproved(),
+        ])->with(['media', 'delivery_areas', 'settings', 'working_hours', 'reviews' => fn($q) => $q->isApproved()]);
 
         $filterByDeliveryAreas = $this->orderType == 'delivery';
 
@@ -194,8 +194,8 @@ class LocationList extends \Livewire\Component
         $coordinates = Location::userPosition()->getCoordinates();
 
         $collection = $results->getCollection()
-            ->filter(fn ($location) => $this->filterQueryResult($location, $coordinates, $filterByDeliveryAreas))
-            ->map(fn ($location) => new LocationData($location));
+            ->filter(fn($location) => $this->filterQueryResult($location, $coordinates, $filterByDeliveryAreas))
+            ->map(fn($location) => new LocationData($location));
 
         return $results->setCollection($collection);
     }
