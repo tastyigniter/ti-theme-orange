@@ -390,12 +390,12 @@ class Checkout extends Component
         $this->form->requiresAddress = $order->isDeliveryType();
         $this->form->telephoneIsRequired = $this->telephoneIsRequired;
 
-        $this->form->withValidator(function ($validator) use ($order) {
-            $validator->after(function ($validator) use ($order) {
+        $this->form->withValidator(function($validator) use ($order) {
+            $validator->after(function($validator) use ($order) {
                 if ($order->isDeliveryType()) {
-                    rescue(function () {
+                    rescue(function() {
                         $this->orderManager->validateDeliveryAddress($this->form->toArray());
-                    }, function (\Exception $ex) use ($validator) {
+                    }, function(\Exception $ex) use ($validator) {
                         $validator->errors()->add('address_1', $ex->getMessage());
                     });
                 }

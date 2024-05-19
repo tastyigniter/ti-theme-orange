@@ -141,8 +141,8 @@ class CartItemModal extends ModalComponent
     {
         $value = 0;
         if ($this->cartItem && $this->cartItem->hasOptionValue($menuOptionValueId)) {
-            $this->cartItem->options->search(function ($option) use ($menuOptionValueId, &$value) {
-                $option->values->each(function ($opt) use ($menuOptionValueId, &$value) {
+            $this->cartItem->options->search(function($option) use ($menuOptionValueId, &$value) {
+                $option->values->each(function($opt) use ($menuOptionValueId, &$value) {
                     if ($opt->id == $menuOptionValueId) {
                         $value = $opt->qty;
                     }

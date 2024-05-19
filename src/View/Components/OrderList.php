@@ -50,7 +50,7 @@ class OrderList extends Component
 
     public static function getSortOrderOptions()
     {
-        return collect(Order::make()->queryModifierGetSorts())->mapWithKeys(function ($value, $key) {
+        return collect(Order::make()->queryModifierGetSorts())->mapWithKeys(function($value, $key) {
             return [$value => $value];
         })->all();
     }

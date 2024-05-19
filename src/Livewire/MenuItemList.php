@@ -136,7 +136,7 @@ class MenuItemList extends \Livewire\Component
     public static function getPropertyOptions(Form $form, FormField $field): array|Collection
     {
         return match ($field->getConfig('property')) {
-            'sortOrder' => collect(MenuModel::make()->queryModifierGetSorts())->mapWithKeys(function ($value, $key) {
+            'sortOrder' => collect(MenuModel::make()->queryModifierGetSorts())->mapWithKeys(function($value, $key) {
                 return [$value => $value];
             })->all(),
             default => [],
@@ -174,7 +174,7 @@ class MenuItemList extends \Livewire\Component
 
         $list = MenuModel::with([
             'mealtimes', 'menu_options',
-            'categories' => function ($query) use ($location) {
+            'categories' => function($query) use ($location) {
                 $query->whereHasOrDoesntHaveLocation($location);
             }, 'categories.media',
             'special', 'media', 'ingredients.media',
@@ -190,7 +190,7 @@ class MenuItemList extends \Livewire\Component
         ]);
 
         $list->setCollection($list->getCollection()
-            ->map(fn ($menuItem) => new MenuItemData($menuItem)));
+            ->map(fn($menuItem) => new MenuItemData($menuItem)));
 
         if (!strlen($this->selectedCategorySlug) && $this->isGrouped) {
             $this->groupListByCategory($list);
@@ -218,7 +218,7 @@ class MenuItemList extends \Livewire\Component
         }
 
         $collection = collect($groupedList)
-            ->sortBy(function ($menuItems, $categoryId) {
+            ->sortBy(function($menuItems, $categoryId) {
                 if (isset($this->menuListCategories[$categoryId])) {
                     return $this->menuListCategories[$categoryId]->priority;
                 }

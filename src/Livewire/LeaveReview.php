@@ -109,14 +109,14 @@ class LeaveReview extends \Livewire\Component
             'service' => lang('igniter.local::default.review.label_service'),
         ]);
 
-        rescue(function () use ($reviewable) {
+        rescue(function() use ($reviewable) {
             ReviewModel::leaveReview($reviewable, [
                 'quality' => $this->quality,
                 'delivery' => $this->delivery,
                 'service' => $this->service,
                 'review_text' => $this->comment,
             ]);
-        }, function (\Throwable $e) {
+        }, function(\Throwable $e) {
             throw ValidationException::withMessages([
                 'comment' => $e->getMessage(),
             ]);

@@ -53,7 +53,7 @@ class BannerData
             return [];
         }
 
-        return array_map(function ($path) {
+        return array_map(function($path) {
             return ImageHelper::resize($path, [
                 'width' => $this->imageWidth,
                 'height' => $this->imageHeight,

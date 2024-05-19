@@ -209,7 +209,7 @@ class Booking extends Component
     public function timeslots(): Collection
     {
         return $this->manager->makeTimeSlots(make_carbon($this->date))
-            ->map(fn ($dateTime) => make_carbon($dateTime));
+            ->map(fn($dateTime) => make_carbon($dateTime));
     }
 
     #[Computed, Locked]
@@ -217,7 +217,7 @@ class Booking extends Component
     {
         $timeslots = $this->timeslots->values();
 
-        $selectedIndex = $timeslots->search(function (Carbon $slot) {
+        $selectedIndex = $timeslots->search(function(Carbon $slot) {
             return $slot->isSameAs('Y-m-d H:i', make_carbon($this->date.' '.$this->time));
         });
 
@@ -227,7 +227,7 @@ class Booking extends Component
 
         return $timeslots
             ->slice($from, $this->noOfSlots - 1)
-            ->map(function ($dateTime) {
+            ->map(function($dateTime) {
                 return (object)[
                     'dateTime' => $dateTime,
                     'fullyBooked' => false,

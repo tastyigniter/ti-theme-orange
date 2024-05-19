@@ -60,7 +60,7 @@ class FulfillmentModal extends \Livewire\Component
     public function render()
     {
         return view('igniter-orange::livewire.fulfillment-modal', [
-            'orderTypes' => collect($this->location->getOrderTypes() ?? [])->filter(fn ($orderType) => !$orderType->isDisabled()),
+            'orderTypes' => collect($this->location->getOrderTypes() ?? [])->filter(fn($orderType) => !$orderType->isDisabled()),
         ]);
     }
 
@@ -134,7 +134,7 @@ class FulfillmentModal extends \Livewire\Component
 
     protected function parseTimeslot(Collection $timeslot)
     {
-        $timeslot->collapse()->each(function (DateTime $slot) {
+        $timeslot->collapse()->each(function(DateTime $slot) {
             $dateKey = $slot->format('Y-m-d');
             $hourKey = $slot->format('H:i');
             $dateValue = make_carbon($slot)->isoFormat(lang('system::lang.moment.day_format'));
@@ -158,7 +158,7 @@ class FulfillmentModal extends \Livewire\Component
 
         $orderType = $this->defaultOrderType;
         if (!$this->location->hasOrderType($orderType)) {
-            $orderType = optional($this->location->getOrderTypes()->first(function ($orderType) {
+            $orderType = optional($this->location->getOrderTypes()->first(function($orderType) {
                 return !$orderType->isDisabled();
             }))->getCode();
         }

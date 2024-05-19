@@ -88,7 +88,7 @@ class ReservationPreview extends Component
 
     protected function getReservation()
     {
-        return tap($this->reservation ??= $this->manager->getReservationByHash($this->hash, Auth::customer()), function ($reservation) {
+        return tap($this->reservation ??= $this->manager->getReservationByHash($this->hash, Auth::customer()), function($reservation) {
             if ($reservation) {
                 $this->manager->useLocation($reservation->location);
             }
