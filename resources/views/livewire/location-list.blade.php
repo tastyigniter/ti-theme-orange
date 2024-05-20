@@ -11,7 +11,7 @@
                         role="button"
                         class="text-primary"
                         data-bs-toggle="modal"
-                        data-bs-target="#localControlModal"
+                        data-bs-target="#fulfillmentModal"
                     >@lang('igniter.local::default.search.text_change')</a>
                 </div>
             @endif

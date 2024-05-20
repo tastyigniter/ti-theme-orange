@@ -85,6 +85,16 @@ class OrderPreview extends \Livewire\Component
                 'options' => [static::class, 'getThemePageOptions'],
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
+            'hideReorderBtn' => [
+                'label' => 'When rendering the component on the checkout confirmation page, hide the re-order button',
+                'type' => 'switch',
+                'validationRule' => 'required|boolean',
+            ],
+            'showCancelButton' => [
+                'label' => 'Show the cancel order button',
+                'type' => 'switch',
+                'validationRule' => 'required|boolean',
+            ],
         ];
     }
 
@@ -156,7 +166,7 @@ class OrderPreview extends \Livewire\Component
         ]));
 
         rescue(function() use ($order) {
-            if ($notes = resolve(CartManager::class)->addOrderMenus($order)) {
+            if ($notes = resolve(CartManager::class)->restoreWithOrderMenus($order)) {
                 throw new ApplicationException(implode(PHP_EOL, $notes));
             }
         }, function(Exception $ex) {

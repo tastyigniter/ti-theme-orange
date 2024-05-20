@@ -63,7 +63,7 @@ class CheckoutForm extends Form
             'country_id' => lang('igniter.cart::default.checkout.label_country'),
             'postcode' => lang('igniter.cart::default.checkout.label_postcode'),
             'payment' => lang('igniter.cart::default.checkout.label_payment_method'),
-            'termsAgreed' => lang('igniter.cart::default.checkout.label_checkout_terms'),
+            'termsAgreed' => lang('igniter.cart::default.checkout.text_checkout_terms'),
         ];
     }
 

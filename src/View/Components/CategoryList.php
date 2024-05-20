@@ -20,8 +20,10 @@ class CategoryList extends Component
 
     public function __construct(
         public string $menusPage = 'local.menus',
-        public bool $hideEmptyCategory = false
-    ) {
+        public bool $hideEmptyCategory = false,
+        public bool $useLinkAnchor = true,
+    )
+    {
     }
 
     public static function componentMeta(): array
@@ -44,6 +46,11 @@ class CategoryList extends Component
             ],
             'hideEmptyCategory' => [
                 'label' => 'Hide categories with no items from the list',
+                'type' => 'switch',
+                'validationRule' => 'required|boolean',
+            ],
+            'useLinkAnchor' => [
+                'label' => 'Use link anchor for category links',
                 'type' => 'switch',
                 'validationRule' => 'required|boolean',
             ],

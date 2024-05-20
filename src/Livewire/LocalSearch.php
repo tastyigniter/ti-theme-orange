@@ -11,6 +11,8 @@ class LocalSearch extends Component
     use ConfigurableComponent;
     use SearchesNearby;
 
+    public bool $hideSearch = false;
+
     public static function componentMeta(): array
     {
         return [
@@ -22,7 +24,12 @@ class LocalSearch extends Component
 
     public function defineProperties()
     {
-        return $this->definePropertiesSearchNearby();
+        return array_merge($this->definePropertiesSearchNearby(), [
+            'hideSearch' => [
+                'label' => 'Hide search box and display a view menu button',
+                'type' => 'switch',
+            ],
+        ]);
     }
 
     public function render()

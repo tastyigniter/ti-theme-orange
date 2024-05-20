@@ -8,21 +8,21 @@ use Livewire\Form;
 
 class SettingsForm extends Form
 {
-    public string $first_name;
+    public string $first_name = '';
 
-    public string $last_name;
+    public string $last_name = '';
 
-    public string $telephone;
+    public string $telephone = '';
 
-    public string $email;
+    public string $email = '';
 
-    public bool $newsletter;
+    public ?bool $newsletter = false;
 
-    public string $old_password;
+    public string $old_password = '';
 
-    public string $password;
+    public string $password = '';
 
-    public string $password_confirmation;
+    public string $password_confirmation = '';
 
     public function fillFrom($customer)
     {

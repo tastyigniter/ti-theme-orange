@@ -57,8 +57,8 @@ return [
     'menu_account' => 'Main',
     'menu_detail' => 'Edit Details',
     'menu_address' => 'Address Book',
-    'menu_recent_order' => 'Recent Orders',
-    'menu_recent_reservation' => 'Recent Reservations',
+    'menu_recent_order' => 'Orders',
+    'menu_recent_reservation' => 'Reservations',
     'menu_locations' => 'Our Locations',
     'menu_contact' => 'Contact Us',
     'menu_admin' => 'Administrator',
@@ -140,6 +140,7 @@ return [
     'button_payment' => 'Continue to Payment',
     'button_more_reviews' => 'Click to see more reviews',
     'button_view_cart' => 'View Cart',
+    'button_register' => 'Register',
 
     'help_security' => 'Choose who can access this page',
 

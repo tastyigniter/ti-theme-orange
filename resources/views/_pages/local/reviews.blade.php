@@ -5,7 +5,7 @@ description: ''
 layout: default
 
 '[igniter-orange::local-header]': []
-'[igniter-orange::reviews-list]': []
+'[igniter-orange::review-list]': []
 '[igniter-orange::cart-box]': []
 ---
 <?php
@@ -43,7 +43,7 @@ function onStart()
 <div class="container pt-3 pb-5">
     <div class="row">
         <div class="col-lg-8">
-            <livewire:igniter-orange::reviews-list/>
+            <livewire:igniter-orange::review-list/>
         </div>
 
         <div class="col-lg-4 d-none d-lg-inline-block">

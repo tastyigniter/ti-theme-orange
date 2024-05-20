@@ -20,6 +20,7 @@
                 data-control="datepicker"
                 data-inline="true"
                 data-static="true"
+                x-on:change="$wire.$refresh()"
             />
         </div>
         <div class="col-md-4" id="ti-datepicker-options">

@@ -20,13 +20,7 @@
                         @lang('igniter.local::default.text_closed')
                     @endif
                 </div>
-                @if ($locationInfo->orderType()->getSchedule()->isOpen())
-                    @if ($locationInfo->orderType()->getLeadTime())
-                        <div class="breadcrumb-item">
-                            {!! sprintf(lang('igniter.local::default.text_in_min'), $locationInfo->orderType()->getLeadTime()) !!}
-                        </div>
-                    @endif
-                @elseif ($locationInfo->orderType()->getSchedule()->isOpening())
+                @if (!$locationInfo->orderType()->getSchedule()->isOpen() && $locationInfo->orderType()->getSchedule()->isOpening())
                     <div class="breadcrumb-item">
                         {!! sprintf(lang('igniter.local::default.text_starts'), make_carbon($locationInfo->orderType()->getSchedule()->getOpenTime())->isoFormat(lang('igniter::system.moment.day_time_format_short'))) !!}
                     </div>

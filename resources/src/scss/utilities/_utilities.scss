@@ -57,5 +57,5 @@ body::-webkit-scrollbar-thumb {
 }
 
 .text-muted {
-  color: lighten($gray-600, 5%);
+  color: lighten($gray-600, 10%) !important;
 }

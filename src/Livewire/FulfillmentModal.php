@@ -83,6 +83,20 @@ class FulfillmentModal extends \Livewire\Component
         $this->location = resolve('location');
     }
 
+    public function updating($name, $value)
+    {
+        throw_unless($this->location->current(), ValidationException::withMessages([
+            'orderType' => lang('igniter.local::default.alert_location_required'),
+        ]));
+
+        if ($name == 'orderType') {
+            $this->orderType = $value;
+            $this->updateOrderType();
+            $this->mount();
+//            $this->parseTimeslot($this->location->scheduleTimeslot());
+        }
+    }
+
     public function onConfirm()
     {
         $this->validate([
@@ -97,22 +111,9 @@ class FulfillmentModal extends \Livewire\Component
             'orderType' => lang('igniter.local::default.alert_location_required'),
         ]));
 
-        throw_unless($orderType = $this->location->getOrderType($this->orderType), ValidationException::withMessages([
-            'orderType' => lang('igniter.local::default.alert_order_type_required'),
-        ]));
+        $this->updateOrderType();
 
-        throw_if($orderType->isDisabled(), ValidationException::withMessages([
-            'orderType' => $orderType->getDisabledDescription(),
-        ]));
-
-        $timeSlotDateTime = $this->isAsap ? now() : make_carbon($this->orderDate.' '.$this->orderTime);
-        throw_unless($this->location->checkOrderTime($timeSlotDateTime), ValidationException::withMessages([
-            'isAsap' => sprintf(lang('igniter.local::default.alert_order_is_unavailable'), $this->location->getOrderType()->getLabel()),
-        ]));
-
-        $this->location->updateOrderType($orderType->getCode());
-
-        $this->location->updateScheduleTimeSlot($timeSlotDateTime, $this->isAsap);
+        $this->updateTimeslot();
 
         if ($this->searchQuery) {
             $userLocation = $this->geocodeSearchQuery($this->searchQuery, false);
@@ -134,6 +135,9 @@ class FulfillmentModal extends \Livewire\Component
 
     protected function parseTimeslot(Collection $timeslot)
     {
+        $this->timeslotDates = [];
+        $this->timeslotTimes = [];
+
         $timeslot->collapse()->each(function(DateTime $slot) {
             $dateKey = $slot->format('Y-m-d');
             $hourKey = $slot->format('H:i');
@@ -166,5 +170,28 @@ class FulfillmentModal extends \Livewire\Component
         if ($orderType) {
             $this->location->updateOrderType($orderType);
         }
+    }
+
+    protected function updateOrderType(): void
+    {
+        throw_unless($orderType = $this->location->getOrderType($this->orderType), ValidationException::withMessages([
+            'orderType' => lang('igniter.local::default.alert_order_type_required'),
+        ]));
+
+        throw_if($orderType->isDisabled(), ValidationException::withMessages([
+            'orderType' => $orderType->getDisabledDescription(),
+        ]));
+
+        $this->location->updateOrderType($orderType->getCode());
+    }
+
+    protected function updateTimeslot(): void
+    {
+        $timeSlotDateTime = $this->isAsap ? now() : make_carbon($this->orderDate.' '.$this->orderTime);
+        throw_unless($this->location->checkOrderTime($timeSlotDateTime), ValidationException::withMessages([
+            'isAsap' => sprintf(lang('igniter.local::default.alert_order_is_unavailable'), $this->location->getOrderType()->getLabel()),
+        ]));
+
+        $this->location->updateScheduleTimeSlot($timeSlotDateTime, $this->isAsap);
     }
 }

@@ -77,7 +77,7 @@ class BannerPreview extends Component
 
         $model = Banner::query()->isEnabled()->whereCode($this->code)->first();
 
-        return $this->banner = $model ? tap(new BannerData($model), function($bannerData) {
+        return $this->banner = $model ? tap(new BannerData($model), function ($bannerData) {
             $bannerData->imageWidth = $this->width;
             $bannerData->imageHeight = $this->height;
         }) : null;

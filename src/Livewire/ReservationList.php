@@ -6,6 +6,7 @@ use Igniter\Admin\Classes\FormField;
 use Igniter\Admin\Widgets\Form;
 use Igniter\Local\Models\ReviewSettings;
 use Igniter\Main\Traits\ConfigurableComponent;
+use Igniter\Main\Traits\UsesPage;
 use Igniter\Reservation\Models\Reservation;
 use Igniter\User\Facades\Auth;
 use Illuminate\Support\Collection;
@@ -14,11 +15,14 @@ use Livewire\WithPagination;
 class ReservationList extends \Livewire\Component
 {
     use ConfigurableComponent;
+    use UsesPage;
     use WithPagination;
 
     public int $itemsPerPage = 20;
 
     public string $sortOrder = 'reserve_date desc';
+
+    public string $reservationPage = 'account.reservations';
 
     public static function componentMeta(): array
     {
@@ -40,6 +44,12 @@ class ReservationList extends \Livewire\Component
             'sortOrder' => [
                 'label' => 'Sort order',
                 'type' => 'select',
+                'validationRule' => 'required|string',
+            ],
+            'reservationPage' => [
+                'label' => 'Page name to display reservation details',
+                'type' => 'select',
+                'options' => [static::class, 'getThemePageOptions'],
                 'validationRule' => 'required|string',
             ],
         ];
