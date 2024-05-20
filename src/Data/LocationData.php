@@ -122,7 +122,7 @@ class LocationData
 
     public function schedules(): Collection
     {
-        return $this->model->getWorkingHours()->groupBy(function ($model) {
+        return $this->model->getWorkingHours()->groupBy(function($model) {
             return $model->day->isoFormat('dddd');
         });
     }
@@ -140,14 +140,14 @@ class LocationData
         foreach ($this->scheduleTypes() as $code => $definition) {
             $schedule = $this->model->createScheduleItem($code);
             foreach (WorkingHour::make()->getWeekDaysOptions() as $index => $day) {
-                $hours = array_map(function ($hour) {
+                $hours = array_map(function($hour) {
                     $hour['open'] = now()->setTimeFromTimeString($hour['open'])->isoFormat(lang('system::lang.moment.time_format'));
                     $hour['close'] = now()->setTimeFromTimeString($hour['close'])->isoFormat(lang('system::lang.moment.time_format'));
 
                     return $hour;
                 }, array_get($schedule->getHours(), $index, []));
 
-                $scheduleItems[$code][$day] = array_filter($hours, function ($hour) {
+                $scheduleItems[$code][$day] = array_filter($hours, function($hour) {
                     return (bool)$hour['status'];
                 });
             }

@@ -93,7 +93,7 @@ class FulfillmentModal extends \Livewire\Component
             $this->orderType = $value;
             $this->updateOrderType();
             $this->mount();
-//            $this->parseTimeslot($this->location->scheduleTimeslot());
+            //            $this->parseTimeslot($this->location->scheduleTimeslot());
         }
     }
 
