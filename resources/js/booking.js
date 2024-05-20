@@ -17,8 +17,6 @@
     Booking.prototype.init = function () {
         if (this.$datePicker)
             this.initDatePicker();
-
-        this.$el.on('change', 'select[name="date"]', $.proxy(this.onSelectDate, this));
     }
 
     Booking.prototype.initDatePicker = function () {
@@ -46,39 +44,6 @@
     Booking.prototype.onSelectDatePicker = function (selectedDates, dateStr) {
         this.$datePickerValue = dateStr;
         this.$dataLocker.val(dateStr);
-    }
-
-    Booking.prototype.onSelectDate = function (event) {
-        location.href = location.pathname + '?date=' + event.target.value;
-    }
-
-    Booking.prototype.onHtmlUpdate = function () {
-        var $indicatorContainer = this.$el.find('.progress-indicator-container')
-        $indicatorContainer.prepend('<div class="progress-indicator"></div>')
-        $indicatorContainer.addClass('is-loading')
-
-        this.$guestPickerValue = this.$el.find('[name="guest"]').val();
-
-        jQuery.ajax(location.pathname + '?&date=' + this.$datePickerValue + '&guest=' + this.$guestPickerValue, {
-            dataType: 'html'
-        })
-            .done($.proxy(this.onHtmlResponse, this));
-    }
-
-    Booking.prototype.onHtmlResponse = function (html) {
-        html = jQuery.parseHTML(html);
-        html.forEach(function (node) {
-            if (node.tagName && node.tagName.toUpperCase() == 'MAIN') {
-                var newEl, currentEl;
-                if ((newEl = node.querySelector('#ti-datepicker-options')) && (currentEl = document.querySelector('#ti-datepicker-options'))) {
-                    currentEl.innerHTML = newEl.innerHTML;
-                }
-            }
-        });
-
-        var $indicatorContainer = this.$el.find('.progress-indicator-container')
-        $indicatorContainer.find('.progress-indicator').remove()
-        $indicatorContainer.removeClass('is-loading')
     }
 
     Booking.DEFAULTS = {}

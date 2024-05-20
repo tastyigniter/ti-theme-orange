@@ -156,6 +156,13 @@ class Booking extends Component
         $this->manager->useLocation(Location::current());
     }
 
+    public function updating($name, $value)
+    {
+        if ($name === 'date') {
+            unset($this->timeslots);
+        }
+    }
+
     public function onSave()
     {
         $this->pickerStep = static::STEP_PICKER;

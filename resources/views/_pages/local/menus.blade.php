@@ -36,7 +36,7 @@ layout: default
         </div>
     </div>
 </div>
-<div class="bg-white border-bottom border-1">
+<div class="sticky-top bg-white border-bottom border-1">
     <div class="container">
         <x-igniter-orange::category-list/>
     </div>

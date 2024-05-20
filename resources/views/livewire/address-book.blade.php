@@ -1,5 +1,5 @@
 <div class="card">
-    <div class="card-header d-flex justify-content-between align-items-center">
+    <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
         <h4 class="mb-0">@lang('igniter.user::default.text_address')</h4>
         <button
             class="btn btn-secondary"

@@ -50,7 +50,7 @@ class NewsletterSubscribeForm extends \Livewire\Component
         $this->validate();
 
         try {
-            $subscribe = Subscriber::subscribe($this->listId, $this->email);
+            $subscribe = Subscriber::subscribe($this->email, $this->listId);
         } catch (Exception $e) {
             throw ValidationException::withMessages(['email' => $e->getMessage()]);
         }

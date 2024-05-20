@@ -26,7 +26,7 @@ class SupportFlashMessages extends ComponentHook
         $messages = app('flash')->all();
 
         if ($messages->isNotEmpty()) {
-            $this->component->dispatch('flashMessageAdded', $messages->map(function(Message $message) {
+            $this->component->dispatch('flashMessageAdded', $messages->map(function (Message $message) {
                 return (object)$message->toArray();
             })->all());
         }

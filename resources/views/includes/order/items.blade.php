@@ -1,7 +1,7 @@
-<h2 class="h4 mb-0 fw-normal">@lang('igniter.cart::default.checkout.text_order_details')</h2>
+<h6 class="mb-0 text-muted">@lang('igniter.cart::default.checkout.text_order_details')</h6>
 
 <div class="cart-items pt-2">
-    <ul>
+    <ul class="list-unstyled">
         @foreach ($order->getOrderMenusWithOptions() as $orderItem)
             <li>
                 <span class="price pull-right">{{ currency_format($orderItem->subtotal) }}</span>

@@ -6,6 +6,7 @@ use Igniter\Cart\Facades\Cart;
 use Igniter\Flame\Exception\ApplicationException;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Livewire\Forms\SettingsForm;
+use Igniter\User\Actions\LogoutUser;
 use Igniter\User\Facades\Auth;
 use Livewire\Component;
 
@@ -14,6 +15,8 @@ class AccountSettings extends Component
     use ConfigurableComponent;
 
     public SettingsForm $form;
+
+    public string $loginPage = 'account.login';
 
     public static function componentMeta(): array
     {
@@ -50,18 +53,19 @@ class AccountSettings extends Component
             new ApplicationException('You must be logged in to manage your address book')
         );
 
+        $oldEmail = $customer->email;
+
         $this->form->validate();
 
         $customer->fill($this->form->except(['old_password', 'password_confirmation']));
         $customer->save();
 
-        if ($this->form->old_password) {
-            Auth::logout();
+        if ($this->form->old_password || $customer->email !== $oldEmail) {
+            Cart::keepSession(function() {
+                resolve(LogoutUser::class)->handle();
+            });
 
-            session()->invalidate();
-            session()->regenerateToken();
-
-            return redirect()->back();
+            return redirect()->to(page_url($this->loginPage));
         }
 
         flash()->success(lang('igniter.user::default.settings.alert_updated_success'));

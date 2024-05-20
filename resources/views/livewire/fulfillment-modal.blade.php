@@ -1,5 +1,6 @@
 <div x-data='OrangeFulfillment(@json($timeslotTimes))'>
     <div
+        wire:ignore.self
         @class(['modal fade', 'show' => $showAddressPicker])
         id="fulfillmentModal"
         tabindex="-1"
@@ -20,7 +21,7 @@
                             @foreach($orderTypes as $orderType)
                                 <div @class(['form-check py-2', 'border-bottom' => !$loop->last])>
                                     <input
-                                        wire:model="orderType"
+                                        wire:model.live="orderType"
                                         type="radio"
                                         name="orderType"
                                         id="orderType{{ $orderType->getCode() }}"

@@ -1,4 +1,10 @@
-<div class="menu-group">
+<div
+    class="menu-group"
+    data-bs-spy="scroll"
+    data-bs-target="#navbar-categories"
+    data-bs-offset="0"
+    data-bs-smooth-scroll="true"
+>
     @forelse ($groupedMenuItems as $categoryId => $menuList)
         <div @class(['menu-group-item'])>
             @if ($categoryId > 0)
@@ -41,7 +47,7 @@
                     </div>
                 </div>
             @else
-                <div class="mb-3">
+                <div id="category-all-heading" class="mb-3">
                     @include('igniter-orange::includes.menu.items', ['menuItems' => $menuList])
                 </div>
             @endif

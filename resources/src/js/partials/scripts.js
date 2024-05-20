@@ -4,7 +4,7 @@
  * $(document).render(function() { })
  * $(document).on('render', function() { })
  */
-+ function ($) {
++function ($) {
     "use strict";
 
     app.requestTimeout = 150
@@ -61,7 +61,7 @@ $(function () {
         var fields = jqXHR.responseJSON.X_IGNITER_ERROR_FIELDS
         for (let field in fields) {
             var fieldName = dotToArrayString(field),
-                $field = $('input[name="' + fieldName + '"], select[name="' + fieldName + '"]'),
+                $field = $('input[name="'+fieldName+'"], select[name="'+fieldName+'"]'),
                 $floating = $field.closest('.form-floating')
             $field.attr('required', true)
             $field.addClass('is-invalid')
@@ -81,7 +81,7 @@ $(function () {
         if (str.indexOf('.') !== -1) {
             let parts = str.split('.'), output = parts[0]
             for (var i = 1; i < parts.length; i++)
-                output += '[' + parts[i] + ']'
+                output += '['+parts[i]+']'
 
             return output
         } else {
@@ -110,4 +110,18 @@ $(function () {
     }
 })
 
+$(function () {
+    $('a[href*="#"]:not([href="#"])').click(function () {
+        if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+            var target = $(this.hash);
+            target = target.length ? target : $('[name='+this.hash.slice(1)+']');
+            if (target.length) {
+                $('html, body').animate({
+                    scrollTop: target.offset().top
+                }, 1000);
+            }
 
+            return false;
+        }
+    });
+});
