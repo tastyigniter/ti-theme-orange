@@ -70,7 +70,7 @@ class Modal extends Component
     {
         return $this->getPublicPropertyTypes($component)
             ->intersectByKeys($attributes)
-            ->map(function ($className, $propName) use ($attributes) {
+            ->map(function($className, $propName) use ($attributes) {
                 return $this->resolveParameter($attributes, $propName, $className);
             });
     }
@@ -103,7 +103,7 @@ class Modal extends Component
     public function getPublicPropertyTypes($component)
     {
         return collect($component->all())
-            ->map(function ($value, $name) use ($component) {
+            ->map(function($value, $name) use ($component) {
                 return Reflector::getParameterClassName(new \ReflectionProperty($component, $name));
             })
             ->filter();

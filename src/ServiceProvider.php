@@ -40,7 +40,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->loadLivewireComponentsFrom(__DIR__.'/Livewire');
 
         if (!Igniter::runningInAdmin()) {
-            ViewFacade::composer('*', function (View $view) {
+            ViewFacade::composer('*', function(View $view) {
                 $view->with([
                     'theme' => controller()->getTheme(),
                     'page' => controller()->getPage(),
@@ -77,7 +77,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             }
         }
 
-        resolve(ComponentManager::class)->registerCallback(function ($manager) use ($configurableComponents) {
+        resolve(ComponentManager::class)->registerCallback(function($manager) use ($configurableComponents) {
             foreach ($configurableComponents as $componentClass) {
                 $manager->registerComponent($componentClass, $componentClass::componentMeta());
             }
@@ -91,7 +91,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             ->ignoreDotFiles(true)
             ->ignoreVCS(true);
 
-        resolve(ComponentManager::class)->registerCallback(function ($manager) use ($components) {
+        resolve(ComponentManager::class)->registerCallback(function($manager) use ($components) {
             foreach ($components as $component) {
                 $componentName = Str::of($component->getRelativePathname())->before('.php')->kebab()->replace('/-', '.');
                 $componentClass = Str::of($component->getRelativePathname())->before('.php')->replace('/', '\\')->start('Igniter\\Orange\\View\\Components\\')->toString();
@@ -108,8 +108,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     protected function configurePageAuthentication(): void
     {
         if (!Igniter::runningInAdmin()) {
-            MainController::extend(function ($controller) {
-                $controller->bindEvent('page.init', function ($page) {
+            MainController::extend(function($controller) {
+                $controller->bindEvent('page.init', function($page) {
                     if (!isset($page->security) || $page->security == 'all') {
                         return;
                     }
@@ -126,7 +126,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             });
         }
 
-        Event::listen('admin.form.extendFields', function (Form $widget) {
+        Event::listen('admin.form.extendFields', function(Form $widget) {
             if (!isset($widget->data->fileSource)) {
                 return;
             }
@@ -154,14 +154,14 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
     protected function configureGoogleFonts(): void
     {
-        $this->callAfterResolving(GoogleFonts::class, function (GoogleFonts $googleFonts) {
+        $this->callAfterResolving(GoogleFonts::class, function(GoogleFonts $googleFonts) {
             $themeData = resolve(ThemeManager::class)->getActiveTheme()->getCustomData();
             if (array_get($themeData, 'font-download')) {
                 config()->set('google-fonts.fonts.default', array_get($themeData, 'font-url'));
             }
         });
 
-        Event::listen('assets.combiner.afterBuildBundles', function (Assets $assets, Theme $theme) {
+        Event::listen('assets.combiner.afterBuildBundles', function(Assets $assets, Theme $theme) {
             if (array_get($theme->getCustomData(), 'font-download')) {
                 config()->set('google-fonts.fonts.default', array_get($theme->getCustomData(), 'font-url'));
 
@@ -176,7 +176,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             ->domain(config('igniter-routes.domain'))
             ->name('igniter.theme.')
             ->prefix(Igniter::uri())
-            ->group(function ($router) {
+            ->group(function($router) {
                 $router->get('logout', Logout::class)->name('account.logout');
             });
     }

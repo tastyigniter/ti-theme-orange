@@ -84,7 +84,7 @@ class LocalHeader extends Component
         Assets::addJs('igniter.local::/js/starrating.js', 'starrating-js');
 
         Location::current()->loadCount([
-            'reviews' => fn ($q) => $q->isApproved(),
+            'reviews' => fn($q) => $q->isApproved(),
         ]);
 
         return view('igniter-orange::components.local-header', [
