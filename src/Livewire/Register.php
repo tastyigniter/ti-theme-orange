@@ -43,26 +43,26 @@ class Register extends \Livewire\Component
     {
         return [
             'agreeTermsSlug' => [
-                'label' => 'The permalink slug for the agree registration terms page',
+                'label' => 'Page to redirect to after registration.',
                 'type' => 'select',
                 'options' => [static::class, 'getStaticPageOptions'],
                 'comment' => 'If set, require customers to agree to terms before registering',
                 'validationRule' => 'sometimes|alpha_dash',
             ],
             'redirectPage' => [
-                'label' => 'Page to redirect to after registration',
+                'label' => 'Static page for the registration terms and conditions.',
                 'type' => 'select',
                 'options' => [static::class, 'getThemePageOptions'],
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
             'activationPage' => [
-                'label' => 'The activation page used for the activation link',
+                'label' => 'Page to redirect to when the user clicks the activation link.',
                 'type' => 'select',
                 'options' => [static::class, 'getThemePageOptions'],
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
             'loginPage' => [
-                'label' => 'The login page used for the account login link and to redirect after registration',
+                'label' => 'Page to redirect to when the user clicks the login button.',
                 'type' => 'select',
                 'options' => [static::class, 'getThemePageOptions'],
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
@@ -96,9 +96,9 @@ class Register extends \Livewire\Component
         $customer = $action->handle($this->form->except(['password_confirm', 'terms']));
 
         if ($customer->is_activated) {
-            $action->notifyRegistered(['account_login_link' => page_url($this->loginPage)]);
+            $customer->mailSendRegistration(['account_login_link' => page_url($this->loginPage)]);
         } else {
-            $action->notifyActivated([
+            $customer->mailSendEmailVerification([
                 'account_activation_link' => page_url($this->activationPage).'?code='.$customer->getActivationCode(),
             ]);
         }
@@ -122,7 +122,10 @@ class Register extends \Livewire\Component
             'code' => lang('igniter.user::default.reset.alert_no_activation_code'),
         ]);
 
-        resolve(RegisterUser::class)->activate($this->activationCode);
+        $action = resolve(RegisterUser::class);
+        $customer = $action->activate($this->activationCode);
+
+        $customer->mailSendRegistration(['account_login_link' => page_url($this->loginPage)]);
 
         return redirect()->to(page_url($this->redirectPage));
     }

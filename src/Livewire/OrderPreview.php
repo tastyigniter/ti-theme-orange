@@ -57,41 +57,36 @@ class OrderPreview extends \Livewire\Component
     {
         return [
             'hashParamName' => [
-                'label' => 'Order Hash Parameter Name',
+                'label' => 'URL routing parameter that holds the code used for displaying the order confirmation page.',
                 'type' => 'text',
                 'validationRule' => 'required|alpha',
             ],
             'loginPage' => [
-                'label' => 'Login page to redirect to when viewing as guest',
+                'label' => 'Page to redirect to when the user clicks the login button.',
                 'type' => 'select',
                 'options' => [static::class, 'getThemePageOptions'],
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
             'ordersPage' => [
-                'label' => 'Page to redirect to as a customer when an order is incomplete',
+                'label' => 'Page to redirect to when viewing as logged in customer and an order is incomplete or not found.',
                 'type' => 'select',
                 'options' => [static::class, 'getThemePageOptions'],
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
             'checkoutPage' => [
-                'label' => 'Page to redirect to as guest when an order is incomplete',
+                'label' => 'Page to redirect to when viewing as guest and an order is incomplete or not found.',
                 'type' => 'select',
                 'options' => [static::class, 'getThemePageOptions'],
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
             'menusPage' => [
-                'label' => 'Menus page to redirect to when re-ordering',
+                'label' => 'Page to redirect to when the user clicks the reorder button.',
                 'type' => 'select',
                 'options' => [static::class, 'getThemePageOptions'],
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
             'hideReorderBtn' => [
                 'label' => 'When rendering the component on the checkout confirmation page, hide the re-order button',
-                'type' => 'switch',
-                'validationRule' => 'required|boolean',
-            ],
-            'showCancelButton' => [
-                'label' => 'Show the cancel order button',
                 'type' => 'switch',
                 'validationRule' => 'required|boolean',
             ],

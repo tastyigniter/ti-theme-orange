@@ -22,7 +22,7 @@ class ReservationList extends \Livewire\Component
 
     public string $sortOrder = 'reserve_date desc';
 
-    public string $reservationPage = 'account.reservations';
+    public string $reservationPage = 'account.reservation';
 
     public static function componentMeta(): array
     {

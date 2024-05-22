@@ -39,7 +39,7 @@ class ReservationPreview extends Component
     {
         return [
             'hashParamName' => [
-                'label' => 'Reservation Hash Parameter Name',
+                'label' => 'URL routing parameter that holds the code used for displaying the reservation confirmation page.',
                 'type' => 'text',
                 'validationRule' => 'required|alpha',
             ],

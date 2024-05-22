@@ -33,7 +33,7 @@ class NewsletterSubscribeForm extends \Livewire\Component
     {
         return [
             'listId' => [
-                'label' => 'MailChimp List ID',
+                'label' => 'The Mailchimp list ID to subscribe users to.',
                 'type' => 'text',
                 'validationRule' => 'nullable|string|max:255',
             ],

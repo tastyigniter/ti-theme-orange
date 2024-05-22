@@ -19,7 +19,8 @@ class FeaturedItems extends Component
         public bool $showThumb = true,
         public ?int $itemWidth = 400,
         public ?int $itemHeight = 300,
-    ) {
+    )
+    {
     }
 
     public static function componentMeta(): array
@@ -65,6 +66,11 @@ class FeaturedItems extends Component
                 ],
                 'validationRule' => 'required|integer',
             ],
+            'showThumb' => [
+                'label' => 'Show thumbnail image',
+                'type' => 'switch',
+                'validationRule' => 'required|boolean',
+            ],
             'itemWidth' => [
                 'label' => 'lang:igniter.frontend::default.featured.label_dimension_w',
                 'span' => 'left',
@@ -76,11 +82,6 @@ class FeaturedItems extends Component
                 'span' => 'right',
                 'type' => 'number',
                 'validationRule' => 'integer',
-            ],
-            'showThumb' => [
-                'label' => 'Show thumbnail image',
-                'type' => 'switch',
-                'validationRule' => 'required|boolean',
             ],
         ];
     }

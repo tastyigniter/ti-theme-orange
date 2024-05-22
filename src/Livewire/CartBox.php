@@ -45,7 +45,7 @@ class CartBox extends Component
     {
         return [
             'checkoutPage' => [
-                'label' => 'Checkout Page',
+                'label' => 'Page to redirect to when the checkout button is clicked.',
                 'type' => 'select',
                 'options' => [static::class, 'getThemePageOptions'],
                 'default' => 'checkout.checkout',

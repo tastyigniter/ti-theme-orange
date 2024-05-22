@@ -52,8 +52,8 @@ class MenuItemList extends \Livewire\Component
     {
         return [
             'code' => 'igniter-orange::menu-item-list',
-            'name' => 'igniter.orange::default.component_menu_items_list_title',
-            'description' => 'igniter.orange::default.component_menu_items_list_desc',
+            'name' => 'igniter.orange::default.component_menu_item_list_title',
+            'description' => 'igniter.orange::default.component_menu_item_list_desc',
         ];
     }
 
@@ -61,72 +61,72 @@ class MenuItemList extends \Livewire\Component
     {
         return [
             'isGrouped' => [
-                'label' => 'Group menu items by category',
+                'label' => 'Group menu items by category.',
                 'type' => 'switch',
                 'span' => 'left',
                 'validationRule' => 'required|boolean',
             ],
             'collapseCategoriesAfter' => [
-                'label' => 'Collapse categories after',
+                'label' => 'Collapse categories after the specified number of items in group view.',
                 'type' => 'number',
                 'span' => 'right',
                 'validationRule' => 'required|numeric|min:0',
             ],
             'itemsPerPage' => [
-                'label' => 'Number of menus per page',
+                'label' => 'Number of menu items to display per page.',
                 'type' => 'number',
                 'span' => 'left',
                 'validationRule' => 'required|numeric|min:0',
             ],
             'sortOrder' => [
-                'label' => 'Sort order',
+                'label' => 'Default sort order of menu items.',
                 'type' => 'select',
                 'span' => 'right',
                 'validationRule' => 'required|string',
             ],
             'showThumb' => [
-                'label' => 'Show menu thumbnails',
+                'label' => 'Display menu item, category and allergen image thumb.',
                 'type' => 'switch',
                 'validationRule' => 'required|boolean',
             ],
             'menuThumbWidth' => [
-                'label' => 'Menu thumbnail width',
+                'label' => 'Menu item image thumb width',
                 'type' => 'number',
                 'span' => 'left',
                 'validationRule' => 'required|numeric|min:0',
             ],
             'menuThumbHeight' => [
-                'label' => 'Menu thumbnail height',
+                'label' => 'Menu item image thumb height',
                 'type' => 'number',
                 'span' => 'right',
                 'validationRule' => 'required|numeric|min:0',
             ],
             'categoryThumbWidth' => [
-                'label' => 'Category thumbnail width',
+                'label' => 'Category image thumb width.',
                 'type' => 'number',
                 'span' => 'left',
                 'validationRule' => 'required|numeric|min:0',
             ],
             'categoryThumbHeight' => [
-                'label' => 'Category thumbnail height',
+                'label' => 'Category image thumb height.',
                 'type' => 'number',
                 'span' => 'right',
                 'validationRule' => 'required|numeric|min:0',
             ],
             'allergenThumbWidth' => [
-                'label' => 'Allergen thumbnail width',
+                'label' => 'Allergen image thumb width.',
                 'type' => 'number',
                 'span' => 'left',
                 'validationRule' => 'required|numeric|min:0',
             ],
             'allergenThumbHeight' => [
-                'label' => 'All thumbnail height',
+                'label' => 'Allergen image thumb height.',
                 'type' => 'number',
                 'span' => 'right',
                 'validationRule' => 'required|numeric|min:0',
             ],
             'hideMenuSearch' => [
-                'label' => 'Hide menu search form',
+                'label' => 'Hide the menu search form',
                 'type' => 'switch',
                 'validationRule' => 'required|boolean',
             ],
@@ -172,6 +172,19 @@ class MenuItemList extends \Livewire\Component
     {
         $location = Location::current()?->getKey();
 
+        $filters = [
+            'sort' => $this->sortOrder,
+            'location' => $location,
+            'category' => $this->selectedCategorySlug,
+            'search' => $this->menuSearchTerm,
+            'orderType' => Location::orderType(),
+        ];
+
+        if ($this->itemsPerPage > 0) {
+            $filters['page'] = $this->getPage();
+            $filters['pageLimit'] = $this->itemsPerPage;
+        }
+
         $list = MenuModel::with([
             'mealtimes', 'menu_options',
             'categories' => function($query) use ($location) {
@@ -179,32 +192,32 @@ class MenuItemList extends \Livewire\Component
             }, 'categories.media',
             'special', 'media', 'ingredients.media',
             'menu_options.option',
-        ])->listFrontEnd([
-            'page' => $this->getPage(),
-            'pageLimit' => $this->itemsPerPage,
-            'sort' => $this->sortOrder,
-            'location' => $location,
-            'category' => $this->selectedCategorySlug,
-            'search' => $this->menuSearchTerm,
-            'orderType' => Location::orderType(),
-        ]);
+        ])->listFrontEnd($filters);
 
-        $list->setCollection($list->getCollection()
-            ->map(fn($menuItem) => new MenuItemData($menuItem)));
+        if ($this->itemsPerPage > 0) {
+            $list->setCollection($list->getCollection()
+                ->map(fn($menuItem) => new MenuItemData($menuItem)));
+        } else {
+            $list = $list->get()->map(fn($menuItem) => new MenuItemData($menuItem));
+        }
 
         if (!strlen($this->selectedCategorySlug) && $this->isGrouped) {
-            $this->groupListByCategory($list);
+            if ($this->itemsPerPage > 0) {
+                $list->setCollection($this->groupListByCategory($list->getCollection()));
+            } else {
+                $list = $this->groupListByCategory($list);
+            }
         }
 
         return $list;
     }
 
-    protected function groupListByCategory($list)
+    protected function groupListByCategory($items)
     {
         $this->menuListCategories = [];
 
         $groupedList = [];
-        foreach ($list->getCollection() as $menuItemObject) {
+        foreach ($items as $menuItemObject) {
             $categories = $menuItemObject->model->categories;
             if (!$categories || $categories->isEmpty()) {
                 $groupedList[0][] = $menuItemObject;
@@ -217,7 +230,7 @@ class MenuItemList extends \Livewire\Component
             }
         }
 
-        $collection = collect($groupedList)
+        return collect($groupedList)
             ->sortBy(function($menuItems, $categoryId) {
                 if (isset($this->menuListCategories[$categoryId])) {
                     return $this->menuListCategories[$categoryId]->priority;
@@ -225,7 +238,5 @@ class MenuItemList extends \Livewire\Component
 
                 return $categoryId;
             });
-
-        $list->setCollection($collection);
     }
 }

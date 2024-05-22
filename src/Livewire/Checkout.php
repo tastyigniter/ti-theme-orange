@@ -110,64 +110,64 @@ class Checkout extends Component
     {
         return [
             'isTwoPageCheckout' => [
-                'label' => 'Whether to use a multi step checkout',
+                'label' => 'Use two-page checkout.',
                 'type' => 'switch',
                 'validationRule' => 'required|boolean',
             ],
             'showAddress2Field' => [
-                'label' => 'Whether to display the address 2 checkout form field',
+                'label' => 'Display the address 2 checkout field.',
                 'type' => 'switch',
                 'validationRule' => 'required|boolean',
             ],
             'showCityField' => [
-                'label' => 'Whether to display the city checkout form field',
+                'label' => 'Display the city checkout field.',
                 'type' => 'switch',
                 'validationRule' => 'required|boolean',
             ],
             'showStateField' => [
-                'label' => 'Whether to display the state checkout form field',
+                'label' => 'Display the state checkout field.',
                 'type' => 'switch',
                 'validationRule' => 'required|boolean',
             ],
             'showPostcodeField' => [
-                'label' => 'Whether to display the postcode checkout form field',
+                'label' => 'Display the postcode checkout field.',
                 'type' => 'switch',
                 'validationRule' => 'required|boolean',
             ],
             'showTelephoneField' => [
-                'label' => 'Whether to display the telephone checkout form field',
+                'label' => 'Display the telephone checkout field.',
                 'type' => 'switch',
                 'validationRule' => 'required|boolean',
             ],
             'showCountryField' => [
-                'label' => 'Whether to display the country checkout form field',
+                'label' => 'Display the country checkout field.',
                 'type' => 'switch',
                 'validationRule' => 'required|boolean',
             ],
             'showCommentField' => [
-                'label' => 'Whether to display the comment checkout form field',
+                'label' => 'Display the comment checkout field',
                 'type' => 'switch',
                 'validationRule' => 'required|boolean',
             ],
             'showDeliveryCommentField' => [
-                'label' => 'Whether to display the delivery comment checkout form field',
+                'label' => 'Display the delivery comment checkout field',
                 'type' => 'switch',
                 'validationRule' => 'required|boolean',
             ],
             'telephoneIsRequired' => [
-                'label' => 'Whether the telephone field should be required',
+                'label' => 'Require telephone number for checkout',
                 'type' => 'switch',
                 'validationRule' => 'required|boolean',
             ],
             'agreeTermsSlug' => [
-                'label' => 'The permalink slug for the agree checkout terms page',
+                'label' => 'Static page for the checkout terms and conditions',
                 'type' => 'select',
                 'options' => [static::class, 'getStaticPageOptions'],
                 'comment' => 'If set, require customers to agree to terms before checkout',
                 'validationRule' => 'sometimes|alpha_dash',
             ],
             'menusPage' => [
-                'label' => 'Page to redirect to when checkout can not be performed',
+                'label' => 'Page to redirect to when checkout is unavailable.',
                 'type' => 'select',
                 'options' => [static::class, 'getThemePageOptions'],
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',

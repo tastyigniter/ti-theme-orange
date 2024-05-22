@@ -54,7 +54,13 @@ class FulfillmentModal extends \Livewire\Component
 
     public function defineProperties()
     {
-        return $this->definePropertiesSearchNearby();
+        return array_merge([
+            'defaultOrderType' => [
+                'label' => 'The default selected order type.',
+                'type' => 'select',
+                'options' => [Location::class, 'getOrderTypeOptions'],
+            ],
+        ], $this->definePropertiesSearchNearby());
     }
 
     public function render()

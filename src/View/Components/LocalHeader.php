@@ -24,7 +24,8 @@ class LocalHeader extends Component
         public int $reviewPerPage = 10,
         public string $reviewSortOrder = 'created_at desc',
         public string $reviewsPage = 'local.reviews',
-    ) {
+    )
+    {
         $this->itemPerPage = $this->reviewPerPage;
         $this->sortOrder = $this->reviewSortOrder;
     }
@@ -42,15 +43,15 @@ class LocalHeader extends Component
     {
         return [
             'showThumb' => [
-                'label' => 'Show location thumbnail',
+                'label' => 'Display the location image thumb.',
                 'type' => 'switch',
             ],
             'localThumbWidth' => [
-                'label' => 'Thumbnail width',
+                'label' => 'Location thumb width',
                 'type' => 'number',
             ],
             'localThumbHeight' => [
-                'label' => 'Thumbnail height',
+                'label' => 'Location thumb height',
                 'type' => 'number',
             ],
             'reviewPerPage' => [
@@ -59,13 +60,13 @@ class LocalHeader extends Component
                 'validationRule' => 'integer|min:1',
             ],
             'reviewSortOrder' => [
-                'label' => 'Sort order',
+                'label' => 'Default sort order of reviews.',
                 'type' => 'select',
                 'options' => [static::class, 'getSortOrderOptionsWithReviews'],
                 'validationRule' => 'required|string',
             ],
             'reviewsPage' => [
-                'label' => 'Reviews page',
+                'label' => 'Page to redirect to when the "see more reviews" link is clicked.',
                 'type' => 'select',
                 'options' => [static::class, 'getThemePageOptions'],
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',

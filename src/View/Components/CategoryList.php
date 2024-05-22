@@ -20,7 +20,7 @@ class CategoryList extends Component
 
     public function __construct(
         public string $menusPage = 'local.menus',
-        public bool $hideEmptyCategory = false,
+        public bool $hideEmpty = false,
         public bool $useLinkAnchor = true,
     ) {
     }
@@ -38,13 +38,13 @@ class CategoryList extends Component
     {
         return [
             'menusPage' => [
-                'label' => 'lang:igniter.local::default.menus.text_menus_page',
+                'label' => 'Page to redirect to when a category is clicked.',
                 'type' => 'select',
                 'options' => [static::class, 'getThemePageOptions'],
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
-            'hideEmptyCategory' => [
-                'label' => 'Hide categories with no items from the list',
+            'hideEmpty' => [
+                'label' => 'Hide empty categories with no menu items',
                 'type' => 'switch',
                 'validationRule' => 'required|boolean',
             ],

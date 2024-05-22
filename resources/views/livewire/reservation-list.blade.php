@@ -19,7 +19,7 @@
                             <td>
                                 <a
                                     class="btn btn-light"
-                                    href="{{ page_url('account.reservation', ['reservationId' => $reservation->reservation_id, 'hash' => $reservation->hash]) }}"
+                                    href="{{ page_url($reservationPage, ['reservationId' => $reservation->reservation_id, 'hash' => $reservation->hash]) }}"
                                 >#{{ $reservation->reservation_id }}</a>
                             </td>
                             <td>{{ $reservation->location ? $reservation->location->location_name : null }}</td>

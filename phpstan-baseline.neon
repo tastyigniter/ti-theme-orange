@@ -121,7 +121,17 @@ parameters:
 			path: src/Data/MenuItemData.php
 
 		-
+			message: "#^Call to an undefined static method Igniter\\\\Cart\\\\Facades\\\\Cart\\:\\:keepSession\\(\\)\\.$#"
+			count: 1
+			path: src/Http/Controllers/Logout.php
+
+		-
 			message: "#^Call to an undefined static method Igniter\\\\Cart\\\\Facades\\\\Cart\\:\\:count\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/AccountSettings.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Cart\\\\Facades\\\\Cart\\:\\:keepSession\\(\\)\\.$#"
 			count: 1
 			path: src/Livewire/AccountSettings.php
 
@@ -136,14 +146,44 @@ parameters:
 			path: src/Livewire/AccountSettings.php
 
 		-
-			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:logout\\(\\)\\.$#"
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:queryModifierGetSorts\\(\\)\\.$#"
 			count: 1
-			path: src/Livewire/AccountSettings.php
+			path: src/Livewire/AddressBook.php
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:customer\\(\\)\\.$#"
 			count: 7
 			path: src/Livewire/AddressBook.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Orange\\\\Livewire\\\\Booking\\:\\:\\$timeslots\\.$#"
+			count: 1
+			path: src/Livewire/Booking.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Flame\\\\Support\\\\Facades\\\\File\\:\\:symbolizePath\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/Booking.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:current\\(\\)\\.$#"
+			count: 3
+			path: src/Livewire/Booking.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addCss\\(\\)\\.$#"
+			count: 3
+			path: src/Livewire/Booking.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addJs\\(\\)\\.$#"
+			count: 2
+			path: src/Livewire/Booking.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:customer\\(\\)\\.$#"
+			count: 2
+			path: src/Livewire/Booking.php
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\Frontend\\\\Models\\\\CaptchaSettings\\:\\:get\\(\\)\\.$#"
@@ -183,16 +223,6 @@ parameters:
 		-
 			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addJs\\(\\)\\.$#"
 			count: 2
-			path: src/Livewire/CartBox.php
-
-		-
-			message: "#^Static call to instance method Igniter\\\\Cart\\\\Models\\\\CartSettings\\:\\:tippingAmounts\\(\\)\\.$#"
-			count: 1
-			path: src/Livewire/CartBox.php
-
-		-
-			message: "#^Static call to instance method Igniter\\\\Cart\\\\Models\\\\CartSettings\\:\\:tippingEnabled\\(\\)\\.$#"
-			count: 1
 			path: src/Livewire/CartBox.php
 
 		-
@@ -424,6 +454,26 @@ parameters:
 			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:getUser\\(\\)\\.$#"
 			count: 1
 			path: src/Livewire/Login.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:listFrontEnd\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/MenuItemList.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:queryModifierGetSorts\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/MenuItemList.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:current\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/MenuItemList.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:orderType\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/MenuItemList.php
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:customer\\(\\)\\.$#"

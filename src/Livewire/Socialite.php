@@ -5,6 +5,7 @@ namespace Igniter\Orange\Livewire;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
 use Igniter\Socialite\Classes\ProviderManager;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
 class Socialite extends Component
@@ -15,8 +16,6 @@ class Socialite extends Component
     public string $errorPage = 'account.login';
 
     public string $successPage = 'account.account';
-
-    public string $confirmEmailPage = 'account.socialite';
 
     public bool $confirm = false;
 
@@ -50,12 +49,6 @@ class Socialite extends Component
                 'label' => 'Display email confirmation form',
                 'type' => 'switch',
             ],
-            'confirmEmailPage' => [
-                'label' => 'The confirm email page',
-                'type' => 'select',
-                'options' => [static::class, 'getThemePageOptions'],
-                'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
-            ],
         ];
     }
 
@@ -73,9 +66,9 @@ class Socialite extends Component
     {
         $manager = resolve(ProviderManager::class);
 
-        if (!$providerData = $manager->getProviderData()) {
-            return;
-        }
+        throw_unless($providerData = $manager->getProviderData(), ValidationException::withMessages([
+            'email' => 'Missing social provider data',
+        ]));
 
         $validated = $this->validate(post(), [
             ['email', 'lang:igniter.user::default.reset.label_email', 'required|email:filter|max:96|unique:customers,email'],
@@ -90,6 +83,8 @@ class Socialite extends Component
 
     protected function loadLinks()
     {
-        return resolve(ProviderManager::class)->listProviderLinks();
+        return resolve(ProviderManager::class)->listProviderLinks()->mapWithKeys(function($url, $code) {
+            return [$code => $url.'?success='.page_url($this->successPage).'&error='.page_url($this->errorPage)];
+        });
     }
 }

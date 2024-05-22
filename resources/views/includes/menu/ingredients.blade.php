@@ -9,14 +9,14 @@
             data-bs-toggle="tooltip"
             title="{{ $ingredient->name }}: {{ $ingredient->description }}"
         >
-        @if ($ingredient->hasMedia('thumb'))
-                <img
-                    class="img-fluid rounded"
-                    alt="{{ $ingredient->name }}"
-                    src="{{ $ingredient->getThumb(['width' => $ingredientThumbWidth, 'height' => $ingredientThumbHeight]) }}"
-                />
-            @endif
-            {{ $ingredient->name }}
+        @if ($showThumb && $ingredient->hasMedia('thumb'))
+            <img
+                class="img-fluid rounded"
+                alt="{{ $ingredient->name }}"
+                src="{{ $ingredient->getThumb(['width' => $ingredientThumbWidth, 'height' => $ingredientThumbHeight]) }}"
+            />
+        @endif
+        {{ $ingredient->name }}
     </span>
     @endforeach
 </div>

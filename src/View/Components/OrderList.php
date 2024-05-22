@@ -17,7 +17,8 @@ class OrderList extends Component
         public int $itemsPerPage = 20,
         public string $sortOrder = 'created_at desc',
         public string $orderPage = 'account.order',
-    ) {
+    )
+    {
     }
 
     public static function componentMeta(): array
@@ -37,11 +38,11 @@ class OrderList extends Component
                 'type' => 'number',
             ],
             'sortOrder' => [
-                'label' => 'Sort order',
+                'label' => 'Default sort order of orders.',
                 'type' => 'select',
             ],
             'orderPage' => [
-                'label' => 'Page to generate order links',
+                'label' => 'Page to redirect to when an order is clicked.',
                 'type' => 'select',
                 'options' => [static::class, 'getThemePageOptions'],
             ],
