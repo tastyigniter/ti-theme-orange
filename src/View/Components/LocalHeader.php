@@ -24,8 +24,7 @@ class LocalHeader extends Component
         public int $reviewPerPage = 10,
         public string $reviewSortOrder = 'created_at desc',
         public string $reviewsPage = 'local.reviews',
-    )
-    {
+    ) {
         $this->itemPerPage = $this->reviewPerPage;
         $this->sortOrder = $this->reviewSortOrder;
     }
