@@ -27,6 +27,17 @@ class AccountSettings extends Component
         ];
     }
 
+    public function defineProperties(): array
+    {
+        return [
+            'loginPage' => [
+                'label' => 'Login page',
+                'type' => 'select',
+                'options' => [static::class, 'getThemePageOptions'],
+            ],
+        ];
+    }
+
     public function render()
     {
         return view('igniter-orange::livewire.account-settings');

@@ -43,13 +43,13 @@ class ResetPassword extends Component
     {
         return [
             'resetPage' => [
-                'label' => 'The reset password page',
+                'label' => 'Page to generate the reset password link. The selected page _permalink_ should contain the `code` parameter.',
                 'type' => 'select',
                 'options' => [static::class, 'getThemePageOptions'],
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
             'loginPage' => [
-                'label' => 'The login page',
+                'label' => 'Page to redirect to after the password has been reset also used to generate the login link.',
                 'type' => 'select',
                 'options' => [static::class, 'getThemePageOptions'],
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
@@ -76,11 +76,15 @@ class ResetPassword extends Component
         ]);
 
         if ($customer = Customer::whereEmail($this->email)->first()) {
+            throw_unless($customer->enabled(), ValidationException::withMessages([
+                'email' => lang('igniter.user::default.reset.alert_reset_error'),
+            ]));
+
             throw_unless($customer->resetPassword(), ValidationException::withMessages([
                 'email' => lang('igniter.user::default.reset.alert_reset_error'),
             ]));
 
-            $customer->sendResetPasswordMail([
+            $customer->mailSendResetPasswordRequest([
                 'reset_link' => page_url($this->resetPage, ['code' => $customer->reset_code]),
                 'account_login_link' => page_url($this->loginPage),
             ]);
@@ -108,6 +112,8 @@ class ResetPassword extends Component
         if (!$customer || !$customer->completeResetPassword($this->resetCode, $this->password)) {
             throw new ApplicationException(lang('igniter.user::default.reset.alert_reset_failed'));
         }
+
+        $customer->mailSendResetPassword(['account_login_link' => page_url($this->loginPage)]);
 
         flash()->success(lang('igniter.user::default.reset.alert_reset_success'));
 

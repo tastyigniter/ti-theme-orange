@@ -24,12 +24,12 @@ class LocalSearch extends Component
 
     public function defineProperties()
     {
-        return array_merge($this->definePropertiesSearchNearby(), [
+        return array_merge([
             'hideSearch' => [
-                'label' => 'Hide search box and display a view menu button',
+                'label' => 'Hide the search field and display a view menu button.',
                 'type' => 'switch',
             ],
-        ]);
+        ], $this->definePropertiesSearchNearby());
     }
 
     public function render()

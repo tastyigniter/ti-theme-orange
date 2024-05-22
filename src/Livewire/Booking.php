@@ -86,37 +86,37 @@ class Booking extends Component
     {
         return [
             'useCalendarView' => [
-                'label' => 'Enable to display a calendar view for date selection',
+                'label' => 'Use the calendar view for date selection.',
                 'type' => 'switch',
                 'validationRule' => 'required|boolean',
             ],
             'weekStartOn' => [
-                'label' => 'Day of the week start the calendar. 0 (Sunday) to 6 (Saturday).',
+                'label' => 'Day of the week to start on. 0 (Sunday) to 6 (Saturday).',
                 'type' => 'number',
                 'validationRule' => 'required|integer|between:0,6',
             ],
             'minGuestSize' => [
-                'label' => 'The minimum guest size',
+                'label' => 'Minimum number of guests allowed for a reservation',
                 'type' => 'number',
                 'validationRule' => 'required|integer',
             ],
             'maxGuestSize' => [
-                'label' => 'The maximum guest size',
+                'label' => 'Maximum number of guests allowed for a reservation.',
                 'type' => 'number',
                 'validationRule' => 'required|integer',
             ],
             'noOfSlots' => [
-                'label' => 'Number of slots to display in the reduced timeslots view',
+                'label' => 'Number of time slots to display in the reduced timeslots view',
                 'type' => 'number',
                 'validationRule' => 'required|integer',
             ],
             'telephoneIsRequired' => [
-                'label' => 'Whether the telephone field should be required',
+                'label' => 'Require telephone number for booking.',
                 'type' => 'switch',
                 'validationRule' => 'required|boolean',
             ],
             'successPage' => [
-                'label' => 'Page to redirect to when checkout is successful',
+                'label' => 'Page to redirect to when the booking is successful',
                 'type' => 'select',
                 'options' => [static::class, 'getThemePageOptions'],
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',

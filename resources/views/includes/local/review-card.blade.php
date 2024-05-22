@@ -6,10 +6,13 @@
             </blockquote>
             <figcaption class="blockquote-footer">
                 <div>
-                    {{ $review->customer->full_name }} @lang('igniter.local::default.text_from')
-                    <cite title="@lang('igniter.local::default.text_source')">
-                        {{ $review->customer->address ? $review->customer->address->city : '' }}
-                    </cite>
+                    {{ $review->author }}
+                    @if($review->customer?->address)
+                        @lang('igniter.local::default.text_from')
+                        <cite title="@lang('igniter.local::default.text_source')">
+                            {{ $review->customer?->address ? $review->customer->address->city : '' }}
+                        </cite>
+                    @endif
                     @lang('igniter.local::default.text_on')
                     {{ $review->created_at->isoFormat(lang('system::lang.moment.date_format_short')) }}
                 </div>

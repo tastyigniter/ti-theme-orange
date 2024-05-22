@@ -7,6 +7,7 @@ use Igniter\Flame\Exception\ApplicationException;
 use Igniter\Flame\Geolite\Facades\Geocoder;
 use Igniter\Flame\Geolite\Model\Location as GeoliteLocation;
 use Igniter\Local\Facades\Location;
+use Igniter\Main\Traits\UsesPage;
 use Igniter\User\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
@@ -15,6 +16,8 @@ use Livewire\Attributes\Session;
 
 trait SearchesNearby
 {
+    use UsesPage;
+
     public ?string $searchQuery = null;
 
     public ?array $searchPoint = null;

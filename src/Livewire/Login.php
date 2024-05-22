@@ -32,7 +32,7 @@ class Login extends \Livewire\Component
     {
         return [
             'redirectPage' => [
-                'label' => 'Redirect Page',
+                'label' => 'Page to redirect to after login.',
                 'type' => 'select',
                 'options' => [static::class, 'getThemePageOptions'],
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',

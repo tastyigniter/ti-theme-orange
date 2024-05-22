@@ -2,11 +2,15 @@
 
 namespace Igniter\Orange\Livewire;
 
+use Igniter\Admin\Classes\FormField;
+use Igniter\Admin\Widgets\Form;
 use Igniter\Flame\Exception\ApplicationException;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Livewire\Forms\AddressBookForm;
 use Igniter\System\Models\Country;
 use Igniter\User\Facades\Auth;
+use Igniter\User\Models\Address;
+use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -34,6 +38,30 @@ class AddressBook extends Component
             'name' => 'igniter.orange::default.component_address_book_title',
             'description' => 'igniter.orange::default.component_address_book_desc',
         ];
+    }
+
+    public function defineProperties(): array
+    {
+        return [
+            'itemsPerPage' => [
+                'label' => 'Number of addresses to display per page',
+                'type' => 'number',
+            ],
+            'sortOrder' => [
+                'label' => 'Default sort order of addresses',
+                'type' => 'select',
+            ],
+        ];
+    }
+
+    public static function getPropertyOptions(Form $form, FormField $field): array|Collection
+    {
+        return match ($field->getConfig('property')) {
+            'sortOrder' => collect(Address::make()->queryModifierGetSorts())->mapWithKeys(function($value, $key) {
+                return [$value => $value];
+            })->all(),
+            default => [],
+        };
     }
 
     public function render()

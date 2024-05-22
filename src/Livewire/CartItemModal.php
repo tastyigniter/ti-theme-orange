@@ -41,8 +41,6 @@ class CartItemModal extends ModalComponent
     /** Whether to hide zero prices on options */
     public bool $hideZeroOptionPrices = false;
 
-    public bool $checkStockCheckout = true;
-
     /**
      * @var \Igniter\Cart\Classes\CartManager
      */
@@ -65,27 +63,22 @@ class CartItemModal extends ModalComponent
     {
         return [
             'showThumb' => [
-                'label' => 'Show cart menu item image in the popup',
+                'label' => 'Display menu item image in the popup',
                 'type' => 'switch',
                 'validationRule' => 'required|boolean',
             ],
             'thumbWidth' => [
-                'label' => 'Cart item image width',
+                'label' => 'Menu item image width',
                 'type' => 'number',
                 'validationRule' => 'nullable|required_if:showThumb,1|integer',
             ],
             'thumbHeight' => [
-                'label' => 'Cart item image height',
+                'label' => 'Menu item image height',
                 'type' => 'number',
                 'validationRule' => 'nullable|required_if:showThumb,1|integer',
             ],
-            'checkStockCheckout' => [
-                'label' => 'lang:igniter.cart::default.help_stock_checkout',
-                'type' => 'switch',
-                'validationRule' => 'required|boolean',
-            ],
             'hideZeroOptionPrices' => [
-                'label' => 'Whether to hide zero prices on options',
+                'label' => 'Hide zero prices on options.',
                 'type' => 'switch',
                 'validationRule' => 'required|boolean',
             ],

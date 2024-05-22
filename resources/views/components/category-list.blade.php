@@ -13,7 +13,7 @@
         </li>
 
         @foreach ($categories->toFlatTree() as $category)
-            @continue($hideEmptyCategory && $category->count_menus < 1)
+            @continue($hideEmpty && $category->count_menus < 1)
 
             <li class="nav-item">
                 <a

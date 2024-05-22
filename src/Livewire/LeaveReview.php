@@ -48,7 +48,7 @@ class LeaveReview extends \Livewire\Component
     {
         return [
             'type' => [
-                'label' => 'Review Type',
+                'label' => 'Leave a review for the order or reservation.',
                 'type' => 'select',
                 'default' => 'order',
                 'options' => [

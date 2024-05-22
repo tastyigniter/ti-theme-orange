@@ -29,12 +29,12 @@ class ReviewList extends Component
     {
         return [
             'itemPerPage' => [
-                'label' => 'Number of reviews to display per page',
+                'label' => 'Number of reviews to display per page.',
                 'type' => 'number',
                 'validationRule' => 'integer|min:1',
             ],
             'sortOrder' => [
-                'label' => 'Sort order',
+                'label' => 'Default sort order of reviews.',
                 'type' => 'select',
                 'validationRule' => 'required|string',
             ],
