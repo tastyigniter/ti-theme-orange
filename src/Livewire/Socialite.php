@@ -85,6 +85,6 @@ class Socialite extends Component
     {
         return resolve(ProviderManager::class)->listProviderLinks()->mapWithKeys(function($url, $code) {
             return [$code => $url.'?success='.page_url($this->successPage).'&error='.page_url($this->errorPage)];
-        });
+        })->all();
     }
 }
