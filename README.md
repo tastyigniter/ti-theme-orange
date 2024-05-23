@@ -264,7 +264,7 @@ The following properties can be configured:
 
 ### Menu Item List
 
-`igniter-orange::menu-item-list` component displays a list of menu items. The component displays the menu items and search form. Users can search for menu items by name, description, or category. 
+`igniter-orange::menu-item-list` component displays a list of menu items. The component displays the menu items and search form. Users can search for menu items by name, description, or category.
 
 The following properties can be configured:
 
