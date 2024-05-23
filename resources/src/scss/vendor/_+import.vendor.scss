@@ -20,12 +20,12 @@
 }
 
 .iti__flag {
-  background-image: url("vendor/igniter-orange/images/iti/flags.png");
+  background-image: url("/vendor/igniter-orange/images/iti/flags.png");
 }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .iti__flag {
-    background-image: url("vendor/igniter-orange/images/iti/flags@2x.png");
+    background-image: url("/vendor/igniter-orange/images/iti/flags@2x.png");
   }
 }
 
