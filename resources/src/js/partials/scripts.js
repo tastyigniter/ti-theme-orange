@@ -53,7 +53,7 @@ $.ajaxPrefilter(function (options) {
         if (!options.headers) options.headers = {}
         options.headers['X-CSRF-TOKEN'] = token
     }
-})
+});
 
 $(function () {
     $(window).on('ajaxError', function (event, context, textStatus, jqXHR) {
@@ -80,23 +80,21 @@ $(function () {
     function dotToArrayString(str) {
         if (str.indexOf('.') !== -1) {
             let parts = str.split('.'), output = parts[0]
-            for (var i = 1; i < parts.length; i++)
-                output += '['+parts[i]+']'
+            for (var i = 1; i < parts.length; i++) output += '['+parts[i]+']'
 
             return output
         } else {
             return str
         }
     }
-})
+});
 
 // CURRENCY HELPER FUNCTION DEFINITION
 // ============================
 $(function () {
     if (app) {
         app.currencyFormat = function (amount) {
-            if (!app.currency)
-                throw 'Currency values not defined in app scope';
+            if (!app.currency) throw 'Currency values not defined in app scope';
 
             return currency(amount, {
                 decimal: app.currency.decimal_sign,
@@ -108,8 +106,9 @@ $(function () {
 
         };
     }
-})
+});
 
+// Remove #anchors from browser URL
 $(function () {
     $('a[href*="#"]:not([href="#"])').click(function () {
         if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
@@ -122,6 +121,28 @@ $(function () {
             }
 
             return false;
+        }
+    });
+});
+
+// Geolocate user position
+$(function () {
+    $(document).on('click', '[data-control="user-position"]', (event) => {
+        const $button = $(event.currentTarget)
+        $button.addClass('disabled')
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                Livewire.dispatch('userPositionUpdated', {
+                    position: [position.coords.latitude, position.coords.longitude]
+                })
+            }, (error) => {
+                $button.removeClass('disabled')
+                $.ti.flashMessage({class: 'danger', text: `ERROR(${error.code}): ${error.message}`})
+            }, {
+                enableHighAccuracy: true, maximumAge: 30000, timeout: 10000
+            });
+        } else {
+            $.ti.flashMessage({class: 'danger', text: "Geolocation is not supported by your browser."})
         }
     });
 });

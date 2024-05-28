@@ -54,13 +54,20 @@
                                     >@lang('igniter.local::default.search.text_change')</a>
                                 </h6>
                                 @if($showAddressPicker)
-                                    <input
-                                        wire:model="searchQuery"
-                                        type="text"
-                                        id="search-query"
-                                        class="bg-white form-control"
-                                        placeholder="@lang('igniter.local::default.label_search_query')"
-                                    />
+                                    <div class="input-group bg-white rounded border p-1 mb-3 mb-lg-0">
+                                        <input
+                                            wire:model="searchQuery"
+                                            type="text"
+                                            id="search-query"
+                                            class="bg-white form-control shadow-none border-none"
+                                            placeholder="@lang('igniter.local::default.label_search_query')"
+                                        />
+                                        <button
+                                            type="button"
+                                            data-control="user-position"
+                                            class="btn shadow-none"
+                                        ><i class="fa fa-location-arrow fs-5 align-bottom"></i> </button>
+                                    </div>
 
                                     <x-igniter-orange::forms.error
                                         field="searchQuery"
