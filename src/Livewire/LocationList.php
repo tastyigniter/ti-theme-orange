@@ -10,6 +10,7 @@ use Igniter\Local\Models\ReviewSettings;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
 use Igniter\Orange\Data\LocationData;
+use Igniter\Orange\Livewire\Concerns\SearchesNearby;
 use Igniter\User\Facades\AdminAuth;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
@@ -21,6 +22,7 @@ use Livewire\WithPagination;
 class LocationList extends \Livewire\Component
 {
     use ConfigurableComponent;
+    use SearchesNearby;
     use UsesPage;
     use WithPagination;
 

@@ -122,7 +122,7 @@ class FulfillmentModal extends \Livewire\Component
         $this->updateTimeslot();
 
         if ($this->searchQuery) {
-            $userLocation = $this->geocodeSearchQuery($this->searchQuery, false);
+            $userLocation = $this->geocodeSearchQuery($this->searchQuery);
             if ($area = $this->location->current()->searchDeliveryArea($userLocation->getCoordinates())) {
                 $this->location->updateUserPosition($userLocation);
                 $this->location->updateNearbyArea($area);

@@ -1,20 +1,22 @@
 <div>
     <div class="row">
         <div class="col-sm-3">
-            @if ($searchQueryPosition->isValid())
-                <div class="d-flex bg-white border rounded p-3 mb-3">
-                    <h5 class="mb-0 d-inline-block flex-grow-1">
-                        <i class="fa fa-map-marker"></i>&nbsp;&nbsp;
+            <div class="d-flex bg-white border rounded p-3 mb-3">
+                <h5 class="mb-0 d-inline-block flex-grow-1">
+                    <i class="fa fa-map-marker"></i>&nbsp;&nbsp;
+                    @if ($searchQueryPosition->isValid())
                         {{ $searchQueryPosition->getLocality() }}
-                    </h5>
-                    <a
-                        role="button"
-                        class="text-primary"
-                        data-bs-toggle="modal"
-                        data-bs-target="#fulfillmentModal"
-                    >@lang('igniter.local::default.search.text_change')</a>
-                </div>
-            @endif
+                    @else
+                        ---
+                    @endif
+                </h5>
+                <a
+                    role="button"
+                    class="text-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#addressPickerModal"
+                >@lang('igniter.local::default.search.text_change')</a>
+            </div>
             <div class="bg-white border rounded p-3 mb-3">
                 @include('igniter-orange::includes.local.list-filter-items', ['filters' => $this->orderTypes, 'field' => 'orderType'])
             </div>
@@ -69,6 +71,53 @@
                     </div>
                 </div>
             @endif
+        </div>
+    </div>
+
+    <div
+        wire:ignore.self
+        class="modal fade"
+        id="addressPickerModal"
+        tabindex="-1"
+        aria-labelledby="addressPickerModalLabel"
+        aria-hidden="true"
+    >
+        <div class="modal-dialog modal-dialog-centered">
+            <x-igniter-orange::forms.form class="w-100" wire:submit="onUpdateSearchQuery">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="input-group bg-white rounded border p-1 mb-3 mb-lg-0">
+                            <input
+                                wire:model="searchQuery"
+                                type="text"
+                                id="search-query"
+                                class="bg-white form-control shadow-none border-none"
+                                placeholder="@lang('igniter.local::default.label_search_query')"
+                            />
+                            <button
+                                type="button"
+                                data-control="user-position"
+                                class="btn shadow-none"
+                                wire:loading.class="disabled"
+                            ><i class="fa fa-location-arrow fs-5 align-bottom"></i></button>
+                        </div>
+
+                        <x-igniter-orange::forms.error
+                            field="searchQuery"
+                            id="searchQueryFeedback"
+                            class="text-danger"
+                        />
+                    </div>
+                    <div class="modal-footer border-none">
+                        <button
+                            type="submit"
+                            data-control="search-local"
+                            class="btn btn-primary w-100"
+                            wire:loading.class="disabled"
+                        >@lang('igniter.local::default.search.text_change')</button>
+                    </div>
+                </div>
+            </x-igniter-orange::forms.form>
         </div>
     </div>
 </div>

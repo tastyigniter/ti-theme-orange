@@ -3,7 +3,6 @@
 namespace Igniter\Orange\Livewire\Concerns;
 
 use Exception;
-use Igniter\Flame\Exception\ApplicationException;
 use Igniter\Flame\Geolite\Facades\Geocoder;
 use Igniter\Flame\Geolite\Model\Location as GeoliteLocation;
 use Igniter\Local\Facades\Location;
@@ -12,7 +11,9 @@ use Igniter\User\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Session;
+use Livewire\Livewire;
 
 trait SearchesNearby
 {
@@ -58,13 +59,10 @@ trait SearchesNearby
     public function onSearchNearby()
     {
         try {
-            if (!$searchQuery = $this->getSearchQuery()) {
-                throw new ApplicationException(lang('igniter.local::default.alert_no_search_query'));
-            }
+            $userLocation = $this->geocodeUserPosition();
 
-            $userLocation = is_array($searchQuery)
-                ? $this->geocodeSearchPoint($searchQuery)
-                : $this->geocodeSearchQuery($searchQuery);
+            Location::updateUserPosition($userLocation);
+            Location::putSession('searchQuery', $this->searchQuery);
 
             $nearByLocation = $this->findNearByLocation($userLocation);
 
@@ -86,7 +84,7 @@ trait SearchesNearby
 
         $searchQuery = format_address($address->toArray(), false);
 
-        $userLocation = $this->geocodeSearchQuery($searchQuery, false);
+        $userLocation = $this->geocodeSearchQuery($searchQuery);
 
         $this->searchQuery = null;
 
@@ -111,6 +109,32 @@ trait SearchesNearby
         $this->searchField = 'searchQuery';
     }
 
+    #[On('userPositionUpdated')]
+    public function onUserPositionUpdated($position = null)
+    {
+        $this->searchPoint = $position;
+
+        try {
+            $this->geocodeUserPosition();
+        } catch (Exception $ex) {
+            throw ValidationException::withMessages([$this->searchField => $ex->getMessage()]);
+        }
+    }
+
+    public function onUpdateSearchQuery()
+    {
+        try {
+            $userLocation = $this->geocodeUserPosition();
+
+            Location::updateUserPosition($userLocation);
+            Location::putSession('searchQuery', $this->searchQuery);
+        } catch (Exception $ex) {
+            throw ValidationException::withMessages([$this->searchField => $ex->getMessage()]);
+        }
+
+        return $this->redirect(Livewire::originalUrl(), navigate: true);
+    }
+
     protected function getSearchQuery()
     {
         if ($coordinates = $this->searchPoint) {
@@ -124,17 +148,9 @@ trait SearchesNearby
      * @return GeoliteLocation
      * @throws \Igniter\Flame\Exception\ApplicationException
      */
-    protected function geocodeSearchQuery($searchQuery, bool $store = true)
+    protected function geocodeSearchQuery($searchQuery)
     {
-        $collection = Geocoder::geocode($searchQuery);
-
-        $userLocation = $this->handleGeocodeResponse($collection, $store);
-
-        if ($store) {
-            Location::putSession('searchQuery', $searchQuery);
-        }
-
-        return $userLocation;
+        return $this->handleGeocodeResponse(Geocoder::geocode($searchQuery));
     }
 
     protected function geocodeSearchPoint($searchPoint)
@@ -152,13 +168,12 @@ trait SearchesNearby
 
         $userLocation = $this->handleGeocodeResponse($collection);
 
-        Location::putSession('searchPoint', $searchPoint);
-        Location::putSession('searchQuery', $userLocation->format());
+        $this->searchQuery = $userLocation->format();
 
         return $userLocation;
     }
 
-    protected function handleGeocodeResponse($collection, bool $store = true)
+    protected function handleGeocodeResponse($collection)
     {
         if (!$collection || $collection->isEmpty()) {
             Log::error(implode(PHP_EOL, Geocoder::getLogs()));
@@ -173,10 +188,6 @@ trait SearchesNearby
             throw ValidationException::withMessages([
                 $this->searchField => lang('igniter.local::default.alert_invalid_search_query'),
             ]);
-        }
-
-        if ($store) {
-            Location::updateUserPosition($userLocation);
         }
 
         return $userLocation;
@@ -199,5 +210,16 @@ trait SearchesNearby
         ]));
 
         return $nearByLocation;
+    }
+
+    protected function geocodeUserPosition(): mixed
+    {
+        throw_unless($searchQuery = $this->getSearchQuery(), ValidationException::withMessages([
+            $this->searchField => lang('igniter.local::default.alert_no_search_query'),
+        ]));
+
+        return is_array($searchQuery)
+            ? $this->geocodeSearchPoint($searchQuery)
+            : $this->geocodeSearchQuery($searchQuery);
     }
 }
