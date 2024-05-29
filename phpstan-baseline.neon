@@ -317,7 +317,7 @@ parameters:
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:putSession\\(\\)\\.$#"
-			count: 3
+			count: 2
 			path: src/Livewire/FulfillmentModal.php
 
 		-
@@ -332,7 +332,7 @@ parameters:
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:updateUserPosition\\(\\)\\.$#"
-			count: 1
+			count: 2
 			path: src/Livewire/FulfillmentModal.php
 
 		-
@@ -392,7 +392,7 @@ parameters:
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:putSession\\(\\)\\.$#"
-			count: 3
+			count: 2
 			path: src/Livewire/LocalSearch.php
 
 		-
@@ -407,7 +407,7 @@ parameters:
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:updateUserPosition\\(\\)\\.$#"
-			count: 1
+			count: 2
 			path: src/Livewire/LocalSearch.php
 
 		-
@@ -417,6 +417,46 @@ parameters:
 
 		-
 			message: "#^Access to an undefined property Igniter\\\\Orange\\\\Livewire\\\\LocationList\\:\\:\\$sorters\\.$#"
+			count: 2
+			path: src/Livewire/LocationList.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Flame\\\\Geolite\\\\Facades\\\\Geocoder\\:\\:geocode\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/LocationList.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Flame\\\\Geolite\\\\Facades\\\\Geocoder\\:\\:getLogs\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/LocationList.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Flame\\\\Geolite\\\\Facades\\\\Geocoder\\:\\:reverse\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/LocationList.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:getSession\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/LocationList.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:putSession\\(\\)\\.$#"
+			count: 2
+			path: src/Livewire/LocationList.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:searchByCoordinates\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/LocationList.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:updateNearbyArea\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/LocationList.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:updateUserPosition\\(\\)\\.$#"
 			count: 2
 			path: src/Livewire/LocationList.php
 
@@ -438,6 +478,11 @@ parameters:
 		-
 			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\AdminAuth\\:\\:getUser\\(\\)\\.$#"
 			count: 1
+			path: src/Livewire/LocationList.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:customer\\(\\)\\.$#"
+			count: 2
 			path: src/Livewire/LocationList.php
 
 		-
