@@ -65,7 +65,7 @@ class LeaveReview extends \Livewire\Component
             'allowReviews' => ReviewSettings::allowReviews(),
             'reviewable' => $this->reviewable(),
             'hasCustomerReview' => (bool)$this->loadReview(),
-            'reviewRatingHints' => $this->getHints(),
+            'reviewRatingHints' => ReviewSettings::getHints(),
         ]);
     }
 
@@ -123,14 +123,6 @@ class LeaveReview extends \Livewire\Component
         });
 
         flash()->success(lang('igniter.local::default.review.alert_review_success'))->now();
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function getHints()
-    {
-        return ReviewModel::make()->getRatingOptions();
     }
 
     protected function reviewable()

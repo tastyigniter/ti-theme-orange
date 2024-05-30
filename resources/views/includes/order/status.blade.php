@@ -25,7 +25,7 @@
             </div>
         </div>
     </div>
-    <h3 style="color: {{ $order->status->status_color }};">{{ $order->status->status_name }}</h3>
+    <h3>{{ $order->status->status_name }}</h3>
     <p class="lead">{!! $order->status->status_comment !!}</p>
 @else
     <h3>--</h3>

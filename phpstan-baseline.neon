@@ -346,11 +346,6 @@ parameters:
 			path: src/Livewire/FulfillmentModal.php
 
 		-
-			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:getRatingOptions\\(\\)\\.$#"
-			count: 1
-			path: src/Livewire/LeaveReview.php
-
-		-
 			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Models\\\\Review\\:\\:whereReviewable\\(\\)\\.$#"
 			count: 1
 			path: src/Livewire/LeaveReview.php
