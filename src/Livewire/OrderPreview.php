@@ -161,7 +161,15 @@ class OrderPreview extends \Livewire\Component
         ]));
 
         rescue(function() use ($order) {
-            if ($notes = resolve(CartManager::class)->restoreWithOrderMenus($order)) {
+            $cartManager = resolve(CartManager::class);
+            $currentInstance = $cartManager->getCart()->currentInstance();
+            $cartManager->cartInstance($order->location_id);
+
+            $notes = $cartManager->restoreWithOrderMenus($order->getOrderMenus());
+
+            $cartManager->getCart()->instance($currentInstance);
+
+            if ($notes) {
                 throw new ApplicationException(implode(PHP_EOL, $notes));
             }
         }, function(Exception $ex) {
