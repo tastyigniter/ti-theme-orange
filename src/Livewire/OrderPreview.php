@@ -2,7 +2,6 @@
 
 namespace Igniter\Orange\Livewire;
 
-use Exception;
 use Igniter\Cart\Classes\CartManager;
 use Igniter\Cart\Classes\OrderManager;
 use Igniter\Flame\Exception\ApplicationException;
@@ -116,7 +115,7 @@ class OrderPreview extends \Livewire\Component
             return $this->redirect(MainHelper::pageUrl(Auth::customer() ? $this->ordersPage : $this->checkoutPage));
         }
 
-        if ($this->orderManager->isCurrentOrderId($processedOrder?->order_id)) {
+        if ($this->orderManager->isCurrentOrderId($processedOrder->order_id)) {
             $this->orderManager->clearOrder();
         }
     }
@@ -172,7 +171,7 @@ class OrderPreview extends \Livewire\Component
             if ($notes) {
                 throw new ApplicationException(implode(PHP_EOL, $notes));
             }
-        }, function(Exception $ex) {
+        }, function(\Throwable $ex) {
             throw ValidationException::withMessages(['onReOrder' => $ex->getMessage()]);
         });
 
