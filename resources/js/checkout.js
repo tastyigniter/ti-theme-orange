@@ -7,7 +7,7 @@
     var Checkout = function (element, options) {
         this.$el = $(element)
         this.options = options || {}
-        this.paymentInputSelector = 'input[name="' + this.options.paymentInputName + '"]'
+        this.paymentInputSelector = 'input[name="'+this.options.paymentInputName+'"]'
         this.$form = $(this.options.formSelector)
         this.$checkoutBtn = $(this.options.buttonSelector)
 
@@ -25,7 +25,7 @@
                 $(this).prop('disabled', false)
             })
             .on('ajaxFail', this.options.buttonSelector, function () {
-                this.$checkoutBtn.prop('disabled', false)
+                self.$checkoutBtn.prop('disabled', false)
             })
             .on('submit', this.options.formSelector, $.proxy(this.onSubmitCheckoutForm, this))
 
@@ -33,7 +33,7 @@
             self.completeCheckout();
         })
 
-        Livewire.hook('morph.updating',  ({ el, component, toEl, skip, childrenOnly }) => {
+        Livewire.hook('morph.updating', ({el, component, toEl, skip, childrenOnly}) => {
             if (this.$checkoutBtn.data('skipValidation')) {
 
                 if ($(el).data('toggle') === 'payments' || $(el).is(this.options.buttonSelector)) {
@@ -57,7 +57,7 @@
     Checkout.prototype.choosePayment = function ($el) {
         var $paymentToggle = $el.closest('[data-toggle="payments"]')
 
-        if ($paymentToggle.hasClass('in-progress') || $el.find(this.paymentInputSelector).is(':checked'))
+        if ($paymentToggle.hasClass('in-progress') || $el.find(this.paymentInputSelector).attr('checked'))
             return
 
         $(this.paymentInputSelector, document).prop('disabled', true)
@@ -69,7 +69,7 @@
     }
 
     Checkout.prototype.triggerPaymentInputChange = function ($el) {
-        var paymentInputSelector = this.paymentInputSelector + '[value=' + $el.data('paymentCode') + ']';
+        var paymentInputSelector = this.paymentInputSelector+'[value='+$el.data('paymentCode')+']';
         setTimeout(function () {
             $(paymentInputSelector, document).prop('checked', true).trigger('change')
         }, 1)
@@ -93,7 +93,7 @@
     }
 
     Checkout.prototype.onSubmitCheckoutForm = function (event) {
-        var $selectedPaymentMethod = $(this.paymentInputSelector + ':checked', document)
+        var $selectedPaymentMethod = $(this.paymentInputSelector+':checked', document)
 
         event.preventDefault();
 
