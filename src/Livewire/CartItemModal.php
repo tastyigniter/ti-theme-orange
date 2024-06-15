@@ -41,6 +41,9 @@ class CartItemModal extends ModalComponent
     /** Whether to hide zero prices on options */
     public bool $hideZeroOptionPrices = false;
 
+    /** Limit number of item option values */
+    public ?int $limitOptionsValues = 6;
+
     /**
      * @var \Igniter\Cart\Classes\CartManager
      */
@@ -81,6 +84,11 @@ class CartItemModal extends ModalComponent
                 'label' => 'Hide zero prices on options.',
                 'type' => 'switch',
                 'validationRule' => 'required|boolean',
+            ],
+            'limitOptionsValues' => [
+                'label' => 'Limit number of item option values',
+                'type' => 'number',
+                'validationRule' => 'nullable|integer',
             ],
         ];
     }

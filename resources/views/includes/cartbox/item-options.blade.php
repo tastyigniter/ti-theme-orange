@@ -26,7 +26,24 @@
                     value="{{ $menuOption->menu_option_id }}"
                 />
                 <div class="option-group">
-                    @include('igniter-orange::includes.cartbox.item-options-'.$menuOption->display_type)
+                    @if(!$menuOption->option->isSelectDisplayType() && $limitOptionsValues && $optionValues->count() >= $limitOptionsValues)
+                        @include('igniter-orange::includes.cartbox.item-options-'.$menuOption->display_type, [
+                            'optionValues' => $optionValues->sortBy('priority')->slice(0, $limitOptionsValues),
+                        ])
+
+                        <div class="hidden-item-options" style="display: none;">
+                            @include('igniter-orange::includes.cartbox.item-options-'.$menuOption->display_type, [
+                                'optionValues' => $optionValues->sortBy('priority')->slice($limitOptionsValues-1),
+                            ])
+                        </div>
+                        <button
+                            type="button"
+                            data-toggle="more-options"
+                            class="btn btn-link"
+                        >@lang('igniter.orange::default.button_show_more_options')</button>
+                    @else
+                        @include('igniter-orange::includes.cartbox.item-options-'.$menuOption->display_type)
+                    @endif
                 </div>
             @endif
         </div>

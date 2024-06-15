@@ -26,6 +26,14 @@ window.OrangeCartItemOptions = (min, max) => {
             Livewire.on('cartItemTotalCalculated', () => {
                 this.toggleSelection()
             })
+
+            $(this.$refs['item-options']).on('click', '[data-toggle="more-options"]', function (event) {
+                var $el = $(event.currentTarget),
+                    $container = $el.closest('[data-control="item-option"]')
+
+                $el.fadeOut()
+                $container.find('.hidden-item-options').fadeIn();
+            })
         }
     }
 }
