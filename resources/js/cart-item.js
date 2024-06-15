@@ -33,9 +33,9 @@ window.OrangeCartItem = () => {
             Livewire.dispatch('cartItemTotalCalculated')
         },
         init() {
-            this.minQuantity = this.$wire.get('minQuantity');
-            this.price = this.$wire.get('price');
-            this.quantity = this.$wire.get('quantity');
+            this.minQuantity = parseFloat(this.$wire.get('minQuantity'));
+            this.price = parseFloat(this.$wire.get('price'));
+            this.quantity = parseInt(this.$wire.get('quantity'));
             this.comment = this.$wire.get('comment');
 
             this.$nextTick(() => {
