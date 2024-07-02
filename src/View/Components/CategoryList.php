@@ -22,8 +22,7 @@ class CategoryList extends Component
         public string $menusPage = 'local.menus',
         public bool $hideEmpty = false,
         public bool $useLinkAnchor = true,
-    ) {
-    }
+    ) {}
 
     public static function componentMeta(): array
     {

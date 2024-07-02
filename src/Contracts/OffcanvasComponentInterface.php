@@ -2,6 +2,4 @@
 
 namespace Igniter\Orange\Contracts;
 
-interface OffcanvasComponentInterface
-{
-}
+interface OffcanvasComponentInterface {}

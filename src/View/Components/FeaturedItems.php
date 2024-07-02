@@ -19,8 +19,7 @@ class FeaturedItems extends Component
         public bool $showThumb = true,
         public ?int $itemWidth = 400,
         public ?int $itemHeight = 300,
-    ) {
-    }
+    ) {}
 
     public static function componentMeta(): array
     {
