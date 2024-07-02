@@ -7,6 +7,7 @@ use Igniter\Main\Traits\UsesPage;
 use Igniter\Orange\Livewire\Forms\LoginForm;
 use Igniter\User\Actions\LoginUser;
 use Igniter\User\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class Login extends \Livewire\Component
 {
@@ -65,10 +66,14 @@ class Login extends \Livewire\Component
     {
         $this->form->validate();
 
-        resolve(LoginUser::class, [
-            'credentials' => $this->form->except('remember'),
-            'remember' => $this->form->remember,
-        ])->handle();
+        rescue(function() {
+            resolve(LoginUser::class, [
+                'credentials' => $this->form->except('remember'),
+                'remember' => $this->form->remember,
+            ])->handle();
+        }, function(\Throwable $e) {
+            throw ValidationException::withMessages(['form.email' => $e->getMessage()]);
+        });
 
         if ($redirect = input('redirect')) {
             return redirect()->to(page_url($redirect));

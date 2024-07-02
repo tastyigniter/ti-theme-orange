@@ -8,6 +8,7 @@ use Igniter\Cart\Models\Menu as MenuModel;
 use Igniter\Local\Facades\Location;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Data\MenuItemData;
+use Igniter\System\Facades\Assets;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Url;
 use Livewire\WithPagination;
@@ -153,6 +154,8 @@ class MenuItemList extends \Livewire\Component
 
     public function mount()
     {
+        Assets::addJs('igniter-orange::/js/menus.js', 'menus-js');
+
         $this->selectedCategorySlug = request()->route()->parameter('category', '');
     }
 

@@ -516,6 +516,11 @@ parameters:
 			path: src/Livewire/MenuItemList.php
 
 		-
+			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addJs\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/MenuItemList.php
+
+		-
 			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:customer\\(\\)\\.$#"
 			count: 3
 			path: src/Livewire/OrderPreview.php
@@ -577,11 +582,6 @@ parameters:
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addJs\\(\\)\\.$#"
-			count: 1
-			path: src/Livewire/Utils/Modal.php
-
-		-
-			message: "#^Call to an undefined static method UnitEnum\\:\\:tryFrom\\(\\)\\.$#"
 			count: 1
 			path: src/Livewire/Utils/Modal.php
 
@@ -692,11 +692,6 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:whereCode\\(\\)\\.$#"
-			count: 1
-			path: src/View/Components/Nav.php
-
-		-
-			message: "#^Call to static method active\\(\\) on an unknown class Laravel\\\\Pennant\\\\Feature\\.$#"
 			count: 1
 			path: src/View/Components/Nav.php
 

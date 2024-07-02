@@ -1,7 +1,7 @@
 <div
     {{ $attributes }}
 >
-    @if($readOnly)
+    @if($readOnly && isset($max))
         @for ($value = 1; $value<($max+1); $value++)
             <span @class([
                 'fa-star',
@@ -9,7 +9,7 @@
                 'far' => $value >= $score
              ])></span>
         @endfor
-    @else
+    @elseif(isset($hints))
         <div
             wire:ignore
             data-control="star-rating"

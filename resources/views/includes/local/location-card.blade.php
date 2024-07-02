@@ -24,7 +24,7 @@
                         </div>
                     @endif
                     <div class="text-muted text-truncate">
-                        {{ format_address($locationData->address) }}
+                        {{ format_address($locationData->address, false) }}
                     </div>
                     @if($locationData->distance())
                         <div class="my-1">

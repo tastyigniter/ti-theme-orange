@@ -12,7 +12,7 @@
             </thead>
             <tbody>
             @foreach ($orders as $order)
-                <tr class="border-bottom align-middle">
+                <tr @class(['align-middle', 'border-top' => !$loop->first])>
                     <td>
                         <a
                             class="btn btn-light"

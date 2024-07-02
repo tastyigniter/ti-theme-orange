@@ -1,175 +1,75 @@
-window.OrangeModal = () => {
-    return {
-        show: false,
-        showActiveComponent: true,
-        activeComponent: false,
-        componentHistory: [],
-        modalWidth: null,
-        bsModal: null,
-        getActiveComponentModalAttribute(key) {
-            if (this.$wire.get('components')[this.activeComponent] !== undefined) {
-                return this.$wire.get('components')[this.activeComponent]['modalAttributes'][key];
-            }
-        },
-        closeModalOnEscape(trigger) {
-            if (this.getActiveComponentModalAttribute('closeOnEscape') === false) {
-                return;
-            }
++function ($) {
+    "use strict";
 
-            let force = this.getActiveComponentModalAttribute('closeOnEscapeIsForceful') === true;
-            this.closeModal(force);
-        },
-        closeModalOnClickAway(trigger) {
-            if (this.getActiveComponentModalAttribute('closeOnClickAway') === false) {
-                return;
-            }
+    if ($.ti.orangeModal === undefined)
+        $.ti.orangeModal = {}
 
-            this.closeModal(true);
-        },
-        closeModal(force = false, skipPreviousModals = 0, destroySkipped = false) {
-            document.body.style.overflow = null;
-            document.body.style.paddingRight = null;
+    var OrangeModal = function (element, options) {
+        this.$el = $(element)
+        this.options = options || {}
 
-            if (this.show === false) {
-                return;
-            }
+        this.init()
+    }
 
-            this.bsModal.hide()
+    OrangeModal.prototype.init = function () {
+        $(document).on('click', this.options.toggleSelector, $.proxy(this.show, this));
 
-            if (this.getActiveComponentModalAttribute('dispatchCloseEvent') === true) {
-                const componentName = this.$wire.get('components')[this.activeComponent].name;
-                Livewire.dispatch('modalClosed', componentName);
-            }
+        this.$el.on('hide.bs.modal', $.proxy(this.onModalHidden, this))
+        this.$el.on('shown.bs.modal', $.proxy(this.onModalShown, this))
 
-            // if (this.getActiveComponentModalAttribute('destroyOnClose') === true) {
-                this.bsModal.dispose()
-                Livewire.dispatch('destroyComponent', {id: this.activeComponent});
-            // }
+        Livewire.on('hideModal', () => {
+            let modal = bootstrap.Modal.getOrCreateInstance(this.$el.get(0));
+            modal.hide()
+        })
+    }
 
-            if (skipPreviousModals > 0) {
-                for (var i = 0; i < skipPreviousModals; i++) {
-                    if (destroySkipped) {
-                        const id = this.componentHistory[this.componentHistory.length-1];
-                        Livewire.dispatch('destroyComponent', {id: id});
-                    }
-                    this.componentHistory.pop();
-                }
-            }
+    OrangeModal.prototype.show = function (event) {
+        var $button = $(event.currentTarget);
 
-            const id = this.componentHistory.pop();
+        this.options.component = $button.data('component');
+        this.options.params = $button.data('arguments');
 
-            if (id && !force) {
-                if (id) {
-                    this.setActiveModalComponent(id, true);
-                } else {
-                    this.setShowPropertyTo(false);
-                }
-            } else {
-                this.setShowPropertyTo(false);
-            }
-        },
-        setActiveModalComponent(id, skip = false) {
-            this.setShowPropertyTo(true);
+        let modal = bootstrap.Modal.getOrCreateInstance(this.$el.get(0));
+        modal.show();
+    }
 
-            if (this.activeComponent === id) {
-                return;
-            }
+    OrangeModal.prototype.onModalHidden = function (event) {
+        Livewire.dispatch('resetModal')
+    }
 
-            if (this.activeComponent !== false && skip === false) {
-                this.componentHistory.push(this.activeComponent);
-            }
+    OrangeModal.prototype.onModalShown = function (event) {
+        Livewire.dispatch('showModal', {
+            component: this.options.component,
+            arguments: this.options.params,
+        })
+    }
 
-            let focusableTimeout = 50;
+    OrangeModal.DEFAULTS = {
+        toggleSelector: '[data-toggle="orange-modal"]',
+    }
 
-            if (this.activeComponent === false) {
-                this.activeComponent = id
-                this.showActiveComponent = true;
-            } else {
-                this.showActiveComponent = false;
+    var old = $.fn.orangeModal
 
-                focusableTimeout = 400;
+    $.fn.orangeModal = function (option) {
+        var args = arguments
 
-                setTimeout(() => {
-                    this.activeComponent = id;
-                    this.showActiveComponent = true;
-                }, 300);
-            }
+        return this.each(function () {
+            var $this = $(this)
+            var data = $this.data('ti.orangeModal')
+            var options = $.extend({}, OrangeModal.DEFAULTS, $this.data(), typeof option == 'object' && option)
+            if (!data) $this.data('ti.orangeModal', (data = new OrangeModal(this, options)))
+            if (typeof option == 'string') data[option].apply(data, args)
+        })
+    }
 
-            this.$nextTick(() => {
-                setTimeout(() => {
-                    const bsModalEl = document.getElementById('modal-'+id)
-                    this.bsModal = new bootstrap.Modal(bsModalEl)
-                    this.bsModal.show()
+    $.fn.orangeModal.Constructor = OrangeModal
 
-                    bsModalEl.addEventListener('hidden.bs.modal', event => {
-                        Livewire.dispatch('closeModal');
-                    })
-                }, 300)
+    $.fn.orangeModal.noConflict = function () {
+        $.fn.booking = old
+        return this
+    }
 
-                let focusable = this.$refs[id]?.querySelector('[autofocus]');
-                if (focusable) {
-                    setTimeout(() => {
-                        focusable.focus();
-                    }, focusableTimeout);
-                }
-            });
-        },
-        focusables() {
-            let selector = 'a, button, input:not([type=\'hidden\'], textarea, select, details, [tabindex]:not([tabindex=\'-1\'])'
-
-            return [...this.$el.querySelectorAll(selector)]
-                .filter(el => !el.hasAttribute('disabled'))
-        },
-        firstFocusable() {
-            return this.focusables()[0]
-        },
-        lastFocusable() {
-            return this.focusables().slice(-1)[0]
-        },
-        nextFocusable() {
-            return this.focusables()[this.nextFocusableIndex()] || this.firstFocusable()
-        },
-        prevFocusable() {
-            return this.focusables()[this.prevFocusableIndex()] || this.lastFocusable()
-        },
-        nextFocusableIndex() {
-            return (this.focusables().indexOf(document.activeElement)+1) % (this.focusables().length+1)
-        },
-        prevFocusableIndex() {
-            return Math.max(0, this.focusables().indexOf(document.activeElement))-1
-        },
-        setShowPropertyTo(show) {
-            this.show = show;
-
-            if (show) {
-                document.body.classList.add('overflow-y-hidden');
-            } else {
-                document.body.classList.remove('overflow-y-hidden');
-
-                setTimeout(() => {
-                    this.activeComponent = false;
-                    this.$wire.resetState();
-                }, 300);
-            }
-        },
-        init() {
-            this.modalWidth = this.getActiveComponentModalAttribute('maxWidthClass');
-
-            Livewire.on('closeModal', (data) => {
-                this.closeModal(data?.force ?? false, data?.skipPreviousModals ?? 0, data?.destroySkipped ?? false);
-            });
-
-            Livewire.on('activeModalComponentChanged', ({id}) => {
-                this.setActiveModalComponent(id);
-            });
-
-            Livewire.on('openModal', () => {
-                document.body.classList.add('modal-open');
-                document.body.style.overflow = 'hidden';
-                document.body.style.paddingRight = '15px';
-                document.body.setAttribute('data-bs-overflow', 'visible')
-                this.setShowPropertyTo(true);
-            });
-        }
-    };
-}
+    $(document).render(function () {
+        $('#orange-modal').orangeModal()
+    });
+}(window.jQuery);

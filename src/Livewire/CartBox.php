@@ -32,6 +32,8 @@ class CartBox extends Component
      */
     protected $cartManager;
 
+    protected $listeners = ['hideModal' => '$refresh'];
+
     public static function componentMeta(): array
     {
         return [
@@ -85,7 +87,7 @@ class CartBox extends Component
 
     public function onOpenItemModal(string $rowId, int $menuId)
     {
-        $this->dispatch('openModal', component: 'igniter-orange::cart-item-modal', arguments: ['menuId' => $menuId, 'rowId' => $rowId]);
+        $this->dispatch('showModal', component: 'igniter-orange::cart-item-modal', arguments: ['menuId' => $menuId, 'rowId' => $rowId]);
     }
 
     #[On('cart-box:add-item')]

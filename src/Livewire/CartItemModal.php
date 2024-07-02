@@ -2,12 +2,13 @@
 
 namespace Igniter\Orange\Livewire;
 
+use Exception;
 use Igniter\Cart\Classes\CartManager;
 use Igniter\Local\Facades\Location;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Contracts\ModalComponent;
 use Igniter\Orange\Data\MenuItemData;
-use Livewire\Livewire;
+use Illuminate\Validation\ValidationException;
 
 class CartItemModal extends ModalComponent
 {
@@ -122,15 +123,19 @@ class CartItemModal extends ModalComponent
 
     public function onSave()
     {
-        $this->cartManager->addOrUpdateCartItem([
-            'menuId' => $this->menuId,
-            'rowId' => $this->rowId,
-            'quantity' => $this->quantity,
-            'comment' => $this->comment,
-            'menu_options' => $this->menuOptions,
-        ]);
+        try {
+            $this->cartManager->addOrUpdateCartItem([
+                'menuId' => $this->menuId,
+                'rowId' => $this->rowId,
+                'quantity' => $this->quantity,
+                'comment' => $this->comment,
+                'menu_options' => $this->menuOptions,
+            ]);
 
-        return $this->redirect(Livewire::originalUrl(), navigate: true);
+            $this->dispatch('hideModal');
+        } catch (Exception $ex) {
+            throw ValidationException::withMessages(['menuOptions' => $ex->getMessage()]);
+        }
     }
 
     public function getLocationId()

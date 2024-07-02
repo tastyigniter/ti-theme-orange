@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="text-muted">
-            {!! format_address($locationInfo->address, FALSE) !!}
+            {{format_address($locationInfo->address, false)}}
         </div>
         @if ($allowReviews)
             <div class="rating rating-sm mt-2">

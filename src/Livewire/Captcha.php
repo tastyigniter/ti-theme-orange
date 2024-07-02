@@ -25,7 +25,7 @@ class Captcha extends Component
 
     public function mount()
     {
-        $this->apiKey = CaptchaSettings::get('api_site_key');
+        $this->apiKey = CaptchaSettings::get('api_site_key', '');
         $this->lang = CaptchaSettings::get('lang', 'en');
     }
 

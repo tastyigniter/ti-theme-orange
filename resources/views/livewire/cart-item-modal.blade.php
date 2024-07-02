@@ -6,7 +6,7 @@
     data-price-amount="{{ $price }}"
 >
     <form method="POST" wire:submit="onSave">
-        <div class="modal-content">
+        <div class="modal-content border-0">
             <div class="modal-header border-0">
                 <h4 class="modal-title">{{ $menuItemData->name }}</h4>
                 <button
@@ -43,6 +43,7 @@
                 >
                     @include('igniter-orange::includes.cartbox.item-options')
                 </div>
+                <x-igniter-orange::forms.error field="menuOptions" class="text-danger mb-3"/>
 
                 <div class="menu-comment">
                     <textarea
@@ -52,6 +53,7 @@
                         rows="2"
                         placeholder="@lang('igniter.cart::default.label_add_comment')"
                     >{{ $cartItem ? $cartItem->comment : null }}</textarea>
+                    <x-igniter-orange::forms.error field="comment" class="text-danger"/>
                 </div>
             </div>
 

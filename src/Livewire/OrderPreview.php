@@ -20,7 +20,7 @@ class OrderPreview extends \Livewire\Component
     /** The parameter name used for the order hash code */
     public string $hashParamName = 'hash';
 
-    public string $hash;
+    public ?string $hash = null;
 
     public string $loginPage = 'account.login';
 
@@ -105,10 +105,10 @@ class OrderPreview extends \Livewire\Component
         $this->orderManager = resolve(OrderManager::class);
     }
 
-    public function mount()
+    public function mount(?string $hash = null)
     {
         $this->loginUrl = $this->getLoginPageUrl();
-        $this->hash = request()->route()->parameter($this->hashParamName);
+        $this->hash = $hash ?? request()->route()->parameter($this->hashParamName);
         $this->showCancelButton = $this->showCancelButton();
 
         if (!$processedOrder = $this->getProcessedOrder()) {
@@ -204,6 +204,10 @@ class OrderPreview extends \Livewire\Component
 
     protected function getProcessedOrder()
     {
+        if (!$this->hash) {
+            return null;
+        }
+
         return $this->order ??= $this->orderManager->getOrderByHash($this->hash, Auth::customer());
     }
 

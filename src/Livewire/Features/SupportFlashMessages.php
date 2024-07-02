@@ -11,7 +11,7 @@ class SupportFlashMessages extends ComponentHook
 {
     public function exception($e, $stopPropagation)
     {
-        if (!config('app.debug') && !$e instanceof ValidationException) {
+        if (!config('app.debug') && !app()->runningUnitTests() && !$e instanceof ValidationException) {
             flash()->error($e->getMessage())->important();
             $stopPropagation();
         }

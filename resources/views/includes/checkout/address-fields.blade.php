@@ -1,6 +1,6 @@
-<div class="p-3 border-top">
+<div class="p-3">
     @if(!count($this->customerAddresses))
-        <h5 class="card-title fw-normal mb-3">@lang('igniter.cart::default.checkout.label_address')</h5>
+        <h5 class="fw-normal mt-2">@lang('igniter.cart::default.checkout.label_address')</h5>
     @else
         <div class="form-group">
             <div class="form-floating">
@@ -24,7 +24,7 @@
         </div>
     @endif
 
-    <div @class(['mt-3'])>
+    <div>
         <div class="row g-3 mb-1">
             <div class="col-sm-6">
                 <div @class(['form-floating', 'is-invalid' => has_form_error('form.address_1')])>

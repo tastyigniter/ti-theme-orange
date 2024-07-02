@@ -6,6 +6,11 @@
 //
 // Sweetalert2
 @import "sweetalert2";
+
+.toast-container {
+  --bs-toast-zindex: 99999;
+}
+
 // Animate.css
 @import "animate";
 //

@@ -2,13 +2,18 @@
 
 namespace Igniter\Orange\Tests;
 
-abstract class TestCase extends \Orchestra\Testbench\TestCase
+use Igniter\Main\Classes\ThemeManager;
+
+abstract class TestCase extends \SamPoyigi\Testbench\TestCase
 {
     protected function getPackageProviders($app)
     {
-        return [
-            \Igniter\Flame\ServiceProvider::class,
-            \Igniter\User\Extension::class,
-        ];
+        $app->booted(function($app) {
+            $themeManager = $app[ThemeManager::class];
+            $theme = $themeManager->loadTheme(__DIR__.'/../');
+            $themeManager->bootTheme($theme);
+        });
+
+        return parent::getPackageProviders($app);
     }
 }
