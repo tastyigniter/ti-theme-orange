@@ -1,4 +1,4 @@
-<div class="m-3">
+<div class="">
     <div @class(['form-floating', 'is-invalid' => has_form_error('form.delivery_comment')])>
         <textarea
             wire:model="form.delivery_comment"

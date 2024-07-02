@@ -1,21 +1,6 @@
 <div>
     <div class="card mb-1">
         <div class="card-body">
-            <div class="mb-3" wire:ignore>
-                <a
-                    class="text-decoration-none"
-                    href="{{page_url('locations')}}"
-                >
-                    <i class="fa fa-arrow-left-long"></i>&nbsp;&nbsp;
-                    @lang('igniter.orange::default.button_back')
-                </a>
-            </div>
-
-            <x-igniter-orange::local-header />
-        </div>
-    </div>
-    <div class="card mb-1">
-        <div class="card-body">
             {!! $customer
                 ? sprintf(lang('igniter.orange::default.text_logged_out'), e($customer->first_name), url('logout'))
                 : sprintf(lang('igniter.orange::default.text_logged_in'), page_url('account.login'))
@@ -24,9 +9,7 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <div
-                data-control="booking"
-            >
+            <div data-control="booking">
                 @if ($pickerStep == $this::STEP_BOOKING)
                     @include('igniter-orange::includes.booking.info')
 

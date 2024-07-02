@@ -1,7 +1,7 @@
-<div class="p-3 border-bottom border-top">
-    <h5 class="card-title mb-2">@lang('igniter.cart::default.checkout.label_payment_method')</h5>
+<div class="px-3">
+    <h5 class="fw-normal mb-2">@lang('igniter.cart::default.checkout.label_payment_method')</h5>
     <div data-toggle="payments" class="progress-indicator-container">
-        <div class="list-group list-group-flush">
+        <div class="list-group list-group-flush p-3 border rounded">
             @foreach ($this->paymentGateways as $paymentMethod)
                 @php
                     $paymentIsSelected = ($this->form->payment == $paymentMethod->code);

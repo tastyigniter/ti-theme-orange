@@ -21,7 +21,7 @@ class LeaveReview extends \Livewire\Component
     /** The parameter name used for the review hash code */
     public string $hashParamName = 'hash';
 
-    public string $reviewableHash;
+    public ?string $reviewableHash = null;
 
     public ?string $comment = null;
 
@@ -137,6 +137,10 @@ class LeaveReview extends \Livewire\Component
 
     protected function getReviewable()
     {
+        if (!$this->reviewableHash) {
+            return null;
+        }
+
         return match ($this->type) {
             'reservation' => resolve(BookingManager::class)->getReservationByHash($this->reviewableHash, Auth::customer()),
             'order' => resolve(OrderManager::class)->getOrderByHash($this->reviewableHash, Auth::customer()),

@@ -1,4 +1,7 @@
-<div class="cart-items mb-3" wire:loading.class="opacity-75" wire:target="onOpenItemModal">
+<div
+    class="cart-items mb-3"
+    wire:loading.class="opacity-75"
+>
     <ul class="list-unstyled user-select-none mb-0">
         @foreach ($cart->content()->reverse() as $cartItem)
             <li @class(['d-flex align-items-start', 'mb-3' => !$loop->last])>
@@ -31,8 +34,9 @@
                     </div>
                     <button
                         class="btn shadow-none flex-grow-1 text-start fw-normal p-0"
-                        wire:click="onOpenItemModal('{{ $cartItem->rowId }}', {{ $cartItem->id }})"
-                        wire:loading.class="disabled"
+                        data-toggle="orange-modal"
+                        data-component="igniter-orange::cart-item-modal"
+                        data-arguments='{"menuId": {{ $cartItem->id }}, "rowId": "{{ $cartItem->rowId }}"}'
                     >
                         <p class="mb-1">
                             @if ($cartItem->qty > 1)

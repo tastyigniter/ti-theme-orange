@@ -7,12 +7,15 @@
     ])
     @if($menuItemData->mealtimeIsAvailable())
         @if($menuItemData->hasOptions())
-            wire:click="$dispatch('openModal', {component: 'igniter-orange::cart-item-modal', arguments: {menuId: {{ $menuItemData->id }}}})"
+            data-toggle="orange-modal"
+            data-component="igniter-orange::cart-item-modal"
+            data-arguments='{"menuId": {{ $menuItemData->id }}}'
         @else
             wire:click="$dispatch('cart-box:add-item', {menuId: {{ $menuItemData->id }}})"
         @endif
     @endif
 >
+    @unless($showThumb)
     <button
         type="button"
         class="btn btn-outline-secondary rounded py-1 px-2 float-end"
@@ -27,6 +30,7 @@
            @endunless
         ></i>
     </button>
+    @endunless
     <div class="d-flex flex-row">
         <div class="menu-content flex-grow-1 me-3">
             <h6 class="menu-name fw-bold">{{ $menuItemData->name }}</h6>
@@ -36,7 +40,7 @@
         </div>
         @if($showThumb)
             <div
-                class="col-3 p-0 me-3 menu-item-image align-self-center"
+                class="col-3 p-0 me-3 menu-item-image align-self-center rounded"
                 style="
                     background: url('{{ $menuItemData->getThumb() }}') no-repeat center center;
                     background-size: cover;

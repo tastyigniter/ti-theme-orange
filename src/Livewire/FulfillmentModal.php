@@ -99,7 +99,6 @@ class FulfillmentModal extends \Livewire\Component
             $this->orderType = $value;
             $this->updateOrderType();
             $this->mount();
-            //            $this->parseTimeslot($this->location->scheduleTimeslot());
         }
     }
 
@@ -121,7 +120,7 @@ class FulfillmentModal extends \Livewire\Component
 
         $this->updateTimeslot();
 
-        if ($this->searchQuery) {
+        if ($this->searchQuery && $this->showAddressPicker) {
             $userLocation = $this->geocodeSearchQuery($this->searchQuery);
             if ($area = $this->location->current()->searchDeliveryArea($userLocation->getCoordinates())) {
                 $this->location->updateUserPosition($userLocation);

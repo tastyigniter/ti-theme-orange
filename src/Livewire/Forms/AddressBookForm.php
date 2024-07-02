@@ -20,7 +20,7 @@ class AddressBookForm extends Form
 
     public ?string $country_id;
 
-    public ?bool $is_default;
+    public bool $is_default = false;
 
     public function validationAttributes()
     {

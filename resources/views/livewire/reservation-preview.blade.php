@@ -1,9 +1,4 @@
 <div>
-    <div class="card mb-1">
-        <div class="card-body">
-            <x-igniter-orange::local-header/>
-        </div>
-    </div>
     @if ($showCancelButton)
         <div class="card">
             <div class="card-body text-center">

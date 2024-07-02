@@ -14,6 +14,12 @@ permalink: /account/reservation/:hash
         </div>
 
         <div class="col-sm-10">
+            <div class="card mb-1">
+                <div class="card-body">
+                    <x-igniter-orange::local-header/>
+                </div>
+            </div>
+
             <livewire:igniter-orange::reservation-preview />
 
             <livewire:igniter-orange::leave-review />

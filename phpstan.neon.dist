@@ -6,7 +6,6 @@ parameters:
     paths:
         - src/
         - resources/
-        - tests/
 #    ignoreErrors:
 #        - '#PHPDoc tag @var#'
 #    excludePaths:

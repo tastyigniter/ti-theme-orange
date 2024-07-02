@@ -1,18 +1,21 @@
 <x-igniter-orange::forms.form id="checkout-form" novalidate>
     <div class="p-3">
-        <h5 class="card-title mb-3">@lang('igniter.orange::default.label_your_details')</h5>
+        <h5 class="fw-normal">@lang('igniter.orange::default.label_your_details')</h5>
         @include('igniter-orange::includes.checkout.customer-fields')
+    </div>
+
+    <div class="px-3 fs-5">
+        <div class="p-3 border rounded">
+            <x-igniter-orange::fulfillment/>
+        </div>
     </div>
 
     @includeWhen($order->isDeliveryType(), 'igniter-orange::includes.checkout.address-fields')
 
-    <div class="p-3 border-top border-bottom fs-5">
-        <x-igniter-orange::fulfillment />
+    <div class="px-3 pb-3">
+        @includeWhen($showCommentField, 'igniter-orange::includes.checkout.comment-field')
+        @includeWhen($order->isDeliveryType() && $showDeliveryCommentField, 'igniter-orange::includes.checkout.delivery-comment-field')
     </div>
-
-    @includeWhen($showCommentField, 'igniter-orange::includes.checkout.comment-field')
-
-    @includeWhen($showDeliveryCommentField, 'igniter-orange::includes.checkout.delivery-comment-field')
 
     @includeWhen($this->paymentGateways->isNotEmpty(), 'igniter-orange::includes.checkout.payments')
 

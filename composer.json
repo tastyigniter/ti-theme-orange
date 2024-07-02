@@ -57,7 +57,20 @@
       "meta-path": "/resources/meta",
       "publish-paths": [
         "/public"
-      ]
+      ],
+      "require": {
+        "igniter.broadcast": "*",
+        "igniter.cart": "*",
+        "igniter.coupons": "*",
+        "igniter.frontend": "*",
+        "igniter.local": "*",
+        "igniter.pages": "*",
+        "igniter.payregister": "*",
+        "igniter.reservation": "*",
+        "igniter.socialite": "*",
+        "igniter.translate": "*",
+        "igniter.user": "*"
+      }
     }
   },
   "scripts": {

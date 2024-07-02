@@ -15,7 +15,7 @@ class ReservationPreview extends Component
 
     public string $hashParamName = 'hash';
 
-    public string $hash;
+    public ?string $hash = null;
 
     public bool $showCancelButton = false;
 
@@ -58,9 +58,9 @@ class ReservationPreview extends Component
         $this->manager = resolve(BookingManager::class);
     }
 
-    public function mount()
+    public function mount(?string $hash = null)
     {
-        $this->hash = request()->route()->parameter($this->hashParamName);
+        $this->hash = $hash ?? request()->route()->parameter($this->hashParamName);
         $this->showCancelButton = $this->showCancelButton();
     }
 

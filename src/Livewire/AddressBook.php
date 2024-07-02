@@ -100,7 +100,7 @@ class AddressBook extends Component
         $this->form->validate();
 
         if ($this->addressId) {
-            $address = $this->getAddress($this->addressId);
+            throw_unless($address = $this->getAddress($this->addressId), new ApplicationException('Address not found'));
             $address->fill($this->form->except('address_id'));
             $address->save();
         } else {
