@@ -21,8 +21,7 @@ class Slider extends Component
         public bool $hideControls = false,
         public bool $hideIndicators = false,
         public bool $hideCaptions = false,
-    ) {
-    }
+    ) {}
 
     public static function componentMeta(): array
     {

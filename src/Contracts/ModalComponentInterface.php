@@ -2,6 +2,4 @@
 
 namespace Igniter\Orange\Contracts;
 
-interface ModalComponentInterface
-{
-}
+interface ModalComponentInterface {}
