@@ -5,7 +5,7 @@
                 <img
                     class="img-logo"
                     alt="{{ setting('site_name') }}"
-                    src="{{ uploads_url($theme->logo_image) }}"
+                    src="{{ media_url($theme->logo_image) }}"
                 />
             @elseif ($theme->logo_text)
                 <span class="text-logo">{{ $theme->logo_text }}</span>
@@ -13,7 +13,7 @@
                 <img
                     class="img-logo"
                     alt="{{ $site_name }}"
-                    src="{{ media_url($site_logo) }}"
+                    src="{{ media_thumb($site_logo) }}"
                 />
             @endif
         </a>

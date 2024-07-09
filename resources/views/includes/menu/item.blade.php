@@ -11,7 +11,7 @@
             data-component="igniter-orange::cart-item-modal"
             data-arguments='{"menuId": {{ $menuItemData->id }}}'
         @else
-            wire:click="$dispatch('cart-box:add-item', {menuId: {{ $menuItemData->id }}})"
+            wire:click="$dispatch('cart-box:add-item', {menuId: {{ $menuItemData->id }}, quantity: {{ $menuItemData->minimumQuantity }}})"
         @endif
     @endif
 >
@@ -26,7 +26,7 @@
         ])
            wire:loading.class="fa-spinner fa-spin"
            @unless($menuItemData->hasOptions())
-           wire:target="$dispatch('cart-box:add-item', {menuId: {{ $menuItemData->id }}})"
+           wire:target="$dispatch('cart-box:add-item', {menuId: {{ $menuItemData->id }}, quantity: {{ $menuItemData->minimumQuantity }}})"
            @endunless
         ></i>
     </button>

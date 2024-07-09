@@ -99,6 +99,7 @@ class FeaturedItems extends Component
     protected function loadItems()
     {
         return Menu::query()
+            ->with(['locations', 'media'])
             ->whereIn('menu_id', $this->items)
             ->take($this->limit)
             ->get()

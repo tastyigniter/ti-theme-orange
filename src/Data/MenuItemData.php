@@ -102,4 +102,17 @@ class MenuItemData
 
         return implode("\r\n", $titles);
     }
+
+    public function getUrl(?string $pageId = null)
+    {
+        $current = Location::current();
+        $slug = $this->model->locations->first()?->permalink_slug;
+        if ($current && ($this->model->locations->isEmpty() || $this->model->locations->firstWhere('location_id', $current->getKey()))) {
+            $slug = $current->permalink_slug;
+        }
+
+        $url = page_url($pageId ?? 'local.menus', ['location' => $slug]);
+
+        return $url.'?menuId='.$this->model->getBuyableIdentifier();
+    }
 }

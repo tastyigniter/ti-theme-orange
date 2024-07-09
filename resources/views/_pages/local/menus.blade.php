@@ -62,3 +62,6 @@ layout: default
     </a>
 </div>
 <livewire:igniter-orange::fulfillment-modal/>
+@push('scripts')
+    @dump('hey there!')
+@endpush

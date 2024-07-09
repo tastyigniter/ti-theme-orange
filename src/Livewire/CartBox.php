@@ -91,11 +91,12 @@ class CartBox extends Component
     }
 
     #[On('cart-box:add-item')]
-    public function onUpdateItem(int $menuId, ?string $rowId = null)
+    public function onUpdateItem(int $menuId, ?string $rowId = null, ?int $quantity = null)
     {
         $this->cartManager->addOrUpdateCartItem([
             'menuId' => $menuId,
             'rowId' => $rowId,
+            'quantity' => $quantity,
         ]);
     }
 
