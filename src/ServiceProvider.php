@@ -140,6 +140,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
                     'tab' => 'igniter::system.themes.text_tab_meta',
                     'label' => 'igniter.orange::default.label_security',
                     'type' => 'checkboxtoggle',
+                    'default' => 'all',
                     'span' => 'right',
                     'options' => [
                         'all' => 'igniter.orange::default.text_all',

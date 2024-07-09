@@ -146,3 +146,20 @@ $(function () {
         }
     });
 });
+
+// Show selected menu item modal
+window.OrangeShowSelectedMenuItemModal = () => {
+    return {
+        init() {
+            this.$nextTick(() => {
+                setTimeout(() => {
+                    $(this.$refs['selectedMenuItemTrigger']).trigger('click');
+
+                    const urlObj = new URL(window.location.href.toString());
+                    urlObj.searchParams.delete('menuId');
+                    history.replaceState({}, '', urlObj.toString());
+                }, 300)
+            })
+        }
+    }
+};

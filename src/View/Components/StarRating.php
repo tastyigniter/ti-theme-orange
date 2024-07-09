@@ -11,8 +11,8 @@ class StarRating extends Component
 
     public function __construct(
         public string $name = '',
-        public int $score = 0,
-        public int $max = 5,
+        public float $score = 0,
+        public float $max = 5,
         public bool $readOnly = true,
     ) {
         $this->max = max(1, count($this->getHints()));
@@ -27,6 +27,6 @@ class StarRating extends Component
 
     protected function getHints()
     {
-        return self::$hints ??= collect(ReviewModel::make()->getRatingOptions())->pluck('value')->all();
+        return self::$hints ??= ReviewModel::make()->getRatingOptions();
     }
 }

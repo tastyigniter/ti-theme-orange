@@ -16,4 +16,16 @@
             </div>
         @endif
     </div>
+
+    @if($selectedMenuId)
+        <button
+            x-data="OrangeShowSelectedMenuItemModal()"
+            x-ref="selectedMenuItemTrigger"
+            type="button"
+            class="d-none"
+            data-toggle="orange-modal"
+            data-component="igniter-orange::cart-item-modal"
+            data-arguments='{"menuId": {{ $selectedMenuId }}}'
+        ></button>
+    @endif
 </div>

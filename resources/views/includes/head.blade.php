@@ -1,6 +1,6 @@
 {!! get_metas() !!}
 <meta name="csrf-token" content="{{ csrf_token() }}">
-@if (trim($favicon = $theme->favicon, '/'))
+@if ($favicon = $theme->favicon)
     <link href="{{ media_url($favicon) }}" rel="shortcut icon" type="image/ico">
 @elseif ($site_logo !== 'no_photo.png')
     <link href="{{ media_thumb($site_logo, ['width' => 64, 'height' => 64]) }}" rel="shortcut icon" type="image/ico">

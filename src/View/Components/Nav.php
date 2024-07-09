@@ -28,7 +28,7 @@ class Nav extends Component
     {
         $themeCode = controller()->getTheme()->getName();
 
-        if ($menu = Menu::with(['items'])->whereCode($this->code)->where('theme_code', $themeCode)->first()) {
+        if ($menu = Menu::whereCode($this->code)->where('theme_code', $themeCode)->first()) {
             $this->menuItems = resolve(MenuManager::class)->generateReferences($menu, controller()->getLayout());
         }
 

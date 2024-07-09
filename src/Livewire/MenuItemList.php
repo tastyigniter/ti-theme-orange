@@ -26,7 +26,7 @@ class MenuItemList extends \Livewire\Component
 
     public string $sortOrder = 'menu_priority asc';
 
-    public bool $showThumb = true;
+    public bool $showThumb = false;
 
     public int $menuThumbWidth = 95;
 
@@ -46,6 +46,9 @@ class MenuItemList extends \Livewire\Component
 
     #[Url(as: 'q')]
     public string $menuSearchTerm = '';
+
+    #[Url(as: 'menuId')]
+    public string $selectedMenuId = '';
 
     protected array $menuListCategories = [];
 
@@ -188,14 +191,22 @@ class MenuItemList extends \Livewire\Component
             $filters['pageLimit'] = $this->itemsPerPage;
         }
 
-        $list = MenuModel::with([
+        $with = [
             'mealtimes', 'menu_options',
             'categories' => function($query) use ($location) {
                 $query->whereHasOrDoesntHaveLocation($location);
-            }, 'categories.media',
-            'special', 'media', 'ingredients.media',
-            'menu_options.option',
-        ])->listFrontEnd($filters);
+            },
+            'special', 'ingredients',
+            'menu_options.option', 'locations', 'stocks'
+        ];
+
+        if ($this->showThumb) {
+            $with[] = 'media';
+            $with[] = 'categories.media';
+            $with[] = 'ingredients.media';
+        }
+
+        $list = MenuModel::with($with)->listFrontEnd($filters);
 
         if ($this->itemsPerPage > 0) {
             $list->setCollection($list->getCollection()
