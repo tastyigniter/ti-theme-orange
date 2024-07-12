@@ -197,7 +197,7 @@ class MenuItemList extends \Livewire\Component
                 $query->whereHasOrDoesntHaveLocation($location);
             },
             'special', 'ingredients',
-            'menu_options.option', 'locations', 'stocks'
+            'menu_options.option', 'locations', 'stocks',
         ];
 
         if ($this->showThumb) {
