@@ -34,14 +34,15 @@
         })
 
         Livewire.hook('morph.updating', ({el, component, toEl, skip, childrenOnly}) => {
-            if (this.$checkoutBtn.data('skipValidation')) {
-
-                if ($(el).data('toggle') === 'payments' || $(el).is(this.options.buttonSelector)) {
-                    skip()
-                }
-
+            if (this.$checkoutBtn.data('skipValidation')
+                && ($(el).data('toggle') === 'payments' || $(el).is(this.options.buttonSelector))) {
+                skip()
             }
         })
+    }
+
+    Checkout.prototype.selectedPaymentInput = function () {
+        return this.$el.find(this.paymentInputSelector+':checked')
     }
 
     Checkout.prototype.completeCheckout = function () {
@@ -55,24 +56,44 @@
     }
 
     Checkout.prototype.choosePayment = function ($el) {
-        var $paymentToggle = $el.closest('[data-toggle="payments"]')
+        var $paymentContainer = $el.closest('[data-checkout-payment]'),
+            $paymentInput = $paymentContainer.find(this.paymentInputSelector)
 
-        if ($paymentToggle.hasClass('in-progress') || $el.find(this.paymentInputSelector).attr('checked'))
+        if (!$paymentInput.length || $paymentInput.prop('checked'))
             return
 
+        this.$form.off('submitCheckoutForm')
+
         $(this.paymentInputSelector, document).prop('disabled', true)
-        Livewire.dispatch(this.options.choosePaymentEvent, {code: $el.data('paymentCode')});
+        Livewire.dispatch(this.options.choosePaymentEvent, {code: $paymentInput.data('paymentCode')});
     }
 
     Checkout.prototype.deletePaymentProfile = function ($el) {
         Livewire.dispatch(this.options.deletePaymentProfileEvent, {code: $el.data('paymentCode')});
     }
 
-    Checkout.prototype.triggerPaymentInputChange = function ($el) {
-        var paymentInputSelector = this.paymentInputSelector+'[value='+$el.data('paymentCode')+']';
-        setTimeout(function () {
-            $(paymentInputSelector, document).prop('checked', true).trigger('change')
-        }, 1)
+    Checkout.prototype.setPaymentFieldsComponentProperties = function () {
+        var $paymentContainer = this.$el.find('[data-checkout-payment].selected'),
+            checkoutComponentId = this.$el.closest('[wire\\:id]').attr('wire:id'),
+            checkoutComponent,
+            paymentFields = {};
+
+        // Get all hidden input values and store in a key value array
+        $paymentContainer.find('input, select').each(function () {
+            var $el = $(this),
+                name = $el.attr('name'),
+                type = $el.attr('type');
+
+            if (!name.length || name.startsWith('form.')) return;
+
+            if (['radio', 'checkbox'].indexOf(type) !== -1 && !$el.prop('checked')) return;
+
+            paymentFields[name] = $el.val();
+        });
+
+        if ((checkoutComponent = Livewire.find(checkoutComponentId)) && Object.keys(paymentFields).length) {
+            checkoutComponent.$set('form.payment_fields', paymentFields, false)
+        }
     }
 
     // EVENT HANDLERS
@@ -83,6 +104,8 @@
             control = $el.data('checkoutControl')
 
         switch (control) {
+            case 'payment':
+            case 'payment-label':
             case 'choose-payment':
                 this.choosePayment($el)
                 return false
@@ -93,11 +116,13 @@
     }
 
     Checkout.prototype.onSubmitCheckoutForm = function (event) {
-        var $selectedPaymentMethod = $(this.paymentInputSelector+':checked', document)
+        var $selectedPaymentMethod = this.selectedPaymentInput()
 
         event.preventDefault();
 
-        if (!this.$checkoutBtn.data('skipValidation') && $selectedPaymentMethod && $selectedPaymentMethod.data('preValidateCheckout') === true) {
+        this.setPaymentFieldsComponentProperties()
+
+        if (!this.$checkoutBtn.data('skipValidation') && $selectedPaymentMethod.length && $selectedPaymentMethod.data('preValidateCheckout') === true) {
             this.$checkoutBtn.data('skipValidation', true)
             Livewire.dispatch(this.options.validateEvent);
             return false;
@@ -124,15 +149,19 @@
     var old = $.fn.checkout
 
     $.fn.checkout = function (option) {
-        var args = arguments
+        var args = arguments,
+            result = undefined
 
-        return this.each(function () {
+        this.each(function () {
             var $this = $(this)
             var data = $this.data('ti.checkout')
             var options = $.extend({}, Checkout.DEFAULTS, $this.data(), typeof option == 'object' && option)
             if (!data) $this.data('ti.checkout', (data = new Checkout(this, options)))
-            if (typeof option == 'string') data[option].apply(data, args)
+            if (typeof option == 'string') result = data[option].apply(data, args)
+            if (typeof result != 'undefined') return false
         })
+
+        return result ? result : this
     }
 
     $.fn.checkout.Constructor = Checkout
@@ -145,16 +174,4 @@
     $(document).render(function () {
         $('[data-control="checkout"]').checkout()
     })
-
-    $(document)
-        .on('ajaxPromise', '[data-payment-code]', function () {
-            var $indicatorContainer = $(this).closest('.progress-indicator-container')
-            $indicatorContainer.prepend('<div class="progress-indicator"></div>')
-            $indicatorContainer.addClass('is-loading')
-        })
-        .on('ajaxFail ajaxDone', '[data-payment-code]', function () {
-            var $indicatorContainer = $(this).closest('.progress-indicator-container')
-            $('div.progress-indicator', $indicatorContainer).remove()
-            $indicatorContainer.removeClass('is-loading')
-        })
 }(window.jQuery)

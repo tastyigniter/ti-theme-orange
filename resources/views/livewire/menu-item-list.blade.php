@@ -1,7 +1,9 @@
 <div>
-    <div class="menu-search pb-4">
-        @include('igniter-orange::includes.menu.search')
-    </div>
+    @unless($hideMenuSearch)
+        <div class="menu-search pb-4">
+            @include('igniter-orange::includes.menu.search')
+        </div>
+    @endunless
 
     <div class="menu-list">
         @if (!$selectedCategorySlug && $isGrouped)

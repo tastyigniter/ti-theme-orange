@@ -21,9 +21,14 @@
       border-top: 0 none;
     }
 
-    .category-title {
-      padding: 15px 0;
-      margin-bottom: 0;
+    .category-header {
+      &::before {
+        content: '';
+        height: 75px;
+        margin-top: -75px;
+        display: block;
+        visibility: hidden;
+      }
     }
 
     .image {
@@ -68,10 +73,4 @@
   .form-quantity-label {
     font-size: 0.945rem;
   }
-}
-
-.affix-categories, .affix-cart {
-  position: -webkit-sticky;
-  position: sticky;
-  top: $spacer;
 }

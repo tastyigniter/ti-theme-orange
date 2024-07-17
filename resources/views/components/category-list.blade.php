@@ -1,5 +1,5 @@
 <div class="layout-scrollable w-100">
-    <ul class="nav nav-pills nav-inline flex-nowrap py-3 w-100">
+    <ul id="navbar-categories" class="nav nav-pills nav-inline flex-nowrap py-3 w-100">
         <li class="nav-item">
             <a
                 @class(['nav-link rounded py-1 text-nowrap', 'active' => !$selectedCategory])

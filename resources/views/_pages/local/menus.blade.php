@@ -28,7 +28,7 @@ layout: default
             </div>
             <div class="col-lg-4 mt-4 mt-lg-0">
                 <div class="local-control float-lg-end p-3 border rounded">
-                    <div class="d-inline-block w-100 fs-5 text-sm-left text-md-center">
+                    <div class="d-inline-block w-100 fw-bold text-sm-left text-md-center">
                         <x-igniter-orange::fulfillment/>
                     </div>
                 </div>

@@ -12,7 +12,7 @@
 
     @includeWhen($order->isDeliveryType(), 'igniter-orange::includes.checkout.address-fields')
 
-    <div class="px-3 pb-3">
+    <div class="p-3">
         @includeWhen($showCommentField, 'igniter-orange::includes.checkout.comment-field')
         @includeWhen($order->isDeliveryType() && $showDeliveryCommentField, 'igniter-orange::includes.checkout.delivery-comment-field')
     </div>

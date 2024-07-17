@@ -71,10 +71,14 @@ class MenuItemList extends \Livewire\Component
                 'validationRule' => 'required|boolean',
             ],
             'collapseCategoriesAfter' => [
-                'label' => 'Collapse categories after the specified number of items in group view.',
+                'label' => 'The number of categories to expand before collapsing the rest. Set to 0 to always expand all categories.',
                 'type' => 'number',
-                'span' => 'right',
                 'validationRule' => 'required|numeric|min:0',
+                'trigger' => [
+                    'action' => 'disable',
+                    'field' => 'isGrouped',
+                    'condition' => 'unchecked',
+                ],
             ],
             'itemsPerPage' => [
                 'label' => 'Number of menu items to display per page.',
@@ -98,36 +102,66 @@ class MenuItemList extends \Livewire\Component
                 'type' => 'number',
                 'span' => 'left',
                 'validationRule' => 'required|numeric|min:0',
+                'trigger' => [
+                    'action' => 'show',
+                    'field' => 'showThumb',
+                    'condition' => 'checked',
+                ]
             ],
             'menuThumbHeight' => [
                 'label' => 'Menu item image thumb height',
                 'type' => 'number',
                 'span' => 'right',
                 'validationRule' => 'required|numeric|min:0',
+                'trigger' => [
+                    'action' => 'show',
+                    'field' => 'showThumb',
+                    'condition' => 'checked',
+                ],
             ],
             'categoryThumbWidth' => [
                 'label' => 'Category image thumb width.',
                 'type' => 'number',
                 'span' => 'left',
                 'validationRule' => 'required|numeric|min:0',
+                'trigger' => [
+                    'action' => 'show',
+                    'field' => 'showThumb',
+                    'condition' => 'checked',
+                ],
             ],
             'categoryThumbHeight' => [
                 'label' => 'Category image thumb height.',
                 'type' => 'number',
                 'span' => 'right',
                 'validationRule' => 'required|numeric|min:0',
+                'trigger' => [
+                    'action' => 'show',
+                    'field' => 'showThumb',
+                    'condition' => 'checked',
+                ],
             ],
             'allergenThumbWidth' => [
                 'label' => 'Allergen image thumb width.',
                 'type' => 'number',
                 'span' => 'left',
                 'validationRule' => 'required|numeric|min:0',
+                'trigger' => [
+                    'action' => 'show',
+                    'field' => 'showThumb',
+                    'condition' => 'checked',
+                ],
             ],
             'allergenThumbHeight' => [
                 'label' => 'Allergen image thumb height.',
                 'type' => 'number',
                 'span' => 'right',
                 'validationRule' => 'required|numeric|min:0',
+                'trigger' => [
+                    'action' => 'show',
+                    'field' => 'showThumb',
+                    'condition' => 'checked',
+                ],
             ],
             'hideMenuSearch' => [
                 'label' => 'Hide the menu search form',

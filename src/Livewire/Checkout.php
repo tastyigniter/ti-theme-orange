@@ -82,6 +82,8 @@ class Checkout extends Component
     #[Url(as: 'step')]
     public string $checkoutStep = 'details';
 
+    public array $paymentFields = [];
+
     /**
      * @var \Igniter\Cart\Classes\CartManager
      */
@@ -341,11 +343,17 @@ class Checkout extends Component
         $customer = Auth::customer();
         $payment = $this->orderManager->getPayment($code);
 
-        throw_if(!$payment || !$payment->paymentProfileExists($customer), ValidationException::withMessages([
+        throw_if(!$payment, ValidationException::withMessages([
             'form.payment' => lang('igniter.cart::default.checkout.error_invalid_payment'),
         ]));
 
+        throw_if(!$payment->paymentProfileExists($customer), ValidationException::withMessages([
+            'form.payment' => lang('igniter.cart::default.checkout.error_payment_profile_not_found'),
+        ]));
+
         $payment->deletePaymentProfile($customer);
+
+        return redirect()->back();
     }
 
     protected function getOrder()
@@ -407,6 +415,7 @@ class Checkout extends Component
         });
 
         $data = $this->form->validate();
+        $data = array_merge(array_pull($data, 'payment_fields', []), $data);
 
         $this->orderManager->applyCurrentPaymentFee($this->form->payment);
 

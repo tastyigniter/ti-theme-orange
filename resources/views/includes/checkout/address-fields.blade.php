@@ -1,4 +1,4 @@
-<div class="p-3">
+<div class="p-3 pb-0">
     @if(!count($this->customerAddresses))
         <h5 class="fw-normal mt-2">@lang('igniter.cart::default.checkout.label_address')</h5>
     @else

@@ -1,5 +1,5 @@
 @auth('igniter-customer')
-    <p class="mt-3 mb-2 ms-3">
+    <p class="mt-3 mb-2">
         @lang('igniter.orange::default.text_select_saved_addresses')
     </p>
 
@@ -22,7 +22,7 @@
 
     <x-igniter-orange::forms.error field="savedAddress" id="savedAddressFeedback" class="p-2 text-danger" />
 @else
-    <p class="mt-2 ms-3 mb-0">
+    <p class="mt-2 mb-0">
         <a
             href="{{ page_url('account.login') }}"
         >@lang('igniter.orange::default.text_login')</a> @lang('igniter.orange::default.text_for_saved_addresses')

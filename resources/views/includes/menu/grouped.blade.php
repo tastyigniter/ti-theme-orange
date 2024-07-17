@@ -2,7 +2,7 @@
     class="menu-group"
     data-bs-spy="scroll"
     data-bs-target="#navbar-categories"
-    data-bs-offset="0"
+    data-bs-root-margin="0px 0px -30%"
     data-bs-smooth-scroll="true"
 >
     @forelse ($groupedMenuItems as $categoryId => $menuList)
@@ -12,7 +12,7 @@
                     $menuCategory = array_get($menuListCategories, $categoryId);
                     $menuCategoryAlias = strtolower(str_slug($menuCategory->name));
                 @endphp
-                <div id="category-{{ $menuCategoryAlias }}-heading" role="tab">
+                <div id="category-{{ $menuCategoryAlias }}-heading" class="category-header" role="tab">
                     <h4
                         @class(['menu-group-toggle pt-3 pb-2 mb-0', 'collapsed' => $loop->iteration >= $collapseCategoriesAfter])
                         data-bs-toggle="collapse"
@@ -23,7 +23,7 @@
                 </div>
                 <div
                     id="category-{{ $menuCategoryAlias }}-collapse"
-                    class="collapse {{ $loop->iteration < $collapseCategoriesAfter ? 'show' : '' }}"
+                    class="category-items collapse {{ $loop->iteration < $collapseCategoriesAfter ? 'show' : '' }}"
                     role="tabpanel" aria-labelledby="{{ $menuCategoryAlias }}"
                 >
                     <div class="menu-category">
