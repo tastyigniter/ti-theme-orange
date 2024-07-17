@@ -1,5 +1,5 @@
 /*
- * Custom event that unifies document.ready with livewire:navigated
+ * Custom event that unifies document.ready with livewire:init
  *
  * $(document).render(function() { })
  * $(document).on('render', function() { })
@@ -9,24 +9,20 @@
 
     app.requestTimeout = 150
 
-    $(document).on('livewire:navigated', () => {
-        setTimeout(() => {
-            $(document).trigger('render')
-        }, app.requestTimeout)
-    })
-
-    $(document).on('livewire:init', () => {
+    document.addEventListener('livewire:init', () => {
         Livewire.hook('request', ({uri, options, payload, respond, succeed, fail}) => {
             $(window).trigger('ajaxBeforeSend', [uri, options, payload, respond, succeed, fail])
 
             respond(({status, response}) => {
                 setTimeout(() => {
+                    console.log('ajaxAlways')
                     $(document).trigger('render')
                     $(window).trigger('ajaxAlways', [status, response])
                 }, app.requestTimeout)
             })
             succeed(({status, json}) => {
                 setTimeout(() => {
+                    console.log('ajaxDone')
                     $(window).trigger('ajaxDone', [status, json])
                 }, app.requestTimeout)
             })
@@ -36,7 +32,7 @@
                 }, app.requestTimeout)
             })
         })
-    })
+    }, {once: true})
 
     $.fn.render = function (callback) {
         $(document).on('render', callback)

@@ -244,11 +244,6 @@ return [
         'advanced' => [
             'title' => 'Advanced',
             'fields' => [
-                'hide_search' => [
-                    'label' => 'Hide location search bar on homepage',
-                    'type' => 'switch',
-                    'rules' => 'boolean',
-                ],
                 'ga_tracking_code' => [
                     'label' => 'Google Analytics Tracking Code',
                     'type' => 'codeeditor',

@@ -22,9 +22,8 @@ description: Default layout
 <footer class="footer mt-auto">
     @include('igniter-orange::includes.footer')
 </footer>
-<livewire:igniter-orange::utils.modal />
-<livewire:igniter-orange::utils.offcanvas />
-<livewire:igniter-orange::utils.flash-message />
+<livewire:igniter-orange::utils.modal/>
+<livewire:igniter-orange::utils.flash-message/>
 @include('igniter-orange::includes.eucookiebanner')
 @livewireScripts
 @include('igniter-orange::includes.scripts')

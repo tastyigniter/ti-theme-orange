@@ -6,6 +6,11 @@ parameters:
 			path: resources/views/_pages/local/reviews.blade.php
 
 		-
+			message: "#^Cannot call method parameter\\(\\) on object\\|string\\.$#"
+			count: 1
+			path: resources/views/_pages/local/reviews.blade.php
+
+		-
 			message: "#^Access to an undefined property Igniter\\\\Frontend\\\\Models\\\\Banner\\:\\:\\$alt_text\\.$#"
 			count: 1
 			path: src/Data/BannerData.php
@@ -96,6 +101,11 @@ parameters:
 			path: src/Data/MenuItemData.php
 
 		-
+			message: "#^Access to an undefined property Igniter\\\\Cart\\\\Models\\\\Menu\\:\\:\\$locations\\.$#"
+			count: 3
+			path: src/Data/MenuItemData.php
+
+		-
 			message: "#^Access to an undefined property Igniter\\\\Cart\\\\Models\\\\Menu\\:\\:\\$menu_options\\.$#"
 			count: 1
 			path: src/Data/MenuItemData.php
@@ -113,6 +123,11 @@ parameters:
 		-
 			message: "#^Access to an undefined property Igniter\\\\Cart\\\\Models\\\\Menu\\:\\:\\$special\\.$#"
 			count: 2
+			path: src/Data/MenuItemData.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:current\\(\\)\\.$#"
+			count: 1
 			path: src/Data/MenuItemData.php
 
 		-
@@ -296,6 +311,11 @@ parameters:
 			path: src/Livewire/FulfillmentModal.php
 
 		-
+			message: "#^Call to an undefined method Illuminate\\\\Support\\\\Optional\\:\\:getCode\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/FulfillmentModal.php
+
+		-
 			message: "#^Call to an undefined static method Igniter\\\\Flame\\\\Geolite\\\\Facades\\\\Geocoder\\:\\:geocode\\(\\)\\.$#"
 			count: 1
 			path: src/Livewire/FulfillmentModal.php
@@ -342,6 +362,11 @@ parameters:
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:customer\\(\\)\\.$#"
+			count: 2
+			path: src/Livewire/FulfillmentModal.php
+
+		-
+			message: "#^Cannot call method setParameter\\(\\) on object\\|string\\.$#"
 			count: 2
 			path: src/Livewire/FulfillmentModal.php
 
@@ -411,8 +436,18 @@ parameters:
 			path: src/Livewire/LocalSearch.php
 
 		-
+			message: "#^Cannot call method setParameter\\(\\) on object\\|string\\.$#"
+			count: 2
+			path: src/Livewire/LocalSearch.php
+
+		-
 			message: "#^Access to an undefined property Igniter\\\\Orange\\\\Livewire\\\\LocationList\\:\\:\\$sorters\\.$#"
 			count: 2
+			path: src/Livewire/LocationList.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Support\\\\Optional\\:\\:hasPermission\\(\\)\\.$#"
+			count: 1
 			path: src/Livewire/LocationList.php
 
 		-
@@ -481,6 +516,11 @@ parameters:
 			path: src/Livewire/LocationList.php
 
 		-
+			message: "#^Cannot call method setParameter\\(\\) on object\\|string\\.$#"
+			count: 2
+			path: src/Livewire/LocationList.php
+
+		-
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 2
 			path: src/Livewire/LocationList.php
@@ -496,7 +536,7 @@ parameters:
 			path: src/Livewire/Login.php
 
 		-
-			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:listFrontEnd\\(\\)\\.$#"
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<Igniter\\\\Cart\\\\Models\\\\Menu\\>\\:\\:listFrontEnd\\(\\)\\.$#"
 			count: 1
 			path: src/Livewire/MenuItemList.php
 
@@ -521,9 +561,24 @@ parameters:
 			path: src/Livewire/MenuItemList.php
 
 		-
+			message: "#^Cannot call method parameter\\(\\) on object\\|string\\.$#"
+			count: 1
+			path: src/Livewire/MenuItemList.php
+
+		-
 			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:customer\\(\\)\\.$#"
 			count: 3
 			path: src/Livewire/OrderPreview.php
+
+		-
+			message: "#^Cannot call method parameter\\(\\) on object\\|string\\.$#"
+			count: 1
+			path: src/Livewire/OrderPreview.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\User\\\\Models\\\\Customer\\:\\:\\$is_activated\\.$#"
+			count: 1
+			path: src/Livewire/Register.php
 
 		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:queryModifierGetSorts\\(\\)\\.$#"
@@ -541,6 +596,11 @@ parameters:
 			path: src/Livewire/ReservationPreview.php
 
 		-
+			message: "#^Cannot call method parameter\\(\\) on object\\|string\\.$#"
+			count: 1
+			path: src/Livewire/ReservationPreview.php
+
+		-
 			message: "#^Call to an undefined static method Igniter\\\\User\\\\Models\\\\Customer\\:\\:whereEmail\\(\\)\\.$#"
 			count: 1
 			path: src/Livewire/ResetPassword.php
@@ -551,7 +611,12 @@ parameters:
 			path: src/Livewire/ResetPassword.php
 
 		-
-			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:isApproved\\(\\)\\.$#"
+			message: "#^Cannot call method parameter\\(\\) on object\\|string\\.$#"
+			count: 1
+			path: src/Livewire/ResetPassword.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<Igniter\\\\Local\\\\Models\\\\Review\\>\\:\\:isApproved\\(\\)\\.$#"
 			count: 1
 			path: src/Livewire/ReviewList.php
 
@@ -586,11 +651,6 @@ parameters:
 			path: src/Livewire/Utils/Modal.php
 
 		-
-			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:addJs\\(\\)\\.$#"
-			count: 1
-			path: src/Livewire/Utils/Offcanvas.php
-
-		-
 			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:check\\(\\)\\.$#"
 			count: 1
 			path: src/ServiceProvider.php
@@ -621,7 +681,7 @@ parameters:
 			path: src/View/Components/AccountDashboard.php
 
 		-
-			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:isEnabled\\(\\)\\.$#"
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<Igniter\\\\Frontend\\\\Models\\\\Banner\\>\\:\\:isEnabled\\(\\)\\.$#"
 			count: 1
 			path: src/View/Components/BannerPreview.php
 
@@ -631,7 +691,7 @@ parameters:
 			path: src/View/Components/BannerPreview.php
 
 		-
-			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:whereIsEnabled\\(\\)\\.$#"
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<Igniter\\\\Cart\\\\Models\\\\Category\\>\\:\\:whereIsEnabled\\(\\)\\.$#"
 			count: 1
 			path: src/View/Components/CategoryList.php
 
@@ -643,6 +703,11 @@ parameters:
 		-
 			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:current\\(\\)\\.$#"
 			count: 2
+			path: src/View/Components/CategoryList.php
+
+		-
+			message: "#^Cannot call method parameter\\(\\) on object\\|string\\.$#"
+			count: 1
 			path: src/View/Components/CategoryList.php
 
 		-
@@ -666,7 +731,7 @@ parameters:
 			path: src/View/Components/Fulfillment.php
 
 		-
-			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:isApproved\\(\\)\\.$#"
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<Igniter\\\\Local\\\\Models\\\\Review\\>\\:\\:isApproved\\(\\)\\.$#"
 			count: 1
 			path: src/View/Components/LocalHeader.php
 
@@ -691,7 +756,7 @@ parameters:
 			path: src/View/Components/LocalHeader.php
 
 		-
-			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:whereCode\\(\\)\\.$#"
+			message: "#^Call to an undefined static method Igniter\\\\Pages\\\\Models\\\\Menu\\:\\:whereCode\\(\\)\\.$#"
 			count: 1
 			path: src/View/Components/Nav.php
 

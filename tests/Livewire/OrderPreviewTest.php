@@ -18,7 +18,7 @@ it('mounts and prepare props', function() {
         ->assertSet('checkoutPage', 'checkout.checkout')
         ->assertSet('menusPage', 'local.menus')
         ->assertSet('hideReorderBtn', true)
-        ->assertSet('showCancelButton', true);
+        ->assertSet('showCancelButton', false);
 });
 
 it('gets status width for progress bars', function() {
@@ -32,7 +32,17 @@ it('gets status width for progress bars', function() {
 });
 
 it('shows cancel button', function() {
-    Livewire::test(OrderPreview::class, ['hash' => $this->order->hash])
+    $order = Order::factory()->create([
+        'order_date' => now()->toDateString(),
+        'order_time' => now()->addHour()->toTimeString(),
+    ]);
+
+    $order->location->settings()->create([
+        'item' => $order->order_type,
+        'data' => ['cancellation_timeout' => 15]
+    ]);
+
+    Livewire::test(OrderPreview::class, ['hash' => $order->hash])
         ->call('showCancelButton')
         ->assertReturned(true);
 });
@@ -44,7 +54,17 @@ it('handles reorder', function() {
 });
 
 it('handles cancel order', function() {
-    Livewire::test(OrderPreview::class, ['hash' => $this->order->hash])
+    $order = Order::factory()->create([
+        'order_date' => now()->toDateString(),
+        'order_time' => now()->addHour()->toTimeString(),
+    ]);
+
+    $order->location->settings()->create([
+        'item' => $order->order_type,
+        'data' => ['cancellation_timeout' => 15]
+    ]);
+
+    Livewire::test(OrderPreview::class, ['hash' => $order->hash])
         ->call('onCancel')
         ->assertHasNoErrors();
 });

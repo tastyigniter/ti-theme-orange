@@ -13,6 +13,12 @@
             <div id="local-search-form">
                 <x-igniter-orange::forms.form id="location-search" wire:submit="onSearchNearby">
                     <div class="input-group input-group-lg bg-white rounded border p-1 mb-3 mb-lg-0">
+                        <button
+                            type="button"
+                            data-control="user-position"
+                            class="btn rounded border-0 shadow-none"
+                            wire:loading.class="disabled"
+                        ><i class="fa fa-location-arrow fs-4 align-bottom"></i> </button>
                         <input
                             wire:model="searchQuery"
                             type="text"
@@ -20,12 +26,6 @@
                             class="bg-white form-control shadow-none border-none"
                             placeholder="@lang('igniter.local::default.label_search_query')"
                         />
-                        <button
-                            type="button"
-                            data-control="user-position"
-                            class="btn rounded shadow-none"
-                            wire:loading.class="disabled"
-                        ><i class="fa fa-location-arrow fs-4 align-bottom"></i> </button>
                         <button
                             type="submit"
                             class="btn btn-primary btn-lg fw-bold ms-lg-2 rounded"
@@ -39,7 +39,7 @@
             <x-igniter-orange::forms.error
                 field="searchQuery"
                 id="searchQueryFeedback"
-                class="p-2 text-center text-danger fw-bold"
+                class="p-2 text-danger fw-bold"
             />
 
             @include('igniter-orange::includes.local.saved-address-picker')

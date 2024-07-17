@@ -1,8 +1,8 @@
 +function ($) {
     "use strict";
 
-    if ($.ti.orangeModal === undefined)
-        $.ti.orangeModal = {}
+    if ($.fn.orangeModal === undefined)
+        $.fn.orangeModal = {}
 
     var OrangeModal = function (element, options) {
         this.$el = $(element)
@@ -67,9 +67,11 @@
     $.fn.orangeModal.noConflict = function () {
         $.fn.booking = old
         return this
-    }
+    };
 
-    $(document).render(function () {
-        $('#orange-modal').orangeModal()
+    ['livewire:initialized', 'livewire:navigated'].forEach(function (eventName) {
+        document.addEventListener(eventName, () => {
+            $('#orange-modal').orangeModal()
+        }, {once: true});
     });
 }(window.jQuery);

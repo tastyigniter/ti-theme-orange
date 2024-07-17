@@ -18,7 +18,7 @@ it('mounts and prepare props', function() {
         ->assertSet('collapseCategoriesAfter', 5)
         ->assertSet('itemsPerPage', 200)
         ->assertSet('sortOrder', 'menu_priority asc')
-        ->assertSet('showThumb', true)
+        ->assertSet('showThumb', false)
         ->assertSet('menuThumbWidth', 95)
         ->assertSet('menuThumbHeight', 80)
         ->assertSet('categoryThumbWidth', 1240)

@@ -8,13 +8,13 @@
                     $paymentIsNotApplicable = !$paymentMethod->isApplicable($order->order_total, $paymentMethod);
                 @endphp
                 <div
-                    class="list-group-item px-0"
-                    data-checkout-control="choose-payment"
-                    data-payment-code="{{ $paymentMethod->code }}"
+                    @class(['list-group-item px-0', 'selected' => $paymentIsSelected])
+                    data-checkout-payment
                 >
                     <div class="form-check">
                         <input
                             data-checkout-control="payment"
+                            data-payment-code="{{ $paymentMethod->code }}"
                             data-pre-validate-checkout="{{ $paymentMethod->completesPaymentOnClient() ? 'true' : 'false' }}"
                             type="radio"
                             name="form.payment"
@@ -28,6 +28,7 @@
                         <label
                             class="form-check-label ms-2 d-block"
                             for="payment-{{ $paymentMethod->code }}"
+                            data-checkout-control="payment-label"
                         >
                             <div class="">{{ $paymentMethod->name }}</div>
                             @if(strlen($paymentMethod->description))
@@ -58,7 +59,9 @@
                                 </div>
                             @endif
                         </label>
-                        @includeWhen(($viewName = $paymentMethod->getPaymentFormViewName()) && $paymentIsSelected, $viewName)
+                        @if($paymentIsSelected && ($viewName = $paymentMethod->getPaymentFormViewName()))
+                            @include($viewName)
+                        @endif
                     </div>
                 </div>
             @endforeach

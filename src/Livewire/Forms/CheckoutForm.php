@@ -36,9 +36,7 @@ class CheckoutForm extends Form
 
     public ?string $payment = null;
 
-    public int $pay_from_profile = 0;
-
-    public int $create_payment_profile = 0;
+    public array $payment_fields = [];
 
     public bool $termsAgreed = false;
 
@@ -77,7 +75,7 @@ class CheckoutForm extends Form
             'comment' => ['max:500'],
             'delivery_comment' => ['max:500'],
             'address_id' => ['exclude_unless:requiresAddress,true', 'nullable', 'integer'],
-            //            'address_1' => ['exclude_unless:requiresAddress,true', 'required', 'min:3', 'max:128'],
+            'address_1' => ['exclude_unless:requiresAddress,true', 'required', 'min:3', 'max:128'],
             'address_2' => ['exclude_unless:requiresAddress,true', 'nullable', 'min:3', 'max:128'],
             'city' => ['exclude_unless:requiresAddress,true', 'nullable', 'min:2', 'max:128'],
             'state' => ['exclude_unless:requiresAddress,true', 'nullable', 'max:128'],
@@ -85,8 +83,10 @@ class CheckoutForm extends Form
             'country_id' => ['exclude_unless:requiresAddress,true', 'nullable', 'integer'],
             'payment' => ['required', 'alpha_dash'],
             'termsAgreed' => ['accepted'],
-            'pay_from_profile' => ['sometimes', 'integer'],
-            'create_payment_profile' => ['sometimes', 'integer'],
+            'payment_fields' => ['sometimes', 'array'],
+            'payment_fields.*' => ['sometimes'],
+            'payment_fields.pay_from_profile' => ['sometimes', 'integer'],
+            'payment_fields.create_payment_profile' => ['sometimes', 'integer'],
         ];
     }
 }
