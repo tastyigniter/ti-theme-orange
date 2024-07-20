@@ -65,7 +65,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             ->ignoreVCS(true);
 
         foreach ($components as $component) {
-            $componentName = Str::of($component->getRelativePathname())->before('.php')->kebab()->replace('/-', '.');
+            $componentName = Str::of($component->getRelativePathname())->before('.php')->kebab()->replace(DIRECTORY_SEPARATOR.'-', '.');
             $componentClass = Str::of($component->getRelativePathname())->before('.php')->replace('/', '\\')->start('Igniter\\Orange\\Livewire\\')->toString();
 
             if (is_subclass_of($componentClass, Component::class)) {
@@ -93,7 +93,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         resolve(ComponentManager::class)->registerCallback(function($manager) use ($components) {
             foreach ($components as $component) {
-                $componentName = Str::of($component->getRelativePathname())->before('.php')->kebab()->replace('/-', '.');
+                $componentName = Str::of($component->getRelativePathname())->before('.php')->kebab()->replace(DIRECTORY_SEPARATOR.'-', '.');
                 $componentClass = Str::of($component->getRelativePathname())->before('.php')->replace('/', '\\')->start('Igniter\\Orange\\View\\Components\\')->toString();
 
                 if (in_array(ConfigurableComponent::class, class_uses_recursive($componentClass))) {
