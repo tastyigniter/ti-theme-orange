@@ -16,7 +16,7 @@ permalink: /cart
             <div class="cart-buttons">
                 <a
                     class="btn btn-link btn-block btn-md"
-                    href="{{ restaurant_url('local/menus') }}"
+                    href="javascript:history.back()"
                 >@lang('igniter.cart::default.text_add_more_items')</a>
             </div>
 
