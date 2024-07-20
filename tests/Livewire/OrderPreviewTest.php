@@ -39,7 +39,7 @@ it('shows cancel button', function() {
 
     $order->location->settings()->create([
         'item' => $order->order_type,
-        'data' => ['cancellation_timeout' => 15]
+        'data' => ['cancellation_timeout' => 15],
     ]);
 
     Livewire::test(OrderPreview::class, ['hash' => $order->hash])
@@ -61,7 +61,7 @@ it('handles cancel order', function() {
 
     $order->location->settings()->create([
         'item' => $order->order_type,
-        'data' => ['cancellation_timeout' => 15]
+        'data' => ['cancellation_timeout' => 15],
     ]);
 
     Livewire::test(OrderPreview::class, ['hash' => $order->hash])
