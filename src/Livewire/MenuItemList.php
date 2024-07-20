@@ -106,7 +106,7 @@ class MenuItemList extends \Livewire\Component
                     'action' => 'show',
                     'field' => 'showThumb',
                     'condition' => 'checked',
-                ]
+                ],
             ],
             'menuThumbHeight' => [
                 'label' => 'Menu item image thumb height',
