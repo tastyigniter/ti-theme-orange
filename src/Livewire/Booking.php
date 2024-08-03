@@ -193,6 +193,8 @@ class Booking extends Component
 
     public function onComplete()
     {
+        $customer = Auth::customer();
+
         $this->form->validate();
 
         $reservation = $this->manager->loadReservation();
@@ -200,10 +202,10 @@ class Booking extends Component
         $this->manager->saveReservation($reservation, [
             'sdateTime' => make_carbon($this->date.' '.$this->time)->format('Y-m-d H:i'),
             'guest' => $this->guest,
-            'first_name' => $this->form->firstName,
-            'last_name' => $this->form->lastName,
-            'email' => $this->form->email,
-            'telephone' => $this->form->telephone,
+            'first_name' => $customer ? $customer->first_name : $this->form->firstName,
+            'last_name' => $customer ? $customer->last_name : $this->form->lastName,
+            'email' => $customer ? $customer->email : $this->form->email,
+            'telephone' => $customer ? $customer->telephone : $this->form->telephone,
             'comment' => $this->form->comment,
         ]);
 
@@ -234,10 +236,11 @@ class Booking extends Component
 
         return $timeslots
             ->slice($from, $this->noOfSlots - 1)
-            ->map(function($dateTime) {
+            ->map(function($dateTime, $index) use ($selectedIndex) {
                 return (object)[
                     'dateTime' => $dateTime,
                     'fullyBooked' => false,
+                    'isSelected' => $selectedIndex === $index
                 ];
             });
     }

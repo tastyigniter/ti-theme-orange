@@ -6,10 +6,6 @@
         this.options = options || {}
         this.$datePicker = this.$el.find('[data-control="datepicker"]')
         this.$datePickerValue = null
-        this.$guestPicker = null
-        this.$guestPickerValue = 1
-        this.$locationPicker = null
-        this.$locationPickerValue = 1
 
         this.init()
     }
