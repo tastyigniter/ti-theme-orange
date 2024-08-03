@@ -37,6 +37,7 @@
                     type="text"
                     id="email"
                     @class(['form-control', 'is-invalid' => has_form_error('form.email')])
+                    @if($customer) readonly="readonly" @endif
                     placeholder="@lang('igniter.reservation::default.label_email')"
                     aria-describedby="emailFeedback"
                     required

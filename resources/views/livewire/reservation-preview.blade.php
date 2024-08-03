@@ -35,41 +35,32 @@
                     </span>
                 </div>
                 <div class="col-md-6 p-3 border">
-                    <h6 class="small text-muted">@lang('igniter.reservation::default.column_table')</h6>
-                    <span class="h4">{{ implode(', ', $reservation->tables->pluck('table_name')->all()) }}</span>
-                </div>
-            </div>
-            <div class="d-flex">
-                <div class="col-md-6 p-3 border">
                     <h6 class="small text-muted">@lang('igniter.reservation::default.column_guest')</h6>
                     <span class="h4">{{ $reservation->guest_num }}</span>
                 </div>
-                <div class="col-md-6 p-3 border">
-                    <h6 class="small text-muted">@lang('igniter.reservation::default.column_location')</h6>
-                    <span class="h4">
-                        {{ $reservation->location->location_name }}<br/>
-                        {{ format_address($reservation->location->getAddress()) }}
-                    </span>
-                </div>
             </div>
             <div class="d-flex">
                 <div class="col-md-6 p-3 border">
-                    <h6 class="small text-muted">@lang('admin::lang.label_name')</h6>
-                    <span class="h4">{{ $reservation->first_name}} {{ $reservation->last_name }}</span>
-                </div>
-                <div class="col-md-6 p-3 border">
-                    <h6 class="small text-muted">@lang('admin::lang.label_email')</h6>
-                    <span class="h4">{{ $reservation->email }}</span>
-                </div>
-            </div>
-            <div class="d-flex">
-                <div class="col-md-6 p-3 border">
-                    <h6 class="small text-muted">@lang('igniter.reservation::default.column_telephone')</h6>
-                    <span class="h4">{{ $reservation->telephone }}</span>
+                    <h6 class="small text-muted">@lang('igniter.reservation::default.column_table')</h6>
+                    <span class="h4">{{ implode(', ', $reservation->tables->pluck('table_name')->all()) }}</span>
                 </div>
                 <div class="col-md-6 p-3 border">
                     <h6 class="small text-muted">@lang('igniter.reservation::default.column_comment')</h6>
                     <span class="h4">{{ $reservation->comment }}</span>
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="col-md-6 p-3 border">
+                    <h6 class="small text-muted">@lang('igniter.reservation::default.column_location')</h6>
+                    <span class="h4">
+                        {{ $reservation->location->location_name }}<br/>
+                    </span>
+                    <p class="mt-2">{{ html(format_address($reservation->location->getAddress(), false)) }}</p>
+                </div>
+                <div class="col-md-6 p-3 border">
+                    <h6 class="small text-muted">@lang('igniter.reservation::default.column_customer_name')</h6>
+                    <span class="h4">{{ $reservation->first_name}} {{ $reservation->last_name }}</span>
+                    <p class="mt-2">{{ $reservation->email }}</p>
                 </div>
             </div>
         </div>

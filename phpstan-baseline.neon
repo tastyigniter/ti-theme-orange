@@ -197,7 +197,7 @@ parameters:
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:customer\\(\\)\\.$#"
-			count: 2
+			count: 3
 			path: src/Livewire/Booking.php
 
 		-

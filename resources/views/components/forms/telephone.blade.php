@@ -1,4 +1,4 @@
-@props(['id', 'label', 'number', 'field'])
+@props(['id', 'label', 'number', 'field', 'readOnly'])
 <div @class(['form-control py-0', 'is-invalid' => has_form_error($field)])>
     <label for="{{$id}}">{{$label}}</label>
     <input
