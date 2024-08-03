@@ -63,7 +63,7 @@ class Contact extends Component
             'contact_message' => $this->comment,
         ];
 
-        (new SendContactMail())($data);
+        (new SendContactMail)($data);
 
         $this->reset();
 
