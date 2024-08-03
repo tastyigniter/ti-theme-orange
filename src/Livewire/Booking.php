@@ -240,7 +240,7 @@ class Booking extends Component
                 return (object)[
                     'dateTime' => $dateTime,
                     'fullyBooked' => false,
-                    'isSelected' => $selectedIndex === $index
+                    'isSelected' => $selectedIndex === $index,
                 ];
             });
     }
