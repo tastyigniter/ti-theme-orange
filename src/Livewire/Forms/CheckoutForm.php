@@ -81,7 +81,7 @@ class CheckoutForm extends Form
             'state' => ['exclude_unless:requiresAddress,true', 'nullable', 'max:128'],
             'postcode' => ['exclude_unless:requiresAddress,true', 'nullable', 'string'],
             'country_id' => ['exclude_unless:requiresAddress,true', 'nullable', 'integer'],
-            'payment' => ['required', 'alpha_dash'],
+            'payment' => ['nullable', 'alpha_dash'],
             'termsAgreed' => ['accepted'],
             'payment_fields' => ['sometimes', 'array'],
             'payment_fields.*' => ['sometimes'],

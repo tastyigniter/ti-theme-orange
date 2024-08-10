@@ -15,7 +15,7 @@
                 <tr>
                     <td>
                         {{ $condition->getLabel() }}:
-                        @if ($condition->removeable)
+                        @if (!$previewMode && $condition->removeable)
                             <button
                                 type="button"
                                 class="btn btn-sm"
