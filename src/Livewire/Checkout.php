@@ -408,7 +408,7 @@ class Checkout extends Component
                     });
                 }
 
-                if (!$this->orderManager->getPayment($this->form->payment)) {
+                if ($this->form->payment && !$this->orderManager->getPayment($this->form->payment)) {
                     $validator->errors()->add('payment', lang('igniter.cart::default.checkout.error_invalid_payment'));
                 }
             });

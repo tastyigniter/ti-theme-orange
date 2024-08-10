@@ -66,7 +66,7 @@ class FulfillmentModal extends \Livewire\Component
     public function render()
     {
         return view('igniter-orange::livewire.fulfillment-modal', [
-            'orderTypes' => collect($this->location->getOrderTypes() ?? [])->filter(fn($orderType) => !$orderType->isDisabled()),
+            'orderTypes' => $this->location->getActiveOrderTypes(),
         ]);
     }
 

@@ -27,9 +27,11 @@ layout: default
                 <x-igniter-orange::local-header/>
             </div>
             <div class="col-lg-4 mt-4 mt-lg-0">
-                <div class="local-control float-lg-end p-3 border rounded">
-                    <div class="d-inline-block w-100 fw-bold text-sm-left text-md-center">
-                        <x-igniter-orange::fulfillment/>
+                <div class="d-flex justify-content-end">
+                    <div class="local-control p-3 border rounded">
+                        <div class="d-inline-block w-100 fw-bold text-sm-left text-md-center">
+                            <x-igniter-orange::fulfillment/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -62,6 +64,3 @@ layout: default
     </a>
 </div>
 <livewire:igniter-orange::fulfillment-modal/>
-@push('scripts')
-    @dump('hey there!')
-@endpush
