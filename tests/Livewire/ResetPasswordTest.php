@@ -36,7 +36,7 @@ it('handles forgot password', function() {
     Mail::assertQueued(AnonymousTemplateMailable::class, function($mailable) {
         return $mailable->getTemplateCode() === 'igniter.user::mail.password_reset_request';
     });
-});
+})->group('lock_wait_timeout');
 
 it('handles reset password', function() {
     Mail::fake();
@@ -58,4 +58,4 @@ it('handles reset password', function() {
     Mail::assertQueued(AnonymousTemplateMailable::class, function($mailable) {
         return $mailable->getTemplateCode() === 'igniter.user::mail.password_reset';
     });
-});
+})->group('lock_wait_timeout');

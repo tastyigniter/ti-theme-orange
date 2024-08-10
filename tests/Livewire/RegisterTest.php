@@ -36,7 +36,7 @@ it('registers customer', function() {
     Mail::assertQueued(AnonymousTemplateMailable::class, function($mail) {
         return $mail->getTemplateCode() === 'igniter.user::mail.registration';
     });
-});
+})->group('lock_wait_timeout');
 
 it('activates customer', function() {
     Mail::fake();
@@ -55,4 +55,4 @@ it('activates customer', function() {
     Mail::assertQueued(AnonymousTemplateMailable::class, function($mail) {
         return $mail->getTemplateCode() === 'igniter.user::mail.registration';
     });
-});
+})->group('lock_wait_timeout');
