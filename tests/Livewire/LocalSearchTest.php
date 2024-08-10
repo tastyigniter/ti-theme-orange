@@ -35,4 +35,4 @@ it('fails with an outside delivery area previously saved address', function() {
         ->test(LocalSearch::class)
         ->call('onSelectAddress', $address->getKey())
         ->assertHasErrors(['savedAddress']);
-});
+})->group('lock_wait_timeout');

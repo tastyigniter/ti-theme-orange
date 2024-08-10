@@ -21,7 +21,7 @@ it('logs in user', function() {
         ->set('form.remember', true)
         ->call('onLogin')
         ->assertRedirect();
-});
+})->group('lock_wait_timeout');
 
 it('fails to log in user with invalid credentials', function() {
     Livewire::test(Login::class)
@@ -47,7 +47,7 @@ it('fails to log in user with invalid password', function() {
         ->set('form.password', 'pass')
         ->call('onLogin')
         ->assertHasErrors(['form.password']);
-});
+})->group('lock_wait_timeout');
 
 it('fails to log in user with empty email', function() {
     Livewire::test(Login::class)

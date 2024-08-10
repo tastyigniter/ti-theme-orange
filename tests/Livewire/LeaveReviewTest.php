@@ -46,4 +46,4 @@ it('leaves review', function() {
         'quality' => 5,
         'service' => 5,
     ]))->not->toBeNull();
-});
+})->group('lock_wait_timeout');
