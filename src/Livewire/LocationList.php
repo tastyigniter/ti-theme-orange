@@ -242,11 +242,13 @@ class LocationList extends \Livewire\Component
     protected function filterQuery($query): void
     {
         collect($this->filters)->each(function($filter, $code) use ($query) {
-            if (!$filter['query'] instanceof \Closure)
+            if (!$filter['query'] instanceof \Closure) {
                 return;
+            }
 
-            if (!$filterValue = array_get($this->filter, $code))
+            if (!$filterValue = array_get($this->filter, $code)) {
                 return;
+            }
 
             $filter['query']($query, $filterValue);
         });
