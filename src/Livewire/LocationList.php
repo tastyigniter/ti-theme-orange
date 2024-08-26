@@ -48,6 +48,9 @@ class LocationList extends \Livewire\Component
     #[Url]
     public string $search = '';
 
+    #[Url]
+    public array $filter = [];
+
     public static function componentMeta(): array
     {
         return [
@@ -133,6 +136,12 @@ class LocationList extends \Livewire\Component
     #[Computed, Locked]
     public function sorters()
     {
+        $defaults = [
+            'name' => null,
+            'priority' => 999,
+            'condition' => null,
+        ];
+
         $result = [
             'distance' => [
                 'name' => lang('igniter.local::default.text_filter_distance'),
@@ -157,8 +166,29 @@ class LocationList extends \Livewire\Component
         ];
 
         $eventResult = Event::dispatch('igniter.orange.extendLocationListSorting');
-        if (is_array($eventResult)) {
-            $result = array_merge($result, ...array_filter($eventResult));
+        foreach (array_filter((array)$eventResult) as $code => $filter) {
+            $result[$code] = array_merge($defaults, $filter);
+        }
+
+        return $result;
+    }
+
+    #[Computed, Locked]
+    public function filters()
+    {
+        $defaults = [
+            'title' => null,
+            'options' => null,
+            'query' => null,
+        ];
+
+        $result = [];
+
+        $eventResults = Event::dispatch('igniter.orange.extendLocationListFilters');
+        foreach (array_filter($eventResults) as $eventResult) {
+            foreach ((array)$eventResult as $code => $filter) {
+                $result[$code] = array_merge($defaults, $filter);
+            }
         }
 
         return $result;
@@ -190,6 +220,8 @@ class LocationList extends \Livewire\Component
 
         $filterByDeliveryAreas = $this->orderType == 'delivery';
 
+        $this->filterQuery($query);
+
         $results = $query->applyFilters($options)
             ->paginate($this->itemPerPage, $this->getPage());
 
@@ -205,5 +237,18 @@ class LocationList extends \Livewire\Component
     protected function filterQueryResult($location, $coordinates, $filterByDeliveryAreas = false)
     {
         return array_get($location->getSettings($this->orderType), 'is_enabled', 1) == 1;
+    }
+
+    protected function filterQuery($query): void
+    {
+        collect($this->filters)->each(function($filter, $code) use ($query) {
+            if (!$filter['query'] instanceof \Closure)
+                return;
+
+            if (!$filterValue = array_get($this->filter, $code))
+                return;
+
+            $filter['query']($query, $filterValue);
+        });
     }
 }

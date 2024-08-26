@@ -25,16 +25,33 @@
                     role="button"
                     class="bg-white accordion-button shadow-none p-0 fw-bold"
                     data-bs-toggle="collapse"
-                    data-bs-target="#collapseExample"
+                    data-bs-target="#collapseSortBy"
                     aria-expanded="false"
-                    aria-controls="collapseExample"
+                    aria-controls="collapseSortBy"
                 >@lang('igniter.orange::default.text_sort')</div>
-                <div class="collapse show" id="collapseExample">
+                <div class="collapse show" id="collapseSortBy">
                     <div class="pt-3">
                         @include('igniter-orange::includes.local.list-filter-items', ['filters' => $this->sorters, 'field' => 'sortBy'])
                     </div>
                 </div>
             </div>
+            @foreach($this->filters as $fieldName => $filter)
+                <div class="bg-white border rounded p-3 mb-3">
+                    <div
+                        role="button"
+                        class="bg-white accordion-button shadow-none p-0 fw-bold"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapse-{{$fieldName}}"
+                        aria-expanded="false"
+                        aria-controls="collapse-{{$fieldName}}"
+                    >{{lang($filter['title'])}}</div>
+                    <div class="collapse show" id="collapse-{{$fieldName}}">
+                        <div class="pt-3">
+                            @include('igniter-orange::includes.local.list-filter-items', ['filters' => $filter['options'](), 'field' => 'filter.'.$fieldName])
+                        </div>
+                    </div>
+                </div>
+            @endforeach
         </div>
         <div class="col-sm-9">
             <div class="mb-4">
