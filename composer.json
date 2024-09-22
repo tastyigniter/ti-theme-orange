@@ -17,7 +17,7 @@
     "livewire/livewire": "^v3.0.0",
     "spatie/laravel-google-fonts": "^1.2",
     "tastyigniter/core": "^v4.0@beta",
-    "tastyigniter/ti-ext-cart": "^v4.0@beta",
+    "tastyigniter/ti-ext-cart": "v4-dev",
     "tastyigniter/ti-ext-coupons": "^v4.0@beta",
     "tastyigniter/ti-ext-frontend": "^v4.0@beta",
     "tastyigniter/ti-ext-local": "^v4.0@beta",
