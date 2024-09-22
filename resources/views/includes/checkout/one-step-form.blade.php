@@ -1,25 +1,32 @@
 <x-igniter-orange::forms.form id="checkout-form" novalidate>
     <div class="p-3">
         <h5 class="fw-normal">@lang('igniter.orange::default.label_your_details')</h5>
-        @include('igniter-orange::includes.checkout.customer-fields')
+        @include('igniter-orange::includes.checkout.tab-fields', [
+            'fields' => $this->formTabFields('details'),
+        ])
     </div>
 
     <div class="px-3 fs-5">
         <div class="p-3 border rounded">
             <x-igniter-orange::fulfillment/>
+
+            @includeWhen($order->isDeliveryType(), 'igniter-orange::includes.checkout.delivery-address')
         </div>
     </div>
 
-    @includeWhen($order->isDeliveryType(), 'igniter-orange::includes.checkout.address-fields')
-
     <div class="p-3">
-        @includeWhen($showCommentField, 'igniter-orange::includes.checkout.comment-field')
-        @includeWhen($order->isDeliveryType() && $showDeliveryCommentField, 'igniter-orange::includes.checkout.delivery-comment-field')
+        @include('igniter-orange::includes.checkout.tab-fields', [
+            'fields' => $this->formTabFields('comments'),
+        ])
     </div>
 
-    @includeWhen($this->paymentGateways->isNotEmpty(), 'igniter-orange::includes.checkout.payments')
+    @include('igniter-orange::includes.checkout.tab-fields', [
+        'fields' => $this->formTabFields('payments'),
+    ])
 
-    @includeWhen($agreeTermsSlug, 'igniter-orange::includes.checkout.terms-field')
+    @include('igniter-orange::includes.checkout.tab-fields', [
+        'fields' => $this->formTabFields('terms'),
+    ])
 
     <div class="p-3">
         <button

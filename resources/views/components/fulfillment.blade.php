@@ -25,10 +25,12 @@
         @endif
         &nbsp;&nbsp;
     </div>
-    <a
-        role="button"
-        class="small text-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#fulfillmentModal"
-    >@lang('igniter.local::default.search.text_change')</a>
+    @unless($previewMode)
+        <a
+            role="button"
+            class="small text-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#fulfillmentModal"
+        >@lang('igniter.local::default.search.text_change')</a>
+    @endunless
 </div>

@@ -14,7 +14,7 @@
             <div
                 data-control="checkout"
                 data-partial="checkoutForm"
-                data-payment-input-name="form.payment"
+                data-payment-input-name="fields.payment"
                 data-validate-event="checkout::validate"
                 data-confirm-event="checkout::confirm"
                 data-choose-payment-event="checkout::choose-payment"

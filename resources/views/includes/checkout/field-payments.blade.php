@@ -1,10 +1,10 @@
 <div class="px-3">
-    <h5 class="fw-normal mb-2">@lang('igniter.cart::default.checkout.label_payment_method')</h5>
+    <h5 class="fw-normal mb-2">@lang($field->label)</h5>
     <div data-toggle="payments" class="progress-indicator-container">
         <div class="list-group list-group-flush p-3 border rounded">
             @foreach ($this->paymentGateways as $paymentMethod)
                 @php
-                    $paymentIsSelected = ($this->form->payment == $paymentMethod->code);
+                    $paymentIsSelected = ($field->value == $paymentMethod->code);
                     $paymentIsNotApplicable = !$paymentMethod->isApplicable($order->order_total, $paymentMethod);
                 @endphp
                 <div
@@ -13,11 +13,11 @@
                 >
                     <div class="form-check">
                         <input
-                            data-checkout-control="payment"
+                            data-checkout-control="{{$field->fieldName}}"
                             data-payment-code="{{ $paymentMethod->code }}"
                             data-pre-validate-checkout="{{ $paymentMethod->completesPaymentOnClient() ? 'true' : 'false' }}"
                             type="radio"
-                            name="form.payment"
+                            name="{{$field->getName()}}"
                             id="payment-{{ $paymentMethod->code }}"
                             class="form-check-input"
                             value="{{ $paymentMethod->code }}"
@@ -67,5 +67,5 @@
             @endforeach
         </div>
     </div>
-    <x-igniter-orange::forms.error field="form.payment" id="paymentFeedback" class="text-danger"/>
+    <x-igniter-orange::forms.error field="{{$field->getName()}}" id="{{$field->getName()}}-feedback" class="text-danger"/>
 </div>

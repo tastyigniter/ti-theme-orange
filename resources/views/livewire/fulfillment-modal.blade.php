@@ -28,6 +28,7 @@
                                         class="form-check-input"
                                         value="{{ $orderType->getCode() }}"
                                         @checked($orderType->isActive())
+                                        @disabled($previewMode)
                                     />
                                     <label
                                         class="form-check-label text-wrap ms-2 d-block"
@@ -47,13 +48,15 @@
                                 <h6 class="my-3">
                                     <i class="fa fa-map-pin"></i>&nbsp;&nbsp;
                                     @lang('igniter.orange::default.text_delivering_to')
-                                    <a
-                                        wire:click="$set('showAddressPicker', true)"
-                                        role="button"
-                                        class="small text-primary"
-                                    >@lang('igniter.local::default.search.text_change')</a>
+                                    @unless($previewMode)
+                                        <a
+                                            wire:click="$set('showAddressPicker', true)"
+                                            role="button"
+                                            class="small text-primary"
+                                        >@lang('igniter.local::default.search.text_change')</a>
+                                    @endunless
                                 </h6>
-                                @if($showAddressPicker)
+                                @if(!$previewMode && $showAddressPicker)
                                     <div class="input-group bg-white rounded border p-1 mb-3 mb-lg-0">
                                         <input
                                             wire:model="searchQuery"
@@ -66,7 +69,7 @@
                                             type="button"
                                             data-control="user-position"
                                             class="btn shadow-none"
-                                        ><i class="fa fa-location-arrow fs-5 align-bottom"></i> </button>
+                                        ><i class="fa fa-location-arrow fs-5 align-bottom"></i></button>
                                     </div>
 
                                     <x-igniter-orange::forms.error

@@ -4,16 +4,16 @@ namespace Igniter\Orange\Livewire;
 
 use Exception;
 use Igniter\Cart\Classes\CartManager;
+use Igniter\Cart\Classes\CheckoutForm;
 use Igniter\Cart\Classes\OrderManager;
 use Igniter\Cart\Models\Order;
 use Igniter\Flame\Exception\ApplicationException;
+use Igniter\Flame\Support\Facades\File;
 use Igniter\Flame\Traits\EventEmitter;
 use Igniter\Local\Facades\Location;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
-use Igniter\Orange\Livewire\Forms\CheckoutForm;
 use Igniter\System\Facades\Assets;
-use Igniter\System\Models\Country;
 use Igniter\User\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Event;
@@ -35,34 +35,17 @@ class Checkout extends Component
 
     public const STEP_PAY = 'pay';
 
-    public CheckoutForm $form;
-
-    /** Whether to use a two page checkout */
+    /** Whether to use a two-page checkout */
     public bool $isTwoPageCheckout = false;
 
-    /** Whether to display the address 2 form field */
-    public bool $showAddress2Field = true;
-
-    /** Whether to display the city form field */
-    public bool $showCityField = true;
-
-    /** Whether to display the state form field */
-    public bool $showStateField = true;
-
-    /** Whether to display the country form field */
-    public bool $showCountryField = false;
-
-    /** Whether to display the postcode form field */
-    public bool $showPostcodeField = true;
-
-    /** Whether the telephone field should be required */
-    public bool $showTelephoneField = true;
+    /** Whether to display the telephone form field */
+    public bool $hideTelephoneField = false;
 
     /** Whether to display the comment form field */
-    public bool $showCommentField = true;
+    public bool $hideCommentField = false;
 
     /** Whether to display the delivery comment form field */
-    public bool $showDeliveryCommentField = true;
+    public bool $hideDeliveryCommentField = false;
 
     /** Whether the telephone field should be required */
     public bool $telephoneIsRequired = true;
@@ -82,22 +65,15 @@ class Checkout extends Component
     #[Url(as: 'step')]
     public string $checkoutStep = 'details';
 
-    public array $paymentFields = [];
+    public array $fields = [];
 
-    /**
-     * @var \Igniter\Cart\Classes\CartManager
-     */
-    protected $cartManager;
+    protected CheckoutForm $checkoutForm;
 
-    /**
-     * @var \Igniter\Cart\Classes\OrderManager
-     */
-    protected $orderManager;
+    protected CartManager $cartManager;
 
-    /**
-     * @var \Igniter\Cart\Models\Order
-     */
-    protected $order;
+    protected OrderManager $orderManager;
+
+    protected ?Order $order = null;
 
     public static function componentMeta(): array
     {
@@ -116,42 +92,17 @@ class Checkout extends Component
                 'type' => 'switch',
                 'validationRule' => 'required|boolean',
             ],
-            'showAddress2Field' => [
-                'label' => 'Display the address 2 checkout field.',
-                'type' => 'switch',
-                'validationRule' => 'required|boolean',
-            ],
-            'showCityField' => [
-                'label' => 'Display the city checkout field.',
-                'type' => 'switch',
-                'validationRule' => 'required|boolean',
-            ],
-            'showStateField' => [
-                'label' => 'Display the state checkout field.',
-                'type' => 'switch',
-                'validationRule' => 'required|boolean',
-            ],
-            'showPostcodeField' => [
-                'label' => 'Display the postcode checkout field.',
-                'type' => 'switch',
-                'validationRule' => 'required|boolean',
-            ],
-            'showTelephoneField' => [
+            'hideTelephoneField' => [
                 'label' => 'Display the telephone checkout field.',
                 'type' => 'switch',
                 'validationRule' => 'required|boolean',
             ],
-            'showCountryField' => [
-                'label' => 'Display the country checkout field.',
-                'type' => 'switch',
-                'validationRule' => 'required|boolean',
-            ],
-            'showCommentField' => [
+            'hideCommentField' => [
                 'label' => 'Display the comment checkout field',
                 'type' => 'switch',
                 'validationRule' => 'required|boolean',
             ],
-            'showDeliveryCommentField' => [
+            'hideDeliveryCommentField' => [
                 'label' => 'Display the delivery comment checkout field',
                 'type' => 'switch',
                 'validationRule' => 'required|boolean',
@@ -215,16 +166,9 @@ class Checkout extends Component
             $paymentGateway->beforeRenderPaymentForm($paymentGateway, controller());
         }
 
-        $order = $this->getOrder();
-        $this->form->requiresAddress = $order->isDeliveryType();
-        $this->form->first_name = $order->first_name;
-        $this->form->last_name = $order->last_name;
-        $this->form->email = $order->email;
-        $this->form->telephone = $order->telephone;
-        $this->form->comment = $order->comment;
-        $this->form->delivery_comment = $order->delivery_comment;
-        $this->form->address_id = $order->address_id;
-        $this->form->payment = $order->payment;
+        foreach ($this->checkoutForm->getFields() as $field) {
+            $this->fields[$field->fieldName] = $field->value;
+        }
 
         $this->prepareDeliveryAddress();
     }
@@ -233,20 +177,13 @@ class Checkout extends Component
     {
         $this->orderManager = resolve(OrderManager::class);
         $this->cartManager = resolve(CartManager::class);
-    }
-
-    public function updating($property, $value)
-    {
-        if ($property === 'form.address_id' && is_numeric($value)) {
-            $this->form->address_id = $value;
-            $this->prepareDeliveryAddress();
-        }
+        $this->initForm();
     }
 
     #[Computed, Locked]
-    public function customerAddresses()
+    public function formTabFields(string $tab): array
     {
-        return $this->getOrder()->listCustomerAddresses();
+        return array_get($this->checkoutForm->getTab('primary'), $tab, []);
     }
 
     #[Computed, Locked]
@@ -318,7 +255,7 @@ class Checkout extends Component
                 return $redirect;
             }
         } catch (\Exception $ex) {
-            throw ValidationException::withMessages(['form.payment' => $ex->getMessage()]);
+            throw ValidationException::withMessages(['fields.payment' => $ex->getMessage()]);
         }
     }
 
@@ -326,15 +263,18 @@ class Checkout extends Component
     public function onChoosePayment($code)
     {
         throw_unless($code, ValidationException::withMessages([
-            'form.payment' => lang('igniter.cart::default.checkout.error_invalid_payment'),
+            'fields.payment' => lang('igniter.cart::default.checkout.error_invalid_payment'),
         ]));
 
         throw_unless($payment = $this->orderManager->getPayment($code), ValidationException::withMessages([
-            'form.payment' => lang('igniter.cart::default.checkout.error_invalid_payment'),
+            'fields.payment' => lang('igniter.cart::default.checkout.error_invalid_payment'),
         ]));
 
-        $this->form->payment = $code;
+        $this->fields['payment'] = $code;
+        $this->checkoutForm->getField('payment')->value = $code;
         $this->orderManager->applyCurrentPaymentFee($payment->code);
+
+        $this->order = null;
     }
 
     #[On('checkout::delete-payment-profile')]
@@ -344,11 +284,11 @@ class Checkout extends Component
         $payment = $this->orderManager->getPayment($code);
 
         throw_if(!$payment, ValidationException::withMessages([
-            'form.payment' => lang('igniter.cart::default.checkout.error_invalid_payment'),
+            'fields.payment' => lang('igniter.cart::default.checkout.error_invalid_payment'),
         ]));
 
         throw_if(!$payment->paymentProfileExists($customer), ValidationException::withMessages([
-            'form.payment' => lang('igniter.cart::default.checkout.error_payment_profile_not_found'),
+            'fields.payment' => lang('igniter.cart::default.checkout.error_payment_profile_not_found'),
         ]));
 
         $payment->deletePaymentProfile($customer);
@@ -385,7 +325,7 @@ class Checkout extends Component
                 return true;
             }
 
-            Event::dispatch('igniter.orange.checkCheckoutSecurity', [$this]);
+            Event::dispatch('igniter.orange.checkCheckoutSecurity');
         } catch (Exception $ex) {
             flash()->warning($ex->getMessage())->now();
 
@@ -395,29 +335,40 @@ class Checkout extends Component
 
     protected function validateCheckout(Order $order)
     {
-        $this->form->requiresAddress = $order->isDeliveryType();
-        $this->form->telephoneIsRequired = $this->telephoneIsRequired;
+        $rules = $this->checkoutForm->validationRules();
+        $messages = $this->checkoutForm->validationMessages();
+        $attributes = $this->checkoutForm->validationAttributes();
 
-        $this->form->withValidator(function($validator) use ($order) {
+        if (!$this->agreeTermsSlug || ($this->isTwoPageCheckout && $this->checkoutStep !== self::STEP_PAY)) {
+            $rules = array_except($rules, ['fields.termsAgreed']);
+        }
+
+        $this->withValidator(function($validator) use ($order) {
             $validator->after(function($validator) use ($order) {
                 if ($order->isDeliveryType()) {
                     rescue(function() {
-                        $this->orderManager->validateDeliveryAddress($this->form->toArray());
+                        $this->orderManager->validateDeliveryAddress(array_only($this->fields, [
+                            'address_1', 'city', 'state', 'postcode', 'country',
+                        ]));
                     }, function(\Exception $ex) use ($validator) {
-                        $validator->errors()->add('address_1', $ex->getMessage());
+                        $validator->errors()->add('delivery_address', $ex->getMessage());
                     });
                 }
 
-                if ($this->form->payment && !$this->orderManager->getPayment($this->form->payment)) {
+                if ($this->fields['payment'] && !$this->orderManager->getPayment($this->fields['payment'])) {
                     $validator->errors()->add('payment', lang('igniter.cart::default.checkout.error_invalid_payment'));
                 }
             });
         });
 
-        $data = $this->form->validate();
-        $data = array_merge(array_pull($data, 'payment_fields', []), $data);
+        $data = $this->validate($rules, $messages, $attributes);
+        $data = array_merge(
+            array_pull($data, 'fields.payment_fields', []),
+            array_pull($data, 'fields', []),
+            $data
+        );
 
-        $this->orderManager->applyCurrentPaymentFee($this->form->payment);
+        $this->orderManager->applyCurrentPaymentFee($this->fields['payment']);
 
         Event::dispatch('igniter.orange.validateCheckout', [$data, $order]);
 
@@ -436,32 +387,55 @@ class Checkout extends Component
 
     protected function prepareDeliveryAddress()
     {
-        if (!$this->form->requiresAddress) {
+        if (!$this->getOrder()->isDeliveryType()) {
             return;
         }
 
-        if ($address = $this->getSelectedAddress()) {
-            $this->form->address_1 = $address->address_1;
-            $this->form->address_2 = $address->address_2;
-            $this->form->city = $address->city;
-            $this->form->state = $address->state;
-            $this->form->postcode = $address->postcode;
-        } elseif ($userPosition = Location::userPosition()) {
-            $this->form->address_1 = $userPosition->getStreetNumber().' '.$userPosition->getStreetName();
-            $this->form->city = $userPosition->getSubLocality();
-            $this->form->state = $userPosition->getLocality();
-            $this->form->postcode = $userPosition->getPostalCode();
-        }
-
-        if (!isset($this->form->country_id)) {
-            $this->form->country_id = Country::getDefaultKey();
+        $userPosition = Location::userPosition();
+        if ($userPosition && $userPosition->isValid()) {
+            $this->fields['address_1'] = $userPosition->getStreetNumber().' '.$userPosition->getStreetName();
+            $this->fields['city'] = $userPosition->getSubLocality();
+            $this->fields['state'] = $userPosition->getLocality();
+            $this->fields['postcode'] = $userPosition->getPostalCode();
         }
     }
 
-    protected function getSelectedAddress()
+    protected function formExtendFieldsBefore(CheckoutForm $checkoutForm)
     {
-        return $this->form->address_id
-            ? $this->orderManager->findDeliveryAddress($this->form->address_id)
-            : null;
+        if ($this->agreeTermsSlug) {
+            $checkoutForm->fields['termsAgreed']['placeholder'] = sprintf(
+                lang('igniter.cart::default.checkout.label_terms'), url($this->agreeTermsSlug)
+            );
+        } else {
+            unset($checkoutForm->fields['termsAgreed']);
+        }
+
+        if ($this->hideTelephoneField) {
+            unset($checkoutForm->fields['telephone']);
+        }
+
+        if ($this->hideCommentField) {
+            unset($checkoutForm->fields['comment']);
+        }
+
+        if ($this->hideDeliveryCommentField) {
+            unset($checkoutForm->fields['delivery_comment']);
+        }
+    }
+
+    protected function initForm(): void
+    {
+        $config = File::getRequire(
+            File::symbolizePath('igniter-orange::/models/checkoutfields.php')
+        );
+
+        $this->checkoutForm = resolve(CheckoutForm::class, ['config' => $config]);
+        $this->checkoutForm->model = $this->getOrder();
+
+        $this->checkoutForm->bindEvent('form.extendFieldsBefore', function() {
+            $this->formExtendFieldsBefore($this->checkoutForm);
+        });
+
+        $this->checkoutForm->initialize();
     }
 }

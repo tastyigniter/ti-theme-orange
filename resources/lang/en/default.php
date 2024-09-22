@@ -45,6 +45,7 @@ return [
     'text_customer' => 'Customer',
     'text_guest' => 'Guest',
     'text_login' => 'Log In',
+    'text_no_delivery_address' => 'No delivery address provided',
     'text_register' => 'Register <small>It\'s easy and always will be.</small>',
     'text_forgot' => 'Forgot password?',
 
@@ -144,6 +145,11 @@ return [
     'button_show_more_options' => 'Show more',
 
     'help_security' => 'Choose who can access this page',
+
+    'alert_preview_mode' => 'Action not allowed in preview mode',
+
+    'error_telephone_required' => 'Telephone number is required',
+    'error_telephone_invalid' => 'Telephone number is invalid',
 
     'contact' => [
         'text_heading' => 'Contact',

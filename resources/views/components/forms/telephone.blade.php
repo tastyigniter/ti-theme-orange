@@ -18,7 +18,6 @@
     id="hidden-{{$id}}"
     value="{{$number}}"
 />
-<x-igniter-orange::forms.error field="{{$field}}" id="{{$id}}Feedback" class="text-danger"/>
 @script
 <script>
     const telephoneInput = document.querySelector('#hidden-{{$id}}');
