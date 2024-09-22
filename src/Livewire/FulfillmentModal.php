@@ -8,6 +8,7 @@ use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Livewire\Concerns\SearchesNearby;
 use Igniter\System\Facades\Assets;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Session;
 use Livewire\Livewire;
@@ -35,6 +36,8 @@ class FulfillmentModal extends \Livewire\Component
 
     public ?bool $hideDeliveryAddress = null;
 
+    public ?bool $previewMode = false;
+
     #[Session]
     public ?string $newSearchQuery = null;
 
@@ -55,6 +58,10 @@ class FulfillmentModal extends \Livewire\Component
     public function defineProperties()
     {
         return array_merge([
+            'previewMode' => [
+                'label' => 'Render the component in preview mode to avoid making changes to order fulfillment.',
+                'type' => 'switch',
+            ],
             'defaultOrderType' => [
                 'label' => 'The default selected order type.',
                 'type' => 'select',
@@ -95,6 +102,10 @@ class FulfillmentModal extends \Livewire\Component
             'orderType' => lang('igniter.local::default.alert_location_required'),
         ]));
 
+        throw_if($this->previewMode, ValidationException::withMessages([
+            'orderType' => lang('igniter.orange::default.alert_preview_mode'),
+        ]));
+
         if ($name == 'orderType') {
             $this->orderType = $value;
             $this->updateOrderType();
@@ -111,6 +122,10 @@ class FulfillmentModal extends \Livewire\Component
             'orderTime' => ['required_if:isAsap,0'],
             'searchQuery' => ['required_if:showAddressPicker,1'],
         ]);
+
+        throw_if($this->previewMode, ValidationException::withMessages([
+            'orderType' => lang('igniter.orange::default.alert_preview_mode'),
+        ]));
 
         throw_unless($this->location->current(), ValidationException::withMessages([
             'orderType' => lang('igniter.local::default.alert_location_required'),
@@ -134,6 +149,8 @@ class FulfillmentModal extends \Livewire\Component
         }
 
         $this->showAddressPicker = false;
+
+        Event::dispatch('igniter.orange.fulfilmentUpdated');
 
         return $this->redirect(Livewire::originalUrl(), navigate: true);
     }

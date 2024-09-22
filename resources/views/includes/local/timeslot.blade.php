@@ -7,6 +7,7 @@
         class="form-check-input"
         value="1"
         @checked($isAsap)
+        @disabled($previewMode)
     />
     <label
         class="form-check-label text-wrap ms-2 d-block"
@@ -22,6 +23,7 @@
         class="form-check-input"
         value="0"
         @checked(!$isAsap)
+        @disabled($previewMode)
     />
     <label
         class="form-check-label text-wrap ms-2 d-block"

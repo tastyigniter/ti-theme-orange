@@ -84,7 +84,7 @@
                 name = $el.attr('name'),
                 type = $el.attr('type');
 
-            if (!name.length || name.startsWith('form.')) return;
+            if (!name.length || name.startsWith('fields.')) return;
 
             if (['radio', 'checkbox'].indexOf(type) !== -1 && !$el.prop('checked')) return;
 
@@ -92,7 +92,7 @@
         });
 
         if ((checkoutComponent = Livewire.find(checkoutComponentId)) && Object.keys(paymentFields).length) {
-            checkoutComponent.$set('form.payment_fields', paymentFields, false)
+            checkoutComponent.$set('fields.payment_fields', paymentFields, false)
         }
     }
 

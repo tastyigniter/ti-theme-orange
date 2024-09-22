@@ -10,7 +10,7 @@ window.OrangeFulfillment = (timeslot) => {
             this.orderTime = this.$wire.get('orderTime');
 
             this.hideDeliveryAddress = this.$wire.get('orderType') !== 'delivery';
-            this.showTimePicker = this.$wire.get('isAsap') == 0;
+            this.showTimePicker = !this.$wire.get('previewMode') && this.$wire.get('isAsap') == 0;
 
             this.$wire.$watch('orderDate', value => {
                 this.orderDate = value;

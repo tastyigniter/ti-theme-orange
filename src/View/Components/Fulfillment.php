@@ -9,6 +9,10 @@ use Illuminate\View\Component;
 class Fulfillment extends Component
 {
     use ConfigurableComponent;
+    
+    public function __construct(
+        public bool $previewMode = false,
+    ) {}
 
     public static function componentMeta(): array
     {
@@ -16,6 +20,16 @@ class Fulfillment extends Component
             'code' => 'igniter-orange::fulfillment',
             'name' => 'igniter.orange::default.component_fulfillment_title',
             'description' => 'igniter.orange::default.component_fulfillment_desc',
+        ];
+    }
+
+    public function defineProperties()
+    {
+        return [
+            'previewMode' => [
+                'label' => 'Render the component in preview mode',
+                'type' => 'switch',
+            ],
         ];
     }
 
