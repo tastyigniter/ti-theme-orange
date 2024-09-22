@@ -55,7 +55,7 @@ return [
         'first_name' => ['required', 'between:1,48'],
         'last_name' => ['required', 'between:1,48'],
         'email' => ['sometimes', 'required', 'email:filter', 'max:96',
-            Rule::unique('customers', 'email')->ignore(Auth::customer()?->getKey(), 'customer_id')
+            Rule::unique('customers', 'email')->ignore(Auth::customer()?->getKey(), 'customer_id'),
         ],
         'telephone' => ['sometimes', 'required_if:telephoneIsRequired,true', 'regex:/^([0-9\s\-\+\(\)]*)$/i'],
         'comment' => ['max:500'],
