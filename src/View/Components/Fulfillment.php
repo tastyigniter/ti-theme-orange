@@ -9,7 +9,7 @@ use Illuminate\View\Component;
 class Fulfillment extends Component
 {
     use ConfigurableComponent;
-    
+
     public function __construct(
         public bool $previewMode = false,
     ) {}
