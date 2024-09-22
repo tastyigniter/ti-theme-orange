@@ -1,6 +1,11 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:customer\\(\\)\\.$#"
+			count: 1
+			path: resources/models/checkoutfields.php
+
+		-
 			message: "#^Call to static method current\\(\\) on an unknown class Location\\.$#"
 			count: 1
 			path: resources/views/_pages/local/reviews.blade.php
@@ -261,6 +266,16 @@ parameters:
 			path: src/Livewire/Checkout.php
 
 		-
+			message: "#^Call to an undefined static method Igniter\\\\Flame\\\\Support\\\\Facades\\\\File\\:\\:getRequire\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/Checkout.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Flame\\\\Support\\\\Facades\\\\File\\:\\:symbolizePath\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/Checkout.php
+
+		-
 			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:current\\(\\)\\.$#"
 			count: 1
 			path: src/Livewire/Checkout.php
@@ -294,11 +309,6 @@ parameters:
 			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:customer\\(\\)\\.$#"
 			count: 1
 			path: src/Livewire/Forms/BookingForm.php
-
-		-
-			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:customer\\(\\)\\.$#"
-			count: 1
-			path: src/Livewire/Forms/CheckoutForm.php
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:user\\(\\)\\.$#"
@@ -439,6 +449,11 @@ parameters:
 			message: "#^Cannot call method setParameter\\(\\) on object\\|string\\.$#"
 			count: 2
 			path: src/Livewire/LocalSearch.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Orange\\\\Livewire\\\\LocationList\\:\\:\\$filters\\.$#"
+			count: 1
+			path: src/Livewire/LocationList.php
 
 		-
 			message: "#^Access to an undefined property Igniter\\\\Orange\\\\Livewire\\\\LocationList\\:\\:\\$sorters\\.$#"
