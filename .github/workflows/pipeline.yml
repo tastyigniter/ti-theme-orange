@@ -5,8 +5,6 @@ on: [ push, pull_request, workflow_dispatch ]
 jobs:
   build-assets:
     uses: tastyigniter/workflows/.github/workflows/build-assets.yml@main
-    with:
-      commit-file-pattern: assets/
   php-lint:
     needs: build-assets
     if: ${{ always() && needs.build-assets.result == 'success' }}

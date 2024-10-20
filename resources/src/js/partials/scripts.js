@@ -72,7 +72,7 @@ $(function () {
 
     $(window).on('ajaxErrorMessage', function (event, message) {
         event.preventDefault()
-        $.ti.flashMessage({class: 'danger', text: message})
+        Swal.fire({class: 'danger', text: message})
     })
 
     function dotToArrayString(str) {
@@ -135,12 +135,12 @@ $(function () {
                 })
             }, (error) => {
                 $button.removeClass('disabled')
-                $.ti.flashMessage({class: 'danger', text: `ERROR(${error.code}): ${error.message}`})
+                Swal.fire({class: 'danger', text: `ERROR(${error.code}): ${error.message}`})
             }, {
                 enableHighAccuracy: true, maximumAge: 30000, timeout: 10000
             });
         } else {
-            $.ti.flashMessage({class: 'danger', text: "Geolocation is not supported by your browser."})
+            Swal.fire("Geolocation is not supported by your browser.");
         }
     });
 });
