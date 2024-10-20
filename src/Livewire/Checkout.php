@@ -296,7 +296,7 @@ class Checkout extends Component
         return redirect()->back();
     }
 
-    protected function getOrder()
+    protected function getOrder(): ?Order
     {
         if (!is_null($this->order)) {
             return $this->order;
@@ -423,6 +423,8 @@ class Checkout extends Component
         }
     }
 
+    protected function formExtendFields(CheckoutForm $checkoutForm, array $fields) {}
+
     protected function initForm(): void
     {
         $config = File::getRequire(
@@ -434,6 +436,10 @@ class Checkout extends Component
 
         $this->checkoutForm->bindEvent('form.extendFieldsBefore', function() {
             $this->formExtendFieldsBefore($this->checkoutForm);
+        });
+
+        $this->checkoutForm->bindEvent('form.extendFields', function($fields) {
+            $this->formExtendFields($this->checkoutForm, $fields);
         });
 
         $this->checkoutForm->initialize();
