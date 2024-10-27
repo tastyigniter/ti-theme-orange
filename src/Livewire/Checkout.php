@@ -152,8 +152,8 @@ class Checkout extends Component
 
     public function mount()
     {
-        if ($redirect = $this->isOrderMarkedAsProcessed()) {
-            return $redirect;
+        if ($order = $this->isOrderMarkedAsProcessed()) {
+            return $this->redirect($order->getUrl($this->successPage));
         }
 
         if ($this->checkCheckoutSecurity()) {
@@ -201,8 +201,8 @@ class Checkout extends Component
             return $this->redirect(restaurant_url($this->menusPage));
         }
 
-        if ($redirect = $this->isOrderMarkedAsProcessed()) {
-            return $redirect;
+        if ($order = $this->isOrderMarkedAsProcessed()) {
+            return $this->redirect($order->getUrl($this->successPage));
         }
 
         $order = $this->getOrder();
@@ -223,8 +223,8 @@ class Checkout extends Component
             return $this->redirect(restaurant_url($this->menusPage));
         }
 
-        if ($redirect = $this->isOrderMarkedAsProcessed()) {
-            return $redirect;
+        if ($order = $this->isOrderMarkedAsProcessed()) {
+            return $this->redirect($order->getUrl($this->successPage));
         }
 
         $order = $this->getOrder();
@@ -251,8 +251,8 @@ class Checkout extends Component
                 return $redirect;
             }
 
-            if ($redirect = $this->isOrderMarkedAsProcessed()) {
-                return $redirect;
+            if ($this->isOrderMarkedAsProcessed()) {
+                return $this->redirect($order->getUrl($this->successPage));
             }
         } catch (\Exception $ex) {
             throw ValidationException::withMessages(['fields.payment' => $ex->getMessage()]);
@@ -378,11 +378,7 @@ class Checkout extends Component
     protected function isOrderMarkedAsProcessed()
     {
         $order = $this->getOrder();
-        if (!$order->isPaymentProcessed()) {
-            return false;
-        }
-
-        return $this->redirect($order->getUrl($this->successPage));
+        return $order->isPaymentProcessed() ? $order : false;
     }
 
     protected function prepareDeliveryAddress()
@@ -431,8 +427,8 @@ class Checkout extends Component
             File::symbolizePath('igniter-orange::/models/checkoutfields.php')
         );
 
+        $config['model'] = $this->getOrder();
         $this->checkoutForm = resolve(CheckoutForm::class, ['config' => $config]);
-        $this->checkoutForm->model = $this->getOrder();
 
         $this->checkoutForm->bindEvent('form.extendFieldsBefore', function() {
             $this->formExtendFieldsBefore($this->checkoutForm);
