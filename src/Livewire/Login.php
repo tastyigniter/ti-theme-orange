@@ -29,7 +29,7 @@ class Login extends \Livewire\Component
         ];
     }
 
-    public function defineProperties()
+    public function defineProperties(): array
     {
         return [
             'redirectPage' => [
