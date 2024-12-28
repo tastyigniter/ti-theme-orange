@@ -4,7 +4,7 @@ namespace Igniter\Orange;
 
 use Igniter\Admin\Widgets\Form;
 use Igniter\Cart\Http\Middleware\CartMiddleware;
-use Igniter\Flame\Igniter;
+use Igniter\Flame\Support\Facades\Igniter;
 use Igniter\Local\Http\Middleware\CheckLocation;
 use Igniter\Main\Classes\MainController;
 use Igniter\Main\Classes\Theme;
