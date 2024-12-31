@@ -13,21 +13,21 @@ class Contact extends Component
     use ConfigurableComponent;
 
     #[Validate('required|max:128', as: 'igniter.orange::default.contact.text_select_subject')]
-    public $subject;
+    public ?string $subject = null;
 
     #[Validate('required|email:filter|max:96', as: 'igniter.orange::default.contact.label_email')]
-    public $email;
+    public ?string $email = null;
 
     #[Validate('required|min:2|max:255', as: 'igniter.orange::default.contact.label_full_name')]
-    public $fullName;
+    public ?string $fullName = null;
 
     #[Validate('required', as: 'igniter.orange::default.contact.label_telephone')]
-    public $telephone;
+    public ?string $telephone = null;
 
     #[Validate('max:1500', as: 'igniter.orange::default.contact.label_comment')]
-    public $comment;
+    public ?string $comment = null;
 
-    public $subjects = [
+    public array $subjects = [
         'igniter.orange::default.contact.text_general_enquiry',
         'igniter.orange::default.contact.text_comment',
         'igniter.orange::default.contact.text_technical_issues',

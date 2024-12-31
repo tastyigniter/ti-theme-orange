@@ -235,7 +235,7 @@ class Booking extends Component
         }
 
         return $timeslots
-            ->slice($from, $this->noOfSlots - 1)
+            ->slice($from, $this->noOfSlots)
             ->map(function($dateTime, $index) use ($selectedIndex) {
                 return (object)[
                     'dateTime' => $dateTime,

@@ -29,7 +29,7 @@ class NewsletterSubscribeForm extends \Livewire\Component
         ];
     }
 
-    public function defineProperties()
+    public function defineProperties(): array
     {
         return [
             'listId' => [

@@ -29,7 +29,9 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     public function register()
     {
-        Livewire::componentHook(\Igniter\Orange\Livewire\Features\SupportFlashMessages::class);
+        if (!$this->app->runningUnitTests()) {
+            Livewire::componentHook(\Igniter\Orange\Livewire\Features\SupportFlashMessages::class);
+        }
     }
 
     public function boot()
@@ -131,25 +133,23 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
                 return;
             }
 
-            if (!$widget->data->fileSource instanceof \Igniter\Main\Template\Page) {
-                return;
-            }
-
-            $widget->addFields([
-                'settings[security]' => [
-                    'tab' => 'igniter::system.themes.text_tab_meta',
-                    'label' => 'igniter.orange::default.label_security',
-                    'type' => 'checkboxtoggle',
-                    'default' => 'all',
-                    'span' => 'right',
-                    'options' => [
-                        'all' => 'igniter.orange::default.text_all',
-                        'customer' => 'igniter.orange::default.text_customer',
-                        'guest' => 'igniter.orange::default.text_guest',
+            if ($widget->data->fileSource instanceof \Igniter\Main\Template\Page) {
+                $widget->addFields([
+                    'settings[security]' => [
+                        'tab' => 'igniter::system.themes.text_tab_meta',
+                        'label' => 'igniter.orange::default.label_security',
+                        'type' => 'checkboxtoggle',
+                        'default' => 'all',
+                        'span' => 'right',
+                        'options' => [
+                            'all' => 'igniter.orange::default.text_all',
+                            'customer' => 'igniter.orange::default.text_customer',
+                            'guest' => 'igniter.orange::default.text_guest',
+                        ],
+                        'comment' => 'igniter.orange::default.help_security',
                     ],
-                    'comment' => 'igniter.orange::default.help_security',
-                ],
-            ], 'primary');
+                ], 'primary');
+            }
         });
     }
 

@@ -5,9 +5,11 @@ namespace Igniter\Orange\Livewire;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
 use Igniter\Orange\Livewire\Forms\LoginForm;
-use Igniter\User\Actions\LoginUser;
+use Igniter\User\Actions\LoginCustomer;
 use Igniter\User\Facades\Auth;
+use Igniter\User\Models\Customer;
 use Illuminate\Validation\ValidationException;
+use Livewire\Attributes\Url;
 
 class Login extends \Livewire\Component
 {
@@ -19,6 +21,9 @@ class Login extends \Livewire\Component
     public bool $registrationAllowed = true;
 
     public string $redirectPage = 'account.account';
+
+    #[Url]
+    public string $redirect = '';
 
     public static function componentMeta(): array
     {
@@ -53,7 +58,7 @@ class Login extends \Livewire\Component
         $this->setRedirectIntendedUrl();
     }
 
-    public function customer()
+    public function customer(): ?Customer
     {
         if (!Auth::check()) {
             return null;
@@ -67,7 +72,7 @@ class Login extends \Livewire\Component
         $this->form->validate();
 
         rescue(function() {
-            resolve(LoginUser::class, [
+            resolve(LoginCustomer::class, [
                 'credentials' => $this->form->except('remember'),
                 'remember' => $this->form->remember,
             ])->handle();
@@ -75,8 +80,8 @@ class Login extends \Livewire\Component
             throw ValidationException::withMessages(['form.email' => $e->getMessage()]);
         });
 
-        if ($redirect = input('redirect')) {
-            return redirect()->to(page_url($redirect));
+        if ($this->redirect) {
+            return redirect()->to(page_url($this->redirect));
         }
 
         if ($redirectUrl = page_url($this->redirectPage)) {

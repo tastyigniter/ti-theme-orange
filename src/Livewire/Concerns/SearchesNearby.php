@@ -79,7 +79,7 @@ trait SearchesNearby
         $this->searchField = 'savedAddress';
 
         throw_unless($address = $this->savedAddresses()->firstWhere('address_id', $id), ValidationException::withMessages([
-            $this->searchField => lang('igniter.local::default.alert_address_not_found'),
+            $this->searchField => lang('igniter.orange::default.alert_saved_address_not_found'),
         ]));
 
         $searchQuery = format_address($address->toArray(), false);
@@ -137,7 +137,7 @@ trait SearchesNearby
 
     protected function getSearchQuery()
     {
-        if ($coordinates = $this->searchPoint) {
+        if (!is_null($coordinates = $this->searchPoint)) {
             return $coordinates;
         }
 
@@ -155,14 +155,11 @@ trait SearchesNearby
 
     protected function geocodeSearchPoint($searchPoint)
     {
-        throw_if(count($searchPoint) !== 2, ValidationException::withMessages([
+        throw_if(count(array_filter($searchPoint)) !== 2, ValidationException::withMessages([
             $this->searchField => lang('igniter.local::default.alert_no_search_query'),
         ]));
 
         [$latitude, $longitude] = $searchPoint;
-        throw_if(!strlen($latitude) || !strlen($longitude), ValidationException::withMessages([
-            $this->searchField => lang('igniter.local::default.alert_no_search_query'),
-        ]));
 
         $collection = Geocoder::reverse($latitude, $longitude);
 
@@ -196,7 +193,7 @@ trait SearchesNearby
     protected function findNearByLocation(GeoliteLocation $userLocation)
     {
         $nearByLocation = Location::searchByCoordinates(
-            $userLocation->getCoordinates()
+            $userLocation->getCoordinates(),
         )->first(function($location) use ($userLocation) {
             if ($area = $location->searchDeliveryArea($userLocation->getCoordinates())) {
                 Location::updateNearbyArea($area);

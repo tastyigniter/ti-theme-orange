@@ -23,6 +23,7 @@ use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Livewire\Component;
+use Livewire\Features\SupportRedirects\Redirector;
 use Livewire\Livewire;
 
 class Checkout extends Component
@@ -239,7 +240,7 @@ class Checkout extends Component
         $this->orderManager->saveOrder($order, $data);
 
         if ($this->isTwoPageCheckout && $this->checkoutStep !== self::STEP_PAY) {
-            return redirect()->to(Livewire::originalUrl().'?step='.static::STEP_PAY);
+            return $this->redirect(Livewire::originalUrl().'?step='.static::STEP_PAY);
         }
 
         try {
@@ -247,7 +248,7 @@ class Checkout extends Component
                 return;
             }
 
-            if ($redirect instanceof RedirectResponse) {
+            if ($redirect instanceof RedirectResponse || $redirect instanceof Redirector) {
                 return $redirect;
             }
 
@@ -365,7 +366,7 @@ class Checkout extends Component
         $data = array_merge(
             array_pull($data, 'fields.payment_fields', []),
             array_pull($data, 'fields', []),
-            $data
+            $data,
         );
 
         $this->orderManager->applyCurrentPaymentFee($this->fields['payment']);
@@ -400,22 +401,22 @@ class Checkout extends Component
     {
         if ($this->agreeTermsSlug) {
             $checkoutForm->fields['termsAgreed']['placeholder'] = sprintf(
-                lang('igniter.cart::default.checkout.label_terms'), url($this->agreeTermsSlug)
+                lang('igniter.cart::default.checkout.label_terms'), url($this->agreeTermsSlug),
             );
         } else {
-            unset($checkoutForm->fields['termsAgreed']);
+            unset($checkoutForm->fields['termsAgreed'], $this->fields['termsAgreed']);
         }
 
         if ($this->hideTelephoneField) {
-            unset($checkoutForm->fields['telephone']);
+            unset($checkoutForm->fields['telephone'], $this->fields['telephone']);
         }
 
         if ($this->hideCommentField) {
-            unset($checkoutForm->fields['comment']);
+            unset($checkoutForm->fields['comment'], $this->fields['comment']);
         }
 
         if ($this->hideDeliveryCommentField) {
-            unset($checkoutForm->fields['delivery_comment']);
+            unset($checkoutForm->fields['delivery_comment'], $this->fields['delivery_comment']);
         }
     }
 
@@ -424,7 +425,7 @@ class Checkout extends Component
     protected function initForm(): void
     {
         $config = File::getRequire(
-            File::symbolizePath('igniter-orange::/models/checkoutfields.php')
+            File::symbolizePath('igniter-orange::/models/checkoutfields.php'),
         );
 
         $config['model'] = $this->getOrder();

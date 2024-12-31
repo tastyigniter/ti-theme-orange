@@ -23,7 +23,7 @@ class Fulfillment extends Component
         ];
     }
 
-    public function defineProperties()
+    public function defineProperties(): array
     {
         return [
             'previewMode' => [

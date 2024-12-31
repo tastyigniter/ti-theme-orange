@@ -112,10 +112,6 @@ class CartBox extends Component
 
     public function onApplyTip(int|float $amount, bool $isCustom = false)
     {
-        if (preg_match('/^\d+([\.\d]{2})?([%])?$/', $amount) === false) {
-            throw new ApplicationException(lang('igniter.cart::default.alert_tip_not_applied'));
-        }
-
         $this->cartManager->applyCondition('tip', [
             'isCustom' => $isCustom,
             'amount' => $amount,
@@ -127,7 +123,7 @@ class CartBox extends Component
     public function onRemoveCondition(string $conditionName)
     {
         throw_unless(strlen($conditionName), new ApplicationException(
-            lang('igniter.cart::default.alert_condition_not_found')
+            lang('igniter.cart::default.alert_condition_not_found'),
         ));
 
         $this->cartManager->removeCondition($conditionName);
@@ -144,7 +140,7 @@ class CartBox extends Component
         throw_if($this->locationIsClosed(), new ApplicationException(lang('igniter.cart::default.alert_location_closed')));
 
         throw_if($this->hasMinimumOrder(), new ApplicationException(
-            sprintf(lang('igniter.local::default.alert_order_is_unavailable'), Location::orderType())
+            sprintf(lang('igniter.local::default.alert_order_is_unavailable'), Location::orderType()),
         ));
 
         return Redirect::to(page_url($this->checkoutPage));

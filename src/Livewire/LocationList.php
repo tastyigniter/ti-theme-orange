@@ -137,7 +137,7 @@ class LocationList extends \Livewire\Component
     public function sorters()
     {
         $defaults = [
-            'name' => null,
+            'name' => 'Unknown',
             'priority' => 999,
             'condition' => null,
         ];
@@ -165,9 +165,11 @@ class LocationList extends \Livewire\Component
             ],
         ];
 
-        $eventResult = Event::dispatch('igniter.orange.extendLocationListSorting');
-        foreach (array_filter((array)$eventResult) as $code => $filter) {
-            $result[$code] = array_merge($defaults, $filter);
+        $eventResults = Event::dispatch('igniter.orange.extendLocationListSorting');
+        foreach (array_filter((array)$eventResults) as $eventResult) {
+            foreach ($eventResult as $code => $filter) {
+                $result[$code] = array_merge($defaults, $filter);
+            }
         }
 
         return $result;
@@ -177,8 +179,10 @@ class LocationList extends \Livewire\Component
     public function filters()
     {
         $defaults = [
-            'title' => null,
-            'options' => null,
+            'title' => 'Unknown',
+            'options' => function() {
+                return [];
+            },
             'query' => null,
         ];
 

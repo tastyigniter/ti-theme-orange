@@ -26,7 +26,7 @@ class BannerData
     public function __construct(protected Banner $model)
     {
         $this->code = $model->code;
-        $this->id = $model->code.'-'.$model->banner_id.'-'.str_random(4);
+        $this->id = $model->code.'-'.$model->banner_id.'-'.strtolower(str_random(4));
         $this->clickUrl = starts_with($model->click_url, ['http://', 'https://']) ? $model->click_url : page_url($model->click_url);
         $this->altText = $model->alt_text;
         $this->markup = $model->custom_code;

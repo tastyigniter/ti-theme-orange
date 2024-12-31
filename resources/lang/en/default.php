@@ -124,6 +124,8 @@ return [
     'component_review_list_desc' => 'Displays a list of reviews',
     'component_socialite_title' => 'Socialite',
     'component_socialite_desc' => 'Displays a social login form',
+    'component_leave_review_title' => 'Leave Review',
+    'component_leave_review_desc' => 'Allow customers to leave reviews for orders and reservations',
 
     'label_your_details' => 'Your Details',
     'label_menus_page' => 'Page to redirect to when a location is clicked',
@@ -147,6 +149,7 @@ return [
     'help_security' => 'Choose who can access this page',
 
     'alert_preview_mode' => 'Action not allowed in preview mode',
+    'alert_saved_address_not_found' => 'Selected address not found',
 
     'error_telephone_required' => 'Telephone number is required',
     'error_telephone_invalid' => 'Telephone number is invalid',

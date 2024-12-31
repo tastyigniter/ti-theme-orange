@@ -112,7 +112,7 @@ class OrderPreview extends \Livewire\Component
         $this->showCancelButton = $this->showCancelButton();
 
         if (!$processedOrder = $this->getProcessedOrder()) {
-            return $this->redirect(MainHelper::pageUrl(Auth::customer() ? $this->ordersPage : $this->checkoutPage));
+            return $this->redirect(MainHelper::pageUrl($this->checkoutPage));
         }
 
         if ($this->orderManager->isCurrentOrderId($processedOrder->order_id)) {
@@ -155,9 +155,7 @@ class OrderPreview extends \Livewire\Component
 
     public function onReOrder()
     {
-        throw_unless($order = $this->getProcessedOrder(), ValidationException::withMessages([
-            'onReOrder' => lang('igniter.cart::default.orders.alert_reorder_failed'),
-        ]));
+        $order = $this->getProcessedOrder();
 
         rescue(function() use ($order) {
             $cartManager = resolve(CartManager::class);
@@ -176,7 +174,7 @@ class OrderPreview extends \Livewire\Component
         });
 
         flash()->success(sprintf(
-            lang('igniter.cart::default.orders.alert_reorder_success'), $order->order_id
+            lang('igniter.cart::default.orders.alert_reorder_success'), $order->order_id,
         ));
 
         return $this->redirect(page_url($this->menusPage, [
@@ -187,9 +185,7 @@ class OrderPreview extends \Livewire\Component
 
     public function onCancel()
     {
-        throw_unless($order = $this->getProcessedOrder(), ValidationException::withMessages([
-            'onCancel' => lang('igniter.cart::default.orders.alert_cancel_failed'),
-        ]));
+        $order = $this->getProcessedOrder();
 
         throw_unless($this->showCancelButton(), ValidationException::withMessages([
             'onCancel' => lang('igniter.cart::default.orders.alert_cancel_failed'),
@@ -208,7 +204,16 @@ class OrderPreview extends \Livewire\Component
             return null;
         }
 
-        return $this->order ??= $this->orderManager->getOrderByHash($this->hash, Auth::customer());
+        if (!is_null($this->order)) {
+            return $this->order;
+        }
+
+        $order = $this->orderManager->getOrderByHash($this->hash, Auth::customer());
+        if (!$order->isPaymentProcessed()) {
+            return null;
+        }
+
+        return $this->order = $order;
     }
 
     protected function getLoginPageUrl()

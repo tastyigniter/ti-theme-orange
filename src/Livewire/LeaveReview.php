@@ -39,8 +39,8 @@ class LeaveReview extends \Livewire\Component
     {
         return [
             'code' => 'igniter-orange::leave-review',
-            'name' => 'Leave Review',
-            'description' => 'Allow customers to leave reviews for orders and reservations',
+            'name' => 'igniter.orange::default.component_leave_review_title',
+            'description' => 'igniter.orange::default.component_leave_review_desc',
         ];
     }
 
@@ -85,18 +85,6 @@ class LeaveReview extends \Livewire\Component
 
     public function onLeaveReview()
     {
-        throw_unless(Auth::customer(), ValidationException::withMessages([
-            'comment' => lang('igniter.local::default.review.alert_expired_login'),
-        ]));
-
-        throw_unless(ReviewSettings::allowReviews(), ValidationException::withMessages([
-            'comment' => lang('igniter.local::default.review.alert_review_disabled'),
-        ]));
-
-        throw_unless($reviewable = $this->getReviewable(), ValidationException::withMessages([
-            'comment' => lang('igniter.local::default.review.alert_review_not_found'),
-        ]));
-
         $this->validate([
             'comment' => ['required', 'min:2', 'max:1028'],
             'delivery' => ['required', 'integer', 'min:0'],
@@ -108,6 +96,18 @@ class LeaveReview extends \Livewire\Component
             'quality' => lang('igniter.local::default.review.label_quality'),
             'service' => lang('igniter.local::default.review.label_service'),
         ]);
+
+        throw_unless(Auth::customer(), ValidationException::withMessages([
+            'comment' => lang('igniter.local::default.review.alert_expired_login'),
+        ]));
+
+        throw_unless(ReviewSettings::allowReviews(), ValidationException::withMessages([
+            'comment' => lang('igniter.local::default.review.alert_review_disabled'),
+        ]));
+
+        throw_unless($reviewable = $this->getReviewable(), ValidationException::withMessages([
+            'comment' => lang('igniter.local::default.review.alert_review_not_found'),
+        ]));
 
         rescue(function() use ($reviewable) {
             ReviewModel::leaveReview($reviewable, [

@@ -19,6 +19,8 @@ class Socialite extends Component
 
     public bool $confirm = false;
 
+    public ?string $email = null;
+
     public array $links = [];
 
     public static function componentMeta(): array
@@ -70,11 +72,13 @@ class Socialite extends Component
             'email' => 'Missing social provider data',
         ]));
 
-        $validated = $this->validate(post(), [
-            ['email', 'lang:igniter.user::default.reset.label_email', 'required|email:filter|max:96|unique:customers,email'],
+        $this->validate([
+            'email' => 'required|email:filter|max:96|unique:customers,email',
+        ], [], [
+            'email' => lang('lang:igniter.user::default.reset.label_email'),
         ]);
 
-        $providerData['user']->email = $validated['email'];
+        $providerData->user->email = $this->email;
 
         $manager->setProviderData($providerData);
 

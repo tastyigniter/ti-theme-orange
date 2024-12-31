@@ -7,7 +7,7 @@
 <x-igniter-orange::forms.form id="confirm-email-form" wire:submit="onConfirmEmail">
     <div class="form-group">
         <input
-            name="email"
+            wire:model="email"
             type="text"
             id="email"
             class="form-control input-lg"

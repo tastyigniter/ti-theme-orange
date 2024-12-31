@@ -6,7 +6,7 @@ use Igniter\Cart\Facades\Cart;
 use Igniter\Flame\Exception\ApplicationException;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Livewire\Forms\SettingsForm;
-use Igniter\User\Actions\LogoutUser;
+use Igniter\User\Actions\LogoutCustomer;
 use Igniter\User\Facades\Auth;
 use Livewire\Component;
 
@@ -61,7 +61,7 @@ class AccountSettings extends Component
     public function onUpdate()
     {
         throw_unless($customer = Auth::customer(),
-            new ApplicationException('You must be logged in to manage your address book')
+            new ApplicationException('You must be logged in to manage your address book'),
         );
 
         $oldEmail = $customer->email;
@@ -73,7 +73,7 @@ class AccountSettings extends Component
 
         if ($this->form->old_password || $customer->email !== $oldEmail) {
             Cart::keepSession(function() {
-                resolve(LogoutUser::class)->handle();
+                resolve(LogoutCustomer::class)->handle();
             });
 
             return redirect()->to(page_url($this->loginPage));

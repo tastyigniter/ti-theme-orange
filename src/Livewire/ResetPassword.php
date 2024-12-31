@@ -2,7 +2,6 @@
 
 namespace Igniter\Orange\Livewire;
 
-use Igniter\Flame\Exception\ApplicationException;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
 use Igniter\User\Models\Customer;
@@ -110,7 +109,7 @@ class ResetPassword extends Component
         $customer = Customer::whereResetCode($this->resetCode)->first();
 
         if (!$customer || !$customer->completeResetPassword($this->resetCode, $this->password)) {
-            throw new ApplicationException(lang('igniter.user::default.reset.alert_reset_failed'));
+            throw ValidationException::withMessages(['password' => lang('igniter.user::default.reset.alert_reset_failed')]);
         }
 
         $customer->mailSendResetPassword(['account_login_link' => page_url($this->loginPage)]);

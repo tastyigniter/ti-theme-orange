@@ -227,10 +227,7 @@ class MenuItemList extends \Livewire\Component
 
         $with = [
             'mealtimes', 'menu_options',
-            'categories' => function($query) use ($location) {
-                $query->whereHasOrDoesntHaveLocation($location);
-            },
-            'special', 'ingredients',
+            'categories', 'special', 'ingredients',
             'menu_options.option', 'locations', 'stocks',
         ];
 

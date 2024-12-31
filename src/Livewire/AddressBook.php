@@ -21,7 +21,7 @@ class AddressBook extends Component
 
     public ?int $addressId = null;
 
-    public ?int $defaultAddressId;
+    public ?int $defaultAddressId = null;
 
     public bool $showModal = false;
 
@@ -94,7 +94,7 @@ class AddressBook extends Component
     public function onSave()
     {
         throw_unless($customer = Auth::customer(),
-            new ApplicationException('You must be logged in to manage your address book')
+            new ApplicationException('You must be logged in to manage your address book'),
         );
 
         $this->form->validate();
@@ -121,7 +121,7 @@ class AddressBook extends Component
     public function onSetDefault(string $addressId)
     {
         throw_unless($customer = Auth::customer(),
-            new ApplicationException('You must be logged in to manage your address book')
+            new ApplicationException('You must be logged in to manage your address book'),
         );
 
         $customer->saveDefaultAddress($addressId);
@@ -132,7 +132,7 @@ class AddressBook extends Component
     public function onDelete(string $addressId)
     {
         throw_unless($customer = Auth::customer(),
-            new ApplicationException('You must be logged in to manage your address book')
+            new ApplicationException('You must be logged in to manage your address book'),
         );
 
         $customer->deleteCustomerAddress($addressId);
@@ -144,7 +144,7 @@ class AddressBook extends Component
 
     protected function getAddress(?string $addressId)
     {
-        return $addressId ? Auth::customer()?->addresses()?->find($addressId) : null;
+        return $addressId ? Auth::customer()?->addresses()->find($addressId) : null;
     }
 
     protected function loadAddressBook()

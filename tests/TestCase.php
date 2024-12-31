@@ -3,6 +3,7 @@
 namespace Igniter\Orange\Tests;
 
 use Igniter\Main\Classes\ThemeManager;
+use Spatie\GoogleFonts\GoogleFontsServiceProvider;
 
 abstract class TestCase extends \SamPoyigi\Testbench\TestCase
 {
@@ -14,6 +15,9 @@ abstract class TestCase extends \SamPoyigi\Testbench\TestCase
             $themeManager->bootTheme($theme);
         });
 
-        return parent::getPackageProviders($app);
+        return array_merge(parent::getPackageProviders($app), [
+            GoogleFontsServiceProvider::class,
+            \Igniter\Orange\ServiceProvider::class,
+        ]);
     }
 }

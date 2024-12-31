@@ -3,6 +3,7 @@
 namespace Igniter\Orange\Livewire;
 
 use DateTime;
+use Igniter\Cart\Classes\AbstractOrderType;
 use Igniter\Local\Models\Location;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Livewire\Concerns\SearchesNearby;
@@ -55,7 +56,7 @@ class FulfillmentModal extends \Livewire\Component
         ];
     }
 
-    public function defineProperties()
+    public function defineProperties(): array
     {
         return array_merge([
             'previewMode' => [
@@ -184,7 +185,7 @@ class FulfillmentModal extends \Livewire\Component
 
         $orderType = $this->defaultOrderType;
         if (!$this->location->hasOrderType($orderType)) {
-            $orderType = optional($this->location->getOrderTypes()->first(function($orderType) {
+            $orderType = optional($this->location->getOrderTypes()->first(function(AbstractOrderType $orderType) {
                 return !$orderType->isDisabled();
             }))->getCode();
         }

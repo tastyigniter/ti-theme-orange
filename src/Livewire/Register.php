@@ -5,7 +5,7 @@ namespace Igniter\Orange\Livewire;
 use Igniter\Flame\Exception\ApplicationException;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Livewire\Forms\RegisterForm;
-use Igniter\User\Actions\RegisterUser;
+use Igniter\User\Actions\RegisterCustomer;
 use Livewire\Attributes\Url;
 
 class Register extends \Livewire\Component
@@ -39,7 +39,7 @@ class Register extends \Livewire\Component
         ];
     }
 
-    public function defineProperties()
+    public function defineProperties(): array
     {
         return [
             'agreeTermsSlug' => [
@@ -92,7 +92,7 @@ class Register extends \Livewire\Component
 
         $this->form->validate();
 
-        $action = resolve(RegisterUser::class);
+        $action = resolve(RegisterCustomer::class);
         $customer = $action->handle($this->form->except(['password_confirm', 'terms']));
 
         if ($customer->is_activated) {
@@ -106,12 +106,10 @@ class Register extends \Livewire\Component
         $redirectUrl = page_url($customer->is_activated ? $this->redirectPage : $this->loginPage);
         flash()->success(lang($customer->is_activated
             ? 'igniter.user::default.login.alert_account_created'
-            : 'igniter.user::default.login.alert_account_activation'
+            : 'igniter.user::default.login.alert_account_activation',
         ));
 
-        if ($redirectUrl = get('redirect', $redirectUrl)) {
-            return redirect()->intended($redirectUrl);
-        }
+        return redirect()->intended(get('redirect', $redirectUrl));
     }
 
     public function onActivate()
@@ -122,7 +120,7 @@ class Register extends \Livewire\Component
             'code' => lang('igniter.user::default.reset.alert_no_activation_code'),
         ]);
 
-        $action = resolve(RegisterUser::class);
+        $action = resolve(RegisterCustomer::class);
         $customer = $action->activate($this->activationCode);
 
         $customer->mailSendRegistration(['account_login_link' => page_url($this->loginPage)]);

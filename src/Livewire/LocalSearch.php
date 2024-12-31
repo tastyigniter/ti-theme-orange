@@ -22,7 +22,7 @@ class LocalSearch extends Component
         ];
     }
 
-    public function defineProperties()
+    public function defineProperties(): array
     {
         return array_merge([
             'hideSearch' => [

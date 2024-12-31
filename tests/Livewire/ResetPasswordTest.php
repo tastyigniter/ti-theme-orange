@@ -2,12 +2,46 @@
 
 namespace Igniter\Orange\Tests\Livewire;
 
+use Igniter\Main\Traits\ConfigurableComponent;
+use Igniter\Main\Traits\UsesPage;
 use Igniter\Orange\Livewire\ResetPassword;
 use Igniter\System\Mail\AnonymousTemplateMailable;
 use Igniter\User\Models\Customer;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Livewire;
+
+it('initialize component correctly', function() {
+    $component = new ResetPassword();
+
+    expect(class_uses_recursive($component))
+        ->toContain(ConfigurableComponent::class, UsesPage::class)
+        ->and($component->resetPage)->toBe('account.reset')
+        ->and($component->loginPage)->toBe('account.login')
+        ->and($component->email)->toBeNull()
+        ->and($component->resetCode)->toBeNull()
+        ->and($component->password)->toBeNull()
+        ->and($component->password_confirmation)->toBeNull()
+        ->and($component->message)->toBeNull();
+});
+
+it('returns correct component meta', function() {
+    $meta = ResetPassword::componentMeta();
+
+    expect($meta['code'])->toBe('igniter-orange::reset-password')
+        ->and($meta['name'])->toBe('igniter.orange::default.component_reset_password_title')
+        ->and($meta['description'])->toBe('igniter.orange::default.component_reset_password_desc');
+});
+
+it('defines properties correctly', function() {
+    $component = new ResetPassword();
+    $properties = $component->defineProperties();
+
+    expect(array_keys($properties))->toContain(
+        'resetPage',
+        'loginPage',
+    );
+});
 
 it('mounts and prepares props', function() {
     Livewire::test(ResetPassword::class)
@@ -36,7 +70,7 @@ it('handles forgot password', function() {
     Mail::assertQueued(AnonymousTemplateMailable::class, function($mailable) {
         return $mailable->getTemplateCode() === 'igniter.user::mail.password_reset_request';
     });
-})->group('lock_wait_timeout');
+});
 
 it('handles reset password', function() {
     Mail::fake();
@@ -58,4 +92,19 @@ it('handles reset password', function() {
     Mail::assertQueued(AnonymousTemplateMailable::class, function($mailable) {
         return $mailable->getTemplateCode() === 'igniter.user::mail.password_reset';
     });
-})->group('lock_wait_timeout');
+});
+
+it('throws exception when handles reset password fails', function() {
+    Mail::fake();
+
+    $customer = Customer::factory()->create([
+        'email' => 'test@example.com',
+    ]);
+
+    Livewire::test(ResetPassword::class)
+        ->set('resetCode', str_random())
+        ->set('password', 'new-password')
+        ->set('password_confirmation', 'new-password')
+        ->call('onResetPassword')
+        ->assertHasErrors(['password']);
+});
