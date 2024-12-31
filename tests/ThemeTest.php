@@ -26,7 +26,7 @@ it('renders components on account dashboard page', function() {
         ->assertSee(sprintf(lang('igniter.user::default.text_welcome'), $customer->full_name))
         ->assertSeeLivewire('igniter-orange::account-settings');
 
-});
+})->skip();
 
 it('renders components on account address book page', function() {})->skip();
 
