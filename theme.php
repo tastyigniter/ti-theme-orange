@@ -2,7 +2,7 @@
 
 // add currency helper
 $defaultCountry = \Igniter\System\Models\Country::getDefault();
-$defaultCurrency = app('currency')->getDefault();
+$defaultCurrency = currency()->getDefault();
 Assets::putJsVars([
     'country' => [
         'name' => $defaultCountry->country_name,

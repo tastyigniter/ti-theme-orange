@@ -37,7 +37,7 @@
                 type="number"
                 class="form-control rounded"
                 placeholder="@lang('igniter.cart::default.text_apply_tip')"
-                step="{{ 1 / (10 ** app('currency')->getDefault()->decimal_position) }}"
+                step="{{ 1 / (10 ** currency()->getDefault()->decimal_position) }}"
             />
         </div>
     </div>
