@@ -41,14 +41,14 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->loadBladeComponentsFrom(__DIR__.'/View/Components');
         $this->loadLivewireComponentsFrom(__DIR__.'/Livewire');
 
-        if (!Igniter::runningInAdmin()) {
-            ViewFacade::composer('*', function(View $view) {
+        ViewFacade::composer('*', function(View $view) {
+            if (!Igniter::runningInAdmin()) {
                 $view->with([
                     'theme' => controller()->getTheme(),
                     'page' => controller()->getPage(),
                 ]);
-            });
-        }
+            }
+        });
 
         $this->configureLivewire();
         $this->configurePageAuthentication();
