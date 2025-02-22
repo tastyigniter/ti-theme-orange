@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use Livewire\Livewire;
 
 it('initialize component correctly', function() {
-    $component = new Register();
+    $component = new Register;
 
     expect(class_uses_recursive($component))
         ->toContain(ConfigurableComponent::class, UsesPage::class)
@@ -34,7 +34,7 @@ it('returns correct component meta', function() {
 });
 
 it('defines properties correctly', function() {
-    $component = new Register();
+    $component = new Register;
     $properties = $component->defineProperties();
 
     expect(array_keys($properties))->toContain(

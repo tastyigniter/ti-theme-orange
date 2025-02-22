@@ -14,7 +14,7 @@ use Igniter\Orange\Livewire\ReviewList;
 use Livewire\Livewire;
 
 it('initialize component correctly', function() {
-    $component = new ReviewList();
+    $component = new ReviewList;
 
     expect(class_uses_recursive($component))
         ->toContain(ConfigurableComponent::class, WithReviews::class)
@@ -31,7 +31,7 @@ it('returns correct component meta', function() {
 });
 
 it('defines properties correctly', function() {
-    $component = new ReviewList();
+    $component = new ReviewList;
     $properties = $component->defineProperties();
 
     expect(array_keys($properties))->toContain(

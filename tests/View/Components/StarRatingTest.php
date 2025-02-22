@@ -14,7 +14,7 @@ it('initializes star rating component correctly', function() {
 });
 
 it('renders view with hints', function() {
-    $view = (new StarRating())->render();
+    $view = (new StarRating)->render();
 
     expect($view->getData()['hints'])->toBe(['Poor', 'Average', 'Good', 'Very Good', 'Excellent']);
 });

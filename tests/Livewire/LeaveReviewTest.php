@@ -18,7 +18,7 @@ it('returns correct component meta', function() {
 });
 
 it('defines properties correctly', function() {
-    $component = new LeaveReview();
+    $component = new LeaveReview;
     $properties = $component->defineProperties();
 
     expect(array_keys($properties))->toContain('type');

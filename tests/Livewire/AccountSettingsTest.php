@@ -15,7 +15,7 @@ beforeEach(function() {
 });
 
 it('initialize component correctly', function() {
-    $component = new AccountSettings();
+    $component = new AccountSettings;
 
     expect(class_uses_recursive($component))
         ->toContain(ConfigurableComponent::class)
@@ -31,7 +31,7 @@ it('returns correct component meta', function() {
 });
 
 it('defines properties correctly', function() {
-    $component = new AccountSettings();
+    $component = new AccountSettings;
     $properties = $component->defineProperties();
 
     expect($properties['loginPage']['label'])->toBe('Login page')

@@ -20,7 +20,7 @@ beforeEach(function() {
 });
 
 it('initialize component correctly', function() {
-    $component = new MenuItemList();
+    $component = new MenuItemList;
 
     expect(class_uses_recursive($component))
         ->toContain(ConfigurableComponent::class, WithPagination::class)
@@ -50,7 +50,7 @@ it('returns correct component meta', function() {
 });
 
 it('defines properties correctly', function() {
-    $component = new MenuItemList();
+    $component = new MenuItemList;
     $properties = $component->defineProperties();
 
     expect(array_keys($properties))->toContain(

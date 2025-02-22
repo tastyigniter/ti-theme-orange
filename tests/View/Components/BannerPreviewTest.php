@@ -25,7 +25,7 @@ it('returns correct component meta', function() {
 });
 
 it('defines properties correctly', function() {
-    $component = new BannerPreview();
+    $component = new BannerPreview;
     $properties = $component->defineProperties();
 
     expect($properties['code']['label'])->toBe('lang:igniter.frontend::default.banners.label_banner')

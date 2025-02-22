@@ -28,7 +28,7 @@ it('returns correct component meta', function() {
 });
 
 it('defines properties correctly', function() {
-    $component = new CategoryList();
+    $component = new CategoryList;
     $properties = $component->defineProperties();
 
     expect($properties['menusPage']['label'])->toBe('Page to redirect to when a category is clicked.')
@@ -50,7 +50,7 @@ it('loads categories correctly', function() {
     request()->setRouteResolver(fn() => $route);
     Location::shouldReceive('current')->andReturn(LocationModel::factory()->create());
 
-    $component = new CategoryList();
+    $component = new CategoryList;
     $loadedCategories = $component->render()['categories'];
 
     expect($loadedCategories->pluck('name')->all())->toContain(...$categories->pluck('name')->all());
@@ -64,7 +64,7 @@ it('finds selected category correctly', function() {
     request()->setRouteResolver(fn() => $route);
     Location::shouldReceive('current')->andReturn(LocationModel::factory()->create());
 
-    $component = new CategoryList();
+    $component = new CategoryList;
     $component->render();
     $selectedCategory = $component->render()['selectedCategory'];
 
@@ -77,7 +77,7 @@ it('returns null when no category is selected', function() {
     $route->setParameter('category', '');
     request()->setRouteResolver(fn() => $route);
 
-    $component = new CategoryList();
+    $component = new CategoryList;
     $selectedCategory = $component->render()['selectedCategory'];
 
     expect($selectedCategory)->toBeNull();

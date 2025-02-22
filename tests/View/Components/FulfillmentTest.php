@@ -22,7 +22,7 @@ it('returns correct component meta', function() {
 });
 
 it('defines properties correctly', function() {
-    $component = new Fulfillment();
+    $component = new Fulfillment;
     $properties = $component->defineProperties();
 
     expect($properties['previewMode']['label'])->toBe('Render the component in preview mode')
@@ -34,7 +34,7 @@ it('renders view with fulfillment data', function() {
     Location::shouldReceive('getOrderType')->andReturn('delivery');
     Location::shouldReceive('orderDateTime')->andReturn('2023-10-10 12:00:00');
 
-    $component = new Fulfillment();
+    $component = new Fulfillment;
     $view = $component->render();
 
     expect($view->getData()['isAsap'])->toBeTrue()

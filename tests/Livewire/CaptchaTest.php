@@ -7,7 +7,7 @@ use Igniter\Orange\Livewire\Captcha;
 use Livewire\Livewire;
 
 it('initialize component correctly', function() {
-    $component = new Captcha();
+    $component = new Captcha;
 
     expect(class_uses_recursive($component))
         ->toContain(ConfigurableComponent::class)

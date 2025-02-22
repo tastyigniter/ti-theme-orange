@@ -28,7 +28,7 @@ it('returns correct component meta', function() {
 });
 
 it('defines properties correctly', function() {
-    $component = new FeaturedItems();
+    $component = new FeaturedItems;
     $properties = $component->defineProperties();
 
     expect($properties['title']['label'])->toBe('Title')

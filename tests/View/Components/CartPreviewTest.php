@@ -21,7 +21,7 @@ it('renders view with cart data', function() {
     $cartManager->shouldReceive('getCart')->andReturn($cart);
     app()->instance(CartManager::class, $cartManager);
 
-    $component = new CartPreview();
+    $component = new CartPreview;
     $view = $component->render();
 
     expect(class_uses_recursive($component))->toContain(ConfigurableComponent::class)

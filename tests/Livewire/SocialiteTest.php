@@ -9,7 +9,7 @@ use Igniter\Socialite\Classes\ProviderManager;
 use Livewire\Livewire;
 
 it('initialize component correctly', function() {
-    $component = new Socialite();
+    $component = new Socialite;
 
     expect(class_uses_recursive($component))
         ->toContain(ConfigurableComponent::class, UsesPage::class)
@@ -29,7 +29,7 @@ it('returns correct component meta', function() {
 });
 
 it('defines properties correctly', function() {
-    $component = new Socialite();
+    $component = new Socialite;
     $properties = $component->defineProperties();
 
     expect(array_keys($properties))->toContain(

@@ -20,7 +20,7 @@ use Livewire\Livewire;
 use Livewire\WithPagination;
 
 it('initialize component correctly', function() {
-    $component = new LocationList();
+    $component = new LocationList;
 
     expect(class_uses_recursive($component))
         ->toContain(ConfigurableComponent::class, SearchesNearby::class, UsesPage::class, WithPagination::class)
@@ -45,7 +45,7 @@ it('returns correct component meta', function() {
 });
 
 it('defines properties correctly', function() {
-    $component = new LocationList();
+    $component = new LocationList;
     $properties = $component->defineProperties();
 
     expect(array_keys($properties))->toContain(
@@ -112,6 +112,7 @@ it('mounts and renders component correctly', function() {
                 'title' => 'Cuisine',
                 'query' => function($query, $value) {
                     expect($value)->toBe('nigerian');
+
                     return $query;
                 },
             ],
@@ -169,6 +170,7 @@ it('returns available filter', function() {
                 'title' => 'Cuisine',
                 'query' => function($query, $value) {
                     expect($value)->toBe('nigerian');
+
                     return $query;
                 },
             ],

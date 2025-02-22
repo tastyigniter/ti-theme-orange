@@ -9,7 +9,7 @@ use Igniter\User\Models\Customer;
 use Livewire\Livewire;
 
 it('initialize component correctly', function() {
-    $component = new Login();
+    $component = new Login;
 
     expect(class_uses_recursive($component))
         ->toContain(ConfigurableComponent::class, UsesPage::class)
@@ -26,7 +26,7 @@ it('returns correct component meta', function() {
 });
 
 it('defines properties correctly', function() {
-    $component = new Login();
+    $component = new Login;
     $properties = $component->defineProperties();
 
     expect(array_keys($properties))->toContain('redirectPage');

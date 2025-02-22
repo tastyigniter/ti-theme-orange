@@ -53,7 +53,7 @@ function setupCheckout()
 }
 
 it('initialize component correctly', function() {
-    $component = new Checkout();
+    $component = new Checkout;
 
     expect(class_uses_recursive($component))
         ->toContain(ConfigurableComponent::class, EventEmitter::class, UsesPage::class)
@@ -78,7 +78,7 @@ it('returns correct component meta', function() {
 });
 
 it('defines properties correctly', function() {
-    $component = new Checkout();
+    $component = new Checkout;
     $properties = $component->defineProperties();
 
     expect(array_keys($properties))->toContain(
@@ -123,10 +123,10 @@ it('can mount and prepare props', function() {
     Livewire::test(Checkout::class)
         ->assertSet('fields', function($fields) {
             return [
-                    'first_name', 'last_name', 'email', 'telephone',
-                    'comment', 'delivery_comment', 'payment', 'termsAgreed',
-                    'address_1', 'city', 'state', 'postcode',
-                ] === array_keys($fields);
+                'first_name', 'last_name', 'email', 'telephone',
+                'comment', 'delivery_comment', 'payment', 'termsAgreed',
+                'address_1', 'city', 'state', 'postcode',
+            ] === array_keys($fields);
         });
 
     Event::assertDispatched('igniter.orange.checkCheckoutSecurity');

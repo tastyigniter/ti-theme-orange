@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use Livewire\Livewire;
 
 it('initialize component correctly', function() {
-    $component = new Contact();
+    $component = new Contact;
 
     expect(class_uses_recursive($component))
         ->toContain(ConfigurableComponent::class)

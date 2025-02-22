@@ -26,7 +26,7 @@ beforeEach(function() {
 });
 
 it('initialize component correctly', function() {
-    $component = new CartItemModal();
+    $component = new CartItemModal;
 
     expect(class_uses_recursive($component))
         ->toContain(ConfigurableComponent::class)
@@ -54,7 +54,7 @@ it('returns correct component meta', function() {
 });
 
 it('defines properties correctly', function() {
-    $component = new CartItemModal();
+    $component = new CartItemModal;
     $properties = $component->defineProperties();
 
     expect(array_keys($properties))->toContain(
@@ -133,7 +133,6 @@ it('returns cart item option quantity type value', function() {
             ],
         ],
     ], 1);
-
 
     Livewire::test(CartItemModal::class, ['menuId' => $menu->getKey(), 'rowId' => $cartItem->rowId])
         ->call('getOptionQuantityTypeValue', 1113)

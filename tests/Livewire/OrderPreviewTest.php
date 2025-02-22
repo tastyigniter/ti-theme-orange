@@ -17,7 +17,7 @@ beforeEach(function() {
 });
 
 it('initialize component correctly', function() {
-    $component = new OrderPreview();
+    $component = new OrderPreview;
 
     expect(class_uses_recursive($component))
         ->toContain(ConfigurableComponent::class, UsesPage::class)
@@ -41,7 +41,7 @@ it('returns correct component meta', function() {
 });
 
 it('defines properties correctly', function() {
-    $component = new OrderPreview();
+    $component = new OrderPreview;
     $properties = $component->defineProperties();
 
     expect(array_keys($properties))->toContain(

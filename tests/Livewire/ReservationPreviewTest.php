@@ -12,7 +12,7 @@ beforeEach(function() {
 });
 
 it('initialize component correctly', function() {
-    $component = new ReservationPreview();
+    $component = new ReservationPreview;
 
     expect(class_uses_recursive($component))
         ->toContain(ConfigurableComponent::class)
@@ -30,7 +30,7 @@ it('returns correct component meta', function() {
 });
 
 it('defines properties correctly', function() {
-    $component = new ReservationPreview();
+    $component = new ReservationPreview;
     $properties = $component->defineProperties();
 
     expect(array_keys($properties))->toContain('hashParamName');

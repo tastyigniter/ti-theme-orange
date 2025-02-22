@@ -17,7 +17,7 @@ it('initializes customer data correctly', function() {
     $customer->shouldReceive('getAttribute')->with('address')->andReturn($address);
     Auth::shouldReceive('getUser')->andReturn($customer);
 
-    $component = new AccountDashboard();
+    $component = new AccountDashboard;
 
     expect(class_uses_recursive($component))->toContain(ConfigurableComponent::class)
         ->and($component->customerName)->toBe('John Doe')
@@ -29,7 +29,7 @@ it('initializes customer data correctly', function() {
 it('handles null customer correctly', function() {
     Auth::shouldReceive('getUser')->andReturn(null);
 
-    $component = new AccountDashboard();
+    $component = new AccountDashboard;
 
     expect($component->customerName)->toBe('')
         ->and($component->hasDefaultAddress)->toBeFalse()
@@ -40,7 +40,7 @@ it('handles null customer correctly', function() {
 it('returns correct cart count', function() {
     Cart::shouldReceive('count')->andReturn(5);
 
-    $component = new AccountDashboard();
+    $component = new AccountDashboard;
 
     $cartCount = $component->cartCount();
 
@@ -50,7 +50,7 @@ it('returns correct cart count', function() {
 it('returns correct cart total', function() {
     Cart::shouldReceive('total')->andReturn(100.0);
 
-    $component = new AccountDashboard();
+    $component = new AccountDashboard;
 
     $cartTotal = $component->cartTotal();
 
@@ -58,7 +58,7 @@ it('returns correct cart total', function() {
 });
 
 it('renders view', function() {
-    $component = new AccountDashboard();
+    $component = new AccountDashboard;
     $view = $component->render();
 
     expect($view->getName())->toBe('igniter-orange::components.account-dashboard');

@@ -27,7 +27,7 @@ it('returns correct component meta', function() {
 });
 
 it('defines properties correctly', function() {
-    $component = new OrderList();
+    $component = new OrderList;
     $properties = $component->defineProperties();
 
     expect($properties['itemsPerPage']['label'])->toBe('Number of orders to display per page')
@@ -62,7 +62,7 @@ it('renders view with orders', function() {
     $customer->orders()->save($order = Order::factory()->create(['processed' => 1]));
     Auth::shouldReceive('customer')->andReturn($customer);
 
-    $component = new OrderList();
+    $component = new OrderList;
     $view = $component->render();
 
     expect($view->getData()['orders']->pluck('order_id'))->toContain($order->order_id);
@@ -71,7 +71,7 @@ it('renders view with orders', function() {
 it('renders view with empty orders when no authenticated customer', function() {
     Auth::shouldReceive('customer')->andReturn(null);
 
-    $component = new OrderList();
+    $component = new OrderList;
     $view = $component->render();
 
     expect($view->getData()['orders'])->toBeEmpty();

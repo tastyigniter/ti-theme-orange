@@ -28,7 +28,7 @@ it('returns correct component meta', function() {
 });
 
 it('defines properties correctly', function() {
-    $component = new Slider();
+    $component = new Slider;
     $properties = $component->defineProperties();
 
     expect($properties['code']['label'])->toBe('lang:igniter.frontend::default.slider.label_slider')

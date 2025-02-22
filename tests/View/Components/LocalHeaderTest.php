@@ -30,7 +30,7 @@ it('adds js on mount', function() {
     Assets::shouldReceive('addCss')->with('igniter.local::/css/starrating.css', 'starrating-css')->once();
     Assets::shouldReceive('addJs')->with('igniter.local::/js/starrating.js', 'starrating-js')->once();
 
-    $component = new LocalHeader();
+    $component = new LocalHeader;
     $component->mountListReviews();
 });
 
@@ -43,7 +43,7 @@ it('returns correct component meta', function() {
 });
 
 it('defines properties correctly', function() {
-    $component = new LocalHeader();
+    $component = new LocalHeader;
     $properties = $component->defineProperties();
 
     expect($properties['showThumb']['label'])->toBe('Display the location image thumb.')
@@ -67,7 +67,7 @@ it('should render returns true when location is set', function() {
     $location = LocationModel::factory()->create();
     Location::shouldReceive('current')->andReturn($location);
 
-    $component = new LocalHeader();
+    $component = new LocalHeader;
     $shouldRender = $component->shouldRender();
 
     expect($shouldRender)->toBeTrue();
@@ -76,7 +76,7 @@ it('should render returns true when location is set', function() {
 it('should render returns false when location is not set', function() {
     Location::shouldReceive('current')->andReturn(null);
 
-    $component = new LocalHeader();
+    $component = new LocalHeader;
     $shouldRender = $component->shouldRender();
 
     expect($shouldRender)->toBeFalse();
@@ -98,7 +98,7 @@ it('lists reviews correctly', function() {
     Location::shouldReceive('current')->andReturn($location);
     Review::factory()->for($location)->count(5)->create(['review_status' => 1]);
 
-    $reviews = (new LocalHeader())->listReviews();
+    $reviews = (new LocalHeader)->listReviews();
 
     expect($reviews->count())->toBe(5);
 });
@@ -106,5 +106,5 @@ it('lists reviews correctly', function() {
 it('lists empty reviews when no current location', function() {
     Location::shouldReceive('current')->andReturn(null);
 
-    expect((new LocalHeader())->listReviews())->toBeNull();
+    expect((new LocalHeader)->listReviews())->toBeNull();
 });

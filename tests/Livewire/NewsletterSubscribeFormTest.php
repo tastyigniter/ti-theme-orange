@@ -10,7 +10,7 @@ use Igniter\Orange\Livewire\NewsletterSubscribeForm;
 use Livewire\Livewire;
 
 it('initialize component correctly', function() {
-    $component = new NewsletterSubscribeForm();
+    $component = new NewsletterSubscribeForm;
 
     expect(class_uses_recursive($component))
         ->toContain(ConfigurableComponent::class)
@@ -28,7 +28,7 @@ it('returns correct component meta', function() {
 });
 
 it('defines properties correctly', function() {
-    $component = new NewsletterSubscribeForm();
+    $component = new NewsletterSubscribeForm;
     $properties = $component->defineProperties();
 
     expect(array_keys($properties))->toContain('listId');

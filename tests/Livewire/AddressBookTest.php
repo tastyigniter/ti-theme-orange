@@ -30,7 +30,7 @@ beforeEach(function() {
 });
 
 it('initialize component correctly', function() {
-    $component = new AddressBook();
+    $component = new AddressBook;
 
     expect(class_uses_recursive($component))
         ->toContain(ConfigurableComponent::class, WithPagination::class)
@@ -50,7 +50,7 @@ it('returns correct component meta', function() {
 });
 
 it('defines properties correctly', function() {
-    $component = new AddressBook();
+    $component = new AddressBook;
     $properties = $component->defineProperties();
 
     expect($properties)->toEqual([

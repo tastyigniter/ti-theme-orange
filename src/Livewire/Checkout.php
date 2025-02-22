@@ -379,6 +379,7 @@ class Checkout extends Component
     protected function isOrderMarkedAsProcessed()
     {
         $order = $this->getOrder();
+
         return $order->isPaymentProcessed() ? $order : false;
     }
 

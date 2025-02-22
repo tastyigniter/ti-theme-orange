@@ -28,7 +28,7 @@ it('returns correct component meta', function() {
 });
 
 it('defines properties correctly', function() {
-    $component = new FulfillmentModal();
+    $component = new FulfillmentModal;
     $properties = $component->defineProperties();
 
     expect(array_keys($properties))->toContain(

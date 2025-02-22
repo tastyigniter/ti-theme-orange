@@ -14,7 +14,7 @@ use Livewire\Livewire;
 use Livewire\WithPagination;
 
 it('initialize component correctly', function() {
-    $component = new ReservationList();
+    $component = new ReservationList;
 
     expect(class_uses_recursive($component))
         ->toContain(ConfigurableComponent::class, UsesPage::class, WithPagination::class)
@@ -32,7 +32,7 @@ it('returns correct component meta', function() {
 });
 
 it('defines properties correctly', function() {
-    $component = new ReservationList();
+    $component = new ReservationList;
     $properties = $component->defineProperties();
 
     expect(array_keys($properties))->toContain(

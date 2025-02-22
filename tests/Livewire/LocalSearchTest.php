@@ -24,7 +24,7 @@ beforeEach(function() {
 });
 
 it('initialize component correctly', function() {
-    $component = new LocalSearch();
+    $component = new LocalSearch;
 
     expect(class_uses_recursive($component))
         ->toContain(ConfigurableComponent::class, SearchesNearby::class)
@@ -45,7 +45,7 @@ it('returns correct component meta', function() {
 });
 
 it('defines properties correctly', function() {
-    $component = new LocalSearch();
+    $component = new LocalSearch;
     $properties = $component->defineProperties();
 
     expect(array_keys($properties))->toContain('hideSearch', 'menusPage');
