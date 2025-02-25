@@ -8,7 +8,7 @@ use Igniter\Main\Traits\ConfigurableComponent;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
-class Contact extends Component
+final class Contact extends Component
 {
     use ConfigurableComponent;
 

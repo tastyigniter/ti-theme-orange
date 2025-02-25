@@ -27,7 +27,8 @@ trait WithReviews
             return null;
         }
 
-        return ReviewModel::with(['customer', 'customer.address'])
+        return ReviewModel::query()
+            ->with(['customer', 'customer.address'])
             ->isApproved()
             ->listFrontEnd([
                 'page' => $page ?? $this->getPage(),
@@ -39,7 +40,7 @@ trait WithReviews
 
     public static function getSortOrderOptionsWithReviews(): array
     {
-        return collect(ReviewModel::make()->queryModifierGetSorts())->mapWithKeys(function($value, $key) {
+        return collect((new ReviewModel)->queryModifierGetSorts())->mapWithKeys(function($value, $key) {
             return [$value => $value];
         })->all();
     }

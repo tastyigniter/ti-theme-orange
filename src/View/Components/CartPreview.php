@@ -6,7 +6,7 @@ use Igniter\Cart\Classes\CartManager;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Illuminate\View\Component;
 
-class CartPreview extends Component
+final class CartPreview extends Component
 {
     use ConfigurableComponent;
 

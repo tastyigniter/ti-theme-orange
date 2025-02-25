@@ -6,7 +6,7 @@ use Igniter\Frontend\Models\CaptchaSettings;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Livewire\Component;
 
-class Captcha extends Component
+final class Captcha extends Component
 {
     use ConfigurableComponent;
 
@@ -25,8 +25,8 @@ class Captcha extends Component
 
     public function mount()
     {
-        $this->apiKey = CaptchaSettings::get('api_site_key', '');
-        $this->lang = CaptchaSettings::get('lang', 'en');
+        $this->apiKey = CaptchaSettings::getApiSecretKey();
+        $this->lang = CaptchaSettings::getLang();
     }
 
     public function render()

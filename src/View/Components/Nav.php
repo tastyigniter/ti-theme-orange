@@ -6,7 +6,7 @@ use Igniter\Pages\Classes\MenuManager;
 use Igniter\Pages\Models\Menu;
 use Illuminate\View\Component;
 
-class Nav extends Component
+final class Nav extends Component
 {
     public array $menuItems = [];
 

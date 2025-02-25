@@ -12,7 +12,7 @@ use Igniter\User\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\ValidationException;
 
-class OrderPreview extends \Livewire\Component
+final class OrderPreview extends \Livewire\Component
 {
     use ConfigurableComponent;
     use UsesPage;

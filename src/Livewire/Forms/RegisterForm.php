@@ -4,7 +4,7 @@ namespace Igniter\Orange\Livewire\Forms;
 
 use Livewire\Form;
 
-class RegisterForm extends Form
+final class RegisterForm extends Form
 {
     public string $first_name = '';
 

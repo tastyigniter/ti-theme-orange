@@ -7,7 +7,7 @@ use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\User\Facades\Auth;
 use Illuminate\View\Component;
 
-class AccountDashboard extends Component
+final class AccountDashboard extends Component
 {
     use ConfigurableComponent;
 

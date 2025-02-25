@@ -5,7 +5,7 @@ namespace Igniter\Orange\Livewire\Forms;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
-class LoginForm extends Form
+final class LoginForm extends Form
 {
     #[Validate('required|email:filter|max:96', as: 'lang:igniter.user::default.settings.label_email')]
     public string $email;

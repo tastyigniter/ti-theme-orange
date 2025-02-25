@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class ReviewList extends Component
+final class ReviewList extends Component
 {
     use ConfigurableComponent;
     use WithReviews;
@@ -44,7 +44,7 @@ class ReviewList extends Component
     public function render(): View
     {
         return view('igniter-orange::livewire.review-list', [
-            'reviewRatingHints' => ReviewModel::make()->getRatingOptions(),
+            'reviewRatingHints' => (new ReviewModel)->getRatingOptions(),
             'reviewList' => $this->loadReviewList(),
         ]);
     }

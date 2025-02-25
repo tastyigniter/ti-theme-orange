@@ -8,7 +8,7 @@ use Igniter\Main\Traits\UsesPage;
 use Igniter\User\Facades\Auth;
 use Illuminate\View\Component;
 
-class OrderList extends Component
+final class OrderList extends Component
 {
     use ConfigurableComponent;
     use UsesPage;
@@ -49,7 +49,7 @@ class OrderList extends Component
 
     public static function getSortOrderOptions()
     {
-        return collect(Order::make()->queryModifierGetSorts())->mapWithKeys(function($value, $key) {
+        return collect((new Order)->queryModifierGetSorts())->mapWithKeys(function($value, $key) {
             return [$value => $value];
         })->all();
     }

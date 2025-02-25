@@ -9,7 +9,7 @@ use Igniter\User\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
-class ReservationPreview extends Component
+final class ReservationPreview extends Component
 {
     use ConfigurableComponent;
 

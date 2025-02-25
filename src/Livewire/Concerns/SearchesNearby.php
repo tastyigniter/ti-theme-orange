@@ -88,7 +88,7 @@ trait SearchesNearby
 
         $this->searchQuery = null;
 
-        if (!isset($this->location)) {
+        if (!property_exists($this, 'location')) {
             $nearByLocation = $this->findNearByLocation($userLocation);
 
             request()->route()->setParameter('location', $nearByLocation->permalink_slug);

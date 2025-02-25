@@ -13,7 +13,7 @@ use Illuminate\Support\Collection;
 use Livewire\Attributes\Url;
 use Livewire\WithPagination;
 
-class MenuItemList extends \Livewire\Component
+final class MenuItemList extends \Livewire\Component
 {
     use ConfigurableComponent;
     use WithPagination;
@@ -174,7 +174,7 @@ class MenuItemList extends \Livewire\Component
     public static function getPropertyOptions(Form $form, FormField $field): array|Collection
     {
         return match ($field->getConfig('property')) {
-            'sortOrder' => collect(MenuModel::make()->queryModifierGetSorts())->mapWithKeys(function($value, $key) {
+            'sortOrder' => collect((new MenuModel)->queryModifierGetSorts())->mapWithKeys(function($value, $key) {
                 return [$value => $value];
             })->all(),
             default => [],
@@ -237,7 +237,7 @@ class MenuItemList extends \Livewire\Component
             $with[] = 'ingredients.media';
         }
 
-        $list = MenuModel::with($with)->listFrontEnd($filters);
+        $list = MenuModel::query()->with($with)->listFrontEnd($filters);
 
         if ($this->itemsPerPage > 0) {
             $list->setCollection($list->getCollection()

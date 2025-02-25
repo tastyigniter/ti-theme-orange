@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Redirect;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-class CartBox extends Component
+final class CartBox extends Component
 {
     use ConfigurableComponent;
     use UsesPage;

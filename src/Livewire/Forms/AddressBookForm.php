@@ -4,7 +4,7 @@ namespace Igniter\Orange\Livewire\Forms;
 
 use Livewire\Form;
 
-class AddressBookForm extends Form
+final class AddressBookForm extends Form
 {
     public ?string $address_id;
 

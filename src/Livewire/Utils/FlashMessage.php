@@ -6,7 +6,7 @@ use Igniter\Flame\Flash\Facades\Flash;
 use Igniter\Flame\Flash\Message;
 use Livewire\Component;
 
-class FlashMessage extends Component
+final class FlashMessage extends Component
 {
     public array $messages = [];
 

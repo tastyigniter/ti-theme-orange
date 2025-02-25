@@ -14,7 +14,7 @@ use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class AddressBook extends Component
+final class AddressBook extends Component
 {
     use ConfigurableComponent;
     use WithPagination;
@@ -57,7 +57,7 @@ class AddressBook extends Component
     public static function getPropertyOptions(Form $form, FormField $field): array|Collection
     {
         return match ($field->getConfig('property')) {
-            'sortOrder' => collect(Address::make()->queryModifierGetSorts())->mapWithKeys(function($value, $key) {
+            'sortOrder' => collect((new Address)->queryModifierGetSorts())->mapWithKeys(function($value, $key) {
                 return [$value => $value];
             })->all(),
             default => [],

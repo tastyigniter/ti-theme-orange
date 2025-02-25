@@ -16,6 +16,7 @@ use Igniter\Main\Traits\UsesPage;
 use Igniter\System\Facades\Assets;
 use Igniter\User\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Computed;
@@ -26,7 +27,12 @@ use Livewire\Component;
 use Livewire\Features\SupportRedirects\Redirector;
 use Livewire\Livewire;
 
-class Checkout extends Component
+/**
+ * Checkout component
+ *
+ * @property-read Collection $paymentGateways
+ */
+final class Checkout extends Component
 {
     use ConfigurableComponent;
     use EventEmitter;

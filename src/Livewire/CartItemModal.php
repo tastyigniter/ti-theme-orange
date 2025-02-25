@@ -10,7 +10,7 @@ use Igniter\Orange\Contracts\ModalComponent;
 use Igniter\Orange\Data\MenuItemData;
 use Illuminate\Validation\ValidationException;
 
-class CartItemModal extends ModalComponent
+final class CartItemModal extends ModalComponent
 {
     use ConfigurableComponent;
 

@@ -8,7 +8,7 @@ use Igniter\Main\Traits\ConfigurableComponent;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Validate;
 
-class NewsletterSubscribeForm extends \Livewire\Component
+final class NewsletterSubscribeForm extends \Livewire\Component
 {
     use ConfigurableComponent;
 

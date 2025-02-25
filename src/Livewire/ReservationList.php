@@ -12,7 +12,7 @@ use Igniter\User\Facades\Auth;
 use Illuminate\Support\Collection;
 use Livewire\WithPagination;
 
-class ReservationList extends \Livewire\Component
+final class ReservationList extends \Livewire\Component
 {
     use ConfigurableComponent;
     use UsesPage;
@@ -58,7 +58,7 @@ class ReservationList extends \Livewire\Component
     public static function getPropertyOptions(Form $form, FormField $field): array|Collection
     {
         return match ($field->getConfig('property')) {
-            'sortOrder' => collect(Reservation::make()->queryModifierGetSorts())->mapWithKeys(function($value, $key) {
+            'sortOrder' => collect((new Reservation)->queryModifierGetSorts())->mapWithKeys(function($value, $key) {
                 return [$value => $value];
             })->all(),
             default => [],

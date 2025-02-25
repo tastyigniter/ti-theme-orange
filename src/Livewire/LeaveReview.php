@@ -12,7 +12,7 @@ use Igniter\System\Facades\Assets;
 use Igniter\User\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
-class LeaveReview extends \Livewire\Component
+final class LeaveReview extends \Livewire\Component
 {
     use ConfigurableComponent;
 

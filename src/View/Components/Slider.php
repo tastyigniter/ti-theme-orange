@@ -7,7 +7,7 @@ use Igniter\Main\Traits\ConfigurableComponent;
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 
-class Slider extends Component
+final class Slider extends Component
 {
     use ConfigurableComponent;
 
@@ -94,6 +94,7 @@ class Slider extends Component
     protected function slides()
     {
         if ($this->code && $slider = SliderModel::whereCode($this->code)->first()) {
+            /** @var SliderModel $slider */
             $this->slides = $slider->images;
         }
 

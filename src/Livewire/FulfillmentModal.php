@@ -14,7 +14,7 @@ use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Session;
 use Livewire\Livewire;
 
-class FulfillmentModal extends \Livewire\Component
+final class FulfillmentModal extends \Livewire\Component
 {
     use ConfigurableComponent;
     use SearchesNearby;

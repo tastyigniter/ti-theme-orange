@@ -11,7 +11,7 @@ use Igniter\Orange\Livewire\Concerns\WithReviews;
 use Igniter\System\Facades\Assets;
 use Illuminate\View\Component;
 
-class LocalHeader extends Component
+final class LocalHeader extends Component
 {
     use ConfigurableComponent;
     use UsesPage;

@@ -9,6 +9,7 @@ use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
 use Igniter\Orange\Livewire\Forms\BookingForm;
 use Igniter\Reservation\Classes\BookingManager;
+use Igniter\Reservation\Models\Concerns\LocationAction;
 use Igniter\System\Facades\Assets;
 use Igniter\User\Facades\Auth;
 use Illuminate\Support\Collection;
@@ -17,7 +18,12 @@ use Livewire\Attributes\Locked;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 
-class Booking extends Component
+/**
+ * Booking component
+ *
+ * @property-read Collection $timeslots
+ */
+final class Booking extends Component
 {
     use ConfigurableComponent;
     use UsesPage;
@@ -286,6 +292,7 @@ class Booking extends Component
 
     protected function prepareProps()
     {
+        /** @var LocationAction $location */
         $location = Location::current();
 
         $this->startDate = now()->addDays($location->getMinReservationAdvanceTime())->startOfDay();

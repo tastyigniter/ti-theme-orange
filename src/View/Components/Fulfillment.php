@@ -6,7 +6,7 @@ use Igniter\Local\Facades\Location;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Illuminate\View\Component;
 
-class Fulfillment extends Component
+final class Fulfillment extends Component
 {
     use ConfigurableComponent;
 

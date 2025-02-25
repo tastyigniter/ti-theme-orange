@@ -7,7 +7,7 @@ use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Data\BannerData;
 use Illuminate\View\Component;
 
-class BannerPreview extends Component
+final class BannerPreview extends Component
 {
     use ConfigurableComponent;
 
@@ -53,7 +53,7 @@ class BannerPreview extends Component
 
     public static function getCodeOptions()
     {
-        return Banner::whereIsEnabled()->dropdown('name');
+        return Banner::query()->whereIsEnabled()->dropdown('name');
     }
 
     public function render()
@@ -74,7 +74,8 @@ class BannerPreview extends Component
             return $this->banner;
         }
 
-        $model = Banner::query()->isEnabled()->whereCode($this->code)->first();
+        /** @var Banner $model */
+        $model = Banner::query()->whereIsEnabled()->whereCode($this->code)->first();
 
         return $this->banner = $model ? tap(new BannerData($model), function($bannerData) {
             $bannerData->imageWidth = $this->width;

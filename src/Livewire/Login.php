@@ -11,7 +11,7 @@ use Igniter\User\Models\Customer;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Url;
 
-class Login extends \Livewire\Component
+final class Login extends \Livewire\Component
 {
     use ConfigurableComponent;
     use UsesPage;

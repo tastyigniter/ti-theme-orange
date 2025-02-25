@@ -8,7 +8,7 @@ use Igniter\Socialite\Classes\ProviderManager;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
-class Socialite extends Component
+final class Socialite extends Component
 {
     use ConfigurableComponent;
     use UsesPage;

@@ -19,14 +19,21 @@ use Livewire\Attributes\Locked;
 use Livewire\Attributes\Url;
 use Livewire\WithPagination;
 
-class LocationList extends \Livewire\Component
+/**
+ * Location List Component
+ *
+ * @property-read Collection $orderTypes
+ * @property-read array $sorters
+ * @property-read array $filters
+ */
+final class LocationList extends \Livewire\Component
 {
     use ConfigurableComponent;
     use SearchesNearby;
     use UsesPage;
     use WithPagination;
 
-    /** Distance unit to use, mi or km */
+    /** Distance unit to use, mile or km */
     public string $distanceUnit = 'mi';
 
     public string $menusPage = 'local.menus';
@@ -105,10 +112,10 @@ class LocationList extends \Livewire\Component
     public static function getPropertyOptions(Form $form, FormField $field): array|Collection
     {
         return match ($field->getConfig('property')) {
-            'sortBy' => collect((new static)->sorters())->mapWithKeys(function($sorter, $key) {
+            'sortBy' => collect((new self)->sorters())->mapWithKeys(function($sorter, $key) {
                 return [$key => array_get($sorter, 'name')];
             })->all(),
-            'orderType' => (new static)->orderTypes(),
+            'orderType' => (new self)->orderTypes(),
             default => [],
         };
     }
@@ -130,7 +137,9 @@ class LocationList extends \Livewire\Component
     #[Computed, Locked]
     public function orderTypes()
     {
-        return LocationModel::getOrderTypeOptions();
+        return method_exists(LocationModel::class, 'getOrderTypeOptions')
+            ? LocationModel::getOrderTypeOptions()
+            : collect();
     }
 
     #[Computed, Locked]
@@ -218,7 +227,7 @@ class LocationList extends \Livewire\Component
             ? array_get($this->sorters, 'name.condition')
             : array_get($this->sorters, $this->sortBy.'.condition');
 
-        $query = LocationModel::withCount([
+        $query = LocationModel::query()->withCount([
             'reviews' => fn($q) => $q->isApproved(),
         ])->with(['media', 'delivery_areas', 'settings', 'working_hours', 'reviews' => fn($q) => $q->isApproved()]);
 
@@ -226,8 +235,7 @@ class LocationList extends \Livewire\Component
 
         $this->filterQuery($query);
 
-        $results = $query->applyFilters($options)
-            ->paginate($this->itemPerPage, $this->getPage());
+        $results = $query->applyFilters($options)->paginate($this->itemPerPage, $this->getPage());
 
         $coordinates = Location::userPosition()->getCoordinates();
 

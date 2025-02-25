@@ -5,6 +5,7 @@ namespace Igniter\Orange\Data;
 use Carbon\Carbon;
 use Igniter\Cart\Classes\AbstractOrderType;
 use Igniter\Cart\Classes\OrderTypes;
+use Igniter\Cart\Models\Concerns\LocationAction;
 use Igniter\Local\Classes\CoveredArea;
 use Igniter\Local\Classes\WorkingSchedule;
 use Igniter\Local\Facades\Location;
@@ -13,7 +14,7 @@ use Igniter\Local\Models\Review;
 use Igniter\Local\Models\WorkingHour;
 use Illuminate\Support\Collection;
 
-class LocationData
+final class LocationData
 {
     public string $id;
 
@@ -33,7 +34,7 @@ class LocationData
 
     protected ?array $payments = null;
 
-    public function __construct(public LocationModel $model)
+    public function __construct(public LocationModel|LocationAction $model)
     {
         $this->id = $model->getKey();
         $this->name = $model->getName();
@@ -139,7 +140,7 @@ class LocationData
         $scheduleItems = [];
         foreach ($this->scheduleTypes() as $code => $definition) {
             $schedule = $this->model->createScheduleItem($code);
-            foreach (WorkingHour::make()->getWeekDaysOptions() as $index => $day) {
+            foreach ((new WorkingHour)->getWeekDaysOptions() as $index => $day) {
                 $hours = array_map(function($hour) {
                     $hour['open'] = now()->setTimeFromTimeString($hour['open'])->isoFormat(lang('system::lang.moment.time_format'));
                     $hour['close'] = now()->setTimeFromTimeString($hour['close'])->isoFormat(lang('system::lang.moment.time_format'));

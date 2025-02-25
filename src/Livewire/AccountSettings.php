@@ -10,7 +10,7 @@ use Igniter\User\Actions\LogoutCustomer;
 use Igniter\User\Facades\Auth;
 use Livewire\Component;
 
-class AccountSettings extends Component
+final class AccountSettings extends Component
 {
     use ConfigurableComponent;
 

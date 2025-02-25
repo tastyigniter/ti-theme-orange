@@ -8,7 +8,7 @@ use Igniter\Orange\Livewire\Forms\RegisterForm;
 use Igniter\User\Actions\RegisterCustomer;
 use Livewire\Attributes\Url;
 
-class Register extends \Livewire\Component
+final class Register extends \Livewire\Component
 {
     use ConfigurableComponent;
     use \Igniter\Main\Traits\UsesPage;

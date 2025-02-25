@@ -9,7 +9,7 @@ use Igniter\Main\Traits\UsesPage;
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 
-class CategoryList extends Component
+final class CategoryList extends Component
 {
     use ConfigurableComponent;
     use UsesPage;
@@ -69,7 +69,7 @@ class CategoryList extends Component
             return self::$categoriesCache;
         }
 
-        $query = Category::with(['children', 'children.children'])->whereIsEnabled()->sorted();
+        $query = Category::query()->with(['children', 'children.children'])->whereIsEnabled()->sorted();
 
         if ($location = Location::current()) {
             $query->whereHasOrDoesntHaveLocation($location->getKey());

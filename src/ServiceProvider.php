@@ -81,7 +81,9 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         resolve(ComponentManager::class)->registerCallback(function($manager) use ($configurableComponents) {
             foreach ($configurableComponents as $componentClass) {
-                $manager->registerComponent($componentClass, $componentClass::componentMeta());
+                if (method_exists($componentClass, 'componentMeta')) {
+                    $manager->registerComponent($componentClass, $componentClass::componentMeta());
+                }
             }
         });
     }

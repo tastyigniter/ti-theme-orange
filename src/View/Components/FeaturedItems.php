@@ -7,7 +7,7 @@ use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Data\MenuItemData;
 use Illuminate\View\Component;
 
-class FeaturedItems extends Component
+final class FeaturedItems extends Component
 {
     use ConfigurableComponent;
 

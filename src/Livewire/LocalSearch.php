@@ -6,7 +6,7 @@ use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Livewire\Concerns\SearchesNearby;
 use Livewire\Component;
 
-class LocalSearch extends Component
+final class LocalSearch extends Component
 {
     use ConfigurableComponent;
     use SearchesNearby;

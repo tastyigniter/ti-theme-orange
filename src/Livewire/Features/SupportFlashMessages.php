@@ -7,7 +7,7 @@ use Illuminate\Validation\ValidationException;
 use Livewire\ComponentHook;
 use Livewire\Mechanisms\HandleRequests\HandleRequests;
 
-class SupportFlashMessages extends ComponentHook
+final class SupportFlashMessages extends ComponentHook
 {
     public function exception($e, $stopPropagation)
     {

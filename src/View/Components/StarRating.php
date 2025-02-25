@@ -5,7 +5,7 @@ namespace Igniter\Orange\View\Components;
 use Igniter\Local\Models\Review as ReviewModel;
 use Illuminate\View\Component;
 
-class StarRating extends Component
+final class StarRating extends Component
 {
     protected static ?array $hints = null;
 
@@ -27,6 +27,6 @@ class StarRating extends Component
 
     protected function getHints()
     {
-        return self::$hints ??= ReviewModel::make()->getRatingOptions();
+        return self::$hints ??= (new ReviewModel)->getRatingOptions();
     }
 }

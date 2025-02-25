@@ -6,7 +6,7 @@ use Igniter\User\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Livewire\Form;
 
-class BookingForm extends Form
+final class BookingForm extends Form
 {
     public ?string $firstName = null;
 

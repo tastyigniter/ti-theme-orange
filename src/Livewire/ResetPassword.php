@@ -8,7 +8,7 @@ use Igniter\User\Models\Customer;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
-class ResetPassword extends Component
+final class ResetPassword extends Component
 {
     use ConfigurableComponent;
     use UsesPage;
@@ -75,6 +75,7 @@ class ResetPassword extends Component
         ]);
 
         if ($customer = Customer::whereEmail($this->email)->first()) {
+            /** @var Customer $customer */
             throw_unless($customer->enabled(), ValidationException::withMessages([
                 'email' => lang('igniter.user::default.reset.alert_reset_error'),
             ]));
@@ -106,6 +107,7 @@ class ResetPassword extends Component
             'password_confirmation' => lang('igniter.user::default.reset.label_password_confirm'),
         ]);
 
+        /** @var null|Customer $customer */
         $customer = Customer::whereResetCode($this->resetCode)->first();
 
         if (!$customer || !$customer->completeResetPassword($this->resetCode, $this->password)) {

@@ -6,7 +6,7 @@ use Igniter\User\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Livewire\Form;
 
-class SettingsForm extends Form
+final class SettingsForm extends Form
 {
     public string $first_name = '';
 

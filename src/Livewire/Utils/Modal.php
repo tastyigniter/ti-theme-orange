@@ -7,7 +7,7 @@ use Illuminate\View\View;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-class Modal extends Component
+final class Modal extends Component
 {
     public ?string $component = null;
 
