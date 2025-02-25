@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\View\Components;
 
+use Override;
 use Igniter\Local\Models\Review as ReviewModel;
 use Illuminate\View\Component;
 
@@ -18,6 +21,7 @@ final class StarRating extends Component
         $this->max = max(1, count($this->getHints()));
     }
 
+    #[Override]
     public function render()
     {
         return view('igniter-orange::components.star-rating', [

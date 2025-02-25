@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire;
 
 use Igniter\Cart\Facades\Cart;
@@ -33,7 +35,7 @@ final class AccountSettings extends Component
             'loginPage' => [
                 'label' => 'Login page',
                 'type' => 'select',
-                'options' => [static::class, 'getThemePageOptions'],
+                'options' => [self::class, 'getThemePageOptions'],
             ],
         ];
     }
@@ -43,7 +45,7 @@ final class AccountSettings extends Component
         return view('igniter-orange::livewire.account-settings');
     }
 
-    public function mount()
+    public function mount(): void
     {
         $this->form->fillFrom(Auth::customer());
     }
@@ -72,7 +74,7 @@ final class AccountSettings extends Component
         $customer->save();
 
         if ($this->form->old_password || $customer->email !== $oldEmail) {
-            Cart::keepSession(function() {
+            Cart::keepSession(function(): void {
                 resolve(LogoutCustomer::class)->handle();
             });
 
@@ -80,5 +82,6 @@ final class AccountSettings extends Component
         }
 
         flash()->success(lang('igniter.user::default.settings.alert_updated_success'));
+        return null;
     }
 }

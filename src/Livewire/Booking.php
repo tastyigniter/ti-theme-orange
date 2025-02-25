@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire;
 
 use Carbon\Carbon;
@@ -28,11 +30,11 @@ final class Booking extends Component
     use ConfigurableComponent;
     use UsesPage;
 
-    public const STEP_PICKER = 'picker';
+    public const string STEP_PICKER = 'picker';
 
-    public const STEP_TIMESLOT = 'timeslot';
+    public const string STEP_TIMESLOT = 'timeslot';
 
-    public const STEP_BOOKING = 'booking';
+    public const string STEP_BOOKING = 'booking';
 
     public BookingForm $form;
 
@@ -75,7 +77,7 @@ final class Booking extends Component
     public $endDate;
 
     /**
-     * @var \Igniter\Reservation\Classes\BookingManager
+     * @var BookingManager
      */
     protected $manager;
 
@@ -124,7 +126,7 @@ final class Booking extends Component
             'successPage' => [
                 'label' => 'Page to redirect to when the booking is successful',
                 'type' => 'select',
-                'options' => [static::class, 'getThemePageOptions'],
+                'options' => self::getThemePageOptions(...),
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
         ];
@@ -138,15 +140,13 @@ final class Booking extends Component
         ]);
     }
 
-    public function mount()
+    public function mount(): void
     {
         Assets::addCss('$/igniter/css/vendor.css', 'vendor-css');
 
         $this->calendarLocale = strtolower(str_before(str_before(app()->getLocale(), '_'), '-'));
-        if ($this->calendarLocale != 'en') {
-            if (File::symbolizePath($localPath = '$/igniter-orange/js/locales/flatpickr/'.$this->calendarLocale.'.js')) {
-                Assets::addJs($localPath, 'flatpickr-locale-js');
-            }
+        if ($this->calendarLocale != 'en' && File::symbolizePath($localPath = '$/igniter-orange/js/locales/flatpickr/'.$this->calendarLocale.'.js')) {
+            Assets::addJs($localPath, 'flatpickr-locale-js');
         }
 
         Assets::addCss('igniter.admin::css/formwidgets/datepicker.css', 'datepicker-css');
@@ -156,22 +156,22 @@ final class Booking extends Component
         $this->prepareProps();
     }
 
-    public function boot()
+    public function boot(): void
     {
         $this->manager = resolve(BookingManager::class);
         $this->manager->useLocation(Location::current());
     }
 
-    public function updating($name, $value)
+    public function updating($name, $value): void
     {
         if ($name === 'date') {
             unset($this->timeslots);
         }
     }
 
-    public function onSave()
+    public function onSave(): void
     {
-        $this->pickerStep = static::STEP_PICKER;
+        $this->pickerStep = self::STEP_PICKER;
 
         $this->validate([
             'guest' => 'required|integer|min:'.$this->minGuestSize.'|max:'.$this->maxGuestSize,
@@ -183,17 +183,17 @@ final class Booking extends Component
             'time' => lang('igniter.reservation::default.label_time'),
         ]);
 
-        $this->pickerStep = static::STEP_TIMESLOT;
+        $this->pickerStep = self::STEP_TIMESLOT;
     }
 
-    public function onSelectTime(string $time)
+    public function onSelectTime(string $time): void
     {
         $this->time = $time;
 
         $this->onSave();
 
-        if ($this->pickerStep === static::STEP_TIMESLOT) {
-            $this->pickerStep = static::STEP_BOOKING;
+        if ($this->pickerStep === self::STEP_TIMESLOT) {
+            $this->pickerStep = self::STEP_BOOKING;
         }
     }
 
@@ -224,7 +224,7 @@ final class Booking extends Component
     public function timeslots(): Collection
     {
         return $this->manager->makeTimeSlots(make_carbon($this->date))
-            ->map(fn($dateTime) => make_carbon($dateTime));
+            ->map(fn($dateTime): Carbon|string => make_carbon($dateTime));
     }
 
     #[Computed, Locked]
@@ -232,9 +232,7 @@ final class Booking extends Component
     {
         $timeslots = $this->timeslots->values();
 
-        $selectedIndex = $timeslots->search(function(Carbon $slot) {
-            return $slot->isSameAs('Y-m-d H:i', make_carbon($this->date.' '.$this->time));
-        });
+        $selectedIndex = $timeslots->search(fn(Carbon $slot): bool => $slot->isSameAs('Y-m-d H:i', make_carbon($this->date.' '.$this->time)));
 
         if (($from = ($selectedIndex ?: 0) - ((int)($this->noOfSlots / 2) - 1)) < 0) {
             $from = 0;
@@ -242,17 +240,15 @@ final class Booking extends Component
 
         return $timeslots
             ->slice($from, $this->noOfSlots)
-            ->map(function($dateTime, $index) use ($selectedIndex) {
-                return (object)[
-                    'dateTime' => $dateTime,
-                    'fullyBooked' => false,
-                    'isSelected' => $selectedIndex === $index,
-                ];
-            });
+            ->map(fn($dateTime, $index) => (object)[
+                'dateTime' => $dateTime,
+                'fullyBooked' => false,
+                'isSelected' => $selectedIndex === $index,
+            ]);
     }
 
     #[Computed, Locked]
-    public function disabledDaysOfWeek()
+    public function disabledDaysOfWeek(): array
     {
         return [];
     }
@@ -265,7 +261,7 @@ final class Booking extends Component
         $endDate = $this->endDate->copy();
         $schedule = $this->manager->getSchedule();
         for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
-            if (!count($schedule->forDate($date))) {
+            if (count($schedule->forDate($date)) === 0) {
                 $result[] = $date->toDateString();
             }
         }
@@ -282,7 +278,7 @@ final class Booking extends Component
         $options = [];
         $schedule = $this->manager->getSchedule();
         for ($date = $start; $date->lte($end); $date->addDay()) {
-            if (count($schedule->forDate($date))) {
+            if (count($schedule->forDate($date)) > 0) {
                 $options[] = $date->copy();
             }
         }
@@ -290,7 +286,7 @@ final class Booking extends Component
         return $options;
     }
 
-    protected function prepareProps()
+    protected function prepareProps(): void
     {
         /** @var LocationAction $location */
         $location = Location::current();

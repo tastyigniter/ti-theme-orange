@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire;
 
 use Igniter\Main\Traits\ConfigurableComponent;

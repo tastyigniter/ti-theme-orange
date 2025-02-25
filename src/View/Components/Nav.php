@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\View\Components;
 
+use Override;
 use Igniter\Pages\Classes\MenuManager;
 use Igniter\Pages\Models\Menu;
 use Illuminate\View\Component;
@@ -17,6 +20,7 @@ final class Nav extends Component
         $this->activePage = controller()->getPage()->getId();
     }
 
+    #[Override]
     public function render()
     {
         return view('igniter-orange::includes.navs.'.$this->code, [
@@ -24,7 +28,7 @@ final class Nav extends Component
         ]);
     }
 
-    protected function menuItems()
+    protected function menuItems(): array
     {
         $themeCode = controller()->getTheme()->getName();
 

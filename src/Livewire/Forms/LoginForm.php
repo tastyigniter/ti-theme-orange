@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire\Forms;
 
 use Livewire\Attributes\Validate;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire\Forms;
 
 use Igniter\User\Facades\Auth;
@@ -18,7 +20,7 @@ final class BookingForm extends Form
 
     public ?string $comment = null;
 
-    public function validationAttributes()
+    public function validationAttributes(): array
     {
         return [
             'firstName' => lang('igniter.reservation::default.label_first_name'),
@@ -29,7 +31,7 @@ final class BookingForm extends Form
         ];
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             'firstName' => 'required|between:1,48',

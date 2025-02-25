@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
+use Igniter\Pages\Models\Page;
+
 return [
     // Set form fields for the admin theme customisation.
     'form' => [
@@ -304,7 +308,7 @@ return [
                 'gdpr_more_info_link' => [
                     'label' => 'More information link',
                     'type' => 'select',
-                    'options' => [\Igniter\Pages\Models\Page::class, 'getDropdownOptions'],
+                    'options' => Page::getDropdownOptions(...),
                     'rules' => 'nullable|string',
                 ],
                 'gdpr_background_color' => [

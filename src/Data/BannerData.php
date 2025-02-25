@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Data;
 
 use Igniter\Frontend\Models\Banner;
@@ -32,32 +34,30 @@ class BannerData
         $this->markup = $model->custom_code;
     }
 
-    public function isCustom()
+    public function isCustom(): bool
     {
         return $this->model->type == 'custom';
     }
 
-    public function isCarousel()
+    public function isCarousel(): bool
     {
         return $this->isImage() && count($this->model->image_code ?: []) > 1;
     }
 
-    public function isImage()
+    public function isImage(): bool
     {
         return $this->model->type == 'image';
     }
 
-    public function imageUrls()
+    public function imageUrls(): array
     {
         if (!$this->model->image_code) {
             return [];
         }
 
-        return array_map(function($path) {
-            return ImageHelper::resize($path, [
-                'width' => $this->imageWidth,
-                'height' => $this->imageHeight,
-            ]);
-        }, array_filter((array)$this->model->image_code));
+        return array_map(fn($path): string => ImageHelper::resize($path, [
+            'width' => $this->imageWidth,
+            'height' => $this->imageHeight,
+        ]), array_filter((array)$this->model->image_code));
     }
 }

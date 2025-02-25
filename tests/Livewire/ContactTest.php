@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\Livewire;
 
 use Igniter\Main\Traits\ConfigurableComponent;
@@ -8,7 +10,7 @@ use Igniter\System\Mail\AnonymousTemplateMailable;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Livewire;
 
-it('initialize component correctly', function() {
+it('initialize component correctly', function(): void {
     $component = new Contact;
 
     expect(class_uses_recursive($component))
@@ -25,7 +27,7 @@ it('initialize component correctly', function() {
         ]);
 });
 
-it('returns correct component meta', function() {
+it('returns correct component meta', function(): void {
     $meta = Contact::componentMeta();
 
     expect($meta['code'])->toBe('igniter-orange::contact')
@@ -33,7 +35,7 @@ it('returns correct component meta', function() {
         ->and($meta['description'])->toBe('igniter.orange::default.component_contact_desc');
 });
 
-it('mounts and prepare props', function() {
+it('mounts and prepare props', function(): void {
     Livewire::test(Contact::class)
         ->assertSet('subject', null)
         ->assertSet('email', null)
@@ -43,7 +45,7 @@ it('mounts and prepare props', function() {
         ->assertSet('message', null);
 });
 
-it('submits contact form', function() {
+it('submits contact form', function(): void {
     Mail::fake();
 
     Livewire::test(Contact::class)
@@ -55,12 +57,10 @@ it('submits contact form', function() {
         ->call('onSubmit')
         ->assertSet('message', lang('igniter.orange::default.contact.alert_contact_sent'));
 
-    Mail::assertQueued(AnonymousTemplateMailable::class, function($mail) {
-        return $mail->getTemplateCode() === 'igniter.frontend::mail.contact';
-    });
+    Mail::assertQueued(AnonymousTemplateMailable::class, fn($mail): bool => $mail->getTemplateCode() === 'igniter.frontend::mail.contact');
 });
 
-it('fails to submit contact form with invalid fields', function() {
+it('fails to submit contact form with invalid fields', function(): void {
     Livewire::test(Contact::class)
         ->set('subject', 'General Enquiry')
         ->set('email', '')

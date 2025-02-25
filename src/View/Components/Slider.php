@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\View\Components;
 
+use Override;
 use Igniter\Frontend\Models\Slider as SliderModel;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Illuminate\Support\Collection;
@@ -84,6 +87,7 @@ final class Slider extends Component
         return SliderModel::lists('name', 'code')->all();
     }
 
+    #[Override]
     public function render()
     {
         return view('igniter-orange::components.slider', [
@@ -91,7 +95,7 @@ final class Slider extends Component
         ]);
     }
 
-    protected function slides()
+    protected function slides(): Collection|array
     {
         if ($this->code && $slider = SliderModel::whereCode($this->code)->first()) {
             /** @var SliderModel $slider */

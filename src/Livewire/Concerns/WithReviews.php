@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire\Concerns;
 
 use Igniter\Local\Facades\Location;
@@ -15,7 +17,7 @@ trait WithReviews
 
     public string $sortOrder = 'created_at desc';
 
-    public function mountListReviews()
+    public function mountListReviews(): void
     {
         Assets::addCss('igniter.local::/css/starrating.css', 'starrating-css');
         Assets::addJs('igniter.local::/js/starrating.js', 'starrating-js');
@@ -40,8 +42,6 @@ trait WithReviews
 
     public static function getSortOrderOptionsWithReviews(): array
     {
-        return collect((new ReviewModel)->queryModifierGetSorts())->mapWithKeys(function($value, $key) {
-            return [$value => $value];
-        })->all();
+        return collect((new ReviewModel)->queryModifierGetSorts())->mapWithKeys(fn($value, $key) => [$value => $value])->all();
     }
 }

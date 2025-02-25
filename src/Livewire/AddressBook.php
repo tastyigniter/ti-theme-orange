@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire;
 
 use Igniter\Admin\Classes\FormField;
@@ -57,9 +59,7 @@ final class AddressBook extends Component
     public static function getPropertyOptions(Form $form, FormField $field): array|Collection
     {
         return match ($field->getConfig('property')) {
-            'sortOrder' => collect((new Address)->queryModifierGetSorts())->mapWithKeys(function($value, $key) {
-                return [$value => $value];
-            })->all(),
+            'sortOrder' => collect((new Address)->queryModifierGetSorts())->mapWithKeys(fn($value, $key) => [$value => $value])->all(),
             default => [],
         };
     }
@@ -76,13 +76,13 @@ final class AddressBook extends Component
         ]);
     }
 
-    public function mount()
+    public function mount(): void
     {
         $this->defaultAddressId = Auth::customer()?->address_id;
         $this->form->country_id = Country::getDefaultKey();
     }
 
-    public function updated($property, $value)
+    public function updated($property, $value): void
     {
         if ($property === 'addressId') {
             $this->showModal = !empty($value);
@@ -91,7 +91,7 @@ final class AddressBook extends Component
         }
     }
 
-    public function onSave()
+    public function onSave(): void
     {
         throw_unless($customer = Auth::customer(),
             new ApplicationException('You must be logged in to manage your address book'),
@@ -118,7 +118,7 @@ final class AddressBook extends Component
         $this->showModal = false;
     }
 
-    public function onSetDefault(string $addressId)
+    public function onSetDefault(string $addressId): void
     {
         throw_unless($customer = Auth::customer(),
             new ApplicationException('You must be logged in to manage your address book'),
@@ -126,10 +126,10 @@ final class AddressBook extends Component
 
         $customer->saveDefaultAddress($addressId);
 
-        $this->defaultAddressId = $addressId;
+        $this->defaultAddressId = (int)$addressId;
     }
 
-    public function onDelete(string $addressId)
+    public function onDelete(string $addressId): void
     {
         throw_unless($customer = Auth::customer(),
             new ApplicationException('You must be logged in to manage your address book'),

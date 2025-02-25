@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire;
 
 use Igniter\Main\Traits\ConfigurableComponent;
@@ -20,7 +22,7 @@ final class ReservationPreview extends Component
     public bool $showCancelButton = false;
 
     /**
-     * @var \Igniter\Reservation\Classes\BookingManager
+     * @var BookingManager
      */
     protected $manager;
 
@@ -53,18 +55,18 @@ final class ReservationPreview extends Component
         ]);
     }
 
-    public function boot()
+    public function boot(): void
     {
         $this->manager = resolve(BookingManager::class);
     }
 
-    public function mount(?string $hash = null)
+    public function mount(?string $hash = null): void
     {
         $this->hash = $hash ?? request()->route()->parameter($this->hashParamName);
         $this->showCancelButton = $this->showCancelButton();
     }
 
-    public function onCancel()
+    public function onCancel(): void
     {
         throw_unless($reservation = $this->getReservation(), ValidationException::withMessages([
             'onCancel' => lang('igniter.reservation::default.alert_cancel_failed'),
@@ -81,14 +83,14 @@ final class ReservationPreview extends Component
         flash()->success(lang('igniter.reservation::default.alert_cancel_success'));
     }
 
-    protected function showCancelButton()
+    protected function showCancelButton(): bool
     {
         return $this->getReservation() && !$this->getReservation()->isCanceled() && $this->getReservation()->isCancelable();
     }
 
     protected function getReservation()
     {
-        return tap($this->reservation ??= $this->manager->getReservationByHash($this->hash, Auth::customer()), function($reservation) {
+        return tap($this->reservation ??= $this->manager->getReservationByHash($this->hash, Auth::customer()), function($reservation): void {
             if ($reservation) {
                 $this->manager->useLocation($reservation->location);
             }

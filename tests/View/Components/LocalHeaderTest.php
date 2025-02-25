@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\View\Components;
 
 use Igniter\Local\Facades\Location;
@@ -13,7 +15,7 @@ use Igniter\Orange\Livewire\Concerns\WithReviews;
 use Igniter\Orange\View\Components\LocalHeader;
 use Igniter\System\Facades\Assets;
 
-it('initializes local header component correctly', function() {
+it('initializes local header component correctly', function(): void {
     $component = new LocalHeader(true, 320, 160, 10, 'created_at desc', 'local.reviews');
 
     expect(class_uses_recursive($component))
@@ -26,7 +28,7 @@ it('initializes local header component correctly', function() {
         ->and($component->reviewsPage)->toBe('local.reviews');
 });
 
-it('adds js on mount', function() {
+it('adds js on mount', function(): void {
     Assets::shouldReceive('addCss')->with('igniter.local::/css/starrating.css', 'starrating-css')->once();
     Assets::shouldReceive('addJs')->with('igniter.local::/js/starrating.js', 'starrating-js')->once();
 
@@ -34,7 +36,7 @@ it('adds js on mount', function() {
     $component->mountListReviews();
 });
 
-it('returns correct component meta', function() {
+it('returns correct component meta', function(): void {
     $meta = LocalHeader::componentMeta();
 
     expect($meta['code'])->toBe('igniter-orange::local-header')
@@ -42,7 +44,7 @@ it('returns correct component meta', function() {
         ->and($meta['description'])->toBe('igniter.orange::default.component_local_header_desc');
 });
 
-it('defines properties correctly', function() {
+it('defines properties correctly', function(): void {
     $component = new LocalHeader;
     $properties = $component->defineProperties();
 
@@ -63,7 +65,7 @@ it('defines properties correctly', function() {
         ->and($properties['reviewsPage']['validationRule'])->toBe('required|regex:/^[a-z0-9\-_\.]+$/i');
 });
 
-it('should render returns true when location is set', function() {
+it('should render returns true when location is set', function(): void {
     $location = LocationModel::factory()->create();
     Location::shouldReceive('current')->andReturn($location);
 
@@ -73,7 +75,7 @@ it('should render returns true when location is set', function() {
     expect($shouldRender)->toBeTrue();
 });
 
-it('should render returns false when location is not set', function() {
+it('should render returns false when location is not set', function(): void {
     Location::shouldReceive('current')->andReturn(null);
 
     $component = new LocalHeader;
@@ -82,7 +84,7 @@ it('should render returns false when location is not set', function() {
     expect($shouldRender)->toBeFalse();
 });
 
-it('renders view with location and review data', function() {
+it('renders view with location and review data', function(): void {
     $location = LocationModel::factory()->create();
     Location::shouldReceive('current')->andReturn($location);
     ReviewSettings::set('allow_reviews', true);
@@ -93,7 +95,7 @@ it('renders view with location and review data', function() {
         ->and($view->getData()['allowReviews'])->toBeTrue();
 });
 
-it('lists reviews correctly', function() {
+it('lists reviews correctly', function(): void {
     $location = LocationModel::factory()->create();
     Location::shouldReceive('current')->andReturn($location);
     Review::factory()->for($location)->count(5)->create(['review_status' => 1]);
@@ -103,7 +105,7 @@ it('lists reviews correctly', function() {
     expect($reviews->count())->toBe(5);
 });
 
-it('lists empty reviews when no current location', function() {
+it('lists empty reviews when no current location', function(): void {
     Location::shouldReceive('current')->andReturn(null);
 
     expect((new LocalHeader)->listReviews())->toBeNull();

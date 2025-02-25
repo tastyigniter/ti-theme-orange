@@ -1,17 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire;
 
 use Igniter\Flame\Exception\ApplicationException;
 use Igniter\Main\Traits\ConfigurableComponent;
+use Igniter\Main\Traits\UsesPage;
 use Igniter\Orange\Livewire\Forms\RegisterForm;
 use Igniter\User\Actions\RegisterCustomer;
 use Livewire\Attributes\Url;
+use Livewire\Component;
 
-final class Register extends \Livewire\Component
+final class Register extends Component
 {
     use ConfigurableComponent;
-    use \Igniter\Main\Traits\UsesPage;
+    use UsesPage;
 
     public RegisterForm $form;
 
@@ -45,26 +49,26 @@ final class Register extends \Livewire\Component
             'agreeTermsSlug' => [
                 'label' => 'Page to redirect to after registration.',
                 'type' => 'select',
-                'options' => [static::class, 'getStaticPageOptions'],
+                'options' => self::getStaticPageOptions(...),
                 'comment' => 'If set, require customers to agree to terms before registering',
                 'validationRule' => 'sometimes|alpha_dash',
             ],
             'redirectPage' => [
                 'label' => 'Static page for the registration terms and conditions.',
                 'type' => 'select',
-                'options' => [static::class, 'getThemePageOptions'],
+                'options' => self::getThemePageOptions(...),
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
             'activationPage' => [
                 'label' => 'Page to redirect to when the user clicks the activation link.',
                 'type' => 'select',
-                'options' => [static::class, 'getThemePageOptions'],
+                'options' => self::getThemePageOptions(...),
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
             'loginPage' => [
                 'label' => 'Page to redirect to when the user clicks the login button.',
                 'type' => 'select',
-                'options' => [static::class, 'getThemePageOptions'],
+                'options' => self::getThemePageOptions(...),
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
         ];
@@ -75,12 +79,12 @@ final class Register extends \Livewire\Component
         return view('igniter-orange::livewire.register');
     }
 
-    public function mount()
+    public function mount(): void
     {
         $this->registrationAllowed = (bool)setting('allow_registration', true);
-        $this->requireRegistrationTerms = !empty($this->agreeTermsSlug);
+        $this->requireRegistrationTerms = $this->agreeTermsSlug !== null && strlen($this->agreeTermsSlug) > 0;
 
-        if ($this->activationCode) {
+        if (strlen($this->activationCode) > 0) {
             $this->onActivate();
         }
     }

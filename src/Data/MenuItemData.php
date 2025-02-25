@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Data;
 
 use Igniter\Cart\Models\Menu;
@@ -58,7 +60,7 @@ class MenuItemData
         return $this->mealtimeIsAvailable = $this->model->isAvailable(Location::orderDateTime());
     }
 
-    public function hasOptions()
+    public function hasOptions(): int
     {
         return $this->model->hasOptions();
     }
@@ -68,7 +70,7 @@ class MenuItemData
         return $this->model->menu_options->sortBy('priority');
     }
 
-    public function hasThumb()
+    public function hasThumb(): bool
     {
         return $this->model->hasMedia('thumb');
     }
@@ -88,7 +90,7 @@ class MenuItemData
         return $this->model->special?->daysRemaining();
     }
 
-    public function mealtimeTitles()
+    public function mealtimeTitles(): string
     {
         $titles = [];
         foreach ($this->model->mealtimes ?? [] as $mealtime) {
@@ -103,7 +105,7 @@ class MenuItemData
         return implode("\r\n", $titles);
     }
 
-    public function getUrl(?string $pageId = null)
+    public function getUrl(?string $pageId = null): string
     {
         $current = Location::current();
         $slug = $this->model->locations->first()?->permalink_slug;

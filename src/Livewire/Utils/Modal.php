@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire\Utils;
 
 use Igniter\System\Facades\Assets;
@@ -15,13 +17,13 @@ final class Modal extends Component
 
     public ?string $activeModal = null;
 
-    public function mount()
+    public function mount(): void
     {
         Assets::addJs('igniter-orange::/js/modal.js', 'modal-js');
     }
 
     #[On('showModal')]
-    public function showModal($component, $arguments = []): void
+    public function showModal(?string $component, array $arguments = []): void
     {
         $this->component = $component;
         $this->arguments = $arguments;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire;
 
 use Igniter\Main\Traits\ConfigurableComponent;
@@ -44,13 +46,13 @@ final class ResetPassword extends Component
             'resetPage' => [
                 'label' => 'Page to generate the reset password link. The selected page _permalink_ should contain the `code` parameter.',
                 'type' => 'select',
-                'options' => [static::class, 'getThemePageOptions'],
+                'options' => self::getThemePageOptions(...),
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
             'loginPage' => [
                 'label' => 'Page to redirect to after the password has been reset also used to generate the login link.',
                 'type' => 'select',
-                'options' => [static::class, 'getThemePageOptions'],
+                'options' => self::getThemePageOptions(...),
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
         ];
@@ -61,12 +63,12 @@ final class ResetPassword extends Component
         return view('igniter-orange::livewire.reset-password');
     }
 
-    public function mount()
+    public function mount(): void
     {
         $this->resetCode = request()->route()->parameter('code');
     }
 
-    public function onForgotPassword()
+    public function onForgotPassword(): void
     {
         $this->validate([
             'email' => 'required|email:filter|max:96',

@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\View\Components;
 
+use Override;
 use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\ReviewSettings;
 use Igniter\Main\Traits\ConfigurableComponent;
@@ -61,23 +64,25 @@ final class LocalHeader extends Component
             'reviewSortOrder' => [
                 'label' => 'Default sort order of reviews.',
                 'type' => 'select',
-                'options' => [static::class, 'getSortOrderOptionsWithReviews'],
+                'options' => self::getSortOrderOptionsWithReviews(...),
                 'validationRule' => 'required|string',
             ],
             'reviewsPage' => [
                 'label' => 'Page to redirect to when the "see more reviews" link is clicked.',
                 'type' => 'select',
-                'options' => [static::class, 'getThemePageOptions'],
+                'options' => self::getThemePageOptions(...),
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
         ];
     }
 
+    #[Override]
     public function shouldRender()
     {
         return !is_null(resolve('location')->current());
     }
 
+    #[Override]
     public function render()
     {
         Assets::addCss('igniter.local::/css/starrating.css', 'starrating-css');

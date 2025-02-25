@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire\Features;
 
+use stdClass;
 use Igniter\Flame\Flash\Message;
 use Illuminate\Validation\ValidationException;
 use Livewire\ComponentHook;
@@ -9,7 +12,7 @@ use Livewire\Mechanisms\HandleRequests\HandleRequests;
 
 final class SupportFlashMessages extends ComponentHook
 {
-    public function exception($e, $stopPropagation)
+    public function exception($e, $stopPropagation): void
     {
         if (!config('app.debug') && !$e instanceof ValidationException) {
             flash()->error($e->getMessage())->important();
@@ -17,7 +20,7 @@ final class SupportFlashMessages extends ComponentHook
         }
     }
 
-    public function dehydrate($context)
+    public function dehydrate($context): void
     {
         if (!app(HandleRequests::class)->isLivewireRequest()) {
             return;
@@ -26,9 +29,7 @@ final class SupportFlashMessages extends ComponentHook
         $messages = app('flash')->all();
 
         if ($messages->isNotEmpty()) {
-            $this->component->dispatch('flashMessageAdded', $messages->map(function(Message $message) {
-                return (object)$message->toArray();
-            })->all());
+            $this->component->dispatch('flashMessageAdded', $messages->map(fn(Message $message): stdClass => (object)$message->toArray())->all());
         }
     }
 }

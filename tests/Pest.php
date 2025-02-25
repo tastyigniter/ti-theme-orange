@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
+use Igniter\Orange\Tests\TestCase;
+
 use Igniter\User\Models\User;
 
-uses(Igniter\Orange\Tests\TestCase::class)->in(__DIR__);
+uses(TestCase::class)->in(__DIR__);
 
 function actingAsSuperUser()
 {

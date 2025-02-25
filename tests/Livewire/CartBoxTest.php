@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\Livewire;
 
 use Igniter\Cart\Classes\AbstractOrderType;
@@ -16,7 +18,7 @@ use Igniter\Orange\Livewire\CartBox;
 use Illuminate\Support\Facades\Event;
 use Livewire\Livewire;
 
-beforeEach(function() {
+beforeEach(function(): void {
     $this->location = LocationModel::factory()->create();
     $this->orderTypeMock = $this->mock(AbstractOrderType::class);
     $this->orderTypeMock->shouldReceive('getSchedule')->andReturn($this->location->newWorkingSchedule(LocationModel::DELIVERY, 5));
@@ -29,7 +31,7 @@ beforeEach(function() {
     Location::shouldReceive('minimumOrderTotal')->andReturn(0);
 });
 
-it('initialize component correctly', function() {
+it('initialize component correctly', function(): void {
     $component = new CartBox;
 
     expect(class_uses_recursive($component))
@@ -40,7 +42,7 @@ it('initialize component correctly', function() {
         ->and($component->couponCode)->toBeNull();
 });
 
-it('returns correct component meta', function() {
+it('returns correct component meta', function(): void {
     $meta = CartBox::componentMeta();
 
     expect($meta['code'])->toBe('igniter-orange::cart-box')
@@ -48,14 +50,14 @@ it('returns correct component meta', function() {
         ->and($meta['description'])->toBe('igniter.orange::default.component_cartbox_desc');
 });
 
-it('defines properties correctly', function() {
+it('defines properties correctly', function(): void {
     $component = new CartBox;
     $properties = $component->defineProperties();
 
     expect(array_keys($properties))->toContain('checkoutPage');
 });
 
-it('mounts and prepare props', function() {
+it('mounts and prepare props', function(): void {
     Livewire::test(CartBox::class)
         ->assertSet('checkoutPage', 'checkout.checkout')
         ->assertSet('tipAmount', 0)
@@ -63,19 +65,19 @@ it('mounts and prepare props', function() {
         ->assertSet('couponCode', null);
 });
 
-it('updates tip amount', function() {
+it('updates tip amount', function(): void {
     Livewire::test(CartBox::class)
         ->set('tipAmount', 10)
         ->assertSet('tipAmount', 10);
 });
 
-it('opens cart item modal', function() {
+it('opens cart item modal', function(): void {
     Livewire::test(CartBox::class)
         ->call('onOpenItemModal', rowId: 1, menuId: 2)
         ->assertDispatched('showModal');
 });
 
-it('updates adds item', function() {
+it('updates adds item', function(): void {
     $menuItem = Menu::factory()->create();
     Location::shouldReceive('orderTypeIsDelivery')->andReturnFalse();
     Location::shouldReceive('orderDateTime')->andReturn(now());
@@ -89,7 +91,7 @@ it('updates adds item', function() {
     expect(Cart::content())->toHaveCount(1);
 });
 
-it('updates cart item quantity', function() {
+it('updates cart item quantity', function(): void {
     $menuItem = Menu::factory()->create();
     $cartItem = Cart::add([
         'id' => $menuItem->getKey(),
@@ -106,7 +108,7 @@ it('updates cart item quantity', function() {
     expect(Cart::content()->first()->qty)->toBe(2);
 });
 
-it('applies coupon', function() {
+it('applies coupon', function(): void {
     Event::fake();
 
     Coupon::factory()->create([
@@ -121,21 +123,21 @@ it('applies coupon', function() {
     Event::assertDispatched('igniter.cart.beforeApplyCoupon');
 });
 
-it('applies tip', function() {
+it('applies tip', function(): void {
     Livewire::test(CartBox::class)
         ->call('onApplyTip', 10, true)
         ->assertSet('tipAmount', 10)
         ->assertSet('isCustomTip', true);
 });
 
-it('removes condition', function() {
+it('removes condition', function(): void {
     Livewire::test(CartBox::class)
         ->call('onRemoveCondition', 'tip')
         ->assertSet('tipAmount', 0)
         ->assertSet('isCustomTip', false);
 });
 
-it('proceeds to checkout fails when location is not found', function() {
+it('proceeds to checkout fails when location is not found', function(): void {
     Location::shouldReceive('getById')->andReturnNull();
 
     $this->expectException(ApplicationException::class);
@@ -146,7 +148,7 @@ it('proceeds to checkout fails when location is not found', function() {
         ->assertRedirect(route('checkout.checkout'));
 });
 
-it('proceeds to checkout', function() {
+it('proceeds to checkout', function(): void {
     Location::shouldReceive('getById')->andReturn($this->location);
     Location::shouldReceive('setCurrent')->with($this->location)->once();
     Location::shouldReceive('checkMinimumOrderTotal')->andReturnTrue();
@@ -158,7 +160,7 @@ it('proceeds to checkout', function() {
         ->assertRedirect(page_url('checkout.checkout'));
 });
 
-it('has minimum order', function() {
+it('has minimum order', function(): void {
     Location::shouldReceive('checkMinimumOrderTotal')->andReturnFalse();
 
     Livewire::test(CartBox::class)
@@ -166,7 +168,7 @@ it('has minimum order', function() {
         ->assertReturned(true);
 });
 
-it('button label returns location closed', function() {
+it('button label returns location closed', function(): void {
     Location::shouldReceive('checkOrderTime')->andReturnFalse();
 
     Livewire::test(CartBox::class)
@@ -174,7 +176,7 @@ it('button label returns location closed', function() {
         ->assertReturned(lang('igniter.cart::default.text_is_closed'));
 });
 
-it('button label returns cart is empty', function() {
+it('button label returns cart is empty', function(): void {
     $menuItem = Menu::factory()->create();
     Cart::add([
         'id' => $menuItem->getKey(),
@@ -190,7 +192,7 @@ it('button label returns cart is empty', function() {
         ->assertReturned(lang('igniter.cart::default.button_order').' · '.currency_format(10));
 });
 
-it('returns true when tipping is enabled', function() {
+it('returns true when tipping is enabled', function(): void {
     CartSettings::set('enable_tipping', 1);
 
     Livewire::test(CartBox::class)
@@ -198,7 +200,7 @@ it('returns true when tipping is enabled', function() {
         ->assertReturned(true);
 });
 
-it('returns configured tipping amounts', function() {
+it('returns configured tipping amounts', function(): void {
     CartSettings::set('tip_amounts', [
         ['priority' => 1, 'amount' => 5],
         ['priority' => 10, 'amount' => 10],

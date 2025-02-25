@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\Livewire;
 
 use Igniter\Flame\Geolite\Facades\Geocoder;
@@ -14,7 +16,7 @@ use Igniter\User\Models\Address;
 use Igniter\User\Models\Customer;
 use Livewire\Livewire;
 
-beforeEach(function() {
+beforeEach(function(): void {
     Geocoder::shouldReceive('geocode')->byDefault()->andReturn(collect([
         GeoliteLocation::createFromArray([
             'latitude' => 51.5074,
@@ -23,7 +25,7 @@ beforeEach(function() {
     ]));
 });
 
-it('initialize component correctly', function() {
+it('initialize component correctly', function(): void {
     $component = new LocalSearch;
 
     expect(class_uses_recursive($component))
@@ -36,7 +38,7 @@ it('initialize component correctly', function() {
         ->and($component->savedAddressId)->toBeNull();
 });
 
-it('returns correct component meta', function() {
+it('returns correct component meta', function(): void {
     $meta = LocalSearch::componentMeta();
 
     expect($meta['code'])->toBe('igniter-orange::local-search')
@@ -44,14 +46,14 @@ it('returns correct component meta', function() {
         ->and($meta['description'])->toBe('igniter.orange::default.component_local_search_desc');
 });
 
-it('defines properties correctly', function() {
+it('defines properties correctly', function(): void {
     $component = new LocalSearch;
     $properties = $component->defineProperties();
 
     expect(array_keys($properties))->toContain('hideSearch', 'menusPage');
 });
 
-it('onSearchNearby errors when geocode returns empty result', function() {
+it('onSearchNearby errors when geocode returns empty result', function(): void {
     Geocoder::shouldReceive('geocode')->with('invalid address')->andReturn(collect());
     Geocoder::shouldReceive('getLogs')->andReturn([]);
 
@@ -61,14 +63,14 @@ it('onSearchNearby errors when geocode returns empty result', function() {
         ->assertHasErrors(['searchQuery' => [lang('igniter.local::default.alert_invalid_search_query')]]);
 });
 
-it('onSearchNearby errors when on invalid search point', function() {
+it('onSearchNearby errors when on invalid search point', function(): void {
     Livewire::test(LocalSearch::class)
         ->set('searchPoint', ['', ''])
         ->call('onSearchNearby')
         ->assertHasErrors(['searchQuery' => [lang('igniter.local::default.alert_no_search_query')]]);
 });
 
-it('onSearchNearby errors when geocode returns invalid coordinates', function() {
+it('onSearchNearby errors when geocode returns invalid coordinates', function(): void {
     Geocoder::shouldReceive('geocode')->with('123 Main St')->andReturn(collect([
         GeoliteLocation::createFromArray([]),
     ]));
@@ -79,7 +81,7 @@ it('onSearchNearby errors when geocode returns invalid coordinates', function() 
         ->assertHasErrors(['searchQuery' => [lang('igniter.local::default.alert_invalid_search_query')]]);
 });
 
-it('onSearchNearby errors when on reverse geocode returns empty results', function() {
+it('onSearchNearby errors when on reverse geocode returns empty results', function(): void {
     Geocoder::shouldReceive('reverse')->with(500, 500)->andReturn(collect());
     Geocoder::shouldReceive('getLogs')->andReturn([]);
 
@@ -89,7 +91,7 @@ it('onSearchNearby errors when on reverse geocode returns empty results', functi
         ->assertHasErrors(['searchQuery' => [lang('igniter.local::default.alert_invalid_search_query')]]);
 });
 
-it('onSearchNearby errors when on reverse geocode returns invalid coordinates', function() {
+it('onSearchNearby errors when on reverse geocode returns invalid coordinates', function(): void {
     Geocoder::shouldReceive('reverse')->with(500, 500)->andReturn(collect([
         GeoliteLocation::createFromArray([]),
     ]));
@@ -100,7 +102,7 @@ it('onSearchNearby errors when on reverse geocode returns invalid coordinates', 
         ->assertHasErrors(['searchQuery' => [lang('igniter.local::default.alert_invalid_search_query')]]);
 });
 
-it('onSearchNearby errors when no nearby location area is found', function() {
+it('onSearchNearby errors when no nearby location area is found', function(): void {
     $location = LocationModel::factory()->create();
     Location::setModel($location);
     Geocoder::shouldReceive('geocode')->with('123 Main St')->andReturn(collect([
@@ -116,7 +118,7 @@ it('onSearchNearby errors when no nearby location area is found', function() {
         ->assertHasErrors(['searchQuery' => [lang('igniter.local::default.alert_no_found_restaurant')]]);
 });
 
-it('onSearchNearby searches nearby location', function() {
+it('onSearchNearby searches nearby location', function(): void {
     $location = LocationModel::factory()->create();
     Location::setModel($location);
     $area = LocationArea::factory()->create([
@@ -138,7 +140,7 @@ it('onSearchNearby searches nearby location', function() {
         ->assertRedirect(restaurant_url('local.menus'));
 });
 
-it('onSelectAddress errors when missing saved address', function() {
+it('onSelectAddress errors when missing saved address', function(): void {
     $customer = Customer::factory()->create();
 
     Livewire::actingAs($customer, 'igniter-customer')
@@ -147,7 +149,7 @@ it('onSelectAddress errors when missing saved address', function() {
         ->assertHasErrors(['savedAddress' => [lang('igniter.orange::default.alert_saved_address_not_found')]]);
 });
 
-it('onSelectAddress checks saved address is within covered area', function() {
+it('onSelectAddress checks saved address is within covered area', function(): void {
     $customer = Customer::factory()->create();
     $address = Address::factory()->create([
         'customer_id' => $customer->getKey(),
@@ -173,13 +175,13 @@ it('onSelectAddress checks saved address is within covered area', function() {
         ->assertRedirect(restaurant_url('local.menus'));
 });
 
-it('onUserPositionUpdated errors when no search query or point', function() {
+it('onUserPositionUpdated errors when no search query or point', function(): void {
     Livewire::test(LocalSearch::class)
         ->call('onUserPositionUpdated', ['', ''])
         ->assertHasErrors(['searchQuery' => [lang('igniter.local::default.alert_no_search_query')]]);
 });
 
-it('onUserPositionUpdated updates user position in session correctly', function() {
+it('onUserPositionUpdated updates user position in session correctly', function(): void {
     Geocoder::shouldReceive('reverse')->with(51.50987615, -0.1446716)->andReturn(collect([
         GeoliteLocation::createFromArray([
             'streetNumber' => '123',
@@ -194,14 +196,14 @@ it('onUserPositionUpdated updates user position in session correctly', function(
         ->assertSet('searchQuery', '123 Main St  ');
 });
 
-it('onUpdateSearchQuery errors when no search query or point', function() {
+it('onUpdateSearchQuery errors when no search query or point', function(): void {
     Livewire::test(LocalSearch::class)
         ->set('searchQuery', '')
         ->call('onUpdateSearchQuery')
         ->assertHasErrors(['searchQuery' => [lang('igniter.local::default.alert_no_search_query')]]);
 });
 
-it('onUpdateSearchQuery updates user position in session correctly', function() {
+it('onUpdateSearchQuery updates user position in session correctly', function(): void {
     $location = LocationModel::factory()->create();
     Location::setModel($location);
     Geocoder::shouldReceive('geocode')->with('123 Main St')->andReturn(collect([

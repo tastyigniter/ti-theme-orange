@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\Livewire;
 
 use Igniter\Main\Traits\ConfigurableComponent;
@@ -11,7 +13,7 @@ use Igniter\User\Models\CustomerGroup;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Livewire;
 
-it('initialize component correctly', function() {
+it('initialize component correctly', function(): void {
     $component = new Register;
 
     expect(class_uses_recursive($component))
@@ -25,7 +27,7 @@ it('initialize component correctly', function() {
         ->and($component->loginPage)->toBe('account.login');
 });
 
-it('returns correct component meta', function() {
+it('returns correct component meta', function(): void {
     $meta = Register::componentMeta();
 
     expect($meta['code'])->toBe('igniter-orange::register')
@@ -33,7 +35,7 @@ it('returns correct component meta', function() {
         ->and($meta['description'])->toBe('igniter.orange::default.component_register_desc');
 });
 
-it('defines properties correctly', function() {
+it('defines properties correctly', function(): void {
     $component = new Register;
     $properties = $component->defineProperties();
 
@@ -45,7 +47,7 @@ it('defines properties correctly', function() {
     );
 });
 
-it('mounts and prepare props', function() {
+it('mounts and prepare props', function(): void {
     setting()->set('allow_registration', false);
 
     Livewire::test(Register::class)
@@ -53,7 +55,7 @@ it('mounts and prepare props', function() {
         ->assertSet('registrationAllowed', false);
 });
 
-it('activates previously registered account on mount', function() {
+it('activates previously registered account on mount', function(): void {
     Mail::fake();
 
     $customer = Customer::factory()->create([
@@ -64,15 +66,13 @@ it('activates previously registered account on mount', function() {
 
     Livewire::test(Register::class, ['activationCode' => $customer->getActivationCode()]);
 
-    Mail::assertQueued(AnonymousTemplateMailable::class, function($mail) {
-        return in_array($mail->getTemplateCode(), [
-            'igniter.user::mail.registration',
-            'igniter.user::mail.registration_alert',
-        ]);
-    });
+    Mail::assertQueued(AnonymousTemplateMailable::class, fn($mail): bool => in_array($mail->getTemplateCode(), [
+        'igniter.user::mail.registration',
+        'igniter.user::mail.registration_alert',
+    ]));
 });
 
-it('registers customer', function() {
+it('registers customer', function(): void {
     Mail::fake();
 
     Livewire::test(Register::class)
@@ -86,12 +86,10 @@ it('registers customer', function() {
         ->call('onRegister')
         ->assertRedirect();
 
-    Mail::assertQueued(AnonymousTemplateMailable::class, function($mail) {
-        return $mail->getTemplateCode() === 'igniter.user::mail.registration';
-    });
+    Mail::assertQueued(AnonymousTemplateMailable::class, fn($mail): bool => $mail->getTemplateCode() === 'igniter.user::mail.registration');
 });
 
-it('registers customer and sends email verification', function() {
+it('registers customer and sends email verification', function(): void {
     Mail::fake();
 
     $customerGroup = CustomerGroup::factory()->create(['approval' => 1]);
@@ -109,7 +107,5 @@ it('registers customer and sends email verification', function() {
         ->call('onRegister')
         ->assertRedirect();
 
-    Mail::assertQueued(AnonymousTemplateMailable::class, function($mail) {
-        return $mail->getTemplateCode() === 'igniter.user::mail.activation';
-    });
+    Mail::assertQueued(AnonymousTemplateMailable::class, fn($mail): bool => $mail->getTemplateCode() === 'igniter.user::mail.activation');
 });

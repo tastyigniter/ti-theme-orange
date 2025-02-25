@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\Livewire;
 
 use Igniter\Main\Traits\ConfigurableComponent;
@@ -8,7 +10,7 @@ use Igniter\Orange\Livewire\Login;
 use Igniter\User\Models\Customer;
 use Livewire\Livewire;
 
-it('initialize component correctly', function() {
+it('initialize component correctly', function(): void {
     $component = new Login;
 
     expect(class_uses_recursive($component))
@@ -17,7 +19,7 @@ it('initialize component correctly', function() {
         ->and($component->redirectPage)->toBe('account.account');
 });
 
-it('returns correct component meta', function() {
+it('returns correct component meta', function(): void {
     $meta = Login::componentMeta();
 
     expect($meta['code'])->toBe('igniter-orange::login')
@@ -25,20 +27,20 @@ it('returns correct component meta', function() {
         ->and($meta['description'])->toBe('igniter.orange::default.component_login_desc');
 });
 
-it('defines properties correctly', function() {
+it('defines properties correctly', function(): void {
     $component = new Login;
     $properties = $component->defineProperties();
 
     expect(array_keys($properties))->toContain('redirectPage');
 });
 
-it('mounts and prepare props', function() {
+it('mounts and prepare props', function(): void {
     Livewire::test(Login::class)
         ->assertSet('registrationAllowed', true)
         ->assertSet('redirectPage', 'account.account');
 });
 
-it('does not set an intended redirect url when one is already set', function() {
+it('does not set an intended redirect url when one is already set', function(): void {
     redirect()->setIntendedUrl(page_url('account/orders'));
 
     Livewire::test(Login::class);
@@ -46,14 +48,14 @@ it('does not set an intended redirect url when one is already set', function() {
     expect(redirect()->getIntendedUrl())->toBe(page_url('account/orders'));
 });
 
-it('does not set an intended redirect url when previous url is external', function() {
+it('does not set an intended redirect url when previous url is external', function(): void {
     Livewire::withHeaders(['referer' => 'https://google.com'])
         ->test(Login::class);
 
     expect(redirect()->getIntendedUrl())->toBeNull();
 });
 
-it('returns current authenticated customer', function() {
+it('returns current authenticated customer', function(): void {
     $customer = Customer::factory()->create();
 
     Livewire::test(Login::class)
@@ -63,12 +65,10 @@ it('returns current authenticated customer', function() {
     Livewire::actingAs($customer, 'igniter-customer')
         ->test(Login::class)
         ->call('customer')
-        ->assertReturned(function($value) use ($customer) {
-            return $value['customer_id'] === $customer->getKey();
-        });
+        ->assertReturned(fn($value): bool => $value['customer_id'] === $customer->getKey());
 });
 
-it('logs in user', function() {
+it('logs in user', function(): void {
     $customer = Customer::factory()->create();
 
     Livewire::test(Login::class)
@@ -79,7 +79,7 @@ it('logs in user', function() {
         ->assertRedirect();
 });
 
-it('logs in user and redirects to custom url', function() {
+it('logs in user and redirects to custom url', function(): void {
     $customer = Customer::factory()->create();
 
     Livewire::withQueryParams(['redirect' => 'account/orders'])
@@ -91,7 +91,7 @@ it('logs in user and redirects to custom url', function() {
         ->assertRedirect(page_url('account/orders'));
 });
 
-it('fails to log in user with invalid credentials', function() {
+it('fails to log in user with invalid credentials', function(): void {
     Livewire::test(Login::class)
         ->set('form.email', 'test@email.com')
         ->set('form.password', 'password')
@@ -99,7 +99,7 @@ it('fails to log in user with invalid credentials', function() {
         ->assertHasErrors(['form.email']);
 });
 
-it('fails to log in user with invalid email', function() {
+it('fails to log in user with invalid email', function(): void {
     Livewire::test(Login::class)
         ->set('form.email', 'testemail.com')
         ->set('form.password', 'password')
@@ -107,7 +107,7 @@ it('fails to log in user with invalid email', function() {
         ->assertHasErrors(['form.email']);
 });
 
-it('fails to log in user with invalid password', function() {
+it('fails to log in user with invalid password', function(): void {
     $customer = Customer::factory()->create();
 
     Livewire::test(Login::class)
@@ -117,7 +117,7 @@ it('fails to log in user with invalid password', function() {
         ->assertHasErrors(['form.password']);
 });
 
-it('fails to log in user with empty email', function() {
+it('fails to log in user with empty email', function(): void {
     Livewire::test(Login::class)
         ->set('form.email', '')
         ->set('form.password', 'password')

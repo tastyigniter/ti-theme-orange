@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\View\Components;
 
 use Igniter\Orange\View\Components\StarRating;
 
-it('initializes star rating component correctly', function() {
+it('initializes star rating component correctly', function(): void {
     $component = new StarRating('rating', 4.5, 5, true);
 
     expect($component->name)->toBe('rating')
@@ -13,7 +15,7 @@ it('initializes star rating component correctly', function() {
         ->and($component->readOnly)->toBeTrue();
 });
 
-it('renders view with hints', function() {
+it('renders view with hints', function(): void {
     $view = (new StarRating)->render();
 
     expect($view->getData()['hints'])->toBe(['Poor', 'Average', 'Good', 'Very Good', 'Excellent']);

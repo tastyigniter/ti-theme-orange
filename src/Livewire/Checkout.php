@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire;
 
 use Exception;
@@ -38,9 +40,9 @@ final class Checkout extends Component
     use EventEmitter;
     use UsesPage;
 
-    public const STEP_DETAILS = 'details';
+    public const string STEP_DETAILS = 'details';
 
-    public const STEP_PAY = 'pay';
+    public const string STEP_PAY = 'pay';
 
     /** Whether to use a two-page checkout */
     public bool $isTwoPageCheckout = false;
@@ -122,26 +124,26 @@ final class Checkout extends Component
             'agreeTermsSlug' => [
                 'label' => 'Static page for the checkout terms and conditions',
                 'type' => 'select',
-                'options' => [static::class, 'getStaticPageOptions'],
+                'options' => self::getStaticPageOptions(...),
                 'comment' => 'If set, require customers to agree to terms before checkout',
                 'validationRule' => 'sometimes|alpha_dash',
             ],
             'menusPage' => [
                 'label' => 'Page to redirect to when checkout is unavailable.',
                 'type' => 'select',
-                'options' => [static::class, 'getThemePageOptions'],
+                'options' => self::getThemePageOptions(...),
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
             'checkoutPage' => [
                 'label' => 'Page to redirect to when checkout fails',
                 'type' => 'select',
-                'options' => [static::class, 'getThemePageOptions'],
+                'options' => self::getThemePageOptions(...),
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
             'successPage' => [
                 'label' => 'Page to redirect to when checkout is successful',
                 'type' => 'select',
-                'options' => [static::class, 'getThemePageOptions'],
+                'options' => self::getThemePageOptions(...),
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
         ];
@@ -178,9 +180,10 @@ final class Checkout extends Component
         }
 
         $this->prepareDeliveryAddress();
+        return null;
     }
 
-    public function boot()
+    public function boot(): void
     {
         $this->orderManager = resolve(OrderManager::class);
         $this->cartManager = resolve(CartManager::class);
@@ -221,6 +224,7 @@ final class Checkout extends Component
         $this->orderManager->saveOrder($order, $data);
 
         $this->dispatch('checkout::validated');
+        return null;
     }
 
     #[On('checkout::confirm')]
@@ -246,12 +250,12 @@ final class Checkout extends Component
         $this->orderManager->saveOrder($order, $data);
 
         if ($this->isTwoPageCheckout && $this->checkoutStep !== self::STEP_PAY) {
-            return $this->redirect(Livewire::originalUrl().'?step='.static::STEP_PAY);
+            return $this->redirect(Livewire::originalUrl().'?step='.self::STEP_PAY);
         }
 
         try {
             if (($redirect = $this->orderManager->processPayment($order, $data)) === false) {
-                return;
+                return null;
             }
 
             if ($redirect instanceof RedirectResponse || $redirect instanceof Redirector) {
@@ -261,13 +265,14 @@ final class Checkout extends Component
             if ($this->isOrderMarkedAsProcessed()) {
                 return $this->redirect($order->getUrl($this->successPage));
             }
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             throw ValidationException::withMessages(['fields.payment' => $ex->getMessage()]);
         }
+        return null;
     }
 
     #[On('checkout::choose-payment')]
-    public function onChoosePayment($code)
+    public function onChoosePayment($code): void
     {
         throw_unless($code, ValidationException::withMessages([
             'fields.payment' => lang('igniter.cart::default.checkout.error_invalid_payment'),
@@ -312,7 +317,7 @@ final class Checkout extends Component
         return $this->order = $this->orderManager->loadOrder();
     }
 
-    protected function checkCheckoutSecurity()
+    protected function checkCheckoutSecurity(): ?bool
     {
         try {
             $this->cartManager->validateContents();
@@ -338,6 +343,7 @@ final class Checkout extends Component
 
             return true;
         }
+        return null;
     }
 
     protected function validateCheckout(Order $order)
@@ -350,14 +356,14 @@ final class Checkout extends Component
             $rules = array_except($rules, ['fields.termsAgreed']);
         }
 
-        $this->withValidator(function($validator) use ($order) {
-            $validator->after(function($validator) use ($order) {
+        $this->withValidator(function($validator) use ($order): void {
+            $validator->after(function($validator) use ($order): void {
                 if ($order->isDeliveryType()) {
-                    rescue(function() {
+                    rescue(function(): void {
                         $this->orderManager->validateDeliveryAddress(array_only($this->fields, [
                             'address_1', 'city', 'state', 'postcode', 'country',
                         ]));
-                    }, function(\Exception $ex) use ($validator) {
+                    }, function(Exception $ex) use ($validator): void {
                         $validator->errors()->add('delivery_address', $ex->getMessage());
                     });
                 }
@@ -382,14 +388,14 @@ final class Checkout extends Component
         return $data;
     }
 
-    protected function isOrderMarkedAsProcessed()
+    protected function isOrderMarkedAsProcessed(): Order|null|false
     {
         $order = $this->getOrder();
 
         return $order->isPaymentProcessed() ? $order : false;
     }
 
-    protected function prepareDeliveryAddress()
+    protected function prepareDeliveryAddress(): void
     {
         if (!$this->getOrder()->isDeliveryType()) {
             return;
@@ -404,9 +410,9 @@ final class Checkout extends Component
         }
     }
 
-    protected function formExtendFieldsBefore(CheckoutForm $checkoutForm)
+    protected function formExtendFieldsBefore(CheckoutForm $checkoutForm): void
     {
-        if ($this->agreeTermsSlug) {
+        if ($this->agreeTermsSlug !== '' && $this->agreeTermsSlug !== '0') {
             $checkoutForm->fields['termsAgreed']['placeholder'] = sprintf(
                 lang('igniter.cart::default.checkout.label_terms'), url($this->agreeTermsSlug),
             );
@@ -427,7 +433,7 @@ final class Checkout extends Component
         }
     }
 
-    protected function formExtendFields(CheckoutForm $checkoutForm, array $fields) {}
+    protected function formExtendFields(CheckoutForm $checkoutForm, array $fields): void {}
 
     protected function initForm(): void
     {
@@ -438,11 +444,11 @@ final class Checkout extends Component
         $config['model'] = $this->getOrder();
         $this->checkoutForm = resolve(CheckoutForm::class, ['config' => $config]);
 
-        $this->checkoutForm->bindEvent('form.extendFieldsBefore', function() {
+        $this->checkoutForm->bindEvent('form.extendFieldsBefore', function(): void {
             $this->formExtendFieldsBefore($this->checkoutForm);
         });
 
-        $this->checkoutForm->bindEvent('form.extendFields', function($fields) {
+        $this->checkoutForm->bindEvent('form.extendFields', function($fields): void {
             $this->formExtendFields($this->checkoutForm, $fields);
         });
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire\Forms;
 
 use Livewire\Form;
@@ -24,7 +26,7 @@ final class RegisterForm extends Form
 
     public bool $status = true;
 
-    public function validationAttributes()
+    public function validationAttributes(): array
     {
         return [
             'first_name' => lang('igniter.user::default.settings.label_first_name'),
@@ -38,7 +40,7 @@ final class RegisterForm extends Form
         ];
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             'first_name' => ['required', 'between:1,48'],

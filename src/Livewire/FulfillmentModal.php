@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire;
 
+use Livewire\Component;
 use DateTime;
 use Igniter\Cart\Classes\AbstractOrderType;
 use Igniter\Local\Models\Location;
@@ -14,7 +17,7 @@ use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Session;
 use Livewire\Livewire;
 
-final class FulfillmentModal extends \Livewire\Component
+final class FulfillmentModal extends Component
 {
     use ConfigurableComponent;
     use SearchesNearby;
@@ -78,7 +81,7 @@ final class FulfillmentModal extends \Livewire\Component
         ]);
     }
 
-    public function mount()
+    public function mount(): void
     {
         Assets::addJs('igniter-orange::/js/fulfillment.js', 'fulfillment-js');
 
@@ -87,17 +90,17 @@ final class FulfillmentModal extends \Livewire\Component
 
         $this->orderType = $this->location->orderType();
         $this->isAsap = $this->location->orderTimeIsAsap();
-        $this->orderDate = $this->location->orderDateTime()?->format('Y-m-d');
-        $this->orderTime = $this->location->orderDateTime()?->format('H:i');
+        $this->orderDate = $this->location->orderDateTime()->format('Y-m-d');
+        $this->orderTime = $this->location->orderDateTime()->format('H:i');
         $this->hideDeliveryAddress = !$this->location->orderTypeIsDelivery();
     }
 
-    public function boot()
+    public function boot(): void
     {
         $this->location = resolve('location');
     }
 
-    public function updating($name, $value)
+    public function updating($name, string $value): void
     {
         throw_unless($this->location->current(), ValidationException::withMessages([
             'orderType' => lang('igniter.local::default.alert_location_required'),
@@ -156,12 +159,12 @@ final class FulfillmentModal extends \Livewire\Component
         return $this->redirect(Livewire::originalUrl(), navigate: true);
     }
 
-    protected function parseTimeslot(Collection $timeslot)
+    protected function parseTimeslot(Collection $timeslot): void
     {
         $this->timeslotDates = [];
         $this->timeslotTimes = [];
 
-        $timeslot->collapse()->each(function(DateTime $slot) {
+        $timeslot->collapse()->each(function(DateTime $slot): void {
             $dateKey = $slot->format('Y-m-d');
             $hourKey = $slot->format('H:i');
             $dateValue = make_carbon($slot)->isoFormat(lang('system::lang.moment.day_format'));
@@ -172,7 +175,7 @@ final class FulfillmentModal extends \Livewire\Component
         });
     }
 
-    protected function updateCurrentOrderType()
+    protected function updateCurrentOrderType(): void
     {
         if (!$this->location->current()) {
             return;
@@ -185,9 +188,7 @@ final class FulfillmentModal extends \Livewire\Component
 
         $orderType = $this->defaultOrderType;
         if (!$this->location->hasOrderType($orderType)) {
-            $orderType = optional($this->location->getOrderTypes()->first(function(AbstractOrderType $orderType) {
-                return !$orderType->isDisabled();
-            }))->getCode();
+            $orderType = optional($this->location->getOrderTypes()->first(fn(AbstractOrderType $orderType): bool => !$orderType->isDisabled()))->getCode();
         }
 
         if ($orderType) {

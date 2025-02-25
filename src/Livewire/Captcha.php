@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire;
 
 use Igniter\Frontend\Models\CaptchaSettings;
@@ -23,7 +25,7 @@ final class Captcha extends Component
         ];
     }
 
-    public function mount()
+    public function mount(): void
     {
         $this->apiKey = CaptchaSettings::getApiSecretKey();
         $this->lang = CaptchaSettings::getLang();

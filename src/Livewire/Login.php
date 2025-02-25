@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire;
 
 use Igniter\Main\Traits\ConfigurableComponent;
@@ -10,8 +12,10 @@ use Igniter\User\Facades\Auth;
 use Igniter\User\Models\Customer;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Url;
+use Livewire\Component;
+use Throwable;
 
-final class Login extends \Livewire\Component
+final class Login extends Component
 {
     use ConfigurableComponent;
     use UsesPage;
@@ -40,7 +44,7 @@ final class Login extends \Livewire\Component
             'redirectPage' => [
                 'label' => 'Page to redirect to after login.',
                 'type' => 'select',
-                'options' => [static::class, 'getThemePageOptions'],
+                'options' => self::getThemePageOptions(...),
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
         ];
@@ -51,7 +55,7 @@ final class Login extends \Livewire\Component
         return view('igniter-orange::livewire.login');
     }
 
-    public function mount()
+    public function mount(): void
     {
         $this->registrationAllowed = (bool)setting('allow_registration', true);
 
@@ -71,25 +75,26 @@ final class Login extends \Livewire\Component
     {
         $this->form->validate();
 
-        rescue(function() {
+        rescue(function(): void {
             resolve(LoginCustomer::class, [
                 'credentials' => $this->form->except('remember'),
                 'remember' => $this->form->remember,
             ])->handle();
-        }, function(\Throwable $e) {
+        }, function(Throwable $e): never {
             throw ValidationException::withMessages(['form.email' => $e->getMessage()]);
         });
 
-        if ($this->redirect) {
+        if (strlen($this->redirect) > 0) {
             return redirect()->to(page_url($this->redirect));
         }
 
-        if ($redirectUrl = page_url($this->redirectPage)) {
+        if (strlen($redirectUrl = page_url($this->redirectPage)) > 0) {
             return redirect()->intended($redirectUrl);
         }
+        return null;
     }
 
-    protected function setRedirectIntendedUrl()
+    protected function setRedirectIntendedUrl(): void
     {
         $previousUrl = url()->previous();
 

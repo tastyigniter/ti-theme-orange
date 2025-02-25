@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests;
 
 use Igniter\Main\Classes\ThemeManager;
@@ -8,7 +10,7 @@ use Igniter\Orange\ServiceProvider;
 use Igniter\User\Models\Customer;
 use Illuminate\Contracts\Foundation\Application;
 
-it('registers support for flash messages', function() {
+it('registers support for flash messages', function(): void {
     $app = mock(Application::class);
     $app->shouldReceive('runningUnitTests')->once()->andReturnFalse();
     $serviceProvider = new ServiceProvider($app);
@@ -16,13 +18,13 @@ it('registers support for flash messages', function() {
     $serviceProvider->register();
 });
 
-it('redirects unauthorised user when page requires authentication', function() {
+it('redirects unauthorised user when page requires authentication', function(): void {
     $this
         ->get(route('igniter.theme.account.account'))
         ->assertRedirect(route('igniter.theme.home'));
 });
 
-it('redirects authorised user when page does not require authentication', function() {
+it('redirects authorised user when page does not require authentication', function(): void {
     $customer = Customer::factory()->create();
 
     $this
@@ -31,7 +33,7 @@ it('redirects authorised user when page does not require authentication', functi
         ->assertRedirect(route('igniter.theme.home'));
 });
 
-it('configures Google Fonts correctly', function() {
+it('configures Google Fonts correctly', function(): void {
     $fontUrl = 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap';
     $themeModel = Theme::factory()->create([
         'name' => 'tests-theme',

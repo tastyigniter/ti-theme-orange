@@ -1,19 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\View\Components;
 
 use Igniter\Local\Facades\Location;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\View\Components\Fulfillment;
 
-it('initializes fulfillment component correctly', function() {
+it('initializes fulfillment component correctly', function(): void {
     $component = new Fulfillment(true);
 
     expect(class_uses_recursive($component))->toContain(ConfigurableComponent::class)
         ->and($component->previewMode)->toBeTrue();
 });
 
-it('returns correct component meta', function() {
+it('returns correct component meta', function(): void {
     $meta = Fulfillment::componentMeta();
 
     expect($meta['code'])->toBe('igniter-orange::fulfillment')
@@ -21,7 +23,7 @@ it('returns correct component meta', function() {
         ->and($meta['description'])->toBe('igniter.orange::default.component_fulfillment_desc');
 });
 
-it('defines properties correctly', function() {
+it('defines properties correctly', function(): void {
     $component = new Fulfillment;
     $properties = $component->defineProperties();
 
@@ -29,7 +31,7 @@ it('defines properties correctly', function() {
         ->and($properties['previewMode']['type'])->toBe('switch');
 });
 
-it('renders view with fulfillment data', function() {
+it('renders view with fulfillment data', function(): void {
     Location::shouldReceive('orderTimeIsAsap')->andReturn(true);
     Location::shouldReceive('getOrderType')->andReturn('delivery');
     Location::shouldReceive('orderDateTime')->andReturn('2023-10-10 12:00:00');

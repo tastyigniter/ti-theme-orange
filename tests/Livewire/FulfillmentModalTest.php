@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\Livewire;
 
 use Igniter\Flame\Geolite\Facades\Geocoder;
@@ -12,14 +14,14 @@ use Igniter\User\Models\Address;
 use Igniter\User\Models\Customer;
 use Livewire\Livewire;
 
-beforeEach(function() {
+beforeEach(function(): void {
     $this->location = LocationModel::factory()->create();
     Location::setModel($this->location);
 
     $this->travelTo(now()->setHour(2));
 });
 
-it('returns correct component meta', function() {
+it('returns correct component meta', function(): void {
     $meta = FulfillmentModal::componentMeta();
 
     expect($meta['code'])->toBe('igniter-orange::fulfillment-modal')
@@ -27,7 +29,7 @@ it('returns correct component meta', function() {
         ->and($meta['description'])->toBe('igniter.orange::default.component_fulfillment_modal_desc');
 });
 
-it('defines properties correctly', function() {
+it('defines properties correctly', function(): void {
     $component = new FulfillmentModal;
     $properties = $component->defineProperties();
 
@@ -38,7 +40,7 @@ it('defines properties correctly', function() {
     );
 });
 
-it('mounts and prepare props', function() {
+it('mounts and prepare props', function(): void {
     Livewire::test(FulfillmentModal::class)
         ->assertNotSet('timeslotDates', [])
         ->assertNotSet('timeslotTimes', [])
@@ -53,7 +55,7 @@ it('mounts and prepare props', function() {
         ->assertSet('newSearchQuery', null);
 });
 
-it('mounts component fails when no current location', function() {
+it('mounts component fails when no current location', function(): void {
     Location::clearInternalCache();
     Location::shouldReceive('scheduleTimeslot')->andReturn(collect());
     Location::shouldReceive('current')->andReturnNull()->once();
@@ -67,7 +69,7 @@ it('mounts component fails when no current location', function() {
     Livewire::test(FulfillmentModal::class);
 });
 
-it('mounts component sets first available order type when default is disabled', function() {
+it('mounts component sets first available order type when default is disabled', function(): void {
     expect(Location::orderType())->toBe(LocationModel::DELIVERY);
 
     $this->location->settings()->create([
@@ -84,14 +86,14 @@ it('mounts component sets first available order type when default is disabled', 
     expect(Location::orderType())->toBe(LocationModel::COLLECTION);
 });
 
-it('updates order type', function() {
+it('updates order type', function(): void {
     Livewire::test(FulfillmentModal::class)
         ->assertSet('orderType', LocationModel::DELIVERY)
         ->set('orderType', LocationModel::COLLECTION)
         ->assertSet('orderType', LocationModel::COLLECTION);
 });
 
-it('confirms order fulfillment options', function() {
+it('confirms order fulfillment options', function(): void {
     Livewire::test(FulfillmentModal::class)
         ->set('orderType', 'delivery')
         ->set('isAsap', true)
@@ -99,7 +101,7 @@ it('confirms order fulfillment options', function() {
         ->assertRedirect();
 });
 
-it('updates search query', function() {
+it('updates search query', function(): void {
     $area = LocationArea::factory()->create([
         'type' => 'polygon',
         'conditions' => ['min_total' => 20],
@@ -120,7 +122,7 @@ it('updates search query', function() {
         ->assertRedirect();
 });
 
-it('throws exception when no delivery area are found', function() {
+it('throws exception when no delivery area are found', function(): void {
     Geocoder::shouldReceive('geocode')->andReturn(collect([
         GeoliteLocation::createFromArray([
             'latitude' => 51.50987615,
@@ -135,7 +137,7 @@ it('throws exception when no delivery area are found', function() {
         ->assertHasErrors(['searchQuery']);
 });
 
-it('onSelectAddress errors when saved address is outside covered area', function() {
+it('onSelectAddress errors when saved address is outside covered area', function(): void {
     $customer = Customer::factory()->create();
     $address = Address::factory()->create([
         'customer_id' => $customer->getKey(),
@@ -155,7 +157,7 @@ it('onSelectAddress errors when saved address is outside covered area', function
         ->assertHasErrors(['savedAddress' => [lang('igniter.local::default.alert_delivery_area_unavailable')]]);
 });
 
-it('onSelectAddress checks saved address is within covered area', function() {
+it('onSelectAddress checks saved address is within covered area', function(): void {
     $customer = Customer::factory()->create();
     $address = Address::factory()->create([
         'customer_id' => $customer->getKey(),

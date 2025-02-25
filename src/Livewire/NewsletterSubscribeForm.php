@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire;
 
 use Exception;
@@ -7,8 +9,9 @@ use Igniter\Frontend\Models\Subscriber;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Validate;
+use Livewire\Component;
 
-final class NewsletterSubscribeForm extends \Livewire\Component
+final class NewsletterSubscribeForm extends Component
 {
     use ConfigurableComponent;
 
@@ -45,7 +48,7 @@ final class NewsletterSubscribeForm extends \Livewire\Component
         return view('igniter-orange::livewire.newsletter-subscribe-form');
     }
 
-    public function onSubscribe()
+    public function onSubscribe(): void
     {
         $this->validate();
 
@@ -54,6 +57,7 @@ final class NewsletterSubscribeForm extends \Livewire\Component
         } catch (Exception $e) {
             throw ValidationException::withMessages(['email' => $e->getMessage()]);
         }
+
         $this->reset();
 
         if (!$subscribe->wasRecentlyCreated) {

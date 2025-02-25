@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\Livewire\Utils;
 
 use Igniter\Flame\Flash\Facades\Flash;
@@ -7,7 +9,7 @@ use Igniter\Flame\Flash\Message;
 use Igniter\Orange\Livewire\Utils\FlashMessage;
 use Livewire\Livewire;
 
-it('initializes flash messages correctly', function() {
+it('initializes flash messages correctly', function(): void {
     Flash::shouldReceive('all')->andReturn(collect([
         new Message([
             'level' => 'info',
@@ -38,7 +40,7 @@ it('initializes flash messages correctly', function() {
         ]);
 });
 
-it('renders flash message view', function() {
+it('renders flash message view', function(): void {
     Livewire::test(FlashMessage::class)
         ->assertViewIs('igniter-orange::livewire.utils.flash-message');
 });

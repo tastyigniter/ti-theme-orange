@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire;
 
+use Livewire\Component;
 use Igniter\Admin\Classes\FormField;
 use Igniter\Admin\Widgets\Form;
 use Igniter\Local\Models\ReviewSettings;
@@ -12,7 +15,7 @@ use Igniter\User\Facades\Auth;
 use Illuminate\Support\Collection;
 use Livewire\WithPagination;
 
-final class ReservationList extends \Livewire\Component
+final class ReservationList extends Component
 {
     use ConfigurableComponent;
     use UsesPage;
@@ -49,7 +52,7 @@ final class ReservationList extends \Livewire\Component
             'reservationPage' => [
                 'label' => 'Page name to display reservation details',
                 'type' => 'select',
-                'options' => [static::class, 'getThemePageOptions'],
+                'options' => self::getThemePageOptions(...),
                 'validationRule' => 'required|string',
             ],
         ];
@@ -58,9 +61,7 @@ final class ReservationList extends \Livewire\Component
     public static function getPropertyOptions(Form $form, FormField $field): array|Collection
     {
         return match ($field->getConfig('property')) {
-            'sortOrder' => collect((new Reservation)->queryModifierGetSorts())->mapWithKeys(function($value, $key) {
-                return [$value => $value];
-            })->all(),
+            'sortOrder' => collect((new Reservation)->queryModifierGetSorts())->mapWithKeys(fn($value, $key) => [$value => $value])->all(),
             default => [],
         };
     }

@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\View\Components;
 
 use Igniter\Cart\Models\Menu;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\View\Components\FeaturedItems;
 
-it('initializes featured items component correctly', function() {
+it('initializes featured items component correctly', function(): void {
     $component = new FeaturedItems('Featured Menus', [1, 2, 3], 6, 3, true, 400, 300);
 
     expect(class_uses_recursive($component))->toContain(ConfigurableComponent::class)
@@ -19,7 +21,7 @@ it('initializes featured items component correctly', function() {
         ->and($component->itemHeight)->toBe(300);
 });
 
-it('returns correct component meta', function() {
+it('returns correct component meta', function(): void {
     $meta = FeaturedItems::componentMeta();
 
     expect($meta['code'])->toBe('igniter-orange::featured-items')
@@ -27,7 +29,7 @@ it('returns correct component meta', function() {
         ->and($meta['description'])->toBe('igniter.orange::default.component_featured_items_desc');
 });
 
-it('defines properties correctly', function() {
+it('defines properties correctly', function(): void {
     $component = new FeaturedItems;
     $properties = $component->defineProperties();
 
@@ -54,7 +56,7 @@ it('defines properties correctly', function() {
         ->and($properties['itemHeight']['validationRule'])->toBe('integer');
 });
 
-it('returns correct items options', function() {
+it('returns correct items options', function(): void {
     Menu::factory()->create(['menu_name' => 'Menu 1', 'menu_status' => 1]);
 
     $options = FeaturedItems::getItemsOptions();
@@ -62,7 +64,7 @@ it('returns correct items options', function() {
     expect($options->all())->toContain('Menu 1');
 });
 
-it('renders view with featured items', function() {
+it('renders view with featured items', function(): void {
     $menus = Menu::factory()->count(3)->create(['menu_status' => 1]);
 
     $component = new FeaturedItems(items: $menus->pluck('menu_id')->all());

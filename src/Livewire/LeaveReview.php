@@ -1,7 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire;
 
+use Livewire\Component;
+use Throwable;
 use Igniter\Cart\Classes\OrderManager;
 use Igniter\Flame\Database\Model;
 use Igniter\Local\Models\Review as ReviewModel;
@@ -12,7 +16,7 @@ use Igniter\System\Facades\Assets;
 use Igniter\User\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
-final class LeaveReview extends \Livewire\Component
+final class LeaveReview extends Component
 {
     use ConfigurableComponent;
 
@@ -69,7 +73,7 @@ final class LeaveReview extends \Livewire\Component
         ]);
     }
 
-    public function mount()
+    public function mount(): void
     {
         Assets::addCss('igniter.local::/css/starrating.css', 'starrating-css');
         Assets::addJs('igniter.local::/js/starrating.js', 'starrating-js');
@@ -83,7 +87,7 @@ final class LeaveReview extends \Livewire\Component
         $this->comment = $customerReview->review_text ?? '';
     }
 
-    public function onLeaveReview()
+    public function onLeaveReview(): void
     {
         $this->validate([
             'comment' => ['required', 'min:2', 'max:1028'],
@@ -109,14 +113,14 @@ final class LeaveReview extends \Livewire\Component
             'comment' => lang('igniter.local::default.review.alert_review_not_found'),
         ]));
 
-        rescue(function() use ($reviewable) {
+        rescue(function() use ($reviewable): void {
             ReviewModel::leaveReview($reviewable, [
                 'quality' => $this->quality,
                 'delivery' => $this->delivery,
                 'service' => $this->service,
                 'review_text' => $this->comment,
             ]);
-        }, function(\Throwable $e) {
+        }, function(Throwable $e): never {
             throw ValidationException::withMessages([
                 'comment' => $e->getMessage(),
             ]);

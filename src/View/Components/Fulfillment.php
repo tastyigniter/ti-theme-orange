@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\View\Components;
 
+use Override;
 use Igniter\Local\Facades\Location;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Illuminate\View\Component;
@@ -33,6 +36,7 @@ final class Fulfillment extends Component
         ];
     }
 
+    #[Override]
     public function render()
     {
         return view('igniter-orange::components.fulfillment', [

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire;
 
 use Igniter\Frontend\Actions\SendContactMail;
@@ -51,7 +53,7 @@ final class Contact extends Component
         ]);
     }
 
-    public function onSubmit()
+    public function onSubmit(): void
     {
         $this->validate();
 

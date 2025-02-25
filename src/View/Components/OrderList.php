@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\View\Components;
 
+use Override;
 use Igniter\Cart\Models\Order;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
@@ -42,16 +45,14 @@ final class OrderList extends Component
             'orderPage' => [
                 'label' => 'Page to redirect to when an order is clicked.',
                 'type' => 'select',
-                'options' => [static::class, 'getThemePageOptions'],
+                'options' => self::getThemePageOptions(...),
             ],
         ];
     }
 
     public static function getSortOrderOptions()
     {
-        return collect((new Order)->queryModifierGetSorts())->mapWithKeys(function($value, $key) {
-            return [$value => $value];
-        })->all();
+        return collect((new Order)->queryModifierGetSorts())->mapWithKeys(fn($value, $key) => [$value => $value])->all();
     }
 
     protected function loadOrders()
@@ -70,6 +71,7 @@ final class OrderList extends Component
             ]);
     }
 
+    #[Override]
     public function render()
     {
         return view('igniter-orange::components.order-list', [

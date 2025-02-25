@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Contracts;
 
 use InvalidArgumentException;
@@ -40,7 +42,7 @@ abstract class ModalComponent extends Component implements ModalComponentInterfa
         return $this;
     }
 
-    public function skipPreviousModal($count = 1, $destroy = false): self
+    public function skipPreviousModal(int $count = 1, bool $destroy = false): self
     {
         $this->skipModals = $count;
         $this->destroySkipped = $destroy;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\Livewire;
 
 use Igniter\Main\Traits\ConfigurableComponent;
@@ -11,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Livewire;
 
-it('initialize component correctly', function() {
+it('initialize component correctly', function(): void {
     $component = new ResetPassword;
 
     expect(class_uses_recursive($component))
@@ -25,7 +27,7 @@ it('initialize component correctly', function() {
         ->and($component->message)->toBeNull();
 });
 
-it('returns correct component meta', function() {
+it('returns correct component meta', function(): void {
     $meta = ResetPassword::componentMeta();
 
     expect($meta['code'])->toBe('igniter-orange::reset-password')
@@ -33,7 +35,7 @@ it('returns correct component meta', function() {
         ->and($meta['description'])->toBe('igniter.orange::default.component_reset_password_desc');
 });
 
-it('defines properties correctly', function() {
+it('defines properties correctly', function(): void {
     $component = new ResetPassword;
     $properties = $component->defineProperties();
 
@@ -43,7 +45,7 @@ it('defines properties correctly', function() {
     );
 });
 
-it('mounts and prepares props', function() {
+it('mounts and prepares props', function(): void {
     Livewire::test(ResetPassword::class)
         ->assertSet('resetPage', 'account.reset')
         ->assertSet('loginPage', 'account.login')
@@ -54,7 +56,7 @@ it('mounts and prepares props', function() {
         ->assertSet('message', null);
 });
 
-it('handles forgot password', function() {
+it('handles forgot password', function(): void {
     Mail::fake();
 
     $customer = Customer::factory()->create([
@@ -67,12 +69,10 @@ it('handles forgot password', function() {
 
     expect($customer->fresh()->reset_code)->not->toBeNull();
 
-    Mail::assertQueued(AnonymousTemplateMailable::class, function($mailable) {
-        return $mailable->getTemplateCode() === 'igniter.user::mail.password_reset_request';
-    });
+    Mail::assertQueued(AnonymousTemplateMailable::class, fn($mailable): bool => $mailable->getTemplateCode() === 'igniter.user::mail.password_reset_request');
 });
 
-it('handles reset password', function() {
+it('handles reset password', function(): void {
     Mail::fake();
 
     $customer = Customer::factory()->create([
@@ -89,12 +89,10 @@ it('handles reset password', function() {
 
     expect(Hash::check('new-password', $customer->fresh()->password))->toBeTrue();
 
-    Mail::assertQueued(AnonymousTemplateMailable::class, function($mailable) {
-        return $mailable->getTemplateCode() === 'igniter.user::mail.password_reset';
-    });
+    Mail::assertQueued(AnonymousTemplateMailable::class, fn($mailable): bool => $mailable->getTemplateCode() === 'igniter.user::mail.password_reset');
 });
 
-it('throws exception when handles reset password fails', function() {
+it('throws exception when handles reset password fails', function(): void {
     Mail::fake();
 
     $customer = Customer::factory()->create([

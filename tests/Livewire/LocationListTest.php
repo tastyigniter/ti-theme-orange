@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\Livewire;
 
 use Igniter\Admin\Classes\FormField;
@@ -19,7 +21,7 @@ use Illuminate\Support\Facades\Event;
 use Livewire\Livewire;
 use Livewire\WithPagination;
 
-it('initialize component correctly', function() {
+it('initialize component correctly', function(): void {
     $component = new LocationList;
 
     expect(class_uses_recursive($component))
@@ -36,7 +38,7 @@ it('initialize component correctly', function() {
         ->and($component->filter)->toBe([]);
 });
 
-it('returns correct component meta', function() {
+it('returns correct component meta', function(): void {
     $meta = LocationList::componentMeta();
 
     expect($meta['code'])->toBe('igniter-orange::location-list')
@@ -44,7 +46,7 @@ it('returns correct component meta', function() {
         ->and($meta['description'])->toBe('igniter.orange::default.component_location_list_desc');
 });
 
-it('defines properties correctly', function() {
+it('defines properties correctly', function(): void {
     $component = new LocationList;
     $properties = $component->defineProperties();
 
@@ -59,7 +61,7 @@ it('defines properties correctly', function() {
     );
 });
 
-it('returns correct sorted order options for sortBy', function() {
+it('returns correct sorted order options for sortBy', function(): void {
     $form = new Form(resolve(Themes::class), [
         'model' => new Theme,
     ]);
@@ -73,7 +75,7 @@ it('returns correct sorted order options for sortBy', function() {
     expect($options)->toBeArray()->not->toBeEmpty();
 });
 
-it('returns correct sorted order options for orderType', function() {
+it('returns correct sorted order options for orderType', function(): void {
     $form = new Form(resolve(Themes::class), [
         'model' => new Theme,
     ]);
@@ -87,7 +89,7 @@ it('returns correct sorted order options for orderType', function() {
     expect($options->isNotEmpty())->toBeTrue();
 });
 
-it('returns empty array for unknown property', function() {
+it('returns empty array for unknown property', function(): void {
     $form = new Form(resolve(Menus::class), [
         'model' => new Address,
     ]);
@@ -101,27 +103,25 @@ it('returns empty array for unknown property', function() {
     expect($options)->toBe([]);
 });
 
-it('mounts and renders component correctly', function() {
+it('mounts and renders component correctly', function(): void {
     Location::updateUserPosition(GeoliteLocation::createFromArray([
         'latitude' => 51.50987615,
         'longitude' => -0.1446716,
     ]));
-    Event::listen('igniter.orange.extendLocationListFilters', function() {
-        return [
-            'cuisine' => [
-                'title' => 'Cuisine',
-                'query' => function($query, $value) {
-                    expect($value)->toBe('nigerian');
+    Event::listen('igniter.orange.extendLocationListFilters', fn(): array => [
+        'cuisine' => [
+            'title' => 'Cuisine',
+            'query' => function($query, $value) {
+                expect($value)->toBe('nigerian');
 
-                    return $query;
-                },
-            ],
-            'orderType' => [
-                'title' => 'Order Type',
-                'query' => function($query, $value) {},
-            ],
-        ];
-    });
+                return $query;
+            },
+        ],
+        'orderType' => [
+            'title' => 'Order Type',
+            'query' => function($query, $value): void {},
+        ],
+    ]);
 
     setting()->set('distance_unit', 'km');
     ReviewSettings::set('allow_reviews', 1);
@@ -135,50 +135,40 @@ it('mounts and renders component correctly', function() {
         ->assertViewHas('locationsList');
 });
 
-it('returns order type options', function() {
+it('returns order type options', function(): void {
     Livewire::test(LocationList::class)
-        ->assertSet('orderTypes', function($response) {
-            return $response->isNotEmpty();
-        });
+        ->assertSet('orderTypes', fn($response) => $response->isNotEmpty());
 });
 
-it('returns available sorters', function() {
-    Event::listen('igniter.orange.extendLocationListSorting', function() {
-        return [
-            'cuisine' => [
-                'name' => 'Cuisine',
-                'priority' => 999,
-                'condition' => 'asc',
-            ],
-        ];
-    });
+it('returns available sorters', function(): void {
+    Event::listen('igniter.orange.extendLocationListSorting', fn(): array => [
+        'cuisine' => [
+            'name' => 'Cuisine',
+            'priority' => 999,
+            'condition' => 'asc',
+        ],
+    ]);
 
     Livewire::test(LocationList::class)
-        ->assertSet('sorters', function($response) {
-            return array_keys($response) === ['distance', 'newest', 'rating', 'name', 'cuisine'];
-        });
+        ->assertSet('sorters', fn($response): bool => array_keys($response) === ['distance', 'newest', 'rating', 'name', 'cuisine']);
 });
 
-it('returns available filter', function() {
-    Event::listen('igniter.orange.extendLocationListFilters', function() {
-        return [
-            'invalid' => [
-                'title' => 'invalid',
-                'query' => 'invalid-callback',
-            ],
-            'cuisine' => [
-                'title' => 'Cuisine',
-                'query' => function($query, $value) {
-                    expect($value)->toBe('nigerian');
+it('returns available filter', function(): void {
+    Event::listen('igniter.orange.extendLocationListFilters', fn(): array => [
+        'invalid' => [
+            'title' => 'invalid',
+            'query' => 'invalid-callback',
+        ],
+        'cuisine' => [
+            'title' => 'Cuisine',
+            'query' => function($query, $value) {
+                expect($value)->toBe('nigerian');
 
-                    return $query;
-                },
-            ],
-        ];
-    });
+                return $query;
+            },
+        ],
+    ]);
 
     Livewire::test(LocationList::class, ['filter' => ['cuisine' => 'nigerian']])
-        ->assertSet('filters', function($response) {
-            return array_keys($response) === ['invalid', 'cuisine'];
-        });
+        ->assertSet('filters', fn($response): bool => array_keys($response) === ['invalid', 'cuisine']);
 });

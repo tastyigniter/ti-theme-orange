@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\Livewire;
 
 use Igniter\Cart\Classes\AbstractOrderType;
@@ -11,7 +13,7 @@ use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Livewire\CartItemModal;
 use Livewire\Livewire;
 
-beforeEach(function() {
+beforeEach(function(): void {
     $this->location = LocationModel::factory()->create();
     $this->orderTypeMock = $this->mock(AbstractOrderType::class);
     $this->orderTypeMock->shouldReceive('getCode')->andReturn(LocationModel::DELIVERY);
@@ -25,7 +27,7 @@ beforeEach(function() {
     Location::shouldReceive('orderDateTime')->andReturnTrue();
 });
 
-it('initialize component correctly', function() {
+it('initialize component correctly', function(): void {
     $component = new CartItemModal;
 
     expect(class_uses_recursive($component))
@@ -45,7 +47,7 @@ it('initialize component correctly', function() {
         ->and($component->limitOptionsValues)->toBe(6);
 });
 
-it('returns correct component meta', function() {
+it('returns correct component meta', function(): void {
     $meta = CartItemModal::componentMeta();
 
     expect($meta['code'])->toBe('igniter-orange::cart-item-modal')
@@ -53,7 +55,7 @@ it('returns correct component meta', function() {
         ->and($meta['description'])->toBe('igniter.orange::default.component_cart_item_modal_desc');
 });
 
-it('defines properties correctly', function() {
+it('defines properties correctly', function(): void {
     $component = new CartItemModal;
     $properties = $component->defineProperties();
 
@@ -66,7 +68,7 @@ it('defines properties correctly', function() {
     );
 });
 
-it('can mount and prepare props', function() {
+it('can mount and prepare props', function(): void {
     $menu = Menu::factory()->create();
     $cartItem = Cart::add([
         'id' => $menu->getKey(),
@@ -85,7 +87,7 @@ it('can mount and prepare props', function() {
         ->assertSet('minQuantity', $menu->minimum_qty);
 });
 
-it('can save cart item', function() {
+it('can save cart item', function(): void {
     $menu = Menu::factory()->create();
 
     Livewire::test(CartItemModal::class, ['menuId' => $menu->getKey()])
@@ -96,7 +98,7 @@ it('can save cart item', function() {
         ->assertDispatched('hideModal');
 });
 
-it('throws exception when saving cart item fails', function() {
+it('throws exception when saving cart item fails', function(): void {
     $menu = Menu::factory()->create();
 
     Livewire::test(CartItemModal::class, ['menuId' => $menu->getKey()])
@@ -105,7 +107,7 @@ it('throws exception when saving cart item fails', function() {
         ->assertHasErrors(['menuOptions']);
 });
 
-it('returns current location id', function() {
+it('returns current location id', function(): void {
     $menu = Menu::factory()->create();
 
     Livewire::test(CartItemModal::class, ['menuId' => $menu->getKey()])
@@ -113,7 +115,7 @@ it('returns current location id', function() {
         ->assertReturned($this->location->getKey());
 });
 
-it('returns cart item option quantity type value', function() {
+it('returns cart item option quantity type value', function(): void {
     $menu = Menu::factory()->create();
     $cartItem = Cart::add([
         'id' => $menu->getKey(),

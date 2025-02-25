@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\Data;
 
 use Igniter\Frontend\Models\Banner;
 use Igniter\Main\Classes\MediaLibrary;
 use Igniter\Orange\Data\BannerData;
 
-beforeEach(function() {
+beforeEach(function(): void {
     $this->attributes = [
         'name' => 'Banner Name',
         'code' => 'banner_code',
@@ -18,7 +20,7 @@ beforeEach(function() {
     ];
 });
 
-it('initializes banner data correctly', function() {
+it('initializes banner data correctly', function(): void {
     $model = Banner::create($this->attributes);
 
     $bannerData = new BannerData($model);
@@ -30,7 +32,7 @@ it('initializes banner data correctly', function() {
         ->and($bannerData->markup)->toBe('<div>Custom Code</div>');
 });
 
-it('returns true for custom banner type', function() {
+it('returns true for custom banner type', function(): void {
     $this->attributes['type'] = 'custom';
     $model = Banner::create($this->attributes);
 
@@ -39,7 +41,7 @@ it('returns true for custom banner type', function() {
     expect($bannerData->isCustom())->toBeTrue();
 });
 
-it('returns true for carousel banner type', function() {
+it('returns true for carousel banner type', function(): void {
     $this->attributes['type'] = 'image';
     $this->attributes['image_code'] = ['image1.jpg', 'image2.jpg'];
     $model = Banner::create($this->attributes);
@@ -49,7 +51,7 @@ it('returns true for carousel banner type', function() {
     expect($bannerData->isCarousel())->toBeTrue();
 });
 
-it('returns true for image banner type', function() {
+it('returns true for image banner type', function(): void {
     $this->attributes['type'] = 'image';
     $model = Banner::create($this->attributes);
 
@@ -58,7 +60,7 @@ it('returns true for image banner type', function() {
     expect($bannerData->isImage())->toBeTrue();
 });
 
-it('returns resized image URLs', function() {
+it('returns resized image URLs', function(): void {
     $this->attributes['image_code'] = ['image1.jpg', 'image2.jpg'];
     $model = Banner::create($this->attributes);
 
@@ -76,7 +78,7 @@ it('returns resized image URLs', function() {
     expect($result)->toBe(['resized_image1.jpg', 'resized_image2.jpg']);
 });
 
-it('returns empty array when no image codes are present', function() {
+it('returns empty array when no image codes are present', function(): void {
     $this->attributes['image_code'] = null;
     $model = Banner::create($this->attributes);
 

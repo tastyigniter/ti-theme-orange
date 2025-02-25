@@ -1,7 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire;
 
+use Livewire\Component;
+use Closure;
 use Igniter\Admin\Classes\FormField;
 use Igniter\Admin\Widgets\Form;
 use Igniter\Local\Facades\Location;
@@ -26,7 +30,7 @@ use Livewire\WithPagination;
  * @property-read array $sorters
  * @property-read array $filters
  */
-final class LocationList extends \Livewire\Component
+final class LocationList extends Component
 {
     use ConfigurableComponent;
     use SearchesNearby;
@@ -74,7 +78,7 @@ final class LocationList extends \Livewire\Component
                 'label' => 'igniter.orange::default.label_menus_page',
                 'type' => 'select',
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
-                'options' => [static::class, 'getThemePageOptions'],
+                'options' => self::getThemePageOptions(...),
             ],
             'itemPerPage' => [
                 'label' => 'igniter.orange::default.label_items_per_page',
@@ -112,9 +116,7 @@ final class LocationList extends \Livewire\Component
     public static function getPropertyOptions(Form $form, FormField $field): array|Collection
     {
         return match ($field->getConfig('property')) {
-            'sortBy' => collect((new self)->sorters())->mapWithKeys(function($sorter, $key) {
-                return [$key => array_get($sorter, 'name')];
-            })->all(),
+            'sortBy' => collect((new self)->sorters())->mapWithKeys(fn($sorter, $key) => [$key => array_get($sorter, 'name')])->all(),
             'orderType' => (new self)->orderTypes(),
             default => [],
         };
@@ -129,7 +131,7 @@ final class LocationList extends \Livewire\Component
         ]);
     }
 
-    public function mount()
+    public function mount(): void
     {
         $this->distanceUnit = setting('distance_unit');
     }
@@ -189,9 +191,7 @@ final class LocationList extends \Livewire\Component
     {
         $defaults = [
             'title' => 'Unknown',
-            'options' => function() {
-                return [];
-            },
+            'options' => fn(): array => [],
             'query' => null,
         ];
 
@@ -231,7 +231,7 @@ final class LocationList extends \Livewire\Component
             'reviews' => fn($q) => $q->isApproved(),
         ])->with(['media', 'delivery_areas', 'settings', 'working_hours', 'reviews' => fn($q) => $q->isApproved()]);
 
-        $filterByDeliveryAreas = $this->orderType == 'delivery';
+        $filterByDeliveryAreas = $this->orderType === 'delivery';
 
         $this->filterQuery($query);
 
@@ -241,20 +241,20 @@ final class LocationList extends \Livewire\Component
 
         $collection = $results->getCollection()
             ->filter(fn($location) => $this->filterQueryResult($location, $coordinates, $filterByDeliveryAreas))
-            ->map(fn($location) => new LocationData($location));
+            ->map(fn($location): LocationData => new LocationData($location));
 
         return $results->setCollection($collection);
     }
 
-    protected function filterQueryResult($location, $coordinates, $filterByDeliveryAreas = false)
+    protected function filterQueryResult($location, $coordinates, $filterByDeliveryAreas = false): bool
     {
         return array_get($location->getSettings($this->orderType), 'is_enabled', 1) == 1;
     }
 
     protected function filterQuery($query): void
     {
-        collect($this->filters)->each(function($filter, $code) use ($query) {
-            if (!$filter['query'] instanceof \Closure) {
+        collect($this->filters)->each(function(array $filter, $code) use ($query): void {
+            if (!$filter['query'] instanceof Closure) {
                 return;
             }
 

@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\View\Components;
 
 use Igniter\Frontend\Models\Slider as SliderModel;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\View\Components\Slider;
 
-it('initializes slider component correctly', function() {
+it('initializes slider component correctly', function(): void {
     $component = new Slider('home-slider', '60vh', 'ease', 5000, false, false, false);
 
     expect(class_uses_recursive($component))->toContain(ConfigurableComponent::class)
@@ -19,7 +21,7 @@ it('initializes slider component correctly', function() {
         ->and($component->hideCaptions)->toBeFalse();
 });
 
-it('returns correct component meta', function() {
+it('returns correct component meta', function(): void {
     $meta = Slider::componentMeta();
 
     expect($meta['code'])->toBe('igniter-orange::slider')
@@ -27,7 +29,7 @@ it('returns correct component meta', function() {
         ->and($meta['description'])->toBe('igniter.orange::default.component_slider_desc');
 });
 
-it('defines properties correctly', function() {
+it('defines properties correctly', function(): void {
     $component = new Slider;
     $properties = $component->defineProperties();
 
@@ -54,7 +56,7 @@ it('defines properties correctly', function() {
         ->and($properties['hideCaptions']['validationRule'])->toBe('required|boolean');
 });
 
-it('returns correct code options', function() {
+it('returns correct code options', function(): void {
     SliderModel::create(['name' => 'Test Slider', 'code' => 'test-slider']);
 
     $options = Slider::getCodeOptions();
@@ -62,7 +64,7 @@ it('returns correct code options', function() {
     expect($options)->toHaveKey('test-slider')->toContain('Test Slider');
 });
 
-it('renders view with slides', function() {
+it('renders view with slides', function(): void {
     $slider = SliderModel::create([
         'name' => 'Test Slider',
         'code' => 'test-slider',
@@ -75,7 +77,7 @@ it('renders view with slides', function() {
     expect($slides)->toBeCollection();
 });
 
-it('renders empty array when slider code is invalid', function() {
+it('renders empty array when slider code is invalid', function(): void {
     $component = new Slider('invalid-code');
     $slides = $component->render()['slides'];
 

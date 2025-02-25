@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\Livewire;
 
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Livewire\Captcha;
 use Livewire\Livewire;
 
-it('initialize component correctly', function() {
+it('initialize component correctly', function(): void {
     $component = new Captcha;
 
     expect(class_uses_recursive($component))
@@ -15,7 +17,7 @@ it('initialize component correctly', function() {
         ->and($component->lang)->toBe('');
 });
 
-it('returns correct component meta', function() {
+it('returns correct component meta', function(): void {
     $meta = Captcha::componentMeta();
 
     expect($meta['code'])->toBe('igniter-orange::captcha')
@@ -23,7 +25,7 @@ it('returns correct component meta', function() {
         ->and($meta['description'])->toBe('igniter.orange::default.component_captcha_desc');
 });
 
-it('mounts correctly', function() {
+it('mounts correctly', function(): void {
     Livewire::test(Captcha::class)
         ->assertSet('apiKey', '')
         ->assertSet('lang', 'en');

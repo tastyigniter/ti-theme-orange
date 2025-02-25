@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire\Forms;
 
 use Igniter\User\Facades\Auth;
@@ -24,7 +26,7 @@ final class SettingsForm extends Form
 
     public string $password_confirmation = '';
 
-    public function fillFrom($customer)
+    public function fillFrom($customer): void
     {
         $this->first_name = $customer->first_name ?? '';
         $this->last_name = $customer->last_name ?? '';
@@ -32,7 +34,7 @@ final class SettingsForm extends Form
         $this->email = $customer->email ?? '';
     }
 
-    public function validationAttributes()
+    public function validationAttributes(): array
     {
         return [
             'first_name' => lang('igniter.user::default.settings.label_first_name'),
@@ -46,7 +48,7 @@ final class SettingsForm extends Form
         ];
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             'first_name' => ['required', 'between:1,48'],

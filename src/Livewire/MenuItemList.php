@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire;
 
+use Livewire\Component;
 use Igniter\Admin\Classes\FormField;
 use Igniter\Admin\Widgets\Form;
 use Igniter\Cart\Models\Menu as MenuModel;
@@ -13,7 +16,7 @@ use Illuminate\Support\Collection;
 use Livewire\Attributes\Url;
 use Livewire\WithPagination;
 
-final class MenuItemList extends \Livewire\Component
+final class MenuItemList extends Component
 {
     use ConfigurableComponent;
     use WithPagination;
@@ -174,9 +177,7 @@ final class MenuItemList extends \Livewire\Component
     public static function getPropertyOptions(Form $form, FormField $field): array|Collection
     {
         return match ($field->getConfig('property')) {
-            'sortOrder' => collect((new MenuModel)->queryModifierGetSorts())->mapWithKeys(function($value, $key) {
-                return [$value => $value];
-            })->all(),
+            'sortOrder' => collect((new MenuModel)->queryModifierGetSorts())->mapWithKeys(fn($value, $key) => [$value => $value])->all(),
             default => [],
         };
     }
@@ -189,14 +190,14 @@ final class MenuItemList extends \Livewire\Component
         ]);
     }
 
-    public function mount()
+    public function mount(): void
     {
         Assets::addJs('igniter-orange::/js/menus.js', 'menus-js');
 
         $this->selectedCategorySlug = request()->route()->parameter('category', '');
     }
 
-    public function onAddToCart(int $menuId, int $quantity, bool $openModal = false)
+    public function onAddToCart(int $menuId, int $quantity, bool $openModal = false): void
     {
         if ($openModal) {
             $this->dispatch('openModal', component: 'igniter-orange::cart-item-modal', arguments: [
@@ -241,9 +242,9 @@ final class MenuItemList extends \Livewire\Component
 
         if ($this->itemsPerPage > 0) {
             $list->setCollection($list->getCollection()
-                ->map(fn($menuItem) => new MenuItemData($menuItem)));
+                ->map(fn($menuItem): MenuItemData => new MenuItemData($menuItem)));
         } else {
-            $list = $list->get()->map(fn($menuItem) => new MenuItemData($menuItem));
+            $list = $list->get()->map(fn($menuItem): MenuItemData => new MenuItemData($menuItem));
         }
 
         if (!strlen($this->selectedCategorySlug) && $this->isGrouped) {

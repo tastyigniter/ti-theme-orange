@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\Livewire;
 
 use Igniter\Admin\Classes\FormField;
@@ -16,7 +18,7 @@ use Igniter\User\Models\Customer;
 use Livewire\Livewire;
 use Livewire\WithPagination;
 
-beforeEach(function() {
+beforeEach(function(): void {
     $this->address = Address::factory()->create();
     $this->customer = Customer::factory()
         ->for($this->address)
@@ -29,7 +31,7 @@ beforeEach(function() {
     $this->address->save();
 });
 
-it('initialize component correctly', function() {
+it('initialize component correctly', function(): void {
     $component = new AddressBook;
 
     expect(class_uses_recursive($component))
@@ -41,7 +43,7 @@ it('initialize component correctly', function() {
         ->and($component->sortOrder)->toBe('created_at desc');
 });
 
-it('returns correct component meta', function() {
+it('returns correct component meta', function(): void {
     $meta = AddressBook::componentMeta();
 
     expect($meta['code'])->toBe('igniter-orange::address-book')
@@ -49,7 +51,7 @@ it('returns correct component meta', function() {
         ->and($meta['description'])->toBe('igniter.orange::default.component_address_book_desc');
 });
 
-it('defines properties correctly', function() {
+it('defines properties correctly', function(): void {
     $component = new AddressBook;
     $properties = $component->defineProperties();
 
@@ -65,20 +67,20 @@ it('defines properties correctly', function() {
     ]);
 });
 
-it('mounts correctly', function() {
+it('mounts correctly', function(): void {
     Livewire::actingAs($this->customer, 'igniter-customer')
         ->test(AddressBook::class)
         ->assertSet('defaultAddressId', $this->address->getKey())
         ->assertSet('form.country_id', Country::getDefaultKey());
 });
 
-it('loads empty address book when customer is not authenticated', function() {
+it('loads empty address book when customer is not authenticated', function(): void {
     Livewire::test(AddressBook::class)
         ->assertSet('defaultAddressId', null)
         ->assertViewHas('addresses', []);
 });
 
-it('updates address id correctly', function() {
+it('updates address id correctly', function(): void {
     Livewire::actingAs($this->customer, 'igniter-customer')
         ->test(AddressBook::class)
         ->assertSet('addressId', null)
@@ -87,7 +89,7 @@ it('updates address id correctly', function() {
         ->assertSet('showModal', true);
 });
 
-it('creates address correctly', function() {
+it('creates address correctly', function(): void {
     Livewire::actingAs($this->customer, 'igniter-customer')
         ->test(AddressBook::class)
         ->set('form.address_1', '123 Test St')
@@ -106,7 +108,7 @@ it('creates address correctly', function() {
     ]);
 });
 
-it('updates existing address correctly', function() {
+it('updates existing address correctly', function(): void {
     Livewire::actingAs($this->customer, 'igniter-customer')
         ->test(AddressBook::class)
         ->set('addressId', $this->address->getKey())
@@ -119,7 +121,7 @@ it('updates existing address correctly', function() {
         ->assertSet('showModal', false);
 });
 
-it('sets default address correctly', function() {
+it('sets default address correctly', function(): void {
     $address = Address::factory()->for($this->customer)->create();
     Livewire::actingAs($this->customer, 'igniter-customer')
         ->test(AddressBook::class)
@@ -127,7 +129,7 @@ it('sets default address correctly', function() {
         ->assertSet('defaultAddressId', $address->getKey());
 });
 
-it('deletes address correctly', function() {
+it('deletes address correctly', function(): void {
     $address = Address::factory()->for($this->customer)->create();
     Livewire::actingAs($this->customer, 'igniter-customer')
         ->test(AddressBook::class)
@@ -135,7 +137,7 @@ it('deletes address correctly', function() {
         ->assertSet('addressId', null);
 });
 
-it('returns correct sorted order options', function() {
+it('returns correct sorted order options', function(): void {
     $form = new Form(resolve(Themes::class), [
         'model' => new Theme,
     ]);
@@ -149,7 +151,7 @@ it('returns correct sorted order options', function() {
     expect($options)->toBeArray()->not->toBeEmpty();
 });
 
-it('returns empty array for unknown property', function() {
+it('returns empty array for unknown property', function(): void {
     $form = new Form(resolve(Menus::class), [
         'model' => new Address,
     ]);
@@ -163,7 +165,7 @@ it('returns empty array for unknown property', function() {
     expect($options)->toBe([]);
 });
 
-it('loads component form on theme editor', function() {
+it('loads component form on theme editor', function(): void {
     $theme = resolve(ThemeManager::class)->findTheme('igniter-orange');
     $theme->locked = false;
 

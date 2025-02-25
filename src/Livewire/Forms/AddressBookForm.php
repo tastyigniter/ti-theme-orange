@@ -1,28 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire\Forms;
 
 use Livewire\Form;
 
 final class AddressBookForm extends Form
 {
-    public ?string $address_id;
+    public ?string $address_id = null;
 
-    public ?string $address_1;
+    public ?string $address_1 = null;
 
-    public ?string $address_2;
+    public ?string $address_2 = null;
 
-    public ?string $city;
+    public ?string $city = null;
 
-    public ?string $state;
+    public ?string $state = null;
 
-    public ?string $postcode;
+    public ?string $postcode = null;
 
-    public ?string $country_id;
+    public ?string $country_id = null;
 
     public bool $is_default = false;
 
-    public function validationAttributes()
+    public function validationAttributes(): array
     {
         return [
             'address_id' => lang('igniter.user::default.account.label_address_id'),
@@ -36,7 +38,7 @@ final class AddressBookForm extends Form
         ];
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             'address_id' => 'nullable|integer',
@@ -50,7 +52,7 @@ final class AddressBookForm extends Form
         ];
     }
 
-    public function fillFrom($address, $defaultAddressId = null)
+    public function fillFrom($address, $defaultAddressId = null): void
     {
         $this->address_id = $address?->address_id;
         $this->address_1 = $address?->address_1;

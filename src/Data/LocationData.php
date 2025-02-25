@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Data;
 
 use Carbon\Carbon;
@@ -45,14 +47,14 @@ final class LocationData
         $this->openingSchedule = $model->newWorkingSchedule(LocationModel::OPENING);
     }
 
-    public static function current()
+    public static function current(): self
     {
         $current = Location::current();
 
-        return new static($current);
+        return new self($current);
     }
 
-    public function url(string $page)
+    public function url(string $page): string
     {
         return page_url($page, ['location' => $this->model->permalink_slug]);
     }
@@ -123,9 +125,7 @@ final class LocationData
 
     public function schedules(): Collection
     {
-        return $this->model->getWorkingHours()->groupBy(function($model) {
-            return $model->day->isoFormat('dddd');
-        });
+        return $this->model->getWorkingHours()->groupBy(fn($model) => $model->day->isoFormat('dddd'));
     }
 
     public function scheduleTypes()
@@ -141,16 +141,14 @@ final class LocationData
         foreach ($this->scheduleTypes() as $code => $definition) {
             $schedule = $this->model->createScheduleItem($code);
             foreach ((new WorkingHour)->getWeekDaysOptions() as $index => $day) {
-                $hours = array_map(function($hour) {
+                $hours = array_map(function(array $hour) {
                     $hour['open'] = now()->setTimeFromTimeString($hour['open'])->isoFormat(lang('system::lang.moment.time_format'));
                     $hour['close'] = now()->setTimeFromTimeString($hour['close'])->isoFormat(lang('system::lang.moment.time_format'));
 
                     return $hour;
                 }, array_get($schedule->getHours(), $index, []));
 
-                $scheduleItems[$code][$day] = array_filter($hours, function($hour) {
-                    return (bool)$hour['status'];
-                });
+                $scheduleItems[$code][$day] = array_filter($hours, fn($hour): bool => (bool)$hour['status']);
             }
         }
 

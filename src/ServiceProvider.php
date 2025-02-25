@@ -1,7 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange;
 
+use Override;
+use Igniter\Orange\Livewire\Features\SupportFlashMessages;
+use Igniter\Main\Template\Page;
 use Igniter\Admin\Widgets\Form;
 use Igniter\Cart\Http\Middleware\CartMiddleware;
 use Igniter\Flame\Support\Facades\Igniter;
@@ -27,21 +32,22 @@ use Symfony\Component\Finder\Finder;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
-    public function register()
+    #[Override]
+    public function register(): void
     {
         if (!$this->app->runningUnitTests()) {
-            Livewire::componentHook(\Igniter\Orange\Livewire\Features\SupportFlashMessages::class);
+            Livewire::componentHook(SupportFlashMessages::class);
         }
     }
 
-    public function boot()
+    public function boot(): void
     {
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'igniter-orange');
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'igniter.orange');
         $this->loadBladeComponentsFrom(__DIR__.'/View/Components');
         $this->loadLivewireComponentsFrom(__DIR__.'/Livewire');
 
-        ViewFacade::composer('*', function(View $view) {
+        ViewFacade::composer('*', function(View $view): void {
             if (!Igniter::runningInAdmin()) {
                 $view->with([
                     'theme' => controller()->getTheme(),
@@ -57,7 +63,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->defineRoutes();
     }
 
-    protected function loadLivewireComponentsFrom($path): void
+    protected function loadLivewireComponentsFrom(string|array $path): void
     {
         $configurableComponents = [];
 
@@ -79,7 +85,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             }
         }
 
-        resolve(ComponentManager::class)->registerCallback(function($manager) use ($configurableComponents) {
+        resolve(ComponentManager::class)->registerCallback(function($manager) use ($configurableComponents): void {
             foreach ($configurableComponents as $componentClass) {
                 if (method_exists($componentClass, 'componentMeta')) {
                     $manager->registerComponent($componentClass, $componentClass::componentMeta());
@@ -88,14 +94,14 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         });
     }
 
-    protected function loadBladeComponentsFrom($path)
+    protected function loadBladeComponentsFrom(string|array $path)
     {
         $components = (new Finder)->files()->in($path)
             ->name('*.php')
             ->ignoreDotFiles(true)
             ->ignoreVCS(true);
 
-        resolve(ComponentManager::class)->registerCallback(function($manager) use ($components) {
+        resolve(ComponentManager::class)->registerCallback(function($manager) use ($components): void {
             foreach ($components as $component) {
                 $componentName = Str::of($component->getRelativePathname())->before('.php')->kebab()->replace(DIRECTORY_SEPARATOR.'-', '.');
                 $componentClass = Str::of($component->getRelativePathname())->before('.php')->replace('/', '\\')->start('Igniter\\Orange\\View\\Components\\')->toString();
@@ -112,7 +118,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     protected function configurePageAuthentication(): void
     {
         if (!Igniter::runningInAdmin()) {
-            MainController::extend(function($controller) {
+            MainController::extend(function($controller): void {
                 $controller->bindEvent('page.init', function($page) {
                     if (!isset($page->security) || $page->security == 'all') {
                         return;
@@ -130,12 +136,12 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             });
         }
 
-        Event::listen('admin.form.extendFields', function(Form $widget) {
+        Event::listen('admin.form.extendFields', function(Form $widget): void {
             if (!isset($widget->data->fileSource)) {
                 return;
             }
 
-            if ($widget->data->fileSource instanceof \Igniter\Main\Template\Page) {
+            if ($widget->data->fileSource instanceof Page) {
                 $widget->addFields([
                     'settings[security]' => [
                         'tab' => 'igniter::system.themes.text_tab_meta',
@@ -157,14 +163,14 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
     protected function configureGoogleFonts(): void
     {
-        $this->callAfterResolving(GoogleFonts::class, function(GoogleFonts $googleFonts) {
+        $this->callAfterResolving(GoogleFonts::class, function(GoogleFonts $googleFonts): void {
             $themeData = resolve(ThemeManager::class)->getActiveTheme()->getCustomData();
             if (array_get($themeData, 'font-download')) {
                 config()->set('google-fonts.fonts.default', array_get($themeData, 'font-url'));
             }
         });
 
-        Event::listen('assets.combiner.afterBuildBundles', function(Assets $assets, Theme $theme) {
+        Event::listen('assets.combiner.afterBuildBundles', function(Assets $assets, Theme $theme): void {
             if (array_get($theme->getCustomData(), 'font-download')) {
                 config()->set('google-fonts.fonts.default', array_get($theme->getCustomData(), 'font-url'));
 
@@ -179,7 +185,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             ->domain(config('igniter-routes.domain'))
             ->name('igniter.theme.')
             ->prefix(Igniter::uri())
-            ->group(function($router) {
+            ->group(function($router): void {
                 $router->get('logout', Logout::class)->name('account.logout');
             });
     }

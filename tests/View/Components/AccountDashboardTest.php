@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\View\Components;
 
 use Igniter\Cart\Facades\Cart;
@@ -9,7 +11,7 @@ use Igniter\User\Facades\Auth;
 use Igniter\User\Models\Address;
 use Igniter\User\Models\Customer;
 
-it('initializes customer data correctly', function() {
+it('initializes customer data correctly', function(): void {
     $address = mock(Address::class)->makePartial();
     $address->shouldReceive('getKey')->andReturn(1);
     $customer = mock(Customer::class)->makePartial();
@@ -26,7 +28,7 @@ it('initializes customer data correctly', function() {
         ->and($component->formattedAddress)->toBe(format_address($customer->address));
 });
 
-it('handles null customer correctly', function() {
+it('handles null customer correctly', function(): void {
     Auth::shouldReceive('getUser')->andReturn(null);
 
     $component = new AccountDashboard;
@@ -37,7 +39,7 @@ it('handles null customer correctly', function() {
         ->and($component->formattedAddress)->toBe('');
 });
 
-it('returns correct cart count', function() {
+it('returns correct cart count', function(): void {
     Cart::shouldReceive('count')->andReturn(5);
 
     $component = new AccountDashboard;
@@ -47,7 +49,7 @@ it('returns correct cart count', function() {
     expect($cartCount)->toBe(5);
 });
 
-it('returns correct cart total', function() {
+it('returns correct cart total', function(): void {
     Cart::shouldReceive('total')->andReturn(100.0);
 
     $component = new AccountDashboard;
@@ -57,7 +59,7 @@ it('returns correct cart total', function() {
     expect($cartTotal)->toBe(100.0);
 });
 
-it('renders view', function() {
+it('renders view', function(): void {
     $component = new AccountDashboard;
     $view = $component->render();
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\Data;
 
 use Carbon\Carbon;
@@ -10,7 +12,7 @@ use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Orange\Data\MenuItemData;
 
-beforeEach(function() {
+beforeEach(function(): void {
     $this->model = mock(Menu::class)->makePartial();
     $this->model->shouldReceive('getBuyableIdentifier')->andReturn('menu_1');
     $this->model->shouldReceive('getBuyableName')->andReturn('Test Menu');
@@ -19,7 +21,7 @@ beforeEach(function() {
     $this->model->shouldReceive('getAttribute')->with('minimum_qty')->andReturn(1);
 });
 
-it('initializes menu item data correctly', function() {
+it('initializes menu item data correctly', function(): void {
     $menuItemData = new MenuItemData($this->model);
 
     expect($menuItemData->id)->toBe('menu_1')
@@ -29,7 +31,7 @@ it('initializes menu item data correctly', function() {
         ->and($menuItemData->minimumQuantity)->toBe(1);
 });
 
-it('returns correct price', function() {
+it('returns correct price', function(): void {
     $this->model->shouldReceive('getBuyablePrice')->andReturn(15.0);
 
     $menuItemData = new MenuItemData($this->model);
@@ -39,7 +41,7 @@ it('returns correct price', function() {
     expect($price)->toBe(15.0);
 });
 
-it('returns true if menu item has ingredients', function() {
+it('returns true if menu item has ingredients', function(): void {
     $this->model->shouldReceive('extendableGet')->with('ingredients')->andReturn(collect([['status' => 1]]));
 
     $menuItemData = new MenuItemData($this->model);
@@ -49,7 +51,7 @@ it('returns true if menu item has ingredients', function() {
     expect($hasIngredients)->toBeTrue();
 });
 
-it('returns available ingredients', function() {
+it('returns available ingredients', function(): void {
     $this->model->shouldReceive('extendableGet')->with('ingredients')->andReturn(collect([['status' => 1], ['status' => 0]]));
 
     $menuItemData = new MenuItemData($this->model);
@@ -59,7 +61,7 @@ it('returns available ingredients', function() {
     expect($ingredients->count())->toBe(1);
 });
 
-it('returns true if mealtime is available', function() {
+it('returns true if mealtime is available', function(): void {
     Location::shouldReceive('orderDateTime')->andReturn(Carbon::now());
     $this->model->shouldReceive('isAvailable')->andReturn(true);
 
@@ -70,7 +72,7 @@ it('returns true if mealtime is available', function() {
     expect($mealtimeIsAvailable)->toBeTrue();
 });
 
-it('returns true if menu item has options', function() {
+it('returns true if menu item has options', function(): void {
     $this->model->shouldReceive('hasOptions')->andReturn(true);
 
     $menuItemData = new MenuItemData($this->model);
@@ -80,7 +82,7 @@ it('returns true if menu item has options', function() {
     expect($hasOptions)->toBeTrue();
 });
 
-it('returns sorted menu options', function() {
+it('returns sorted menu options', function(): void {
     $this->model->shouldReceive('extendableGet')->with('menu_options')->andReturn(collect([['priority' => 2], ['priority' => 1]]));
 
     $menuItemData = new MenuItemData($this->model);
@@ -90,7 +92,7 @@ it('returns sorted menu options', function() {
     expect($options->first()['priority'])->toBe(1);
 });
 
-it('returns true if menu item has thumb', function() {
+it('returns true if menu item has thumb', function(): void {
     $this->model->shouldReceive('hasMedia')->with('thumb')->andReturn(true);
 
     $menuItemData = new MenuItemData($this->model);
@@ -100,7 +102,7 @@ it('returns true if menu item has thumb', function() {
     expect($hasThumb)->toBeTrue();
 });
 
-it('returns correct thumb URL', function() {
+it('returns correct thumb URL', function(): void {
     $this->model->shouldReceive('getThumbOrBlank')->with([], null)->andReturn('thumb.jpg');
 
     $menuItemData = new MenuItemData($this->model);
@@ -110,7 +112,7 @@ it('returns correct thumb URL', function() {
     expect($thumbUrl)->toBe('thumb.jpg');
 });
 
-it('returns true if special is active', function() {
+it('returns true if special is active', function(): void {
     $special = mock(MenuSpecial::class)->makePartial();
     $special->shouldReceive('active')->andReturnTrue();
     $this->model->shouldReceive('extendableGet')->with('special')->andReturn($special);
@@ -122,7 +124,7 @@ it('returns true if special is active', function() {
     expect($specialIsActive)->toBeTrue();
 });
 
-it('returns correct special days remaining', function() {
+it('returns correct special days remaining', function(): void {
     $special = mock(MenuSpecial::class)->makePartial();
     $special->shouldReceive('daysRemaining')->andReturn(5);
     $this->model->shouldReceive('extendableGet')->with('special')->andReturn($special);
@@ -134,7 +136,7 @@ it('returns correct special days remaining', function() {
     expect($specialDaysRemaining)->toBe(5);
 });
 
-it('returns correct mealtime titles', function() {
+it('returns correct mealtime titles', function(): void {
     $mealTime = Mealtime::factory()->create([
         'mealtime_name' => 'Breakfast',
         'start_time' => '08:00',
@@ -149,7 +151,7 @@ it('returns correct mealtime titles', function() {
     expect($mealtimeTitles)->toContain('Breakfast');
 });
 
-it('returns correct URL for menu item', function() {
+it('returns correct URL for menu item', function(): void {
     $location = LocationModel::factory()->create(['permalink_slug' => 'test-location']);
     $this->model->shouldReceive('getBuyableIdentifier')->andReturn('menu_1');
     $this->model->shouldReceive('extendableGet')->with('locations')->andReturn(collect([$location]));

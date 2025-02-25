@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\View\Components;
 
 use Igniter\Frontend\Models\Banner;
@@ -7,7 +9,7 @@ use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Data\BannerData;
 use Igniter\Orange\View\Components\BannerPreview;
 
-it('initializes banner preview component correctly', function() {
+it('initializes banner preview component correctly', function(): void {
     $component = new BannerPreview('banner_code', 960, 360);
 
     expect(class_uses_recursive($component))->toContain(ConfigurableComponent::class)
@@ -16,7 +18,7 @@ it('initializes banner preview component correctly', function() {
         ->and($component->height)->toBe(360);
 });
 
-it('returns correct component meta', function() {
+it('returns correct component meta', function(): void {
     $meta = BannerPreview::componentMeta();
 
     expect($meta['code'])->toBe('igniter-orange::banner-preview')
@@ -24,7 +26,7 @@ it('returns correct component meta', function() {
         ->and($meta['description'])->toBe('igniter.orange::default.component_banner_preview_desc');
 });
 
-it('defines properties correctly', function() {
+it('defines properties correctly', function(): void {
     $component = new BannerPreview;
     $properties = $component->defineProperties();
 
@@ -39,7 +41,7 @@ it('defines properties correctly', function() {
         ->and($properties['height']['validationRule'])->toBe('required|integer');
 });
 
-it('returns correct code options', function() {
+it('returns correct code options', function(): void {
     Banner::create(['name' => 'Banner 1', 'code' => 'banner1', 'status' => 1]);
 
     $options = BannerPreview::getCodeOptions();
@@ -47,7 +49,7 @@ it('returns correct code options', function() {
     expect($options->all())->toContain('Banner 1');
 });
 
-it('renders view with banner data', function() {
+it('renders view with banner data', function(): void {
     $banner = Banner::create(['name' => 'Banner 1', 'code' => 'banner_code', 'status' => 1]);
 
     $bannerData = new BannerData($banner);
@@ -56,12 +58,13 @@ it('renders view with banner data', function() {
 
     $component = new BannerPreview('banner_code', 960, 360);
     $component->render();
+
     $view = $component->render();
 
     expect($view->getData()['bannerData']->code)->toBe($bannerData->code);
 });
 
-it('should render returns true when banner is loaded', function() {
+it('should render returns true when banner is loaded', function(): void {
     Banner::create(['name' => 'Banner 1', 'code' => 'banner_code', 'status' => 1]);
 
     $component = new BannerPreview('banner_code', 960, 360);
@@ -70,7 +73,7 @@ it('should render returns true when banner is loaded', function() {
     expect($shouldRender)->toBeTrue();
 });
 
-it('should render returns false when banner is not loaded', function() {
+it('should render returns false when banner is not loaded', function(): void {
     $component = new BannerPreview('invalid_code', 960, 360);
     $shouldRender = $component->shouldRender();
 

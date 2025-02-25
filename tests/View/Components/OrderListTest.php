@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\View\Components;
 
 use Igniter\Cart\Models\Order;
@@ -9,7 +11,7 @@ use Igniter\Orange\View\Components\OrderList;
 use Igniter\User\Facades\Auth;
 use Igniter\User\Models\Customer;
 
-it('initializes order list component correctly', function() {
+it('initializes order list component correctly', function(): void {
     $component = new OrderList(10, 'updated_at asc', 'account.orders');
 
     expect(class_uses_recursive($component))->toContain(ConfigurableComponent::class, UsesPage::class)
@@ -18,7 +20,7 @@ it('initializes order list component correctly', function() {
         ->and($component->orderPage)->toBe('account.orders');
 });
 
-it('returns correct component meta', function() {
+it('returns correct component meta', function(): void {
     $meta = OrderList::componentMeta();
 
     expect($meta['code'])->toBe('igniter-orange::order-list')
@@ -26,7 +28,7 @@ it('returns correct component meta', function() {
         ->and($meta['description'])->toBe('igniter.orange::default.component_order_list_desc');
 });
 
-it('defines properties correctly', function() {
+it('defines properties correctly', function(): void {
     $component = new OrderList;
     $properties = $component->defineProperties();
 
@@ -38,7 +40,7 @@ it('defines properties correctly', function() {
         ->and($properties['orderPage']['type'])->toBe('select');
 });
 
-it('returns correct sort order options', function() {
+it('returns correct sort order options', function(): void {
     $options = OrderList::getSortOrderOptions();
 
     expect($options)->toBe([
@@ -57,7 +59,7 @@ it('returns correct sort order options', function() {
     ]);
 });
 
-it('renders view with orders', function() {
+it('renders view with orders', function(): void {
     $customer = Customer::factory()->create();
     $customer->orders()->save($order = Order::factory()->create(['processed' => 1]));
     Auth::shouldReceive('customer')->andReturn($customer);
@@ -68,7 +70,7 @@ it('renders view with orders', function() {
     expect($view->getData()['orders']->pluck('order_id'))->toContain($order->order_id);
 });
 
-it('renders view with empty orders when no authenticated customer', function() {
+it('renders view with empty orders when no authenticated customer', function(): void {
     Auth::shouldReceive('customer')->andReturn(null);
 
     $component = new OrderList;

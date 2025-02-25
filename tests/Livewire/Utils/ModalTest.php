@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\Livewire\Utils;
 
 use Igniter\Orange\Livewire\OrderPreview;
@@ -7,20 +9,20 @@ use Igniter\Orange\Livewire\Utils\Modal;
 use Igniter\System\Facades\Assets;
 use Livewire\Livewire;
 
-it('initializes modal component correctly', function() {
+it('initializes modal component correctly', function(): void {
     Livewire::test(Modal::class)
         ->assertSet('component', null)
         ->assertSet('arguments', [])
         ->assertSet('activeModal', null);
 });
 
-it('adds modal.js asset on mount', function() {
+it('adds modal.js asset on mount', function(): void {
     Assets::shouldReceive('addJs')->with('igniter-orange::/js/modal.js', 'modal-js')->once();
 
     Livewire::test(Modal::class);
 });
 
-it('shows modal with correct component and arguments', function() {
+it('shows modal with correct component and arguments', function(): void {
     Livewire::test(Modal::class)
         ->call('showModal', OrderPreview::class, ['arg1' => 'value1'])
         ->assertSet('component', OrderPreview::class)
@@ -28,7 +30,7 @@ it('shows modal with correct component and arguments', function() {
         ->assertSet('activeModal', 'orange-modal-'.md5(OrderPreview::class.serialize(['arg1' => 'value1'])));
 });
 
-it('resets modal correctly', function() {
+it('resets modal correctly', function(): void {
     Livewire::test(Modal::class)
         ->call('showModal', OrderPreview::class, ['arg1' => 'value1'])
         ->call('resetModal')
@@ -37,7 +39,7 @@ it('resets modal correctly', function() {
         ->assertSet('activeModal', null);
 });
 
-it('renders modal view', function() {
+it('renders modal view', function(): void {
     Livewire::test(Modal::class)
         ->assertViewIs('igniter-orange::livewire.utils.modal');
 });

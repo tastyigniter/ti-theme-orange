@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\Livewire;
 
 use Igniter\Admin\Classes\FormField;
@@ -14,12 +16,12 @@ use Igniter\Orange\Livewire\MenuItemList;
 use Livewire\Livewire;
 use Livewire\WithPagination;
 
-beforeEach(function() {
+beforeEach(function(): void {
     $this->location = LocationModel::factory()->create();
     Location::setModel($this->location);
 });
 
-it('initialize component correctly', function() {
+it('initialize component correctly', function(): void {
     $component = new MenuItemList;
 
     expect(class_uses_recursive($component))
@@ -41,7 +43,7 @@ it('initialize component correctly', function() {
         ->and($component->selectedMenuId)->toBe('');
 });
 
-it('returns correct component meta', function() {
+it('returns correct component meta', function(): void {
     $meta = MenuItemList::componentMeta();
 
     expect($meta['code'])->toBe('igniter-orange::menu-item-list')
@@ -49,7 +51,7 @@ it('returns correct component meta', function() {
         ->and($meta['description'])->toBe('igniter.orange::default.component_menu_item_list_desc');
 });
 
-it('defines properties correctly', function() {
+it('defines properties correctly', function(): void {
     $component = new MenuItemList;
     $properties = $component->defineProperties();
 
@@ -69,7 +71,7 @@ it('defines properties correctly', function() {
     );
 });
 
-it('returns correct sorted order options', function() {
+it('returns correct sorted order options', function(): void {
     $form = new Form(resolve(Themes::class), [
         'model' => new Theme,
     ]);
@@ -83,7 +85,7 @@ it('returns correct sorted order options', function() {
     expect($options)->toBeArray()->not->toBeEmpty();
 });
 
-it('returns empty array for unknown property', function() {
+it('returns empty array for unknown property', function(): void {
     $form = new Form(resolve(Themes::class), [
         'model' => new Theme,
     ]);
@@ -97,12 +99,12 @@ it('returns empty array for unknown property', function() {
     expect($options)->toBe([]);
 });
 
-it('mounts component correctly', function() {
+it('mounts component correctly', function(): void {
     Livewire::test(MenuItemList::class)
         ->assertSet('selectedCategorySlug', '');
 });
 
-it('loads menu items correctly when pagination is disabled', function() {
+it('loads menu items correctly when pagination is disabled', function(): void {
     $menu = Menu::factory()->hasCategories(3)->create();
 
     Livewire::test(MenuItemList::class)
@@ -114,13 +116,13 @@ it('loads menu items correctly when pagination is disabled', function() {
         ->assertSee($menu->menu_name);
 });
 
-it('adds to cart', function() {
+it('adds to cart', function(): void {
     Livewire::test(MenuItemList::class)
         ->call('onAddToCart', 1, 1, false)
         ->assertDispatched('cart-box:add-item');
 });
 
-it('loads add to cart popup', function() {
+it('loads add to cart popup', function(): void {
     Livewire::test(MenuItemList::class)
         ->call('onAddToCart', 1, 1, true)
         ->assertDispatched('openModal');

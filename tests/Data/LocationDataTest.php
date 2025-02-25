@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\Data;
 
 use Carbon\Carbon;
@@ -14,7 +16,7 @@ use Igniter\Local\Models\LocationArea;
 use Igniter\Orange\Data\LocationData;
 use Illuminate\Support\Collection;
 
-beforeEach(function() {
+beforeEach(function(): void {
     $this->model = mock(Location::class)->makePartial();
     $this->model->shouldReceive('getKey')->andReturn('1');
     $this->model->shouldReceive('getName')->andReturn('Test Location');
@@ -25,7 +27,7 @@ beforeEach(function() {
     $this->model->shouldReceive('newWorkingSchedule')->andReturn(mock(WorkingSchedule::class));
 });
 
-it('initializes location data correctly', function() {
+it('initializes location data correctly', function(): void {
     $locationData = new LocationData($this->model);
 
     expect($locationData->id)->toBe('1')
@@ -37,7 +39,7 @@ it('initializes location data correctly', function() {
         ->and($locationData->openingSchedule)->toBeInstanceOf(WorkingSchedule::class);
 });
 
-it('returns current location data', function() {
+it('returns current location data', function(): void {
     LocationFacade::shouldReceive('current')->andReturn($this->model);
 
     $locationData = LocationData::current();
@@ -45,7 +47,7 @@ it('returns current location data', function() {
     expect($locationData)->toBeInstanceOf(LocationData::class);
 });
 
-it('returns correct URL for location page', function() {
+it('returns correct URL for location page', function(): void {
     $this->model->shouldReceive('getAttribute')->with('permalink_slug')->andReturn('test-location');
 
     $locationData = new LocationData($this->model);
@@ -55,7 +57,7 @@ it('returns correct URL for location page', function() {
     expect($url)->toBe(page_url('location-page', ['location' => 'test-location']));
 });
 
-it('returns correct distance', function() {
+it('returns correct distance', function(): void {
     $this->model->shouldReceive('getAttribute')->with('distance')->andReturn(10);
 
     $locationData = new LocationData($this->model);
@@ -65,7 +67,7 @@ it('returns correct distance', function() {
     expect($distance)->toBe(10);
 });
 
-it('returns gallery collection', function() {
+it('returns gallery collection', function(): void {
     $this->model->shouldReceive('getGallery')->andReturn(collect(['image1.jpg', 'image2.jpg']));
 
     $locationData = new LocationData($this->model);
@@ -76,7 +78,7 @@ it('returns gallery collection', function() {
         ->and($gallery->all())->toBe(['image1.jpg', 'image2.jpg']);
 });
 
-it('returns true if location has gallery', function() {
+it('returns true if location has gallery', function(): void {
     $this->model->shouldReceive('hasGallery')->andReturn(true);
 
     $locationData = new LocationData($this->model);
@@ -86,7 +88,7 @@ it('returns true if location has gallery', function() {
     expect($hasGallery)->toBeTrue();
 });
 
-it('returns true if location has thumb', function() {
+it('returns true if location has thumb', function(): void {
     $this->model->shouldReceive('hasMedia')->with('thumb')->andReturn(true);
 
     $locationData = new LocationData($this->model);
@@ -96,7 +98,7 @@ it('returns true if location has thumb', function() {
     expect($hasThumb)->toBeTrue();
 });
 
-it('returns correct thumb URL', function() {
+it('returns correct thumb URL', function(): void {
     $this->model->shouldReceive('getThumbOrBlank')->with([], null)->andReturn('thumb.jpg');
 
     $locationData = new LocationData($this->model);
@@ -106,7 +108,7 @@ it('returns correct thumb URL', function() {
     expect($thumbUrl)->toBe('thumb.jpg');
 });
 
-it('returns correct order type', function() {
+it('returns correct order type', function(): void {
     LocationFacade::shouldReceive('getOrderType')->andReturn(mock(AbstractOrderType::class));
 
     $locationData = new LocationData($this->model);
@@ -116,7 +118,7 @@ it('returns correct order type', function() {
     expect($orderType)->toBeInstanceOf(AbstractOrderType::class);
 });
 
-it('returns correct last order time', function() {
+it('returns correct last order time', function(): void {
     $workingSchedule = mock(WorkingSchedule::class);
     $workingSchedule->shouldReceive('getCloseTime')->andReturn('2023-12-31 23:59:59');
     $orderType = mock(AbstractOrderType::class);
@@ -126,11 +128,11 @@ it('returns correct last order time', function() {
     $locationData = new LocationData($this->model);
     $lastOrderTime = $locationData->lastOrderTime();
 
-    expect($lastOrderTime)->toBeInstanceOf(\Carbon\Carbon::class)
+    expect($lastOrderTime)->toBeInstanceOf(Carbon::class)
         ->and($lastOrderTime->toDateTimeString())->toBe('2023-12-31 23:59:59');
 });
 
-it('returns correct order types collection', function() {
+it('returns correct order types collection', function(): void {
     $this->model->shouldReceive('availableOrderTypes')->andReturn(collect(['delivery', 'collection']));
 
     $locationData = new LocationData($this->model);
@@ -141,7 +143,7 @@ it('returns correct order types collection', function() {
         ->and($orderTypes->all())->toBe(['delivery', 'collection']);
 });
 
-it('returns correct reviews score', function() {
+it('returns correct reviews score', function(): void {
     $model = Location::factory()->create();
     $model->reviews()->create([
         'customer_id' => 1,
@@ -158,7 +160,7 @@ it('returns correct reviews score', function() {
     expect(round($reviewsScore, 1))->toBe(4.7);
 });
 
-it('returns correct reviews count', function() {
+it('returns correct reviews count', function(): void {
     $this->model->shouldReceive('getAttribute')->with('reviews_count')->andReturn(10);
 
     $locationData = new LocationData($this->model);
@@ -168,7 +170,7 @@ it('returns correct reviews count', function() {
     expect($reviewsCount)->toBe(10);
 });
 
-it('returns delivery areas collection', function() {
+it('returns delivery areas collection', function(): void {
     $locationArea = LocationArea::factory()->create();
     $this->model->shouldReceive('listDeliveryAreas')->andReturn(collect([$locationArea]));
 
@@ -180,7 +182,7 @@ it('returns delivery areas collection', function() {
         ->and($deliveryAreas->first())->toBeInstanceOf(CoveredArea::class);
 });
 
-it('returns correct payments array', function() {
+it('returns correct payments array', function(): void {
     $this->model->shouldReceive('listAvailablePayments')->andReturn(collect([['name' => 'Cash'], ['name' => 'Card']]));
 
     $locationData = new LocationData($this->model);
@@ -193,7 +195,7 @@ it('returns correct payments array', function() {
     expect($payments)->toBe(['Cash', 'Card']);
 });
 
-it('returns schedules collection grouped by day', function() {
+it('returns schedules collection grouped by day', function(): void {
     $this->model->shouldReceive('getWorkingHours')->andReturn(collect([
         (object)['day' => Carbon::now()->startOfWeek(), 'hours' => '9:00-17:00'],
         (object)['day' => Carbon::now()->startOfWeek()->addDay(), 'hours' => '10:00-18:00'],
@@ -210,7 +212,7 @@ it('returns schedules collection grouped by day', function() {
         ]);
 });
 
-it('returns correct schedule types array', function() {
+it('returns correct schedule types array', function(): void {
     $orderTypes = mock(OrderTypes::class);
     $orderTypes->shouldReceive('listOrderTypes')->andReturn([
         'delivery' => ['name' => 'Delivery'],
@@ -227,7 +229,7 @@ it('returns correct schedule types array', function() {
         ->and($scheduleTypes[Location::OPENING]['name'])->toBe('igniter.local::default.text_opening');
 });
 
-it('returns correct schedule items array', function() {
+it('returns correct schedule items array', function(): void {
     $scheduleItem = ScheduleItem::create('delivery', [
         'type' => 'daily',
         'open' => '09:00',
@@ -253,7 +255,7 @@ it('returns correct schedule items array', function() {
         ->and($scheduleItems[Location::OPENING]['Mon'][0]['status'])->toBeTrue();
 });
 
-it('returns correct opening schedule', function() {
+it('returns correct opening schedule', function(): void {
     $workingSchedule = mock(WorkingSchedule::class);
     $this->model->shouldReceive('newWorkingSchedule')->with(Location::OPENING)->andReturn($workingSchedule);
 

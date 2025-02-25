@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'title_separator' => ' - ',
     'home_title' => 'Home',
@@ -31,7 +33,7 @@ return [
     'text_choose_address' => 'Choose your address',
     'text_title_checkout' => 'Complete your order at',
     'text_select_time' => 'Select a time',
-    'text_signup_no_account' => 'Don\'t have an account?',
+    'text_signup_no_account' => "Don't have an account?",
     'text_login_has_account' => 'Already have an account?',
     'text_logged_in' => 'Already have an account? <a href="%s">Login Here</a>',
     'text_logged_out' => 'Welcome back <b>%s</b>, Not You? <a href="%s">Logout</a>',
@@ -46,7 +48,7 @@ return [
     'text_guest' => 'Guest',
     'text_login' => 'Log In',
     'text_no_delivery_address' => 'No delivery address provided',
-    'text_register' => 'Register <small>It\'s easy and always will be.</small>',
+    'text_register' => "Register <small>It's easy and always will be.</small>",
     'text_forgot' => 'Forgot password?',
 
     'menu_menu' => 'View Menu',

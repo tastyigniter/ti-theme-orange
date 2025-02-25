@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\View\Components;
 
 use Igniter\Cart\Cart;
@@ -7,7 +9,7 @@ use Igniter\Cart\Classes\CartManager;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\View\Components\CartPreview;
 
-it('returns correct component meta', function() {
+it('returns correct component meta', function(): void {
     $meta = CartPreview::componentMeta();
 
     expect($meta['code'])->toBe('igniter-orange::cart-preview')
@@ -15,7 +17,7 @@ it('returns correct component meta', function() {
         ->and($meta['description'])->toBe('igniter.orange::default.component_cart_preview_desc');
 });
 
-it('renders view with cart data', function() {
+it('renders view with cart data', function(): void {
     $cart = mock(Cart::class);
     $cartManager = mock(CartManager::class);
     $cartManager->shouldReceive('getCart')->andReturn($cart);

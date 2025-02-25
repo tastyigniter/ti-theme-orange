@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Igniter\Cart\Facades\Cart;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Livewire\AccountSettings;
@@ -7,14 +9,14 @@ use Igniter\User\Facades\Auth;
 use Igniter\User\Models\Customer;
 use Livewire\Livewire;
 
-beforeEach(function() {
+beforeEach(function(): void {
     $this->customer = Customer::factory()->create([
         'first_name' => 'Test',
         'last_name' => 'User',
     ]);
 });
 
-it('initialize component correctly', function() {
+it('initialize component correctly', function(): void {
     $component = new AccountSettings;
 
     expect(class_uses_recursive($component))
@@ -22,7 +24,7 @@ it('initialize component correctly', function() {
         ->and($component->loginPage)->toBe('account.login');
 });
 
-it('returns correct component meta', function() {
+it('returns correct component meta', function(): void {
     $meta = AccountSettings::componentMeta();
 
     expect($meta['code'])->toBe('igniter-orange::account-settings')
@@ -30,7 +32,7 @@ it('returns correct component meta', function() {
         ->and($meta['description'])->toBe('igniter.orange::default.component_account_settings_desc');
 });
 
-it('defines properties correctly', function() {
+it('defines properties correctly', function(): void {
     $component = new AccountSettings;
     $properties = $component->defineProperties();
 
@@ -39,7 +41,7 @@ it('defines properties correctly', function() {
         ->and($properties['loginPage']['options'])->toBe([AccountSettings::class, 'getThemePageOptions']);
 });
 
-it('mounts correctly', function() {
+it('mounts correctly', function(): void {
     Livewire::actingAs($this->customer, 'igniter-customer')
         ->test(AccountSettings::class)
         ->assertSet('form.first_name', $this->customer->first_name)
@@ -48,7 +50,7 @@ it('mounts correctly', function() {
         ->assertSet('form.email', $this->customer->email);
 });
 
-it('gets cart count correctly', function() {
+it('gets cart count correctly', function(): void {
     Cart::shouldReceive('count')->andReturn(5);
 
     Livewire::actingAs($this->customer, 'igniter-customer')
@@ -57,7 +59,7 @@ it('gets cart count correctly', function() {
         ->assertReturned(5);
 });
 
-it('gets cart total correctly', function() {
+it('gets cart total correctly', function(): void {
     Cart::shouldReceive('total')->andReturn(100);
 
     Livewire::actingAs($this->customer, 'igniter-customer')
@@ -66,7 +68,7 @@ it('gets cart total correctly', function() {
         ->assertReturned(100);
 });
 
-it('updates account settings correctly', function() {
+it('updates account settings correctly', function(): void {
     Livewire::actingAs($this->customer, 'igniter-customer')
         ->test(AccountSettings::class)
         ->set('form.first_name', 'New')
@@ -76,7 +78,7 @@ it('updates account settings correctly', function() {
     expect($this->customer->first_name)->toBe('New');
 });
 
-it('logs out if email is changed', function() {
+it('logs out if email is changed', function(): void {
     Livewire::actingAs($this->customer, 'igniter-customer')
         ->test(AccountSettings::class)
         ->set('form.email', 'new@email.com')

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\Livewire;
 
 use Igniter\Cart\Models\Order;
@@ -9,7 +11,7 @@ use Igniter\Reservation\Models\Reservation;
 use Igniter\User\Models\Customer;
 use Livewire\Livewire;
 
-it('returns correct component meta', function() {
+it('returns correct component meta', function(): void {
     $meta = LeaveReview::componentMeta();
 
     expect($meta['code'])->toBe('igniter-orange::leave-review')
@@ -17,14 +19,14 @@ it('returns correct component meta', function() {
         ->and($meta['description'])->toBe('igniter.orange::default.component_leave_review_desc');
 });
 
-it('defines properties correctly', function() {
+it('defines properties correctly', function(): void {
     $component = new LeaveReview;
     $properties = $component->defineProperties();
 
     expect(array_keys($properties))->toContain('type');
 });
 
-it('mounts and prepare props', function() {
+it('mounts and prepare props', function(): void {
     Livewire::test(LeaveReview::class)
         ->assertSet('type', 'order')
         ->assertSet('hashParamName', 'hash')
@@ -35,7 +37,7 @@ it('mounts and prepare props', function() {
         ->assertSet('service', 0);
 });
 
-it('errors when leaving a review for an incomplete order', function() {
+it('errors when leaving a review for an incomplete order', function(): void {
     $customer = Customer::factory()->create();
     $order = Order::factory()->create([
         'customer_id' => $customer->getKey(),
@@ -52,7 +54,7 @@ it('errors when leaving a review for an incomplete order', function() {
         ->assertHasErrors(['comment']);
 });
 
-it('leaves review for order', function() {
+it('leaves review for order', function(): void {
     $customer = Customer::factory()->create();
     $order = Order::factory()->create([
         'customer_id' => $customer->getKey(),
@@ -81,7 +83,7 @@ it('leaves review for order', function() {
     ]))->not->toBeNull();
 });
 
-it('leaves review for reservation', function() {
+it('leaves review for reservation', function(): void {
     $customer = Customer::factory()->create();
     $reservation = Reservation::factory()->create([
         'customer_id' => $customer->getKey(),
@@ -108,4 +110,3 @@ it('leaves review for reservation', function() {
         'service' => 5,
     ]))->not->toBeNull();
 });
-

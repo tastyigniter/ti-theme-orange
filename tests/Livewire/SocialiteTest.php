@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\Livewire;
 
 use Igniter\Main\Traits\ConfigurableComponent;
@@ -8,7 +10,7 @@ use Igniter\Orange\Livewire\Socialite;
 use Igniter\Socialite\Classes\ProviderManager;
 use Livewire\Livewire;
 
-it('initialize component correctly', function() {
+it('initialize component correctly', function(): void {
     $component = new Socialite;
 
     expect(class_uses_recursive($component))
@@ -20,7 +22,7 @@ it('initialize component correctly', function() {
         ->and($component->links)->toBeArray();
 });
 
-it('returns correct component meta', function() {
+it('returns correct component meta', function(): void {
     $meta = Socialite::componentMeta();
 
     expect($meta['code'])->toBe('igniter-orange::socialite')
@@ -28,7 +30,7 @@ it('returns correct component meta', function() {
         ->and($meta['description'])->toBe('igniter.orange::default.component_socialite_desc');
 });
 
-it('defines properties correctly', function() {
+it('defines properties correctly', function(): void {
     $component = new Socialite;
     $properties = $component->defineProperties();
 
@@ -39,7 +41,7 @@ it('defines properties correctly', function() {
     );
 });
 
-it('mounts and loads links', function() {
+it('mounts and loads links', function(): void {
     $providerManager = mock(ProviderManager::class);
     $providerManager->shouldReceive('listProviderLinks')->andReturn(collect([
         'facebook' => 'https://facebook.com',
@@ -48,12 +50,10 @@ it('mounts and loads links', function() {
     app()->instance(ProviderManager::class, $providerManager);
 
     Livewire::test(Socialite::class)
-        ->assertSet('links', function($links) {
-            return is_array($links);
-        });
+        ->assertSet('links', fn($links): bool => is_array($links));
 });
 
-it('confirms email', function() {
+it('confirms email', function(): void {
     $providerManager = mock(ProviderManager::class);
     $providerManager->shouldReceive('getProviderData')->andReturn((object)['user' => (object)['email' => 'test@example.com']]);
     $providerManager->shouldReceive('setProviderData')->once();

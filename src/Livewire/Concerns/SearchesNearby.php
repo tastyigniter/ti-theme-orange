@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire\Concerns;
 
 use Exception;
@@ -32,19 +34,19 @@ trait SearchesNearby
 
     protected string $searchField = 'searchQuery';
 
-    public function definePropertiesSearchNearby()
+    public function definePropertiesSearchNearby(): array
     {
         return [
             'menusPage' => [
                 'label' => 'Page to redirect to when a location is found',
                 'type' => 'select',
-                'options' => [static::class, 'getThemePageOptions'],
+                'options' => static::getThemePageOptions(...),
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
         ];
     }
 
-    public function mountSearchesNearby()
+    public function mountSearchesNearby(): void
     {
         $this->searchQuery = Location::getSession('searchQuery');
         $this->deliveryAddress = Auth::customer()?->address?->formatted_address;
@@ -107,10 +109,11 @@ trait SearchesNearby
         }
 
         $this->searchField = 'searchQuery';
+        return null;
     }
 
     #[On('userPositionUpdated')]
-    public function onUserPositionUpdated($position = null)
+    public function onUserPositionUpdated($position = null): void
     {
         $this->searchPoint = $position;
 
@@ -146,7 +149,6 @@ trait SearchesNearby
 
     /**
      * @return GeoliteLocation
-     * @throws \Igniter\Flame\Exception\ApplicationException
      */
     protected function geocodeSearchQuery($searchQuery)
     {

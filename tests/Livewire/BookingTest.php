@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\Livewire;
 
 use Igniter\Cart\Classes\AbstractOrderType;
@@ -12,7 +14,7 @@ use Igniter\Orange\Livewire\Booking;
 use Igniter\User\Models\Customer;
 use Livewire\Livewire;
 
-beforeEach(function() {
+beforeEach(function(): void {
     $location = LocationModel::factory()->create();
     $orderTypeMock = $this->mock(AbstractOrderType::class);
     $orderTypeMock->shouldReceive('getSchedule')->andReturn($location->newWorkingSchedule(LocationModel::DELIVERY, 5));
@@ -21,7 +23,7 @@ beforeEach(function() {
     Location::shouldReceive('getOrderType')->andReturn($orderTypeMock);
 });
 
-it('initialize component correctly', function() {
+it('initialize component correctly', function(): void {
     $component = new Booking;
 
     expect(class_uses_recursive($component))
@@ -43,7 +45,7 @@ it('initialize component correctly', function() {
         ->and($component->time)->toBeNull();
 });
 
-it('returns correct component meta', function() {
+it('returns correct component meta', function(): void {
     $meta = Booking::componentMeta();
 
     expect($meta['code'])->toBe('igniter-orange::booking')
@@ -51,7 +53,7 @@ it('returns correct component meta', function() {
         ->and($meta['description'])->toBe('igniter.orange::default.component_booking_desc');
 });
 
-it('defines properties correctly', function() {
+it('defines properties correctly', function(): void {
     $component = new Booking;
     $properties = $component->defineProperties();
 
@@ -66,7 +68,7 @@ it('defines properties correctly', function() {
     );
 });
 
-it('mounts as customer correctly', function() {
+it('mounts as customer correctly', function(): void {
     app()->setLocale('fr');
     $this->customer = Customer::factory()->create();
     $component = Livewire::actingAs($this->customer, 'igniter-customer')
@@ -83,7 +85,7 @@ it('mounts as customer correctly', function() {
     expect($component->get('guest'))->toBe($component->get('minGuestSize'));
 });
 
-it('mounts as guest correctly', function() {
+it('mounts as guest correctly', function(): void {
     $component = Livewire::test(Booking::class)
         ->assertNotSet('startDate', null)
         ->assertNotSet('endDate', null)
@@ -97,7 +99,7 @@ it('mounts as guest correctly', function() {
     expect($component->get('guest'))->toBe($component->get('minGuestSize'));
 });
 
-it('updates date and reset timeslots', function() {
+it('updates date and reset timeslots', function(): void {
     $component = Livewire::test(Booking::class);
 
     expect($component->get('timeslots')->isNotEmpty())->toBeTrue();
@@ -107,13 +109,13 @@ it('updates date and reset timeslots', function() {
     expect($component->get('timeslots')->isEmpty())->toBeTrue();
 });
 
-it('returns reduced timeslots', function() {
+it('returns reduced timeslots', function(): void {
     $component = Livewire::test(Booking::class);
 
     expect($component->get('reducedTimeslots'))->toHaveLength($component->get('noOfSlots'));
 });
 
-it('returns disabled dates', function() {
+it('returns disabled dates', function(): void {
     Location::current()->reloadRelations();
 
     WorkingHour::query()
@@ -126,7 +128,7 @@ it('returns disabled dates', function() {
     expect($component->get('disabledDates'))->not->toBeEmpty();
 });
 
-it('returns available dates', function() {
+it('returns available dates', function(): void {
     Location::current()->reloadRelations();
 
     $component = Livewire::test(Booking::class);
@@ -134,7 +136,7 @@ it('returns available dates', function() {
     expect($component->get('dates'))->toHaveCount(29);
 });
 
-it('saves and validate booking', function() {
+it('saves and validate booking', function(): void {
     Livewire::test(Booking::class)
         ->set('guest', 5)
         ->set('date', '2022-12-31')
@@ -143,7 +145,7 @@ it('saves and validate booking', function() {
         ->assertSet('pickerStep', Booking::STEP_TIMESLOT);
 });
 
-it('selects time and move to booking step', function() {
+it('selects time and move to booking step', function(): void {
     Livewire::test(Booking::class)
         ->set('guest', 5)
         ->set('date', '2022-12-31')
@@ -152,7 +154,7 @@ it('selects time and move to booking step', function() {
         ->assertSet('pickerStep', Booking::STEP_BOOKING);
 });
 
-it('completes booking and reset', function() {
+it('completes booking and reset', function(): void {
     Livewire::test(Booking::class)
         ->set('guest', 5)
         ->set('date', '2022-12-31')

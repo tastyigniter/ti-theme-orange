@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\Livewire;
 
+use Override;
 use Igniter\Cart\Classes\OrderManager;
 use Igniter\Cart\Facades\Cart;
 use Igniter\Cart\Models\Menu;
@@ -52,7 +55,7 @@ function setupCheckout()
     ];
 }
 
-it('initialize component correctly', function() {
+it('initialize component correctly', function(): void {
     $component = new Checkout;
 
     expect(class_uses_recursive($component))
@@ -69,7 +72,7 @@ it('initialize component correctly', function() {
         ->and($component->checkoutStep)->toBe('details');
 });
 
-it('returns correct component meta', function() {
+it('returns correct component meta', function(): void {
     $meta = Checkout::componentMeta();
 
     expect($meta['code'])->toBe('igniter-orange::checkout')
@@ -77,7 +80,7 @@ it('returns correct component meta', function() {
         ->and($meta['description'])->toBe('igniter.orange::default.component_checkout_desc');
 });
 
-it('defines properties correctly', function() {
+it('defines properties correctly', function(): void {
     $component = new Checkout;
     $properties = $component->defineProperties();
 
@@ -94,7 +97,7 @@ it('defines properties correctly', function() {
     );
 });
 
-it('can mount and prepare props', function() {
+it('can mount and prepare props', function(): void {
     Event::fake(['igniter.orange.checkCheckoutSecurity']);
     $location = Location::factory()->create();
     $menuItem = Menu::factory()->create();
@@ -121,18 +124,16 @@ it('can mount and prepare props', function() {
     LocationFacade::updateUserPosition($userPosition);
 
     Livewire::test(Checkout::class)
-        ->assertSet('fields', function($fields) {
-            return [
-                'first_name', 'last_name', 'email', 'telephone',
-                'comment', 'delivery_comment', 'payment', 'termsAgreed',
-                'address_1', 'city', 'state', 'postcode',
-            ] === array_keys($fields);
-        });
+        ->assertSet('fields', fn($fields): bool => [
+            'first_name', 'last_name', 'email', 'telephone',
+            'comment', 'delivery_comment', 'payment', 'termsAgreed',
+            'address_1', 'city', 'state', 'postcode',
+        ] === array_keys($fields));
 
     Event::assertDispatched('igniter.orange.checkCheckoutSecurity');
 });
 
-it('mount redirects when order is already processed', function() {
+it('mount redirects when order is already processed', function(): void {
     Event::fake([
         'igniter.orange.checkCheckoutSecurity',
         'admin.order.paymentProcessed',
@@ -147,7 +148,7 @@ it('mount redirects when order is already processed', function() {
         ->assertRedirect(page_url('checkout.success', ['hash' => $order->hash]));
 });
 
-it('mount redirects when checkout security checks fails', function() {
+it('mount redirects when checkout security checks fails', function(): void {
     Event::fake(['igniter.orange.checkCheckoutSecurity']);
     $result = setupCheckout();
 
@@ -165,7 +166,7 @@ it('mount redirects when checkout security checks fails', function() {
     expect(flash()->messages()->first())->toBeNull();
 });
 
-it('onValidate fails validation when checkout security checks fails', function() {
+it('onValidate fails validation when checkout security checks fails', function(): void {
     Event::fake(['igniter.orange.checkCheckoutSecurity']);
     $result = setupCheckout();
 
@@ -184,7 +185,7 @@ it('onValidate fails validation when checkout security checks fails', function()
         currency_format(60.00)));
 });
 
-it('onValidate redirects to success page when order is already processed', function() {
+it('onValidate redirects to success page when order is already processed', function(): void {
     Event::fake([
         'igniter.orange.checkCheckoutSecurity',
         'admin.order.paymentProcessed',
@@ -201,7 +202,7 @@ it('onValidate redirects to success page when order is already processed', funct
         ->assertRedirect(page_url('checkout.success', ['hash' => $order->hash]));
 });
 
-it('onValidate fails validation when selected payment is invalid', function() {
+it('onValidate fails validation when selected payment is invalid', function(): void {
     setupCheckout();
     $order = Order::factory()->create([
         'order_type' => Location::COLLECTION,
@@ -217,7 +218,7 @@ it('onValidate fails validation when selected payment is invalid', function() {
         ->assertHasErrors(['payment' => [lang('igniter.cart::default.checkout.error_invalid_payment')]]);
 });
 
-it('onValidate fails validation when delivery address is invalid', function() {
+it('onValidate fails validation when delivery address is invalid', function(): void {
     setupCheckout();
 
     Geocoder::shouldReceive('geocode')->andReturn(collect([
@@ -235,7 +236,7 @@ it('onValidate fails validation when delivery address is invalid', function() {
         ->assertHasErrors(['delivery_address' => [lang('igniter.local::default.alert_missing_street_address')]]);
 });
 
-it('onValidate dispatches an event on success', function() {
+it('onValidate dispatches an event on success', function(): void {
     Event::fake(['igniter.orange.validateCheckout']);
     setupCheckout();
     $order = Order::factory()->create([
@@ -259,7 +260,7 @@ it('onValidate dispatches an event on success', function() {
     Event::assertDispatched('igniter.orange.validateCheckout');
 });
 
-it('onConfirm fails validation when checkout security fails', function() {
+it('onConfirm fails validation when checkout security fails', function(): void {
     Event::fake(['igniter.orange.checkCheckoutSecurity']);
     $result = setupCheckout();
 
@@ -279,7 +280,7 @@ it('onConfirm fails validation when checkout security fails', function() {
     expect(flash()->messages()->first())->toBeNull();
 });
 
-it('onConfirm redirects to success page when order is already processed', function() {
+it('onConfirm redirects to success page when order is already processed', function(): void {
     Event::fake([
         'igniter.orange.checkCheckoutSecurity',
         'admin.order.paymentProcessed',
@@ -296,7 +297,7 @@ it('onConfirm redirects to success page when order is already processed', functi
         ->assertRedirect(page_url('checkout.success', ['hash' => $order->hash]));
 });
 
-it('onConfirm redirects to payment when in two page checkout mode', function() {
+it('onConfirm redirects to payment when in two page checkout mode', function(): void {
     Event::fake(['igniter.orange.validateCheckout']);
     setupCheckout();
     $order = Order::factory()->create([
@@ -322,7 +323,7 @@ it('onConfirm redirects to payment when in two page checkout mode', function() {
     Event::assertDispatched('igniter.orange.validateCheckout');
 });
 
-it('onConfirm errors when order total is below payment minimum order total', function() {
+it('onConfirm errors when order total is below payment minimum order total', function(): void {
     Event::fake(['igniter.orange.validateCheckout']);
     setupCheckout();
     $order = Order::factory()->create([
@@ -351,7 +352,7 @@ it('onConfirm errors when order total is below payment minimum order total', fun
         )]]);
 });
 
-it('onConfirm does not redirect when payment gateway returns false', function() {
+it('onConfirm does not redirect when payment gateway returns false', function(): void {
     Event::fake(['igniter.orange.validateCheckout']);
     setupCheckout();
     $order = Order::factory()->create([
@@ -376,7 +377,7 @@ it('onConfirm does not redirect when payment gateway returns false', function() 
         ->assertNoRedirect();
 });
 
-it('onConfirm redirects when payment gateway redirects', function() {
+it('onConfirm redirects when payment gateway redirects', function(): void {
     Event::fake(['igniter.orange.validateCheckout']);
     setupCheckout();
     $order = Order::factory()->create([
@@ -402,7 +403,7 @@ it('onConfirm redirects when payment gateway redirects', function() {
         ->assertRedirect('http://example.com');
 });
 
-it('onConfirm redirects to success page correctly', function() {
+it('onConfirm redirects to success page correctly', function(): void {
     Event::fake(['igniter.orange.validateCheckout']);
     setupCheckout();
     $orderManager = resolve(OrderManager::class);
@@ -424,7 +425,7 @@ it('onConfirm redirects to success page correctly', function() {
         ->assertRedirect(page_url('checkout.success', ['hash' => $order->hash]));
 });
 
-it('updates selected payment correctly', function() {
+it('updates selected payment correctly', function(): void {
     Event::fake(['igniter.orange.validateCheckout']);
     setupCheckout();
 
@@ -434,7 +435,7 @@ it('updates selected payment correctly', function() {
         ->assertSet('fields.payment', 'cod');
 });
 
-it('deletes customer payment profile correctly', function() {
+it('deletes customer payment profile correctly', function(): void {
     Event::fake(['igniter.orange.validateCheckout']);
     setupCheckout();
     $customer = Customer::factory()->create();
@@ -455,7 +456,8 @@ it('deletes customer payment profile correctly', function() {
 
 class TestPaymentWithFalse extends Cod
 {
-    public function processPaymentForm($data, $host, $order)
+    #[Override]
+    public function processPaymentForm($data, $host, $order): bool
     {
         return false;
     }
@@ -463,6 +465,7 @@ class TestPaymentWithFalse extends Cod
 
 class TestPaymentReturnsRedirect extends Cod
 {
+    #[Override]
     public function processPaymentForm($data, $host, $order)
     {
         return redirect('http://example.com');
@@ -473,10 +476,12 @@ class TestPaymentWithProfile extends Cod
 {
     use WithPaymentProfile;
 
+    #[Override]
     public function paymentProfileExists(): bool
     {
         return true;
     }
 
+    #[Override]
     public function deletePaymentProfile() {}
 }

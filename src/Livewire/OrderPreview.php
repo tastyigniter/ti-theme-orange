@@ -1,7 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire;
 
+use Livewire\Component;
+use Throwable;
 use Igniter\Cart\Classes\CartManager;
 use Igniter\Cart\Classes\OrderManager;
 use Igniter\Flame\Exception\ApplicationException;
@@ -12,7 +16,7 @@ use Igniter\User\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\ValidationException;
 
-final class OrderPreview extends \Livewire\Component
+final class OrderPreview extends Component
 {
     use ConfigurableComponent;
     use UsesPage;
@@ -63,25 +67,25 @@ final class OrderPreview extends \Livewire\Component
             'loginPage' => [
                 'label' => 'Page to redirect to when the user clicks the login button.',
                 'type' => 'select',
-                'options' => [static::class, 'getThemePageOptions'],
+                'options' => self::getThemePageOptions(...),
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
             'ordersPage' => [
                 'label' => 'Page to redirect to when viewing as logged in customer and an order is incomplete or not found.',
                 'type' => 'select',
-                'options' => [static::class, 'getThemePageOptions'],
+                'options' => self::getThemePageOptions(...),
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
             'checkoutPage' => [
                 'label' => 'Page to redirect to when viewing as guest and an order is incomplete or not found.',
                 'type' => 'select',
-                'options' => [static::class, 'getThemePageOptions'],
+                'options' => self::getThemePageOptions(...),
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
             'menusPage' => [
                 'label' => 'Page to redirect to when the user clicks the reorder button.',
                 'type' => 'select',
-                'options' => [static::class, 'getThemePageOptions'],
+                'options' => self::getThemePageOptions(...),
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
             'hideReorderBtn' => [
@@ -100,7 +104,7 @@ final class OrderPreview extends \Livewire\Component
         ]);
     }
 
-    public function boot()
+    public function boot(): void
     {
         $this->orderManager = resolve(OrderManager::class);
     }
@@ -118,6 +122,7 @@ final class OrderPreview extends \Livewire\Component
         if ($this->orderManager->isCurrentOrderId($processedOrder->order_id)) {
             $this->orderManager->clearOrder();
         }
+        return null;
     }
 
     public function getStatusWidthForProgressBars()
@@ -148,7 +153,7 @@ final class OrderPreview extends \Livewire\Component
         return $result;
     }
 
-    public function showCancelButton()
+    public function showCancelButton(): bool
     {
         return $this->getProcessedOrder() && !$this->getProcessedOrder()->isCanceled() && $this->getProcessedOrder()->isCancelable();
     }
@@ -157,7 +162,7 @@ final class OrderPreview extends \Livewire\Component
     {
         $order = $this->getProcessedOrder();
 
-        rescue(function() use ($order) {
+        rescue(function() use ($order): void {
             $cartManager = resolve(CartManager::class);
             $currentInstance = $cartManager->getCart()->currentInstance();
             $cartManager->cartInstance($order->location_id);
@@ -169,7 +174,7 @@ final class OrderPreview extends \Livewire\Component
             if ($notes) {
                 throw new ApplicationException(implode(PHP_EOL, $notes));
             }
-        }, function(\Throwable $ex) {
+        }, function(Throwable $ex): never {
             throw ValidationException::withMessages(['onReOrder' => $ex->getMessage()]);
         });
 
@@ -183,7 +188,7 @@ final class OrderPreview extends \Livewire\Component
         ]));
     }
 
-    public function onCancel()
+    public function onCancel(): void
     {
         $order = $this->getProcessedOrder();
 
@@ -216,7 +221,7 @@ final class OrderPreview extends \Livewire\Component
         return $this->order = $order;
     }
 
-    protected function getLoginPageUrl()
+    protected function getLoginPageUrl(): string
     {
         $currentUrl = str_before(request()->fullUrl(), request()->root());
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire;
 
 use Igniter\Main\Traits\ConfigurableComponent;
@@ -38,13 +40,13 @@ final class Socialite extends Component
             'errorPage' => [
                 'label' => 'The error page',
                 'type' => 'select',
-                'options' => [static::class, 'getThemePageOptions'],
+                'options' => self::getThemePageOptions(...),
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
             'successPage' => [
                 'label' => 'The success page',
                 'type' => 'select',
-                'options' => [static::class, 'getThemePageOptions'],
+                'options' => self::getThemePageOptions(...),
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
             'confirm' => [
@@ -59,7 +61,7 @@ final class Socialite extends Component
         return view('igniter-orange::livewire.socialite');
     }
 
-    public function mount()
+    public function mount(): void
     {
         $this->links = $this->loadLinks();
     }
@@ -87,8 +89,6 @@ final class Socialite extends Component
 
     protected function loadLinks()
     {
-        return resolve(ProviderManager::class)->listProviderLinks()->mapWithKeys(function($url, $code) {
-            return [$code => $url.'?success='.page_url($this->successPage).'&error='.page_url($this->errorPage)];
-        })->all();
+        return resolve(ProviderManager::class)->listProviderLinks()->mapWithKeys(fn($url, $code) => [$code => $url.'?success='.page_url($this->successPage).'&error='.page_url($this->errorPage)])->all();
     }
 }

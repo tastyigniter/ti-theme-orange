@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire;
 
 use Igniter\Cart\Classes\CartManager;
@@ -28,7 +30,7 @@ final class CartBox extends Component
     public ?string $couponCode = null;
 
     /**
-     * @var \Igniter\Cart\Classes\CartManager
+     * @var CartManager
      */
     protected $cartManager;
 
@@ -49,7 +51,7 @@ final class CartBox extends Component
             'checkoutPage' => [
                 'label' => 'Page to redirect to when the checkout button is clicked.',
                 'type' => 'select',
-                'options' => [static::class, 'getThemePageOptions'],
+                'options' => self::getThemePageOptions(...),
                 'default' => 'checkout.checkout',
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\/]+$/i',
             ],
@@ -65,7 +67,7 @@ final class CartBox extends Component
         ]);
     }
 
-    public function mount()
+    public function mount(): void
     {
         Assets::addJs('igniter-orange::/js/cart-item-options.js', 'cart-item-options-js');
         Assets::addJs('igniter-orange::/js/cart-item.js', 'cart-item-js');
@@ -73,25 +75,25 @@ final class CartBox extends Component
         $this->prepareProps();
     }
 
-    public function boot()
+    public function boot(): void
     {
         $this->cartManager = resolve(CartManager::class);
     }
 
-    public function updated($property, $value)
+    public function updated($property, int|float $value): void
     {
         if ($property === 'tipAmount') {
             $this->onApplyTip($value, true);
         }
     }
 
-    public function onOpenItemModal(string $rowId, int $menuId)
+    public function onOpenItemModal(string $rowId, int $menuId): void
     {
         $this->dispatch('showModal', component: 'igniter-orange::cart-item-modal', arguments: ['menuId' => $menuId, 'rowId' => $rowId]);
     }
 
     #[On('cart-box:add-item')]
-    public function onUpdateItem(int $menuId, ?string $rowId = null, ?int $quantity = null)
+    public function onUpdateItem(int $menuId, ?string $rowId = null, ?int $quantity = null): void
     {
         $this->cartManager->addOrUpdateCartItem([
             'menuId' => $menuId,
@@ -100,17 +102,17 @@ final class CartBox extends Component
         ]);
     }
 
-    public function onUpdateItemQuantity(string $rowId, string $action = 'plus')
+    public function onUpdateItemQuantity(string $rowId, string $action = 'plus'): void
     {
         $this->cartManager->updateCartItemQty($rowId, $action);
     }
 
-    public function onApplyCoupon()
+    public function onApplyCoupon(): void
     {
         $this->cartManager->applyCouponCondition($this->couponCode);
     }
 
-    public function onApplyTip(int|float $amount, bool $isCustom = false)
+    public function onApplyTip(int|float $amount, bool $isCustom = false): void
     {
         $this->cartManager->applyCondition('tip', [
             'isCustom' => $isCustom,
@@ -120,7 +122,7 @@ final class CartBox extends Component
         $this->prepareProps();
     }
 
-    public function onRemoveCondition(string $conditionName)
+    public function onRemoveCondition(string $conditionName): void
     {
         throw_unless(strlen($conditionName), new ApplicationException(
             lang('igniter.cart::default.alert_condition_not_found'),
@@ -146,18 +148,18 @@ final class CartBox extends Component
         return Redirect::to(page_url($this->checkoutPage));
     }
 
-    public function locationIsClosed()
+    public function locationIsClosed(): bool
     {
         return !Location::checkOrderTime() || Location::checkNoOrderTypeAvailable();
     }
 
-    public function hasMinimumOrder()
+    public function hasMinimumOrder(): bool
     {
         return $this->cartManager->cartTotalIsBelowMinimumOrder()
             || $this->cartManager->deliveryChargeIsUnavailable();
     }
 
-    public function buttonLabel($checkoutComponent = null)
+    public function buttonLabel($checkoutComponent = null): string
     {
         if ($this->locationIsClosed()) {
             return lang('igniter.cart::default.text_is_closed');
@@ -175,7 +177,7 @@ final class CartBox extends Component
         return Location::getId();
     }
 
-    public function tippingEnabled()
+    public function tippingEnabled(): bool
     {
         return CartSettings::tippingEnabled();
     }
@@ -185,7 +187,7 @@ final class CartBox extends Component
         return CartSettings::tippingAmounts();
     }
 
-    protected function prepareProps()
+    protected function prepareProps(): void
     {
         $this->couponCode = $this->cartManager->getCart()->getCondition('coupon')?->getMetaData('code');
 

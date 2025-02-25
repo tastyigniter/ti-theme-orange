@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\View\Components;
 
+use Override;
 use Igniter\Frontend\Models\Banner;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Data\BannerData;
@@ -56,6 +59,7 @@ final class BannerPreview extends Component
         return Banner::query()->whereIsEnabled()->dropdown('name');
     }
 
+    #[Override]
     public function render()
     {
         return view('igniter-orange::components.banner-preview', [
@@ -63,6 +67,7 @@ final class BannerPreview extends Component
         ]);
     }
 
+    #[Override]
     public function shouldRender()
     {
         return $this->loadBanner() !== null;
@@ -70,14 +75,14 @@ final class BannerPreview extends Component
 
     protected function loadBanner()
     {
-        if (isset($this->banner)) {
+        if ($this->banner instanceof BannerData) {
             return $this->banner;
         }
 
         /** @var Banner $model */
         $model = Banner::query()->whereIsEnabled()->whereCode($this->code)->first();
 
-        return $this->banner = $model ? tap(new BannerData($model), function($bannerData) {
+        return $this->banner = $model ? tap(new BannerData($model), function($bannerData): void {
             $bannerData->imageWidth = $this->width;
             $bannerData->imageHeight = $this->height;
         }) : null;

@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire\Utils;
 
+use stdClass;
 use Igniter\Flame\Flash\Facades\Flash;
 use Igniter\Flame\Flash\Message;
 use Livewire\Component;
@@ -10,11 +13,9 @@ final class FlashMessage extends Component
 {
     public array $messages = [];
 
-    public function mount()
+    public function mount(): void
     {
-        $this->messages = Flash::all()->map(function(Message $message) {
-            return (object)$message->toArray();
-        })->all();
+        $this->messages = Flash::all()->map(fn(Message $message): stdClass => (object)$message->toArray())->all();
     }
 
     public function render()

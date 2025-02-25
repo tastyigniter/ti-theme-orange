@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\View\Components;
 
+use Override;
 use Igniter\Cart\Models\Menu;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Data\MenuItemData;
@@ -89,6 +92,7 @@ final class FeaturedItems extends Component
         return Menu::whereIsEnabled()->dropdown('menu_name');
     }
 
+    #[Override]
     public function render()
     {
         return view('igniter-orange::components.featured-items', [

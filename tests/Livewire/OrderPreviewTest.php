@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\Livewire;
 
 use Igniter\Admin\Models\Status;
@@ -10,13 +12,13 @@ use Igniter\Main\Traits\UsesPage;
 use Igniter\Orange\Livewire\OrderPreview;
 use Livewire\Livewire;
 
-beforeEach(function() {
+beforeEach(function(): void {
     $status = Status::factory()->create();
     $this->order = Order::factory()->create(['processed' => 1]);
     $this->order->updateOrderStatus($status->getKey());
 });
 
-it('initialize component correctly', function() {
+it('initialize component correctly', function(): void {
     $component = new OrderPreview;
 
     expect(class_uses_recursive($component))
@@ -32,7 +34,7 @@ it('initialize component correctly', function() {
         ->and($component->showCancelButton)->toBeFalse();
 });
 
-it('returns correct component meta', function() {
+it('returns correct component meta', function(): void {
     $meta = OrderPreview::componentMeta();
 
     expect($meta['code'])->toBe('igniter-orange::order-preview')
@@ -40,7 +42,7 @@ it('returns correct component meta', function() {
         ->and($meta['description'])->toBe('igniter.orange::default.component_order_preview_desc');
 });
 
-it('defines properties correctly', function() {
+it('defines properties correctly', function(): void {
     $component = new OrderPreview;
     $properties = $component->defineProperties();
 
@@ -54,7 +56,7 @@ it('defines properties correctly', function() {
     );
 });
 
-it('mounts and prepare props', function() {
+it('mounts and prepare props', function(): void {
     Livewire::test(OrderPreview::class, ['hash' => $this->order->hash])
         ->assertSet('hashParamName', 'hash')
         ->assertSet('loginPage', 'account.login')
@@ -65,14 +67,14 @@ it('mounts and prepare props', function() {
         ->assertSet('showCancelButton', false);
 });
 
-it('redirects when mounting with unprocessed order', function() {
+it('redirects when mounting with unprocessed order', function(): void {
     $order = Order::factory()->create();
 
     Livewire::test(OrderPreview::class, ['hash' => $order->hash])
         ->assertSet('order', null);
 });
 
-it('clears completed order from session', function() {
+it('clears completed order from session', function(): void {
     resolve(OrderManager::class)->setCurrentOrderId($this->order->order_id);
 
     Livewire::test(OrderPreview::class, ['hash' => $this->order->hash]);
@@ -80,7 +82,7 @@ it('clears completed order from session', function() {
     expect(resolve(OrderManager::class)->getCurrentOrderId())->toBeNull();
 });
 
-it('gets status width for progress bars for no matching status', function() {
+it('gets status width for progress bars for no matching status', function(): void {
     Livewire::test(OrderPreview::class, ['hash' => $this->order->hash])
         ->call('getStatusWidthForProgressBars')
         ->assertReturned([
@@ -90,10 +92,11 @@ it('gets status width for progress bars for no matching status', function() {
         ]);
 });
 
-it('gets status width for progress bars for default status', function() {
+it('gets status width for progress bars for default status', function(): void {
     $status = Status::factory()->create();
     $order = Order::factory()->create(['processed' => 1]);
     $order->updateOrderStatus($status->getKey());
+
     setting()->set('default_order_status', $status->getKey());
 
     Livewire::test(OrderPreview::class, ['hash' => $order->hash])
@@ -105,10 +108,11 @@ it('gets status width for progress bars for default status', function() {
         ]);
 });
 
-it('gets status width for progress bars for processing status', function() {
+it('gets status width for progress bars for processing status', function(): void {
     $status = Status::factory()->create();
     $order = Order::factory()->create(['processed' => 1]);
     $order->updateOrderStatus($status->getKey());
+
     setting()->set('processing_order_status', [$status->getKey()]);
 
     Livewire::test(OrderPreview::class, ['hash' => $order->hash])
@@ -120,10 +124,11 @@ it('gets status width for progress bars for processing status', function() {
         ]);
 });
 
-it('gets status width for progress bars for completed status', function() {
+it('gets status width for progress bars for completed status', function(): void {
     $status = Status::factory()->create();
     $order = Order::factory()->create(['processed' => 1]);
     $order->updateOrderStatus($status->getKey());
+
     setting()->set('completed_order_status', [$status->getKey()]);
 
     Livewire::test(OrderPreview::class, ['hash' => $order->hash])
@@ -135,7 +140,7 @@ it('gets status width for progress bars for completed status', function() {
         ]);
 });
 
-it('shows cancel button', function() {
+it('shows cancel button', function(): void {
     $status = Status::factory()->create();
     $order = Order::factory()->create([
         'order_date' => now()->toDateString(),
@@ -154,7 +159,7 @@ it('shows cancel button', function() {
         ->assertReturned(true);
 });
 
-it('errors when reordering with an invalid menu item', function() {
+it('errors when reordering with an invalid menu item', function(): void {
     $this->order->menus()->create([
         'menu_id' => 123,
         'name' => 'Menu Name',
@@ -168,13 +173,13 @@ it('errors when reordering with an invalid menu item', function() {
         ->assertHasErrors(['onReOrder']);
 });
 
-it('handles reorder', function() {
+it('handles reorder', function(): void {
     Livewire::test(OrderPreview::class, ['hash' => $this->order->hash])
         ->call('onReOrder')
         ->assertRedirect();
 });
 
-it('handles cancel order', function() {
+it('handles cancel order', function(): void {
     $status = Status::factory()->create();
     $order = Order::factory()->create([
         'order_date' => now()->toDateString(),

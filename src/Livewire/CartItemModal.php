@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Livewire;
 
+use Igniter\Cart\CartItem;
 use Exception;
 use Igniter\Cart\Classes\CartManager;
 use Igniter\Local\Facades\Location;
@@ -46,11 +49,11 @@ final class CartItemModal extends ModalComponent
     public ?int $limitOptionsValues = 6;
 
     /**
-     * @var \Igniter\Cart\Classes\CartManager
+     * @var CartManager
      */
     protected $cartManager;
 
-    protected ?\Igniter\Cart\CartItem $cartItem = null;
+    protected ?CartItem $cartItem = null;
 
     protected ?MenuItemData $menuItemData = null;
 
@@ -102,7 +105,7 @@ final class CartItemModal extends ModalComponent
         ]);
     }
 
-    public function mount(int $menuId, ?string $rowId = null)
+    public function mount(int $menuId, ?string $rowId = null): void
     {
         $this->menuId = $menuId;
         $this->rowId = $rowId;
@@ -116,12 +119,12 @@ final class CartItemModal extends ModalComponent
         $this->comment = $this->cartItem?->comment;
     }
 
-    public function boot()
+    public function boot(): void
     {
         $this->cartManager = resolve(CartManager::class);
     }
 
-    public function onSave()
+    public function onSave(): void
     {
         try {
             $this->cartManager->addOrUpdateCartItem([
@@ -133,8 +136,8 @@ final class CartItemModal extends ModalComponent
             ]);
 
             $this->dispatch('hideModal');
-        } catch (Exception $ex) {
-            throw ValidationException::withMessages(['menuOptions' => $ex->getMessage()]);
+        } catch (Exception $exception) {
+            throw ValidationException::withMessages(['menuOptions' => $exception->getMessage()]);
         }
     }
 
@@ -147,8 +150,8 @@ final class CartItemModal extends ModalComponent
     {
         $value = 0;
         if ($this->getCartItem()?->hasOptionValue($menuOptionValueId)) {
-            $this->getCartItem()?->options->search(function($option) use ($menuOptionValueId, &$value) {
-                $option->values->each(function($opt) use ($menuOptionValueId, &$value) {
+            $this->getCartItem()?->options->search(function($option) use ($menuOptionValueId, &$value): void {
+                $option->values->each(function($opt) use ($menuOptionValueId, &$value): void {
                     if ($opt->id == $menuOptionValueId) {
                         $value = $opt->qty;
                     }
@@ -159,7 +162,7 @@ final class CartItemModal extends ModalComponent
         return $value;
     }
 
-    protected function getCartItem(): ?\Igniter\Cart\CartItem
+    protected function getCartItem(): ?CartItem
     {
         if (!is_null($this->cartItem)) {
             return $this->cartItem;

@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\View\Components;
 
+use Override;
 use Igniter\Cart\Models\Category;
 use Igniter\Local\Facades\Location;
 use Igniter\Main\Traits\ConfigurableComponent;
@@ -39,7 +42,7 @@ final class CategoryList extends Component
             'menusPage' => [
                 'label' => 'Page to redirect to when a category is clicked.',
                 'type' => 'select',
-                'options' => [static::class, 'getThemePageOptions'],
+                'options' => self::getThemePageOptions(...),
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
             'hideEmpty' => [
@@ -55,6 +58,7 @@ final class CategoryList extends Component
         ];
     }
 
+    #[Override]
     public function render()
     {
         return view('igniter-orange::components.category-list', [
@@ -80,7 +84,7 @@ final class CategoryList extends Component
 
     protected function findSelectedCategory()
     {
-        if (!strlen($slug = request()->route()->parameter('category', ''))) {
+        if ((string) ($slug = request()->route()->parameter('category', '')) === '') {
             return null;
         }
 

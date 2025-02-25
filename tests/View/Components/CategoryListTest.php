@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Tests\View\Components;
 
 use Igniter\Cart\Models\Category;
@@ -10,7 +12,7 @@ use Igniter\Main\Traits\UsesPage;
 use Igniter\Orange\View\Components\CategoryList;
 use Illuminate\Routing\Route;
 
-it('initializes category list component correctly', function() {
+it('initializes category list component correctly', function(): void {
     $component = new CategoryList('local.menus', true, false);
 
     expect(class_uses_recursive($component))->toContain(ConfigurableComponent::class, UsesPage::class)
@@ -19,7 +21,7 @@ it('initializes category list component correctly', function() {
         ->and($component->useLinkAnchor)->toBeFalse();
 });
 
-it('returns correct component meta', function() {
+it('returns correct component meta', function(): void {
     $meta = CategoryList::componentMeta();
 
     expect($meta['code'])->toBe('igniter-orange::category-list')
@@ -27,7 +29,7 @@ it('returns correct component meta', function() {
         ->and($meta['description'])->toBe('igniter.orange::default.component_category_list_desc');
 });
 
-it('defines properties correctly', function() {
+it('defines properties correctly', function(): void {
     $component = new CategoryList;
     $properties = $component->defineProperties();
 
@@ -42,12 +44,13 @@ it('defines properties correctly', function() {
         ->and($properties['useLinkAnchor']['validationRule'])->toBe('required|boolean');
 });
 
-it('loads categories correctly', function() {
+it('loads categories correctly', function(): void {
     $categories = Category::factory()->count(5)->create(['status' => true]);
     $route = new Route('GET', 'test', []);
     $route->bind(request());
     $route->setParameter('category', 'test-category');
-    request()->setRouteResolver(fn() => $route);
+
+    request()->setRouteResolver(fn(): Route => $route);
     Location::shouldReceive('current')->andReturn(LocationModel::factory()->create());
 
     $component = new CategoryList;
@@ -56,26 +59,29 @@ it('loads categories correctly', function() {
     expect($loadedCategories->pluck('name')->all())->toContain(...$categories->pluck('name')->all());
 });
 
-it('finds selected category correctly', function() {
+it('finds selected category correctly', function(): void {
     $category = Category::factory()->create(['status' => true, 'permalink_slug' => 'test-category']);
     $route = new Route('GET', 'test', []);
     $route->bind(request());
     $route->setParameter('category', 'test-category');
-    request()->setRouteResolver(fn() => $route);
+
+    request()->setRouteResolver(fn(): Route => $route);
     Location::shouldReceive('current')->andReturn(LocationModel::factory()->create());
 
     $component = new CategoryList;
     $component->render();
+
     $selectedCategory = $component->render()['selectedCategory'];
 
     expect($selectedCategory->name)->toBe($category->name);
 });
 
-it('returns null when no category is selected', function() {
+it('returns null when no category is selected', function(): void {
     $route = new Route('GET', 'test', []);
     $route->bind(request());
     $route->setParameter('category', '');
-    request()->setRouteResolver(fn() => $route);
+
+    request()->setRouteResolver(fn(): Route => $route);
 
     $component = new CategoryList;
     $selectedCategory = $component->render()['selectedCategory'];
