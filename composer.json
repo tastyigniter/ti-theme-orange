@@ -13,16 +13,6 @@
     "theme",
     "orange"
   ],
-  "repositories": {
-    "core": {
-      "type": "path",
-      "url": "../../../core/"
-    },
-    "packages": {
-      "type": "path",
-      "url": "../../../packages/*/*/"
-    }
-  },
   "require": {
     "livewire/livewire": "^v3.0.0",
     "spatie/laravel-google-fonts": "^1.2",
