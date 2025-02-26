@@ -14,7 +14,7 @@ use Igniter\Orange\Data\MenuItemData;
 
 beforeEach(function(): void {
     $this->model = mock(Menu::class)->makePartial();
-    $this->model->shouldReceive('getBuyableIdentifier')->andReturn('menu_1');
+    $this->model->shouldReceive('getBuyableIdentifier')->andReturn(1);
     $this->model->shouldReceive('getBuyableName')->andReturn('Test Menu');
     $this->model->shouldReceive('getAttribute')->with('menu_description')->andReturn('Test Description');
     $this->model->shouldReceive('getAttribute')->with('menu_price')->andReturn(10.0);
@@ -24,7 +24,7 @@ beforeEach(function(): void {
 it('initializes menu item data correctly', function(): void {
     $menuItemData = new MenuItemData($this->model);
 
-    expect($menuItemData->id)->toBe('menu_1')
+    expect($menuItemData->id)->toBe(1)
         ->and($menuItemData->name)->toBe('Test Menu')
         ->and($menuItemData->description)->toBe('Test Description')
         ->and($menuItemData->priceBeforeSpecial)->toBe(10.0)
@@ -77,9 +77,7 @@ it('returns true if menu item has options', function(): void {
 
     $menuItemData = new MenuItemData($this->model);
 
-    $hasOptions = $menuItemData->hasOptions();
-
-    expect($hasOptions)->toBeTrue();
+    expect($menuItemData->hasOptions())->toBeTrue();
 });
 
 it('returns sorted menu options', function(): void {
@@ -153,7 +151,6 @@ it('returns correct mealtime titles', function(): void {
 
 it('returns correct URL for menu item', function(): void {
     $location = LocationModel::factory()->create(['permalink_slug' => 'test-location']);
-    $this->model->shouldReceive('getBuyableIdentifier')->andReturn('menu_1');
     $this->model->shouldReceive('extendableGet')->with('locations')->andReturn(collect([$location]));
     Location::shouldReceive('current')->andReturn($location);
 
@@ -162,5 +159,5 @@ it('returns correct URL for menu item', function(): void {
     $url = $menuItemData->getUrl('menu-page');
 
     expect($url)->toContain('menu-page')
-        ->and($url)->toContain('menuId=menu_1');
+        ->and($url)->toContain('menuId=1');
 });

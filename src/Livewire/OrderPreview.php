@@ -122,6 +122,7 @@ final class OrderPreview extends Component
         if ($this->orderManager->isCurrentOrderId($processedOrder->order_id)) {
             $this->orderManager->clearOrder();
         }
+
         return null;
     }
 

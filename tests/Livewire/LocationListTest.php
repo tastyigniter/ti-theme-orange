@@ -61,7 +61,7 @@ it('defines properties correctly', function(): void {
     );
 });
 
-it('returns correct sorted order options for sortBy', function(): void {
+it('returns correct sorted options for sortBy', function(): void {
     $form = new Form(resolve(Themes::class), [
         'model' => new Theme,
     ]);
@@ -75,7 +75,7 @@ it('returns correct sorted order options for sortBy', function(): void {
     expect($options)->toBeArray()->not->toBeEmpty();
 });
 
-it('returns correct sorted order options for orderType', function(): void {
+it('returns correct sorted options for orderType', function(): void {
     $form = new Form(resolve(Themes::class), [
         'model' => new Theme,
     ]);

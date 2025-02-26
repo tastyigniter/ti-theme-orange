@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Igniter\Orange\Tests\View\Components;
 
+use Carbon\Carbon;
 use Igniter\Local\Facades\Location;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\View\Components\Fulfillment;
@@ -34,12 +35,11 @@ it('defines properties correctly', function(): void {
 it('renders view with fulfillment data', function(): void {
     Location::shouldReceive('orderTimeIsAsap')->andReturn(true);
     Location::shouldReceive('getOrderType')->andReturn('delivery');
-    Location::shouldReceive('orderDateTime')->andReturn('2023-10-10 12:00:00');
+    Location::shouldReceive('orderDateTime')->andReturn(new Carbon('2023-10-10 12:00:00'));
 
-    $component = new Fulfillment;
-    $view = $component->render();
+    $view = (new Fulfillment)->render();
 
     expect($view->getData()['isAsap'])->toBeTrue()
         ->and($view->getData()['activeOrderType'])->toBe('delivery')
-        ->and($view->getData()['orderDateTime'])->toBe('2023-10-10 12:00:00');
+        ->and($view->getData()['orderDateTime']->format('Y-m-d H:i:s'))->toBe('2023-10-10 12:00:00');
 });

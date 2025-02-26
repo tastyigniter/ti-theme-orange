@@ -18,7 +18,7 @@ use Illuminate\Support\Collection;
 
 beforeEach(function(): void {
     $this->model = mock(Location::class)->makePartial();
-    $this->model->shouldReceive('getKey')->andReturn('1');
+    $this->model->shouldReceive('getKey')->andReturn(1);
     $this->model->shouldReceive('getName')->andReturn('Test Location');
     $this->model->shouldReceive('getDescription')->andReturn('Test Description');
     $this->model->shouldReceive('getAddress')->andReturn(['address' => '123 Test St']);
@@ -30,7 +30,7 @@ beforeEach(function(): void {
 it('initializes location data correctly', function(): void {
     $locationData = new LocationData($this->model);
 
-    expect($locationData->id)->toBe('1')
+    expect($locationData->id)->toBe(1)
         ->and($locationData->name)->toBe('Test Location')
         ->and($locationData->description)->toBe('Test Description')
         ->and($locationData->address)->toBe(['address' => '123 Test St'])

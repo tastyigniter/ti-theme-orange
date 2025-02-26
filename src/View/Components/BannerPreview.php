@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Igniter\Orange\View\Components;
 
-use Override;
 use Igniter\Frontend\Models\Banner;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Data\BannerData;
 use Illuminate\View\Component;
+use Override;
 
 final class BannerPreview extends Component
 {
@@ -79,7 +79,7 @@ final class BannerPreview extends Component
             return $this->banner;
         }
 
-        /** @var Banner $model */
+        /** @var null|Banner $model */
         $model = Banner::query()->whereIsEnabled()->whereCode($this->code)->first();
 
         return $this->banner = $model ? tap(new BannerData($model), function($bannerData): void {

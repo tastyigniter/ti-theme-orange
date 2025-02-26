@@ -18,7 +18,7 @@ use Illuminate\Support\Collection;
 
 final class LocationData
 {
-    public string $id;
+    public int $id;
 
     public string $name;
 

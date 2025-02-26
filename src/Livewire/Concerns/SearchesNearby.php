@@ -17,6 +17,11 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Session;
 use Livewire\Livewire;
 
+/**
+ * SearchesNearby trait.
+ *
+ * @property null|\Igniter\Local\Classes\Location $location
+ */
 trait SearchesNearby
 {
     use UsesPage;
@@ -90,7 +95,7 @@ trait SearchesNearby
 
         $this->searchQuery = null;
 
-        if (!property_exists($this, 'location')) {
+        if (!isset($this->location)) {
             $nearByLocation = $this->findNearByLocation($userLocation);
 
             request()->route()->setParameter('location', $nearByLocation->permalink_slug);

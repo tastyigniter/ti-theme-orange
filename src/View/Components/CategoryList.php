@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Igniter\Orange\View\Components;
 
-use Override;
 use Igniter\Cart\Models\Category;
 use Igniter\Local\Facades\Location;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
+use Override;
 
 final class CategoryList extends Component
 {
@@ -84,7 +84,7 @@ final class CategoryList extends Component
 
     protected function findSelectedCategory()
     {
-        if ((string) ($slug = request()->route()->parameter('category', '')) === '') {
+        if ((string)($slug = request()->route()->parameter('category', '')) === '') {
             return null;
         }
 
@@ -92,7 +92,7 @@ final class CategoryList extends Component
             return self::$selectedCategoryCache;
         }
 
-        $query = Category::whereIsEnabled()->where('permalink_slug', $slug);
+        $query = Category::query()->whereIsEnabled()->where('permalink_slug', $slug);
         if ($location = Location::current()) {
             $query->whereHasOrDoesntHaveLocation($location->getKey());
         }

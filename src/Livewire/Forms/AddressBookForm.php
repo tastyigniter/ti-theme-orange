@@ -8,7 +8,7 @@ use Livewire\Form;
 
 final class AddressBookForm extends Form
 {
-    public ?string $address_id = null;
+    public ?int $address_id = null;
 
     public ?string $address_1 = null;
 
@@ -20,7 +20,7 @@ final class AddressBookForm extends Form
 
     public ?string $postcode = null;
 
-    public ?string $country_id = null;
+    public ?int $country_id = null;
 
     public bool $is_default = false;
 

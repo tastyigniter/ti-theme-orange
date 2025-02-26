@@ -141,6 +141,7 @@ it('gets status width for progress bars for completed status', function(): void 
 });
 
 it('shows cancel button', function(): void {
+    $this->travelTo('2021-01-01 12:00:00');
     $status = Status::factory()->create();
     $order = Order::factory()->create([
         'order_date' => now()->toDateString(),
@@ -180,6 +181,7 @@ it('handles reorder', function(): void {
 });
 
 it('handles cancel order', function(): void {
+    $this->travelTo('2021-01-01 12:00:00');
     $status = Status::factory()->create();
     $order = Order::factory()->create([
         'order_date' => now()->toDateString(),

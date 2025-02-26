@@ -88,10 +88,7 @@ final class Login extends Component
             return redirect()->to(page_url($this->redirect));
         }
 
-        if (strlen($redirectUrl = page_url($this->redirectPage)) > 0) {
-            return redirect()->intended($redirectUrl);
-        }
-        return null;
+        return redirect()->intended(page_url($this->redirectPage));
     }
 
     protected function setRedirectIntendedUrl(): void

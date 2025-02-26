@@ -9,7 +9,7 @@ use Igniter\Local\Facades\Location;
 
 class MenuItemData
 {
-    public string $id;
+    public int $id;
 
     public string $name;
 
@@ -60,7 +60,7 @@ class MenuItemData
         return $this->mealtimeIsAvailable = $this->model->isAvailable(Location::orderDateTime());
     }
 
-    public function hasOptions(): int
+    public function hasOptions(): bool
     {
         return $this->model->hasOptions();
     }
@@ -98,7 +98,7 @@ class MenuItemData
                 lang('igniter.local::default.text_mealtime'),
                 $mealtime->mealtime_name,
                 now()->setTimeFromTimeString($mealtime->start_time)->isoFormat(lang('system::lang.moment.time_format')),
-                now()->setTimeFromTimeString($mealtime->end_time)->isoFormat(lang('system::lang.moment.time_format'))
+                now()->setTimeFromTimeString($mealtime->end_time)->isoFormat(lang('system::lang.moment.time_format')),
             );
         }
 

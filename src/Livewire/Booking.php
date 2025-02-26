@@ -145,7 +145,7 @@ final class Booking extends Component
         Assets::addCss('$/igniter/css/vendor.css', 'vendor-css');
 
         $this->calendarLocale = strtolower(str_before(str_before(app()->getLocale(), '_'), '-'));
-        if ($this->calendarLocale != 'en' && File::symbolizePath($localPath = '$/igniter-orange/js/locales/flatpickr/'.$this->calendarLocale.'.js')) {
+        if ($this->calendarLocale !== 'en' && File::symbolizePath($localPath = '$/igniter-orange/js/locales/flatpickr/'.$this->calendarLocale.'.js')) {
             Assets::addJs($localPath, 'flatpickr-locale-js');
         }
 

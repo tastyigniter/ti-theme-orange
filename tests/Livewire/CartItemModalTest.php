@@ -24,7 +24,7 @@ beforeEach(function(): void {
     Location::shouldReceive('orderTypeIsDelivery')->andReturnFalse();
     Location::shouldReceive('checkNoOrderTypeAvailable')->andReturnFalse();
     Location::shouldReceive('checkOrderTime')->andReturnTrue();
-    Location::shouldReceive('orderDateTime')->andReturnTrue();
+    Location::shouldReceive('orderDateTime')->andReturn(now());
 });
 
 it('initialize component correctly', function(): void {

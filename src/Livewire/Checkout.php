@@ -28,6 +28,7 @@ use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\Features\SupportRedirects\Redirector;
 use Livewire\Livewire;
+use Throwable;
 
 /**
  * Checkout component
@@ -161,11 +162,11 @@ final class Checkout extends Component
 
     public function mount()
     {
-        if ($order = $this->isOrderMarkedAsProcessed()) {
+        if (!is_null($order = $this->isOrderMarkedAsProcessed())) {
             return $this->redirect($order->getUrl($this->successPage));
         }
 
-        if ($this->checkCheckoutSecurity()) {
+        if (!is_null($this->checkCheckoutSecurity())) {
             return $this->redirect(restaurant_url($this->menusPage));
         }
 
@@ -211,7 +212,7 @@ final class Checkout extends Component
             return $this->redirect(restaurant_url($this->menusPage));
         }
 
-        if ($order = $this->isOrderMarkedAsProcessed()) {
+        if (!is_null($order = $this->isOrderMarkedAsProcessed())) {
             return $this->redirect($order->getUrl($this->successPage));
         }
 
@@ -224,6 +225,7 @@ final class Checkout extends Component
         $this->orderManager->saveOrder($order, $data);
 
         $this->dispatch('checkout::validated');
+
         return null;
     }
 
@@ -234,7 +236,7 @@ final class Checkout extends Component
             return $this->redirect(restaurant_url($this->menusPage));
         }
 
-        if ($order = $this->isOrderMarkedAsProcessed()) {
+        if (!is_null($order = $this->isOrderMarkedAsProcessed())) {
             return $this->redirect($order->getUrl($this->successPage));
         }
 
@@ -262,13 +264,10 @@ final class Checkout extends Component
                 return $redirect;
             }
 
-            if ($this->isOrderMarkedAsProcessed()) {
-                return $this->redirect($order->getUrl($this->successPage));
-            }
+            return $this->redirect($order->getUrl($this->successPage));
         } catch (Exception $ex) {
             throw ValidationException::withMessages(['fields.payment' => $ex->getMessage()]);
         }
-        return null;
     }
 
     #[On('checkout::choose-payment')]
@@ -338,12 +337,13 @@ final class Checkout extends Component
             }
 
             Event::dispatch('igniter.orange.checkCheckoutSecurity');
+
+            return null;
         } catch (Exception $ex) {
             flash()->warning($ex->getMessage())->now();
 
             return true;
         }
-        return null;
     }
 
     protected function validateCheckout(Order $order)
@@ -363,7 +363,7 @@ final class Checkout extends Component
                         $this->orderManager->validateDeliveryAddress(array_only($this->fields, [
                             'address_1', 'city', 'state', 'postcode', 'country',
                         ]));
-                    }, function(Exception $ex) use ($validator): void {
+                    }, function(Throwable $ex) use ($validator): void {
                         $validator->errors()->add('delivery_address', $ex->getMessage());
                     });
                 }
@@ -388,11 +388,11 @@ final class Checkout extends Component
         return $data;
     }
 
-    protected function isOrderMarkedAsProcessed(): Order|null|false
+    protected function isOrderMarkedAsProcessed(): Order|null
     {
         $order = $this->getOrder();
 
-        return $order->isPaymentProcessed() ? $order : false;
+        return $order->isPaymentProcessed() ? $order : null;
     }
 
     protected function prepareDeliveryAddress(): void

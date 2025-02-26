@@ -29,7 +29,7 @@ it('does not dispatch flash messages on dehydrate when not a livewire request', 
 });
 
 it('dispatches flash messages on dehydrate', function(): void {
-    request()->headers->set('X-Livewire', true);
+    request()->headers->set('X-Livewire', 'true');
 
     $component = new SupportFlashMessages;
     $component->setComponent(new class

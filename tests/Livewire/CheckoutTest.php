@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Igniter\Orange\Tests\Livewire;
 
-use Override;
 use Igniter\Cart\Classes\OrderManager;
 use Igniter\Cart\Facades\Cart;
 use Igniter\Cart\Models\Menu;
@@ -26,6 +25,7 @@ use Igniter\System\Facades\Assets;
 use Igniter\User\Models\Customer;
 use Illuminate\Support\Facades\Event;
 use Livewire\Livewire;
+use Override;
 
 function setupCheckout()
 {
@@ -111,6 +111,7 @@ it('can mount and prepare props', function(): void {
     ], 1);
 
     Assets::shouldReceive('addJs')->once()->with('igniter-orange::/js/checkout.js', 'checkout-js');
+    Assets::shouldReceive('clearInternalCache');
     // Set user delivery address
     $userPosition = GeoliteLocation::createFromArray([
         'latitude' => 51.50987615,
@@ -125,10 +126,10 @@ it('can mount and prepare props', function(): void {
 
     Livewire::test(Checkout::class)
         ->assertSet('fields', fn($fields): bool => [
-            'first_name', 'last_name', 'email', 'telephone',
-            'comment', 'delivery_comment', 'payment', 'termsAgreed',
-            'address_1', 'city', 'state', 'postcode',
-        ] === array_keys($fields));
+                'first_name', 'last_name', 'email', 'telephone',
+                'comment', 'delivery_comment', 'payment', 'termsAgreed',
+                'address_1', 'city', 'state', 'postcode',
+            ] === array_keys($fields));
 
     Event::assertDispatched('igniter.orange.checkCheckoutSecurity');
 });
@@ -477,11 +478,11 @@ class TestPaymentWithProfile extends Cod
     use WithPaymentProfile;
 
     #[Override]
-    public function paymentProfileExists(): bool
+    public function paymentProfileExists(Customer $customer): ?bool
     {
         return true;
     }
 
     #[Override]
-    public function deletePaymentProfile() {}
+    public function deletePaymentProfile(Customer $customer, PaymentProfile $profile) {}
 }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Igniter\Orange\Livewire;
 
-use Igniter\Cart\CartItem;
 use Exception;
+use Igniter\Cart\CartItem;
 use Igniter\Cart\Classes\CartManager;
 use Igniter\Local\Facades\Location;
 use Igniter\Main\Traits\ConfigurableComponent;
@@ -150,7 +150,7 @@ final class CartItemModal extends ModalComponent
     {
         $value = 0;
         if ($this->getCartItem()?->hasOptionValue($menuOptionValueId)) {
-            $this->getCartItem()?->options->search(function($option) use ($menuOptionValueId, &$value): void {
+            $this->getCartItem()->options->search(function($option) use ($menuOptionValueId, &$value): void {
                 $option->values->each(function($opt) use ($menuOptionValueId, &$value): void {
                     if ($opt->id == $menuOptionValueId) {
                         $value = $opt->qty;

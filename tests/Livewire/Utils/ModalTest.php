@@ -17,7 +17,7 @@ it('initializes modal component correctly', function(): void {
 });
 
 it('adds modal.js asset on mount', function(): void {
-    Assets::shouldReceive('addJs')->with('igniter-orange::/js/modal.js', 'modal-js')->once();
+    Assets::partialMock()->shouldReceive('addJs')->with('igniter-orange::/js/modal.js', 'modal-js')->once();
 
     Livewire::test(Modal::class);
 });

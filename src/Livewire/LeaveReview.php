@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Igniter\Orange\Livewire;
 
-use Livewire\Component;
-use Throwable;
 use Igniter\Cart\Classes\OrderManager;
 use Igniter\Flame\Database\Model;
 use Igniter\Local\Models\Review as ReviewModel;
@@ -15,6 +13,8 @@ use Igniter\Reservation\Classes\BookingManager;
 use Igniter\System\Facades\Assets;
 use Igniter\User\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Livewire\Component;
+use Throwable;
 
 final class LeaveReview extends Component
 {
@@ -136,7 +136,7 @@ final class LeaveReview extends Component
 
     protected function loadReview()
     {
-        return $this->customerReview ??= ($this->reviewable() ? ReviewModel::whereReviewable($this->reviewable())->first() : null);
+        return $this->customerReview ??= ($this->reviewable() ? ReviewModel::query()->whereReviewable($this->reviewable())->first() : null);
     }
 
     protected function getReviewable()

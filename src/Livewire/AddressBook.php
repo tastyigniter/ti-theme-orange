@@ -142,7 +142,7 @@ final class AddressBook extends Component
         $this->addressId = null;
     }
 
-    protected function getAddress(?string $addressId)
+    protected function getAddress(?int $addressId)
     {
         return $addressId ? Auth::customer()?->addresses()->find($addressId) : null;
     }

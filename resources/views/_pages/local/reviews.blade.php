@@ -19,6 +19,8 @@ function onStart()
         flash()->error(lang('igniter.local::default.review.alert_review_disabled'));
         return redirect()->to(page_url('home'));
     }
+
+    return null;
 }
 ?>
 ---

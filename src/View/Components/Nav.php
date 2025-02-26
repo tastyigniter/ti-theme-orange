@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Igniter\Orange\View\Components;
 
-use Override;
 use Igniter\Pages\Classes\MenuManager;
 use Igniter\Pages\Models\Menu;
 use Illuminate\View\Component;
+use Override;
 
 final class Nav extends Component
 {
@@ -33,6 +33,7 @@ final class Nav extends Component
         $themeCode = controller()->getTheme()->getName();
 
         if ($menu = Menu::whereCode($this->code)->where('theme_code', $themeCode)->first()) {
+            /** @var Menu $menu */
             $this->menuItems = resolve(MenuManager::class)->generateReferences($menu, controller()->getLayout());
         }
 

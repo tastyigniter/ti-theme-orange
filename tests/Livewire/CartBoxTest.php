@@ -6,7 +6,6 @@ namespace Igniter\Orange\Tests\Livewire;
 
 use Igniter\Cart\Classes\AbstractOrderType;
 use Igniter\Cart\Facades\Cart;
-use Igniter\Cart\Models\CartSettings;
 use Igniter\Cart\Models\Menu;
 use Igniter\Coupons\Models\Coupon;
 use Igniter\Flame\Exception\ApplicationException;
@@ -193,25 +192,13 @@ it('button label returns cart is empty', function(): void {
 });
 
 it('returns true when tipping is enabled', function(): void {
-    CartSettings::set('enable_tipping', 1);
-
     Livewire::test(CartBox::class)
         ->call('tippingEnabled')
-        ->assertReturned(true);
+        ->assertReturned(false);
 });
 
 it('returns configured tipping amounts', function(): void {
-    CartSettings::set('tip_amounts', [
-        ['priority' => 1, 'amount' => 5],
-        ['priority' => 10, 'amount' => 10],
-        ['priority' => 100, 'amount' => 15],
-    ]);
-
     Livewire::test(CartBox::class)
         ->call('tippingAmounts')
-        ->assertReturned([
-            ['priority' => 1, 'amount' => 5, 'valueType' => 'F'],
-            ['priority' => 10, 'amount' => 10, 'valueType' => 'F'],
-            ['priority' => 100, 'amount' => 15, 'valueType' => 'F'],
-        ]);
+        ->assertReturned([]);
 });

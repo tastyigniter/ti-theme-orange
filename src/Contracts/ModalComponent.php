@@ -35,7 +35,7 @@ abstract class ModalComponent extends Component implements ModalComponentInterfa
         return $this;
     }
 
-    public function skipPreviousModals($count = 1, $destroy = false): self
+    public function skipPreviousModals(int $count = 1, bool $destroy = false): self
     {
         $this->skipPreviousModal($count, $destroy);
 

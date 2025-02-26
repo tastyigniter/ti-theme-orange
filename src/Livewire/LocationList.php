@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Igniter\Orange\Livewire;
 
-use Livewire\Component;
 use Closure;
 use Igniter\Admin\Classes\FormField;
 use Igniter\Admin\Widgets\Form;
@@ -21,6 +20,7 @@ use Illuminate\Support\Facades\Event;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\Url;
+use Livewire\Component;
 use Livewire\WithPagination;
 
 /**
@@ -139,9 +139,7 @@ final class LocationList extends Component
     #[Computed, Locked]
     public function orderTypes()
     {
-        return method_exists(LocationModel::class, 'getOrderTypeOptions')
-            ? LocationModel::getOrderTypeOptions()
-            : collect();
+        return LocationModel::getOrderTypeOptions();
     }
 
     #[Computed, Locked]
@@ -240,7 +238,7 @@ final class LocationList extends Component
         $coordinates = Location::userPosition()->getCoordinates();
 
         $collection = $results->getCollection()
-            ->filter(fn($location) => $this->filterQueryResult($location, $coordinates, $filterByDeliveryAreas))
+            ->filter(fn($location): bool => $this->filterQueryResult($location, $coordinates, $filterByDeliveryAreas))
             ->map(fn($location): LocationData => new LocationData($location));
 
         return $results->setCollection($collection);
