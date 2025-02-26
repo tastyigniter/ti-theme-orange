@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Igniter\Orange\Tests\Livewire;
 
-use Exception;
 use DrewM\MailChimp\MailChimp;
+use Exception;
 use Igniter\Frontend\Models\MailchimpSettings;
 use Igniter\Frontend\Models\Subscriber;
 use Igniter\Main\Traits\ConfigurableComponent;

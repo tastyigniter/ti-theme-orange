@@ -181,6 +181,7 @@ final class Checkout extends Component
         }
 
         $this->prepareDeliveryAddress();
+
         return null;
     }
 
@@ -388,7 +389,7 @@ final class Checkout extends Component
         return $data;
     }
 
-    protected function isOrderMarkedAsProcessed(): Order|null
+    protected function isOrderMarkedAsProcessed(): ?Order
     {
         $order = $this->getOrder();
 

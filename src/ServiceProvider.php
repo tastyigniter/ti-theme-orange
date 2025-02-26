@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Igniter\Orange;
 
-use Override;
-use Igniter\Orange\Livewire\Features\SupportFlashMessages;
-use Igniter\Main\Template\Page;
 use Igniter\Admin\Widgets\Form;
 use Igniter\Cart\Http\Middleware\CartMiddleware;
 use Igniter\Flame\Support\Facades\Igniter;
@@ -14,8 +11,10 @@ use Igniter\Local\Http\Middleware\CheckLocation;
 use Igniter\Main\Classes\MainController;
 use Igniter\Main\Classes\Theme;
 use Igniter\Main\Classes\ThemeManager;
+use Igniter\Main\Template\Page;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Http\Controllers\Logout;
+use Igniter\Orange\Livewire\Features\SupportFlashMessages;
 use Igniter\System\Classes\ComponentManager;
 use Igniter\System\Libraries\Assets;
 use Igniter\User\Facades\Auth;
@@ -27,6 +26,7 @@ use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\Livewire;
+use Override;
 use Spatie\GoogleFonts\GoogleFonts;
 use Symfony\Component\Finder\Finder;
 

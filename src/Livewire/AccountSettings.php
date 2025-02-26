@@ -82,6 +82,7 @@ final class AccountSettings extends Component
         }
 
         flash()->success(lang('igniter.user::default.settings.alert_updated_success'));
+
         return null;
     }
 }

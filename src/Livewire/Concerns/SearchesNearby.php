@@ -114,6 +114,7 @@ trait SearchesNearby
         }
 
         $this->searchField = 'searchQuery';
+
         return null;
     }
 

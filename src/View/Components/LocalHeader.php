@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Igniter\Orange\View\Components;
 
-use Override;
 use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\ReviewSettings;
 use Igniter\Main\Traits\ConfigurableComponent;
@@ -13,6 +12,7 @@ use Igniter\Orange\Data\LocationData;
 use Igniter\Orange\Livewire\Concerns\WithReviews;
 use Igniter\System\Facades\Assets;
 use Illuminate\View\Component;
+use Override;
 
 final class LocalHeader extends Component
 {

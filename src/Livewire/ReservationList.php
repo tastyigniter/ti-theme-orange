@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Igniter\Orange\Livewire;
 
-use Livewire\Component;
 use Igniter\Admin\Classes\FormField;
 use Igniter\Admin\Widgets\Form;
 use Igniter\Local\Models\ReviewSettings;
@@ -13,6 +12,7 @@ use Igniter\Main\Traits\UsesPage;
 use Igniter\Reservation\Models\Reservation;
 use Igniter\User\Facades\Auth;
 use Illuminate\Support\Collection;
+use Livewire\Component;
 use Livewire\WithPagination;
 
 final class ReservationList extends Component

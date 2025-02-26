@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Igniter\Orange\View\Components;
 
-use Override;
 use Igniter\Frontend\Models\Slider as SliderModel;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
+use Override;
 
 final class Slider extends Component
 {

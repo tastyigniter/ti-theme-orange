@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Igniter\Orange\Livewire;
 
-use Livewire\Component;
-use Throwable;
 use Igniter\Cart\Classes\CartManager;
 use Igniter\Cart\Classes\OrderManager;
 use Igniter\Flame\Exception\ApplicationException;
@@ -15,6 +13,8 @@ use Igniter\Main\Traits\UsesPage;
 use Igniter\User\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\ValidationException;
+use Livewire\Component;
+use Throwable;
 
 final class OrderPreview extends Component
 {

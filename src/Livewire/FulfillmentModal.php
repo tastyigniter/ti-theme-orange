@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Igniter\Orange\Livewire;
 
-use Livewire\Component;
 use DateTime;
 use Igniter\Cart\Classes\AbstractOrderType;
 use Igniter\Local\Models\Location;
@@ -15,6 +14,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Session;
+use Livewire\Component;
 use Livewire\Livewire;
 
 final class FulfillmentModal extends Component

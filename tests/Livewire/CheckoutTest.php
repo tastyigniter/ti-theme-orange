@@ -126,10 +126,10 @@ it('can mount and prepare props', function(): void {
 
     Livewire::test(Checkout::class)
         ->assertSet('fields', fn($fields): bool => [
-                'first_name', 'last_name', 'email', 'telephone',
-                'comment', 'delivery_comment', 'payment', 'termsAgreed',
-                'address_1', 'city', 'state', 'postcode',
-            ] === array_keys($fields));
+            'first_name', 'last_name', 'email', 'telephone',
+            'comment', 'delivery_comment', 'payment', 'termsAgreed',
+            'address_1', 'city', 'state', 'postcode',
+        ] === array_keys($fields));
 
     Event::assertDispatched('igniter.orange.checkCheckoutSecurity');
 });

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Igniter\Orange\Livewire;
 
-use Livewire\Component;
 use Igniter\Admin\Classes\FormField;
 use Igniter\Admin\Widgets\Form;
 use Igniter\Cart\Models\Menu as MenuModel;
@@ -14,6 +13,7 @@ use Igniter\Orange\Data\MenuItemData;
 use Igniter\System\Facades\Assets;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Url;
+use Livewire\Component;
 use Livewire\WithPagination;
 
 final class MenuItemList extends Component

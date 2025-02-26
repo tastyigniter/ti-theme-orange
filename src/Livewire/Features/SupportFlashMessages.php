@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Igniter\Orange\Livewire\Features;
 
-use stdClass;
 use Igniter\Flame\Flash\Message;
 use Illuminate\Validation\ValidationException;
 use Livewire\ComponentHook;
 use Livewire\Mechanisms\HandleRequests\HandleRequests;
+use stdClass;
 
 final class SupportFlashMessages extends ComponentHook
 {

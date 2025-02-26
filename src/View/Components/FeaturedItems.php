@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Igniter\Orange\View\Components;
 
-use Override;
 use Igniter\Cart\Models\Menu;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Data\MenuItemData;
 use Illuminate\View\Component;
+use Override;
 
 final class FeaturedItems extends Component
 {

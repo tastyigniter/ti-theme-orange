@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Igniter\Orange\View\Components;
 
-use Override;
 use Igniter\Local\Models\Review as ReviewModel;
 use Illuminate\View\Component;
+use Override;
 
 final class StarRating extends Component
 {

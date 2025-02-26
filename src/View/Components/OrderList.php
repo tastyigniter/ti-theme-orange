@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Igniter\Orange\View\Components;
 
-use Override;
 use Igniter\Cart\Models\Order;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
 use Igniter\User\Facades\Auth;
 use Illuminate\View\Component;
+use Override;
 
 final class OrderList extends Component
 {

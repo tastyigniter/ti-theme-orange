@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Igniter\Orange\View\Components;
 
-use Override;
 use Igniter\Cart\Facades\Cart;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\User\Facades\Auth;
 use Illuminate\View\Component;
+use Override;
 
 final class AccountDashboard extends Component
 {
