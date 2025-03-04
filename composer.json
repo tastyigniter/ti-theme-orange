@@ -14,25 +14,25 @@
     "orange"
   ],
   "require": {
-    "livewire/livewire": "^v3.0.0",
+    "livewire/livewire": "^v3.0",
     "spatie/laravel-google-fonts": "^1.2",
-    "tastyigniter/core": "^v4.0@beta || ^v4.0@dev",
-    "tastyigniter/ti-ext-cart": "^v4.0@beta || ^v4.0@dev",
-    "tastyigniter/ti-ext-coupons": "^v4.0@beta || ^v4.0@dev",
-    "tastyigniter/ti-ext-frontend": "^v4.0@beta || ^v4.0@dev",
-    "tastyigniter/ti-ext-local": "^v4.0@beta || ^v4.0@dev",
-    "tastyigniter/ti-ext-pages": "^v4.0@beta || ^v4.0@dev",
-    "tastyigniter/ti-ext-payregister": "^v4.0@beta || ^v4.0@dev",
-    "tastyigniter/ti-ext-reservation": "^v4.0@beta || ^v4.0@dev",
-    "tastyigniter/ti-ext-socialite": "^v4.0@beta || ^v4.0@dev",
-    "tastyigniter/ti-ext-user": "^v4.0@beta || ^v4.0@dev"
+    "tastyigniter/core": "^v4.0",
+    "tastyigniter/ti-ext-cart": "^v4.0",
+    "tastyigniter/ti-ext-coupons": "^v4.0",
+    "tastyigniter/ti-ext-frontend": "^v4.0",
+    "tastyigniter/ti-ext-local": "^v4.0",
+    "tastyigniter/ti-ext-pages": "^v4.0",
+    "tastyigniter/ti-ext-payregister": "^v4.0",
+    "tastyigniter/ti-ext-reservation": "^v4.0",
+    "tastyigniter/ti-ext-socialite": "^v4.0",
+    "tastyigniter/ti-ext-user": "^v4.0"
   },
   "require-dev": {
-    "larastan/larastan": "^2.4.0",
+    "larastan/larastan": "^2.4",
     "laravel/pint": "^1.2",
     "pestphp/pest-plugin-laravel": "^3.0",
     "rector/rector": "^1.2",
-    "sampoyigi/testbench": "dev-main as 1.0"
+    "sampoyigi/testbench": "^1.0"
   },
   "autoload": {
     "psr-4": {
@@ -94,6 +94,5 @@
       "php-http/discovery": true,
       "composer/installers": true
     }
-  },
-  "minimum-stability": "dev"
+  }
 }
