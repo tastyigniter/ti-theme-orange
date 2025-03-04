@@ -1,0 +1,101 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Property Igniter\\\\Orange\\\\Livewire\\\\LeaveReview\\:\\:\\$customerReview \\(Igniter\\\\Flame\\\\Database\\\\Model\\|null\\) does not accept Illuminate\\\\Database\\\\Eloquent\\\\Model\\|null\\.$#"
+			count: 1
+			path: src/Livewire/LeaveReview.php
+
+		-
+			message: "#^Call to an undefined method Igniter\\\\Flame\\\\Database\\\\Builder\\<Igniter\\\\Local\\\\Models\\\\Location\\>\\:\\:applyFilters\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/LocationList.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Models\\\\Location\\:\\:getOrderTypeOptions\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/LocationList.php
+
+		-
+			message: "#^Relation 'delivery_areas' is not found in Igniter\\\\Local\\\\Models\\\\Location model\\.$#"
+			count: 1
+			path: src/Livewire/LocationList.php
+
+		-
+			message: "#^Relation 'media' is not found in Igniter\\\\Local\\\\Models\\\\Location model\\.$#"
+			count: 1
+			path: src/Livewire/LocationList.php
+
+		-
+			message: "#^Relation 'reviews' is not found in Igniter\\\\Local\\\\Models\\\\Location model\\.$#"
+			count: 1
+			path: src/Livewire/LocationList.php
+
+		-
+			message: "#^Relation 'settings' is not found in Igniter\\\\Local\\\\Models\\\\Location model\\.$#"
+			count: 1
+			path: src/Livewire/LocationList.php
+
+		-
+			message: "#^Relation 'working_hours' is not found in Igniter\\\\Local\\\\Models\\\\Location model\\.$#"
+			count: 1
+			path: src/Livewire/LocationList.php
+
+		-
+			message: "#^Call to an undefined method Igniter\\\\Flame\\\\Database\\\\Builder\\<Igniter\\\\Cart\\\\Models\\\\Menu\\>\\:\\:listFrontEnd\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/MenuItemList.php
+
+		-
+			message: "#^Relation 'menu_options' is not found in Igniter\\\\Cart\\\\Models\\\\Menu model\\.$#"
+			count: 1
+			path: src/Livewire/MenuItemList.php
+
+		-
+			message: "#^Call to an undefined method Igniter\\\\User\\\\Models\\\\Customer\\:\\:reservations\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/ReservationList.php
+
+		-
+			message: "#^Call to an undefined method Igniter\\\\Flame\\\\Database\\\\Builder\\<Igniter\\\\Local\\\\Models\\\\Review\\>\\:\\:isApproved\\(\\)\\.$#"
+			count: 1
+			path: src/Livewire/ReviewList.php
+
+		-
+			message: "#^Relation 'customer' is not found in Igniter\\\\Local\\\\Models\\\\Review model\\.$#"
+			count: 1
+			path: src/Livewire/ReviewList.php
+
+		-
+			message: "#^Call to an undefined method Igniter\\\\Flame\\\\Database\\\\NestedSet\\\\QueryBuilder\\:\\:sorted\\(\\)\\.$#"
+			count: 1
+			path: src/View/Components/CategoryList.php
+
+		-
+			message: "#^Static property Igniter\\\\Orange\\\\View\\\\Components\\\\CategoryList\\:\\:\\$selectedCategoryCache \\(Igniter\\\\Cart\\\\Models\\\\Category\\|null\\) does not accept Illuminate\\\\Database\\\\Eloquent\\\\Model\\|null\\.$#"
+			count: 1
+			path: src/View/Components/CategoryList.php
+
+		-
+			message: "#^Relation 'locations' is not found in Igniter\\\\Cart\\\\Models\\\\Menu model\\.$#"
+			count: 1
+			path: src/View/Components/FeaturedItems.php
+
+		-
+			message: "#^Relation 'media' is not found in Igniter\\\\Cart\\\\Models\\\\Menu model\\.$#"
+			count: 1
+			path: src/View/Components/FeaturedItems.php
+
+		-
+			message: "#^Call to an undefined method Igniter\\\\Flame\\\\Database\\\\Builder\\<Igniter\\\\Local\\\\Models\\\\Review\\>\\:\\:isApproved\\(\\)\\.$#"
+			count: 1
+			path: src/View/Components/LocalHeader.php
+
+		-
+			message: "#^Relation 'customer' is not found in Igniter\\\\Local\\\\Models\\\\Review model\\.$#"
+			count: 1
+			path: src/View/Components/LocalHeader.php
+
+		-
+			message: "#^Call to an undefined method Igniter\\\\User\\\\Models\\\\Customer\\:\\:orders\\(\\)\\.$#"
+			count: 1
+			path: src/View/Components/OrderList.php

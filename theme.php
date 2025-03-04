@@ -1,7 +1,8 @@
 <?php
 
-$defaultCountry = \System\Models\Countries_model::getDefault();
-$defaultCurrency = app('currency')->getDefault();
+// add currency helper
+$defaultCountry = \Igniter\System\Models\Country::getDefault();
+$defaultCurrency = currency()->getDefault();
 Assets::putJsVars([
     'country' => [
         'name' => $defaultCountry->country_name,
@@ -9,7 +10,6 @@ Assets::putJsVars([
         'iso_code_3' => $defaultCountry->iso_code_3,
         'format' => $defaultCountry->format,
     ],
-    // add currency helper
     'currency' => [
         'symbol' => $defaultCurrency->currency_symbol,
         'symbol_position' => $defaultCurrency->symbol_position,
