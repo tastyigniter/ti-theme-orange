@@ -21,7 +21,7 @@
     "sweetalert2": "^11.4.8"
   },
   "devDependencies": {
-    "axios": "^1.6.7",
+    "axios": "^1.7.4",
     "laravel-mix": "^6.0.6",
     "lodash": "^4.17.19",
     "sass": "^1.49.9",
