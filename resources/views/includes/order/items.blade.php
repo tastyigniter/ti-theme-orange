@@ -13,10 +13,9 @@
                     @endif
                     {{ $orderItem->name }}
                 </span>
-                @php $itemOptionGroup = $orderItem->menu_options->groupBy('order_option_category') @endphp
-                @if ($itemOptionGroup->isNotEmpty())
+                @if ($orderItem->menu_options->isNotEmpty())
                     <ul class="list-unstyled small">
-                        @foreach ($itemOptionGroup as $itemOptionGroupName => $itemOptions)
+                        @foreach ($orderItem->menu_options as $itemOptionGroupName => $itemOptions)
                             <li>
                                 <u class="text-muted">{{ $itemOptionGroupName }}:</u>
                                 <ul class="list-unstyled">
