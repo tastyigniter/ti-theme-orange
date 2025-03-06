@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Igniter\Orange\Livewire;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
 use Igniter\Socialite\Classes\ProviderManager;
@@ -66,7 +67,7 @@ final class Socialite extends Component
         $this->links = $this->loadLinks();
     }
 
-    public function onConfirmEmail()
+    public function onConfirmEmail(): ?RedirectResponse
     {
         $manager = resolve(ProviderManager::class);
 

@@ -17,6 +17,7 @@ use Igniter\Local\Models\LocationArea;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
 use Igniter\Orange\Livewire\Checkout;
+use Igniter\PayRegister\Classes\BasePaymentGateway;
 use Igniter\PayRegister\Concerns\WithPaymentProfile;
 use Igniter\PayRegister\Models\Payment;
 use Igniter\PayRegister\Models\PaymentProfile;
@@ -126,10 +127,10 @@ it('can mount and prepare props', function(): void {
 
     Livewire::test(Checkout::class)
         ->assertSet('fields', fn($fields): bool => [
-            'first_name', 'last_name', 'email', 'telephone',
-            'comment', 'delivery_comment', 'payment', 'termsAgreed',
-            'address_1', 'city', 'state', 'postcode',
-        ] === array_keys($fields));
+                'first_name', 'last_name', 'email', 'telephone',
+                'comment', 'delivery_comment', 'payment', 'termsAgreed',
+                'address_1', 'city', 'state', 'postcode',
+            ] === array_keys($fields));
 
     Event::assertDispatched('igniter.orange.checkCheckoutSecurity');
 });
@@ -455,8 +456,16 @@ it('deletes customer payment profile correctly', function(): void {
     expect(PaymentProfile::where('customer_id', $customer->getKey())->count())->toBe(0);
 });
 
-class TestPaymentWithFalse extends Cod
+class TestPaymentWithFalse extends BasePaymentGateway
 {
+    public static ?string $paymentFormView = 'igniter.payregister::_partials.cod.payment_form';
+
+    #[Override]
+    public function defineFieldsConfig(): string
+    {
+        return 'igniter.payregister::/models/cod';
+    }
+
     #[Override]
     public function processPaymentForm($data, $host, $order): bool
     {
@@ -464,8 +473,16 @@ class TestPaymentWithFalse extends Cod
     }
 }
 
-class TestPaymentReturnsRedirect extends Cod
+class TestPaymentReturnsRedirect extends BasePaymentGateway
 {
+    public static ?string $paymentFormView = 'igniter.payregister::_partials.cod.payment_form';
+
+    #[Override]
+    public function defineFieldsConfig(): string
+    {
+        return 'igniter.payregister::/models/cod';
+    }
+
     #[Override]
     public function processPaymentForm($data, $host, $order)
     {

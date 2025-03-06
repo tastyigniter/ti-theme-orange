@@ -57,7 +57,7 @@ it('confirms email', function(): void {
     $providerManager = mock(ProviderManager::class);
     $providerManager->shouldReceive('getProviderData')->andReturn((object)['user' => (object)['email' => 'test@example.com']]);
     $providerManager->shouldReceive('setProviderData')->once();
-    $providerManager->shouldReceive('completeCallback')->once()->andReturnTrue();
+    $providerManager->shouldReceive('completeCallback')->once()->andReturn(redirect()->to('redirect/url'));
     $providerManager->shouldReceive('listProviderLinks')->andReturn(collect([
         'facebook' => 'https://facebook.com',
         'google' => 'https://google.com',
