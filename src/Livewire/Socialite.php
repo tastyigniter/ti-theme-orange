@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Igniter\Orange\Livewire;
 
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
 use Igniter\Socialite\Classes\ProviderManager;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 final class Socialite extends Component
 {
