@@ -4,7 +4,7 @@
     </p>
 
     <div class="list-group list-group-flush bg-white border rounded p-3">
-        @foreach ($this->savedAddresses as $address)
+        @forelse ($this->savedAddresses as $address)
             <div
                 wire:key="address-{{ $address->address_id }}"
                 wire:click="onSelectAddress({{ $address->address_id }})"
@@ -17,7 +17,13 @@
                     <i class="fa fa-angle-right text-muted"></i>
                 </div>
             </div>
-        @endforeach
+        @empty
+            <div class="list-group-item list-group-item-action px-2">
+                <p class="mb-0">
+                    @lang('igniter.orange::default.text_no_saved_addresses')
+                </p>
+            </div>
+        @endforelse
     </div>
 
     <x-igniter-orange::forms.error field="savedAddress" id="savedAddressFeedback" class="p-2 text-danger" />
