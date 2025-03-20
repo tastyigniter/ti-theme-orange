@@ -1,3 +1,9 @@
+---
+title: "Orange"
+section: "themes"
+sortOrder: 10
+---
+
 ## Installation
 
 You can install the theme via composer using the following command:
