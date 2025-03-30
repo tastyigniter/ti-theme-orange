@@ -25,6 +25,7 @@ beforeEach(function(): void {
     $this->model->shouldReceive('hasDelivery')->andReturn(true);
     $this->model->shouldReceive('hasCollection')->andReturn(true);
     $this->model->shouldReceive('newWorkingSchedule')->andReturn(mock(WorkingSchedule::class));
+    $this->model->shouldReceive('getAttribute')->with('permalink_slug')->andReturn('test-location');
 });
 
 it('initializes location data correctly', function(): void {

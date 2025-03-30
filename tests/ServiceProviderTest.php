@@ -6,6 +6,7 @@ namespace Igniter\Orange\Tests;
 
 use Igniter\Main\Classes\ThemeManager;
 use Igniter\Main\Models\Theme;
+use Igniter\Orange\Actions\EnsureUniqueProcess;
 use Igniter\Orange\ServiceProvider;
 use Igniter\User\Models\Customer;
 use Illuminate\Contracts\Foundation\Application;
@@ -13,6 +14,7 @@ use Illuminate\Contracts\Foundation\Application;
 it('registers support for flash messages', function(): void {
     $app = mock(Application::class);
     $app->shouldReceive('runningUnitTests')->once()->andReturnFalse();
+    $app->shouldReceive('singleton')->once()->with(EnsureUniqueProcess::class);
     $serviceProvider = new ServiceProvider($app);
 
     $serviceProvider->register();

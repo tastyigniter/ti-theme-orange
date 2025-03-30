@@ -13,6 +13,7 @@ use Igniter\Main\Classes\Theme;
 use Igniter\Main\Classes\ThemeManager;
 use Igniter\Main\Template\Page;
 use Igniter\Main\Traits\ConfigurableComponent;
+use Igniter\Orange\Actions\EnsureUniqueProcess;
 use Igniter\Orange\Http\Controllers\Logout;
 use Igniter\Orange\Livewire\Features\SupportFlashMessages;
 use Igniter\System\Classes\ComponentManager;
@@ -38,6 +39,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         if (!$this->app->runningUnitTests()) {
             Livewire::componentHook(SupportFlashMessages::class);
         }
+
+        $this->app->singleton(EnsureUniqueProcess::class);
     }
 
     public function boot(): void

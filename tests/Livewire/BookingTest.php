@@ -12,6 +12,7 @@ use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
 use Igniter\Orange\Livewire\Booking;
 use Igniter\User\Models\Customer;
+use Illuminate\Support\Facades\DB;
 use Livewire\Livewire;
 
 beforeEach(function(): void {
@@ -168,4 +169,26 @@ it('completes booking and reset', function(): void {
         ->assertSet('guest', null)
         ->assertSet('date', null)
         ->assertSet('time', null);
+});
+
+it('handles booking failure gracefully when acquiring lock fails', function(): void {
+    $lockKey = 'booking-reservation-lock-'.md5('2022-12-3112:00');
+    DB::shouldReceive('select')
+        ->with('SELECT GET_LOCK(?, ?) as acquired', [$lockKey, 5])
+        ->times(5)
+        ->andReturn([(object)['acquired' => 0]]); // Lock not acquired
+
+    DB::shouldReceive('beginTransaction')->times(5);
+    DB::shouldReceive('rollBack')->times(5);
+
+    Livewire::test(Booking::class)
+        ->set('guest', 5)
+        ->set('date', '2022-12-31')
+        ->set('time', '12:00')
+        ->set('form.firstName', 'John')
+        ->set('form.lastName', 'Doe')
+        ->set('form.email', 'john@email.com')
+        ->set('form.telephone', '1234567890')
+        ->call('onComplete')
+        ->assertDispatched('booking::show-alert');
 });

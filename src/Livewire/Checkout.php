@@ -15,6 +15,7 @@ use Igniter\Flame\Traits\EventEmitter;
 use Igniter\Local\Facades\Location;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
+use Igniter\Orange\Actions\EnsureUniqueProcess;
 use Igniter\System\Facades\Assets;
 use Igniter\User\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
@@ -250,13 +251,16 @@ final class Checkout extends Component
         $data['cancelPage'] = $this->checkoutPage;
         $data['successPage'] = $this->successPage;
 
-        $this->orderManager->saveOrder($order, $data);
-
-        if ($this->isTwoPageCheckout && $this->checkoutStep !== self::STEP_PAY) {
-            return $this->redirect(Livewire::originalUrl().'?step='.self::STEP_PAY);
-        }
-
         try {
+            $lockKey = 'checkout::confirm-'.$order->order_date.$order->order_time.'-'.$order->order_type;
+            resolve(EnsureUniqueProcess::class)->attemptWithLock($lockKey, function() use ($data, $order): void {
+                $this->orderManager->saveOrder($order, $data);
+            });
+
+            if ($this->isTwoPageCheckout && $this->checkoutStep !== self::STEP_PAY) {
+                return $this->redirect(Livewire::originalUrl().'?step='.self::STEP_PAY);
+            }
+
             if (($redirect = $this->orderManager->processPayment($order, $data)) === false) {
                 return null;
             }
@@ -267,7 +271,9 @@ final class Checkout extends Component
 
             return $this->redirect($order->getUrl($this->successPage));
         } catch (Exception $ex) {
-            throw ValidationException::withMessages(['fields.payment' => $ex->getMessage()]);
+            $errorFieldName = $this->checkoutStep !== self::STEP_PAY ? 'field.comments' : 'fields.payment';
+
+            throw ValidationException::withMessages([$errorFieldName => $ex->getMessage()]);
         }
     }
 

@@ -31,13 +31,15 @@
                 </div>
                 <x-igniter-orange::forms.error field="guest" class="text-danger"/>
             </div>
-            <div class="form-group">
-                <div @class(['form-floating', 'is-invalid' => has_form_error('time')])>
-                    @include('igniter-orange::includes.booking.input-time')
-                    <label for="time">@lang('igniter.reservation::default.label_time')</label>
+            @unless($hideTimePicker)
+                <div class="form-group">
+                    <div @class(['form-floating', 'is-invalid' => has_form_error('time')])>
+                        @include('igniter-orange::includes.booking.input-time')
+                        <label for="time">@lang('igniter.reservation::default.label_time')</label>
+                    </div>
+                    <x-igniter-orange::forms.error field="time" class="text-danger"/>
                 </div>
-                <x-igniter-orange::forms.error field="time" class="text-danger"/>
-            </div>
+            @endunless
             <div class="form-group">
                 <button
                     type="submit"

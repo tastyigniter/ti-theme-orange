@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Igniter\Orange\Livewire;
 
 use Carbon\Carbon;
+use Igniter\Flame\Exception\ApplicationException;
 use Igniter\Flame\Support\Facades\File;
 use Igniter\Local\Facades\Location;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
+use Igniter\Orange\Actions\EnsureUniqueProcess;
 use Igniter\Orange\Livewire\Forms\BookingForm;
 use Igniter\Reservation\Classes\BookingManager;
 use Igniter\Reservation\Models\Concerns\LocationAction;
@@ -44,6 +46,9 @@ final class Booking extends Component
     /** Whether the telephone field should be required */
     public bool $telephoneIsRequired = true;
 
+    /** Whether to hide the time picker */
+    public bool $hideTimePicker = false;
+
     /** Day of the week start the calendar. 0 (Sunday) to 6 (Saturday). */
     public int $weekStartOn = 0;
 
@@ -63,13 +68,13 @@ final class Booking extends Component
     #[Url(as: 'step')]
     public string $pickerStep = 'start';
 
-    #[Url]
+    #[Url(history: true)]
     public ?string $date = null;
 
-    #[Url]
+    #[Url(history: true)]
     public ?int $guest = null;
 
-    #[Url]
+    #[Url(history: true)]
     public ?string $time = null;
 
     public $startDate;
@@ -95,6 +100,11 @@ final class Booking extends Component
         return [
             'useCalendarView' => [
                 'label' => 'Use the calendar view for date selection.',
+                'type' => 'switch',
+                'validationRule' => 'required|boolean',
+            ],
+            'hideTimePicker' => [
+                'label' => 'Hide the time picker.',
                 'type' => 'switch',
                 'validationRule' => 'required|boolean',
             ],
@@ -174,9 +184,9 @@ final class Booking extends Component
         $this->pickerStep = self::STEP_PICKER;
 
         $this->validate([
-            'guest' => 'required|integer|min:'.$this->minGuestSize.'|max:'.$this->maxGuestSize,
-            'date' => 'required|date_format:Y-m-d',
-            'time' => 'required|date_format:H:i',
+            'guest' => ['required', 'integer', 'min:'.$this->minGuestSize, 'max:'.$this->maxGuestSize],
+            'date' => ['required', 'date_format:Y-m-d'],
+            'time' => ['nullable', 'date_format:H:i'],
         ], [], [
             'guest' => lang('igniter.reservation::default.label_guest_num'),
             'date' => lang('igniter.reservation::default.label_date'),
@@ -205,7 +215,7 @@ final class Booking extends Component
 
         $reservation = $this->manager->loadReservation();
 
-        $this->manager->saveReservation($reservation, [
+        $data = [
             'sdateTime' => make_carbon($this->date.' '.$this->time)->format('Y-m-d H:i'),
             'guest' => $this->guest,
             'first_name' => $customer ? $customer->first_name : $this->form->firstName,
@@ -213,11 +223,29 @@ final class Booking extends Component
             'email' => $customer ? $customer->email : $this->form->email,
             'telephone' => $customer ? $customer->telephone : $this->form->telephone,
             'comment' => $this->form->comment,
-        ]);
+        ];
 
-        $this->reset();
+        try {
+            $lockKey = 'booking-reservation-lock-'.md5($this->date.$this->time);
+            resolve(EnsureUniqueProcess::class)->attemptWithLock($lockKey, function() use ($reservation, $data): void {
+                $this->manager->saveReservation($reservation, $data);
+            });
 
-        return $this->redirect(page_url($this->successPage, ['hash' => $reservation->hash]));
+            $this->reset();
+
+            return $this->redirect(page_url($this->successPage, [
+                'hash' => $reservation->hash,
+                'location' => Location::current()->permalink_slug,
+            ]));
+        } catch (ApplicationException $ex) {
+            $this->dispatch(
+                'booking::show-alert',
+                message: lang('igniter.orange::default.alert_reservation_process_failed'),
+                exception: $ex->getMessage(),
+            );
+        }
+
+        return null;
     }
 
     #[Computed, Locked]
@@ -238,11 +266,16 @@ final class Booking extends Component
             $from = 0;
         }
 
+        $selectedDate = make_carbon($this->date);
+        $autoAllocateTable = (bool)Location::current()->getSettings('booking.auto_allocate_table', 1);
+
         return $timeslots
             ->slice($from, $this->noOfSlots)
             ->map(fn($dateTime, $index) => (object)[
                 'dateTime' => $dateTime,
-                'fullyBooked' => false,
+                'fullyBooked' => $autoAllocateTable ? $this->manager->isFullyBookedOn(
+                    $selectedDate->copy()->setTimeFromTimeString($dateTime->format('H:i')), $this->guest,
+                ) : false,
                 'isSelected' => $selectedIndex === $index,
             ]);
     }
@@ -293,8 +326,8 @@ final class Booking extends Component
 
         $this->startDate = now()->addDays($location->getMinReservationAdvanceTime())->startOfDay();
         $this->endDate = now()->addDays($location->getMaxReservationAdvanceTime())->endOfDay();
-        $this->guest = $this->minGuestSize;
-        $this->date = $this->startDate->format('Y-m-d');
+        $this->guest ??= $this->minGuestSize;
+        $this->date ??= $this->startDate->format('Y-m-d');
 
         if ($customer = Auth::customer()) {
             $this->form->firstName = $customer->first_name;

@@ -41,6 +41,7 @@ final class LocationData
         $this->id = $model->getKey();
         $this->name = $model->getName();
         $this->description = $model->getDescription() ?? '';
+        $this->permalink = $model->permalink_slug;
         $this->address = $model->getAddress();
         $this->hasDelivery = $model->hasDelivery();
         $this->hasCollection = $model->hasCollection();

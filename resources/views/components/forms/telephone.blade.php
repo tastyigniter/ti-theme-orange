@@ -21,7 +21,7 @@
 @script
 <script>
     const telephoneInput = document.querySelector('#hidden-{{$id}}');
-    telephoneInput.addEventListener('telephoneChange', (event) => {
+    telephoneInput?.addEventListener('telephoneChange', (event) => {
         $wire.{{ $field }} = telephoneInput.value
     })
 </script>

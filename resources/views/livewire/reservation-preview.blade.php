@@ -61,6 +61,7 @@
                     <h6 class="small text-muted">@lang('igniter.reservation::default.column_customer_name')</h6>
                     <span class="h4">{{ $reservation->first_name}} {{ $reservation->last_name }}</span>
                     <p class="mt-2">{{ $reservation->email }}</p>
+                    <p>{{ $reservation->telephone }}</p>
                 </div>
             </div>
         </div>

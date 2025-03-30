@@ -1,6 +1,11 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Call to an undefined method Igniter\\\\Flame\\\\Database\\\\Builder\\<Igniter\\\\Cart\\\\Models\\\\Menu\\>\\:\\:listFrontEnd\\(\\)\\.$#"
+			count: 1
+			path: src/Actions/ListMenuItems.php
+
+		-
 			message: "#^Property Igniter\\\\Orange\\\\Livewire\\\\LeaveReview\\:\\:\\$customerReview \\(Igniter\\\\Flame\\\\Database\\\\Model\\|null\\) does not accept Illuminate\\\\Database\\\\Eloquent\\\\Model\\|null\\.$#"
 			count: 1
 			path: src/Livewire/LeaveReview.php
@@ -39,16 +44,6 @@ parameters:
 			message: "#^Relation 'working_hours' is not found in Igniter\\\\Local\\\\Models\\\\Location model\\.$#"
 			count: 1
 			path: src/Livewire/LocationList.php
-
-		-
-			message: "#^Call to an undefined method Igniter\\\\Flame\\\\Database\\\\Builder\\<Igniter\\\\Cart\\\\Models\\\\Menu\\>\\:\\:listFrontEnd\\(\\)\\.$#"
-			count: 1
-			path: src/Livewire/MenuItemList.php
-
-		-
-			message: "#^Relation 'menu_options' is not found in Igniter\\\\Cart\\\\Models\\\\Menu model\\.$#"
-			count: 1
-			path: src/Livewire/MenuItemList.php
 
 		-
 			message: "#^Call to an undefined method Igniter\\\\User\\\\Models\\\\Customer\\:\\:reservations\\(\\)\\.$#"

@@ -127,10 +127,10 @@ it('can mount and prepare props', function(): void {
 
     Livewire::test(Checkout::class)
         ->assertSet('fields', fn($fields): bool => [
-            'first_name', 'last_name', 'email', 'telephone',
-            'comment', 'delivery_comment', 'payment', 'termsAgreed',
-            'address_1', 'city', 'state', 'postcode',
-        ] === array_keys($fields));
+                'first_name', 'last_name', 'email', 'telephone',
+                'comment', 'delivery_comment', 'payment', 'termsAgreed',
+                'address_1', 'city', 'state', 'postcode',
+            ] === array_keys($fields));
 
     Event::assertDispatched('igniter.orange.checkCheckoutSecurity');
 });
@@ -347,7 +347,7 @@ it('onConfirm errors when order total is below payment minimum order total', fun
         ->set('fields.last_name', 'Doe')
         ->set('fields.email', 'test@example.com')
         ->dispatch('checkout::confirm')
-        ->assertHasErrors(['fields.payment' => [sprintf(
+        ->assertHasErrors(['field.comments' => [sprintf(
             lang('igniter.payregister::default.alert_min_order_total'),
             currency_format(100.00),
             'Cash On Delivery',

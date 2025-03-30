@@ -10,9 +10,9 @@
     <div class="card">
         <div class="card-body">
             <div data-control="booking">
+                @include('igniter-orange::includes.booking.alert-modal')
                 @if ($pickerStep == $this::STEP_BOOKING)
                     @include('igniter-orange::includes.booking.info')
-
                     @include('igniter-orange::includes.booking.booking-form')
 
                 @elseif ($pickerStep == $this::STEP_TIMESLOT)
@@ -28,4 +28,11 @@
             </div>
         </div>
     </div>
+    @if (in_array($pickerStep, [$this::STEP_BOOKING, $this::STEP_TIMESLOT]))
+        <div class="card">
+            <div class="card-body">
+                <a href="{{ page_url('reservation.reservation') }}">Start again</a>
+            </div>
+        </div>
+    @endif
 </div>

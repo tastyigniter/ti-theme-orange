@@ -51,6 +51,7 @@ return [
     'text_no_delivery_address' => 'No delivery address provided',
     'text_register' => "Register <small>It's easy and always will be.</small>",
     'text_forgot' => 'Forgot password?',
+    'text_please_wait_info' => 'Reserving your table. Please wait...',
 
     'menu_menu' => 'View Menu',
     'menu_reservation' => 'Reservation',
@@ -153,6 +154,7 @@ return [
 
     'alert_preview_mode' => 'Action not allowed in preview mode',
     'alert_saved_address_not_found' => 'Selected address not found',
+    'alert_reservation_process_failed' => 'Unable to process your reservation at this time. Please try again in a moment.',
 
     'error_telephone_required' => 'Telephone number is required',
     'error_telephone_invalid' => 'Telephone number is invalid',
