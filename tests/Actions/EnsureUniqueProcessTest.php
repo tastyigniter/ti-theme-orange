@@ -30,7 +30,7 @@ it('executes callback when lock is acquired', function(): void {
 
     DB::shouldReceive('commit')->once();
 
-    expect((new EnsureUniqueProcess())->attemptWithLock($lockKey, fn(): string => 'success'))->toBe('success');
+    expect((new EnsureUniqueProcess)->attemptWithLock($lockKey, fn(): string => 'success'))->toBe('success');
 });
 
 it('retries and returns null when lock not acquired', function(): void {
@@ -45,7 +45,7 @@ it('retries and returns null when lock not acquired', function(): void {
     Log::shouldReceive('error')->times(1);
     Log::shouldReceive('warning')->times(3);
 
-    $action = (new EnsureUniqueProcess())->maxRetries(3)->retryDelay(0);
+    $action = (new EnsureUniqueProcess)->maxRetries(3)->retryDelay(0);
 
     expect(fn(): mixed => $action->attemptWithLock($lockKey, fn(): string => 'should not run'))
         ->toThrow(ApplicationException::class, 'Failed to acquire lock [failing-lock] after 3 attempts');
@@ -74,7 +74,7 @@ it('retries and rethrows QueryException after max attempts', function(): void {
 
     Log::shouldReceive('error')->times(4);
 
-    $action = (new EnsureUniqueProcess())->maxRetries(3)->retryDelay(0);
+    $action = (new EnsureUniqueProcess)->maxRetries(3)->retryDelay(0);
 
     expect(fn(): mixed => $action->attemptWithLock($lockKey, function(): void {}))->toThrow(QueryException::class);
 });
@@ -106,7 +106,7 @@ it('retries when a deadlock (error 1213) occurs and succeeds after', function():
     DB::shouldReceive('commit')->once();
     Log::shouldReceive('warning')->once();
 
-    $action = (new EnsureUniqueProcess())
+    $action = (new EnsureUniqueProcess)
         ->maxRetries(3)
         ->retryDelay(0)
         ->timeout(5);
@@ -129,7 +129,7 @@ it('releases lock and rethrows on generic Throwable', function(): void {
     DB::shouldReceive('rollBack')->once();
     Log::shouldReceive('error')->once();
 
-    $action = (new EnsureUniqueProcess())
+    $action = (new EnsureUniqueProcess)
         ->maxRetries(3)
         ->retryDelay(0);
 

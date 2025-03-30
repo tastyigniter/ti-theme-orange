@@ -16,7 +16,7 @@ it('returns paginated menu items as MenuItemData when pageLimit > 0', function()
     $menuItem = Menu::factory()->create();
     $menuItem->categories()->attach($category);
 
-    $action = new ListMenuItems();
+    $action = new ListMenuItems;
     $result = $action->handle(['pageLimit' => 20])->getList();
 
     expect($result)->toBeInstanceOf(LengthAwarePaginator::class)
@@ -28,7 +28,7 @@ it('returns grouped items when isGrouped is true and no category specified', fun
     $menuItem = Menu::factory()->create();
     $menuItem->categories()->attach($category);
 
-    $action = new ListMenuItems();
+    $action = new ListMenuItems;
     $result = $action->handle([
         'isGrouped' => true,
         'category' => '',
@@ -44,7 +44,7 @@ it('returns grouped items when isGrouped is true and no category specified', fun
 it('groups items without categories under key 0', function(): void {
     Menu::factory()->create();
 
-    $result = (new ListMenuItems())->handle([
+    $result = (new ListMenuItems)->handle([
         'isGrouped' => true,
         'category' => '',
         'pageLimit' => 20,
@@ -56,7 +56,7 @@ it('groups items without categories under key 0', function(): void {
 it('returns full unpaginated collection when pageLimit is 0', function(): void {
     Menu::factory()->create();
 
-    $action = new ListMenuItems();
+    $action = new ListMenuItems;
     $result = $action->handle([])->getList();
 
     expect($result)->toBeInstanceOf(Collection::class)

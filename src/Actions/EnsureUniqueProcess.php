@@ -92,6 +92,7 @@ class EnsureUniqueProcess
         }
 
         Log::error(sprintf('Failed to acquire lock [%s] after %s attempts', $lockKey, $this->maxRetries));
+
         throw new ApplicationException(sprintf('Failed to acquire lock [%s] after %s attempts', $lockKey, $this->maxRetries));
     }
 }
