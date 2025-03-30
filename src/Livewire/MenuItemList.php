@@ -9,7 +9,7 @@ use Igniter\Admin\Widgets\Form;
 use Igniter\Cart\Models\Menu as MenuModel;
 use Igniter\Local\Facades\Location;
 use Igniter\Main\Traits\ConfigurableComponent;
-use Igniter\Orange\Data\MenuItemData;
+use Igniter\Orange\Actions\ListMenuItems;
 use Igniter\System\Facades\Assets;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Url;
@@ -52,8 +52,6 @@ final class MenuItemList extends Component
 
     #[Url(as: 'menuId')]
     public string $selectedMenuId = '';
-
-    protected array $menuListCategories = [];
 
     public static function componentMeta(): array
     {
@@ -184,9 +182,11 @@ final class MenuItemList extends Component
 
     public function render()
     {
+        $menuListAction = $this->loadList();
+
         return view('igniter-orange::livewire.menu-item-list', [
-            'menuList' => $this->loadList(),
-            'menuListCategories' => $this->menuListCategories,
+            'menuList' => $menuListAction->getList(),
+            'menuListCategories' => $menuListAction->getCategoryList(),
         ]);
     }
 
@@ -209,7 +209,7 @@ final class MenuItemList extends Component
         }
     }
 
-    protected function loadList()
+    protected function loadList(): ListMenuItems
     {
         $location = Location::current()?->getKey();
 
@@ -219,6 +219,7 @@ final class MenuItemList extends Component
             'category' => $this->selectedCategorySlug,
             'search' => $this->menuSearchTerm,
             'orderType' => Location::orderType(),
+            'isGrouped' => $this->isGrouped,
         ];
 
         if ($this->itemsPerPage > 0) {
@@ -226,11 +227,7 @@ final class MenuItemList extends Component
             $filters['pageLimit'] = $this->itemsPerPage;
         }
 
-        $with = [
-            'mealtimes', 'menu_options',
-            'categories', 'special', 'ingredients',
-            'menu_options.option', 'locations', 'stocks',
-        ];
+        $with = [];
 
         if ($this->showThumb) {
             $with[] = 'media';
@@ -238,51 +235,6 @@ final class MenuItemList extends Component
             $with[] = 'ingredients.media';
         }
 
-        $list = MenuModel::query()->with($with)->listFrontEnd($filters);
-
-        if ($this->itemsPerPage > 0) {
-            $list->setCollection($list->getCollection()
-                ->map(fn($menuItem): MenuItemData => new MenuItemData($menuItem)));
-        } else {
-            $list = $list->get()->map(fn($menuItem): MenuItemData => new MenuItemData($menuItem));
-        }
-
-        if (!strlen($this->selectedCategorySlug) && $this->isGrouped) {
-            if ($this->itemsPerPage > 0) {
-                $list->setCollection($this->groupListByCategory($list->getCollection()));
-            } else {
-                $list = $this->groupListByCategory($list);
-            }
-        }
-
-        return $list;
-    }
-
-    protected function groupListByCategory($items)
-    {
-        $this->menuListCategories = [];
-
-        $groupedList = [];
-        foreach ($items as $menuItemObject) {
-            $categories = $menuItemObject->model->categories;
-            if (!$categories || $categories->isEmpty()) {
-                $groupedList[0][] = $menuItemObject;
-                continue;
-            }
-
-            foreach ($categories as $category) {
-                $this->menuListCategories[$category->getKey()] = $category;
-                $groupedList[$category->getKey()][] = $menuItemObject;
-            }
-        }
-
-        return collect($groupedList)
-            ->sortBy(function($menuItems, $categoryId) {
-                if (isset($this->menuListCategories[$categoryId])) {
-                    return $this->menuListCategories[$categoryId]->priority;
-                }
-
-                return $categoryId;
-            });
+        return resolve(ListMenuItems::class)->handle($filters, $with);
     }
 }
