@@ -15,6 +15,7 @@ use Igniter\Main\Template\Page;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Actions\EnsureUniqueProcess;
 use Igniter\Orange\Http\Controllers\Logout;
+use Igniter\Orange\Http\Middleware\SetOriginalRouteParametersOnLivewireRoute;
 use Igniter\Orange\Livewire\Features\SupportFlashMessages;
 use Igniter\System\Classes\ComponentManager;
 use Igniter\System\Libraries\Assets;
@@ -38,6 +39,10 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         if (!$this->app->runningUnitTests()) {
             Livewire::componentHook(SupportFlashMessages::class);
+        }
+
+        if (!Igniter::runningInAdmin()) {
+            Route::pushMiddlewareToGroup('igniter', SetOriginalRouteParametersOnLivewireRoute::class);
         }
 
         $this->app->singleton(EnsureUniqueProcess::class);
@@ -196,6 +201,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     protected function configureLivewire(): void
     {
         Livewire::addPersistentMiddleware([
+            SetOriginalRouteParametersOnLivewireRoute::class,
             CheckLocation::class,
             CartMiddleware::class,
         ]);

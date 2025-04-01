@@ -26,6 +26,8 @@ final class Login extends Component
 
     public string $redirectPage = 'account.account';
 
+    public bool $intendedRedirect = true;
+
     #[Url]
     public string $redirect = '';
 
@@ -47,6 +49,12 @@ final class Login extends Component
                 'options' => self::getThemePageOptions(...),
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
+            'intendedRedirect' => [
+                'label' => 'Force redirect to the previous page, this will override the redirect page.',
+                'type' => 'switch',
+                'default' => true,
+                'validationRule' => 'required|boolean',
+            ],
         ];
     }
 
@@ -59,7 +67,9 @@ final class Login extends Component
     {
         $this->registrationAllowed = (bool)setting('allow_registration', true);
 
-        $this->setRedirectIntendedUrl();
+        if ($this->intendedRedirect) {
+            redirect()->setIntendedUrl($this->getRedirectIntendedUrl());
+        }
     }
 
     public function customer(): ?Customer
@@ -85,24 +95,26 @@ final class Login extends Component
         });
 
         if (strlen($this->redirect) > 0) {
-            return redirect()->to(page_url($this->redirect));
+            $this->redirect(page_url($this->redirect));
         }
-
-        return redirect()->intended(page_url($this->redirectPage));
+        else {
+            $this->intendedRedirect
+                ? $this->redirectIntended(page_url($this->redirectPage))
+                : $this->redirect(page_url($this->redirectPage));
+        }
     }
 
-    protected function setRedirectIntendedUrl(): void
+    protected function getRedirectIntendedUrl(): ?string
     {
         $previousUrl = url()->previous();
-
         if (redirect()->getIntendedUrl()) {
-            return;
+            return null;
         }
 
         if (!$previousUrl || $previousUrl === url()->current() || !str_starts_with($previousUrl, url('/'))) {
-            return;
+            return null;
         }
 
-        redirect()->setIntendedUrl($previousUrl);
+        return $previousUrl;
     }
 }

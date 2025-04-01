@@ -2,7 +2,8 @@
     x-data="{ modalMessage: '', modalException: '' }"
     x-init="
         document.querySelector('#booking-form')?.addEventListener('submit', () => {
-            const bookingAlertModal = new bootstrap.Modal('#booking-alert-modal');
+            const modalEl = document.getElementById('booking-alert-modal');
+            const bookingAlertModal = bootstrap.Modal.getOrCreateInstance(modalEl);
             bookingAlertModal.show();
         });
 
@@ -11,11 +12,21 @@
             modalException = '';
         });
 
-        document.addEventListener('livewire:init', () => {
-            Livewire.on('booking::show-alert', (event) => {
-                console.log('booking::show-alert', event);
-                modalMessage = event.detail.message;
-                modalException = event.detail.exception;
+        $wire.on('booking::alert', (event) => {
+            $nextTick(() => {
+                if (event.show) {
+                    modalMessage = event.message;
+                    modalException = event.exception;
+                } else {
+                    modalMessage = '';
+                    modalException = '';
+                    const modalEl = document.getElementById('booking-alert-modal');
+                    const bookingAlertModal = bootstrap.Modal.getOrCreateInstance(modalEl);
+                    document.querySelector('.modal-backdrop')?.remove();
+                    document.body.classList.remove('modal-open');
+                    bookingAlertModal._element.classList.remove('show');
+                    bookingAlertModal._element.style.display = 'none';
+                }
             });
         });
     "

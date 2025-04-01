@@ -21,6 +21,7 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\Url;
 use Livewire\Component;
+use Throwable;
 
 /**
  * Booking component
@@ -211,21 +212,21 @@ final class Booking extends Component
     {
         $customer = Auth::customer();
 
-        $this->form->validate();
-
-        $reservation = $this->manager->loadReservation();
-
-        $data = [
-            'sdateTime' => make_carbon($this->date.' '.$this->time)->format('Y-m-d H:i'),
-            'guest' => $this->guest,
-            'first_name' => $customer ? $customer->first_name : $this->form->firstName,
-            'last_name' => $customer ? $customer->last_name : $this->form->lastName,
-            'email' => $customer ? $customer->email : $this->form->email,
-            'telephone' => $customer ? $customer->telephone : $this->form->telephone,
-            'comment' => $this->form->comment,
-        ];
-
         try {
+            $this->form->validate();
+
+            $reservation = $this->manager->loadReservation();
+
+            $data = [
+                'sdateTime' => make_carbon($this->date.' '.$this->time)->format('Y-m-d H:i'),
+                'guest' => $this->guest,
+                'first_name' => $this->form->firstName,
+                'last_name' => $this->form->lastName,
+                'email' => $customer ? $customer->email : $this->form->email,
+                'telephone' => $customer ? $customer->telephone : $this->form->telephone,
+                'comment' => $this->form->comment,
+            ];
+
             $lockKey = 'booking-reservation-lock-'.md5($this->date.$this->time);
             resolve(EnsureUniqueProcess::class)->attemptWithLock($lockKey, function() use ($reservation, $data): void {
                 $this->manager->saveReservation($reservation, $data);
@@ -239,13 +240,15 @@ final class Booking extends Component
             ]));
         } catch (ApplicationException $ex) {
             $this->dispatch(
-                'booking::show-alert',
+                'booking::alert',
+                show: true,
                 message: lang('igniter.orange::default.alert_reservation_process_failed'),
                 exception: $ex->getMessage(),
             );
+        } catch (Throwable $ex) {
+            $this->dispatch('booking::alert', show: false);
+            throw $ex;
         }
-
-        return null;
     }
 
     #[Computed, Locked]

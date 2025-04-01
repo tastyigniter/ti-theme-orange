@@ -18,11 +18,12 @@
     id="hidden-{{$id}}"
     value="{{$number}}"
 />
+<x-igniter-orange::forms.error field="{{$field}}" class="text-danger"/>
 @script
 <script>
     const telephoneInput = document.querySelector('#hidden-{{$id}}');
     telephoneInput?.addEventListener('telephoneChange', (event) => {
-        $wire.{{ $field }} = telephoneInput.value
+        $wire.$set('{{ $field }}', telephoneInput.value, false);
     })
 </script>
 @endscript
