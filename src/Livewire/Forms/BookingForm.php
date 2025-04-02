@@ -37,7 +37,7 @@ final class BookingForm extends Form
             'firstName' => 'required|between:1,48',
             'lastName' => 'required|between:1,48',
             'email' => ['sometimes', 'required', 'email:filter', 'max:96', Rule::unique('customers', 'email')->ignore(Auth::customer()?->getKey(), 'customer_id')],
-            'telephone' => 'sometimes|required|regex:/^([0-9\s\-\+\(\)]*)$/i',
+            'telephone' => 'sometimes|nullable|regex:/^([0-9\s\-\+\(\)]*)$/i',
             'comment' => 'max:500',
         ];
     }

@@ -223,7 +223,7 @@ final class Booking extends Component
                 'first_name' => $this->form->firstName,
                 'last_name' => $this->form->lastName,
                 'email' => $customer ? $customer->email : $this->form->email,
-                'telephone' => $customer ? $customer->telephone : $this->form->telephone,
+                'telephone' => $this->form->telephone ?? $customer?->telephone ?? '',
                 'comment' => $this->form->comment,
             ];
 

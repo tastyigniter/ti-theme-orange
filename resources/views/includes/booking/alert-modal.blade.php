@@ -1,15 +1,19 @@
 <div
     x-data="{ modalMessage: '', modalException: '' }"
     x-init="
-        document.querySelector('#booking-form')?.addEventListener('submit', () => {
-            const modalEl = document.getElementById('booking-alert-modal');
-            const bookingAlertModal = bootstrap.Modal.getOrCreateInstance(modalEl);
-            bookingAlertModal.show();
+        window.addEventListener('submit', (event) => {
+            if (event.target.matches('#booking-form')) {
+                const modalEl = document.getElementById('booking-alert-modal');
+                const bookingAlertModal = bootstrap.Modal.getOrCreateInstance(modalEl);
+                bookingAlertModal.show();
+            }
         });
 
-        document.querySelector('#booking-alert-modal')?.addEventListener('hidden.bs.modal', (event) => {
-            modalMessage = '';
-            modalException = '';
+        window.addEventListener('hidden.bs.modal', (event) => {
+            if (event.target.matches('#booking-alert-modal')) {
+                modalMessage = '';
+                modalException = '';
+            }
         });
 
         $wire.on('booking::alert', (event) => {
@@ -20,12 +24,11 @@
                 } else {
                     modalMessage = '';
                     modalException = '';
-                    const modalEl = document.getElementById('booking-alert-modal');
-                    const bookingAlertModal = bootstrap.Modal.getOrCreateInstance(modalEl);
-                    document.querySelector('.modal-backdrop')?.remove();
-                    document.body.classList.remove('modal-open');
-                    bookingAlertModal._element.classList.remove('show');
-                    bookingAlertModal._element.style.display = 'none';
+                    setTimeout(() => {
+                        const modalEl = document.getElementById('booking-alert-modal');
+                        const bookingAlertModal = bootstrap.Modal.getOrCreateInstance(modalEl);
+                        bookingAlertModal.hide();
+                    }, 300);
                 }
             });
         });

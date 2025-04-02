@@ -10,7 +10,6 @@
     <div class="card">
         <div class="card-body">
             <div data-control="booking">
-                @include('igniter-orange::includes.booking.alert-modal')
                 @if ($pickerStep == $this::STEP_BOOKING)
                     @include('igniter-orange::includes.booking.info')
                     @include('igniter-orange::includes.booking.booking-form')
@@ -35,4 +34,5 @@
             </div>
         </div>
     @endif
+    @include('igniter-orange::includes.booking.alert-modal')
 </div>
