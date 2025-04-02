@@ -18,7 +18,7 @@ it('sets original route parameters on livewire request', function(): void {
 
     Livewire::shouldReceive('isLivewireRequest')->andReturnTrue();
 
-    $middleware = new SetOriginalRouteParametersOnLivewireRoute();
+    $middleware = new SetOriginalRouteParametersOnLivewireRoute;
     $next = fn($req) => $req;
 
     $response = $middleware->handle($request, $next);
@@ -33,7 +33,7 @@ it('does not set parameters when not a livewire request', function(): void {
     $request->setRouteResolver(fn(): Route => $route);
     Livewire::shouldReceive('isLivewireRequest')->andReturnFalse();
 
-    $middleware = new SetOriginalRouteParametersOnLivewireRoute();
+    $middleware = new SetOriginalRouteParametersOnLivewireRoute;
     $next = fn($req) => $req;
 
     $response = $middleware->handle($request, $next);
@@ -45,7 +45,7 @@ it('does not set parameters when route is null', function(): void {
     $request = request();
     $request->setRouteResolver(fn(): null => null);
 
-    $middleware = new SetOriginalRouteParametersOnLivewireRoute();
+    $middleware = new SetOriginalRouteParametersOnLivewireRoute;
     $next = fn($req) => $req;
 
     $response = $middleware->handle($request, $next);
