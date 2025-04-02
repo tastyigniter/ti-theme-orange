@@ -70,9 +70,9 @@ it('retries and rethrows QueryException after max attempts', function(): void {
 
     DB::shouldReceive('select')
         ->with('SELECT RELEASE_LOCK(?)', [$lockKey])
-        ->times(3);
+        ->times(2);
 
-    Log::shouldReceive('error')->times(4);
+    Log::shouldReceive('error')->times(3);
 
     $action = (new EnsureUniqueProcess)->maxRetries(3)->retryDelay(0);
 

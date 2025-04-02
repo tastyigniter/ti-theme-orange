@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Orange\Http\Middleware;
 
 use Closure;
@@ -14,11 +16,9 @@ class SetOriginalRouteParametersOnLivewireRoute
             return $next($request);
         }
 
-        if (Livewire::isLivewireRequest()) {
-            if ($originalParams = $request->route()->parameters()) {
-                foreach ($originalParams as $key => $value) {
-                    request()->route()->setParameter($key, $value);
-                }
+        if (Livewire::isLivewireRequest() && ($originalParams = $request->route()->parameters())) {
+            foreach ($originalParams as $key => $value) {
+                request()->route()->setParameter($key, $value);
             }
         }
 

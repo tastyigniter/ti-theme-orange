@@ -67,8 +67,8 @@ final class Login extends Component
     {
         $this->registrationAllowed = (bool)setting('allow_registration', true);
 
-        if ($this->intendedRedirect) {
-            redirect()->setIntendedUrl($this->getRedirectIntendedUrl());
+        if ($this->intendedRedirect && $intendedRedirectUrl = $this->getRedirectIntendedUrl()) {
+            redirect()->setIntendedUrl($intendedRedirectUrl);
         }
     }
 
@@ -81,7 +81,7 @@ final class Login extends Component
         return Auth::getUser();
     }
 
-    public function onLogin()
+    public function onLogin(): void
     {
         $this->form->validate();
 
@@ -96,8 +96,7 @@ final class Login extends Component
 
         if (strlen($this->redirect) > 0) {
             $this->redirect(page_url($this->redirect));
-        }
-        else {
+        } else {
             $this->intendedRedirect
                 ? $this->redirectIntended(page_url($this->redirectPage))
                 : $this->redirect(page_url($this->redirectPage));
@@ -106,11 +105,11 @@ final class Login extends Component
 
     protected function getRedirectIntendedUrl(): ?string
     {
-        $previousUrl = url()->previous();
         if (redirect()->getIntendedUrl()) {
             return null;
         }
 
+        $previousUrl = url()->previous();
         if (!$previousUrl || $previousUrl === url()->current() || !str_starts_with($previousUrl, url('/'))) {
             return null;
         }

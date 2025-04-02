@@ -67,6 +67,12 @@ class EnsureUniqueProcess
             } catch (QueryException $ex) {
                 DB::rollBack();
 
+                if ($attempt >= $this->maxRetries) {
+                    Log::error(sprintf('Failed to acquire lock [%s] on attempt #%s', $lockKey, $this->maxRetries));
+
+                    throw $ex;
+                }
+
                 if ($ex->getCode() == 1213) {
                     Log::warning(sprintf('Deadlock detected during attempt #%s for [%s]: %s', $attempt, $lockKey, $ex->getMessage()));
                     sleep($this->retryDelay);
@@ -76,12 +82,6 @@ class EnsureUniqueProcess
                 Log::error(sprintf('QueryException during attempt #%s for [%s]: %s', $attempt, $lockKey, $ex->getMessage()));
                 DB::select('SELECT RELEASE_LOCK(?)', [$lockKey]);
                 sleep($this->retryDelay);
-
-                if ($attempt >= $this->maxRetries) {
-                    Log::error(sprintf('Failed to acquire lock [%s] on attempt #%s', $lockKey, $this->maxRetries));
-
-                    throw $ex;
-                }
             } catch (Throwable $ex) {
                 DB::rollBack();
                 Log::error(sprintf('Exception during attempt #%s for [%s]: %s', $attempt, $lockKey, $ex->getMessage()));
