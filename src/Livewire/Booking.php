@@ -247,8 +247,11 @@ final class Booking extends Component
             );
         } catch (Throwable $ex) {
             $this->dispatch('booking::alert', show: false);
+
             throw $ex;
         }
+
+        return null;
     }
 
     #[Computed, Locked]

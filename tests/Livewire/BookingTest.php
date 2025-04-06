@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Igniter\Orange\Tests\Livewire;
 
+use Exception;
 use Igniter\Cart\Classes\AbstractOrderType;
 use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\Location as LocationModel;
@@ -12,6 +13,7 @@ use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
 use Igniter\Orange\Livewire\Booking;
 use Igniter\User\Models\Customer;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Livewire\Livewire;
 
@@ -190,5 +192,51 @@ it('handles booking failure gracefully when acquiring lock fails', function(): v
         ->set('form.email', 'john@email.com')
         ->set('form.telephone', '1234567890')
         ->call('onComplete')
-        ->assertDispatched('booking::show-alert');
+        ->assertDispatched('booking::alert');
+});
+
+it('handles booking failure gracefully when booking query fails', function(): void {
+    $lockKey = 'booking-reservation-lock-'.md5('2022-12-3112:00');
+    DB::shouldReceive('select')
+        ->with('SELECT GET_LOCK(?, ?) as acquired', [$lockKey, 5])
+        ->andThrow(new QueryException('mysql', 'SELECT GET_LOCK(?, ?) as acquired', [], new Exception('Query failed', 1000)));
+
+    DB::shouldReceive('beginTransaction')->times(5);
+    DB::shouldReceive('rollBack')->times(5);
+    DB::shouldReceive('select')->with('SELECT RELEASE_LOCK(?)', [$lockKey])->times(4);
+
+    $this->expectException(QueryException::class);
+
+    Livewire::test(Booking::class)
+        ->set('guest', 5)
+        ->set('date', '2022-12-31')
+        ->set('time', '12:00')
+        ->set('form.firstName', 'John')
+        ->set('form.lastName', 'Doe')
+        ->set('form.email', 'john@email.com')
+        ->set('form.telephone', '1234567890')
+        ->call('onComplete')
+        ->assertDispatched('booking::alert');
+});
+
+it('handles booking failure gracefully when booking deadlock is detected', function(): void {
+    $lockKey = 'booking-reservation-lock-'.md5('2022-12-3112:00');
+    DB::shouldReceive('select')
+        ->with('SELECT GET_LOCK(?, ?) as acquired', [$lockKey, 5])
+        ->andThrow(new QueryException('mysql', 'SELECT GET_LOCK(?, ?) as acquired', [], new Exception('Deadlock detected', 1213)));
+    DB::shouldReceive('beginTransaction')->times(5);
+    DB::shouldReceive('rollBack')->times(5);
+
+    $this->expectException(QueryException::class);
+
+    Livewire::test(Booking::class)
+        ->set('guest', 5)
+        ->set('date', '2022-12-31')
+        ->set('time', '12:00')
+        ->set('form.firstName', 'John')
+        ->set('form.lastName', 'Doe')
+        ->set('form.email', 'john@email.com')
+        ->set('form.telephone', '1234567890')
+        ->call('onComplete')
+        ->assertDispatched('booking::alert');
 });

@@ -82,13 +82,26 @@ it('logs in user', function(): void {
 it('logs in user and redirects to custom url', function(): void {
     $customer = Customer::factory()->create();
 
-    Livewire::withQueryParams(['redirect' => 'account/orders'])
+    Livewire::withQueryParams(['redirect' => 'account.orders'])
         ->test(Login::class)
         ->set('form.email', $customer->email)
         ->set('form.password', 'password')
         ->set('form.remember', true)
         ->call('onLogin')
-        ->assertRedirect(page_url('account/orders'));
+        ->assertRedirect(page_url('account.orders'));
+});
+
+it('logs in user and redirects to configured redirect page', function(): void {
+    $customer = Customer::factory()->create();
+
+    Livewire::test(Login::class)
+        ->set('intendedRedirect', false)
+        ->set('redirectPage', 'account.orders')
+        ->set('form.email', $customer->email)
+        ->set('form.password', 'password')
+        ->set('form.remember', true)
+        ->call('onLogin')
+        ->assertRedirect(page_url('account.orders'));
 });
 
 it('fails to log in user with invalid credentials', function(): void {
