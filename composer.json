@@ -89,7 +89,7 @@
     },
     "scripts": {
         "format": "vendor/bin/pint --ansi",
-        "composer test:lint": "vendor/bin/pint --test --ansi",
+        "test:lint": "vendor/bin/pint --test --ansi",
         "test:refactor": "vendor/bin/rector process --dry-run --ansi",
         "test:static": "vendor/bin/phpstan analyse --ansi --memory-limit 1056M",
         "test:pest": "vendor/bin/pest",
