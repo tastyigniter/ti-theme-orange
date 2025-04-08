@@ -12,7 +12,7 @@
     <div class="offcanvas-body">
         <div class="mb-4">
             @if (strlen($locationInfo->description ?? ''))
-                {{nl2br($locationInfo->description)}}
+                {{html(nl2br($locationInfo->description))}}
             @endif
         </div>
 
