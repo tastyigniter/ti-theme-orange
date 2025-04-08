@@ -42,7 +42,7 @@
             <div class="d-flex">
                 <div class="col-md-6 p-3 border">
                     <h6 class="small text-muted">@lang('igniter.reservation::default.column_table')</h6>
-                    <span class="h4">{{ implode(', ', $reservation->tables->pluck('table_name')->all()) }}</span>
+                    <span class="h4">{{ $reservation->tables->pluck('name')->join(', ') }}</span>
                 </div>
                 <div class="col-md-6 p-3 border">
                     <h6 class="small text-muted">@lang('igniter.reservation::default.column_comment')</h6>
