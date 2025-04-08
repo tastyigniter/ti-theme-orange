@@ -20,7 +20,9 @@ use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\Url;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Livewire\Livewire;
 use Throwable;
 
 /**
@@ -213,6 +215,30 @@ final class Booking extends Component
         $customer = Auth::customer();
 
         try {
+            $this->form->withValidator(function($validator) {
+                $validator->after(function($validator) {
+                    if ($this->guest && ($this->guest < $this->minGuestSize || $this->guest > $this->maxGuestSize)) {
+                        $validator->errors()->add('guest', sprintf('Number of guests must be between %s and %s',
+                            $this->minGuestSize, $this->maxGuestSize,
+                        ));
+                    }
+
+                    if ($this->date) {
+                        $date = make_carbon($this->date);
+                        if ($date->lt($this->startDate) || $date->gt($this->endDate)) {
+                            $validator->errors()->add('date', sprintf('Date must be between %s and %s',
+                                $this->startDate->isoFormat(lang('igniter::system.moment.date_format')),
+                                $this->endDate->isoFormat(lang('igniter::system.moment.date_format')),
+                            ));
+                        }
+                    }
+
+                    if ($this->time && !preg_match('/^\d{2}:\d{2}$/', $this->time)) {
+                        $validator->errors()->add('time', 'Time must be in HH:MM format.');
+                    }
+                });
+            });
+
             $this->form->validate();
 
             $reservation = $this->manager->loadReservation();
@@ -332,6 +358,8 @@ final class Booking extends Component
 
         $this->startDate = now()->addDays($location->getMinReservationAdvanceTime())->startOfDay();
         $this->endDate = now()->addDays($location->getMaxReservationAdvanceTime())->endOfDay();
+        $this->minGuestSize = $location->getMinReservationGuestCount() ?: $this->minGuestSize;
+        $this->maxGuestSize = $location->getMaxReservationGuestCount() ?: $this->maxGuestSize;
         $this->guest ??= $this->minGuestSize;
         $this->date ??= $this->startDate->format('Y-m-d');
 
