@@ -291,10 +291,11 @@ final class Booking extends Component
     public function reducedTimeslots()
     {
         $timeslots = $this->timeslots->values();
+        $noOfSlots = $this->noOfSlots ?: $timeslots->count();
 
         $selectedIndex = $timeslots->search(fn(Carbon $slot): bool => $slot->isSameAs('Y-m-d H:i', make_carbon($this->date.' '.$this->time)));
 
-        if (($from = ($selectedIndex ?: 0) - ((int)($this->noOfSlots / 2) - 1)) < 0) {
+        if (($from = ($selectedIndex ?: 0) - ((int)($noOfSlots / 2) - 1)) < 0) {
             $from = 0;
         }
 
@@ -302,7 +303,7 @@ final class Booking extends Component
         $autoAllocateTable = (bool)Location::current()->getSettings('booking.auto_allocate_table', 1);
 
         return $timeslots
-            ->slice($from, $this->noOfSlots)
+            ->slice($from, $noOfSlots)
             ->map(fn($dateTime, $index) => (object)[
                 'dateTime' => $dateTime,
                 'fullyBooked' => $autoAllocateTable ? $this->manager->isFullyBookedOn(
