@@ -160,7 +160,7 @@ it('selects time and move to booking step', function(): void {
 it('completes booking and reset', function(): void {
     Livewire::test(Booking::class)
         ->set('guest', 5)
-        ->set('date', '2022-12-31')
+        ->set('date', now()->addDays(4)->toDateString())
         ->set('time', '12:00')
         ->set('form.firstName', 'John')
         ->set('form.lastName', 'Doe')
@@ -173,8 +173,51 @@ it('completes booking and reset', function(): void {
         ->assertSet('time', null);
 });
 
+it('handles booking validation failure when guest number is not within allowed guest numbers', function(): void {
+    Livewire::test(Booking::class)
+        ->set('guest', 25)
+        ->set('date', now()->addDays(4)->toDateString())
+        ->set('time', '12:00')
+        ->set('form.firstName', 'John')
+        ->set('form.lastName', 'Doe')
+        ->set('form.email', 'john@email.com')
+        ->set('form.telephone', '1234567890')
+        ->call('onComplete')
+        ->assertHasErrors('form.guest')
+        ->assertDispatched('booking::alert');
+});
+
+it('handles booking validation failure when selected date is not within bookable dates', function(): void {
+    Livewire::test(Booking::class)
+        ->set('guest', 5)
+        ->set('date', '2022-12-31')
+        ->set('time', '12:00')
+        ->set('form.firstName', 'John')
+        ->set('form.lastName', 'Doe')
+        ->set('form.email', 'john@email.com')
+        ->set('form.telephone', '1234567890')
+        ->call('onComplete')
+        ->assertHasErrors('form.date')
+        ->assertDispatched('booking::alert');
+});
+
+it('handles booking validation failure when selected time is not properly formatted', function(): void {
+    Livewire::test(Booking::class)
+        ->set('guest', 5)
+        ->set('date', now()->addDays(4)->toDateString())
+        ->set('time', '120:00')
+        ->set('form.firstName', 'John')
+        ->set('form.lastName', 'Doe')
+        ->set('form.email', 'john@email.com')
+        ->set('form.telephone', '1234567890')
+        ->call('onComplete')
+        ->assertHasErrors('form.time')
+        ->assertDispatched('booking::alert');
+});
+
 it('handles booking failure gracefully when acquiring lock fails', function(): void {
-    $lockKey = 'booking-reservation-lock-'.md5('2022-12-3112:00');
+    $date = now()->addDays(4)->toDateString();
+    $lockKey = 'booking-reservation-lock-'.md5($date.'12:00');
     DB::shouldReceive('select')
         ->with('SELECT GET_LOCK(?, ?) as acquired', [$lockKey, 5])
         ->times(5)
@@ -185,7 +228,7 @@ it('handles booking failure gracefully when acquiring lock fails', function(): v
 
     Livewire::test(Booking::class)
         ->set('guest', 5)
-        ->set('date', '2022-12-31')
+        ->set('date', $date)
         ->set('time', '12:00')
         ->set('form.firstName', 'John')
         ->set('form.lastName', 'Doe')
@@ -196,7 +239,8 @@ it('handles booking failure gracefully when acquiring lock fails', function(): v
 });
 
 it('handles booking failure gracefully when booking query fails', function(): void {
-    $lockKey = 'booking-reservation-lock-'.md5('2022-12-3112:00');
+    $date = now()->addDays(4)->toDateString();
+    $lockKey = 'booking-reservation-lock-'.md5($date.'12:00');
     DB::shouldReceive('select')
         ->with('SELECT GET_LOCK(?, ?) as acquired', [$lockKey, 5])
         ->andThrow(new QueryException('mysql', 'SELECT GET_LOCK(?, ?) as acquired', [], new Exception('Query failed', 1000)));
@@ -209,7 +253,7 @@ it('handles booking failure gracefully when booking query fails', function(): vo
 
     Livewire::test(Booking::class)
         ->set('guest', 5)
-        ->set('date', '2022-12-31')
+        ->set('date', $date)
         ->set('time', '12:00')
         ->set('form.firstName', 'John')
         ->set('form.lastName', 'Doe')
@@ -220,7 +264,8 @@ it('handles booking failure gracefully when booking query fails', function(): vo
 });
 
 it('handles booking failure gracefully when booking deadlock is detected', function(): void {
-    $lockKey = 'booking-reservation-lock-'.md5('2022-12-3112:00');
+    $date = now()->addDays(4)->toDateString();
+    $lockKey = 'booking-reservation-lock-'.md5($date.'12:00');
     DB::shouldReceive('select')
         ->with('SELECT GET_LOCK(?, ?) as acquired', [$lockKey, 5])
         ->andThrow(new QueryException('mysql', 'SELECT GET_LOCK(?, ?) as acquired', [], new Exception('Deadlock detected', 1213)));
@@ -231,7 +276,7 @@ it('handles booking failure gracefully when booking deadlock is detected', funct
 
     Livewire::test(Booking::class)
         ->set('guest', 5)
-        ->set('date', '2022-12-31')
+        ->set('date', $date)
         ->set('time', '12:00')
         ->set('form.firstName', 'John')
         ->set('form.lastName', 'Doe')

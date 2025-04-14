@@ -20,9 +20,7 @@ use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\Url;
-use Livewire\Attributes\Validate;
 use Livewire\Component;
-use Livewire\Livewire;
 use Throwable;
 
 /**
@@ -215,8 +213,8 @@ final class Booking extends Component
         $customer = Auth::customer();
 
         try {
-            $this->form->withValidator(function($validator) {
-                $validator->after(function($validator) {
+            $this->form->withValidator(function($validator): void {
+                $validator->after(function($validator): void {
                     if ($this->guest && ($this->guest < $this->minGuestSize || $this->guest > $this->maxGuestSize)) {
                         $validator->errors()->add('guest', sprintf('Number of guests must be between %s and %s',
                             $this->minGuestSize, $this->maxGuestSize,
