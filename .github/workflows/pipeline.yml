@@ -12,7 +12,7 @@ jobs:
   php-lint:
     needs: build-assets
     if: ${{ always() && needs.build-assets.result == 'success' }}
-    uses: tastyigniter/workflows/.github/workflows/php-lint.yml@main
+    uses: tastyigniter/workflows/.github/workflows/php-tests-lint.yml@main
     with:
       composer: update --no-interaction --no-progress
   php-tests:
