@@ -9,7 +9,7 @@ sortOrder: 10
 You can install the theme via composer using the following command:
 
 ```bash
-composer require tastyigniter/ti-theme-orange:"^4.0" -W
+composer require tastyigniter/ti-theme-orange -W
 ```
 
 ## Usage
