@@ -247,7 +247,7 @@ final class Booking extends Component
                 'first_name' => $this->form->firstName,
                 'last_name' => $this->form->lastName,
                 'email' => $customer ? $customer->email : $this->form->email,
-                'telephone' => $this->form->telephone ?? $customer?->telephone ?? '',
+                'telephone' => $this->form->telephone ?? $customer->telephone ?? '',
                 'comment' => $this->form->comment,
             ];
 
@@ -282,7 +282,7 @@ final class Booking extends Component
     public function timeslots(): Collection
     {
         return $this->manager->makeTimeSlots(make_carbon($this->date))
-            ->map(fn($dateTime): Carbon|string => make_carbon($dateTime));
+            ->map(fn($dateTime): Carbon => make_carbon($dateTime));
     }
 
     #[Computed, Locked]

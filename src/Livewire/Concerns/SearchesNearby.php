@@ -60,7 +60,7 @@ trait SearchesNearby
     #[Computed]
     public function savedAddresses()
     {
-        return collect(Auth::customer()?->addresses ?? []);
+        return collect(Auth::customer()->addresses ?? []);
     }
 
     public function onSearchNearby()

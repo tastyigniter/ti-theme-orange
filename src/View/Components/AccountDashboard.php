@@ -25,7 +25,7 @@ final class AccountDashboard extends Component
     public function __construct()
     {
         $customer = Auth::getUser();
-        $this->customerName = $customer?->full_name ?? '';
+        $this->customerName = $customer->full_name ?? '';
         $this->hasDefaultAddress = !is_null($customer?->address);
         $this->defaultAddressId = $customer?->address?->getKey();
         $this->formattedAddress = $this->hasDefaultAddress ? format_address($customer?->address) : '';

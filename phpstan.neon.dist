@@ -7,8 +7,7 @@ parameters:
     paths:
         - src/
         - resources/
-#    ignoreErrors:
-#        - '#PHPDoc tag @var#'
-#    excludePaths:
-#        - ./*/*/FileToBeExcluded.php
-#    checkMissingIterableValueType: false
+    ignoreErrors:
+        - '#Method .*::render\(\) never returns .* so it can be removed from the return type#'
+        - '#Parameter \#1 \$view of function view expects view-string\|null, string given#'
+    treatPhpDocTypesAsCertain: false

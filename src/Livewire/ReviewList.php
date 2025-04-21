@@ -9,7 +9,6 @@ use Igniter\Admin\Widgets\Form;
 use Igniter\Local\Models\Review as ReviewModel;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Livewire\Concerns\WithReviews;
-use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -51,7 +50,7 @@ final class ReviewList extends Component
         ]);
     }
 
-    public static function getPropertyOptions(Form $form, FormField $field): array|Collection
+    public static function getPropertyOptions(Form $form, FormField $field): array
     {
         return match ($field->getConfig('property')) {
             'sortOrder' => self::getSortOrderOptionsWithReviews(),
