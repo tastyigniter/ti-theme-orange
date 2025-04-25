@@ -1,6 +1,6 @@
 name: Orange CI Pipeline
 
-on: [ push, pull_request, workflow_dispatch ]
+on: [ push, workflow_dispatch ]
 
 jobs:
   build-assets:
