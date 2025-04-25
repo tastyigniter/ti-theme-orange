@@ -11,7 +11,6 @@ use Igniter\Local\Facades\Location;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Actions\ListMenuItems;
 use Igniter\System\Facades\Assets;
-use Illuminate\Support\Collection;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -172,7 +171,7 @@ final class MenuItemList extends Component
         ];
     }
 
-    public static function getPropertyOptions(Form $form, FormField $field): array|Collection
+    public static function getPropertyOptions(Form $form, FormField $field): array
     {
         return match ($field->getConfig('property')) {
             'sortOrder' => collect((new MenuModel)->queryModifierGetSorts())->mapWithKeys(fn($value, $key) => [$value => $value])->all(),

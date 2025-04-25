@@ -12,7 +12,6 @@ use Igniter\Orange\Livewire\Forms\AddressBookForm;
 use Igniter\System\Models\Country;
 use Igniter\User\Facades\Auth;
 use Igniter\User\Models\Address;
-use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -56,7 +55,7 @@ final class AddressBook extends Component
         ];
     }
 
-    public static function getPropertyOptions(Form $form, FormField $field): array|Collection
+    public static function getPropertyOptions(Form $form, FormField $field): array
     {
         return match ($field->getConfig('property')) {
             'sortOrder' => collect((new Address)->queryModifierGetSorts())->mapWithKeys(fn($value, $key) => [$value => $value])->all(),
