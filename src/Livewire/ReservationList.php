@@ -11,7 +11,6 @@ use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
 use Igniter\Reservation\Models\Reservation;
 use Igniter\User\Facades\Auth;
-use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -58,7 +57,7 @@ final class ReservationList extends Component
         ];
     }
 
-    public static function getPropertyOptions(Form $form, FormField $field): array|Collection
+    public static function getPropertyOptions(Form $form, FormField $field): array
     {
         return match ($field->getConfig('property')) {
             'sortOrder' => collect((new Reservation)->queryModifierGetSorts())->mapWithKeys(fn($value, $key) => [$value => $value])->all(),

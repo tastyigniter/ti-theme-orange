@@ -202,7 +202,7 @@ final class Checkout extends Component
     #[Computed, Locked]
     public function paymentGateways()
     {
-        return $this->getOrder()?->order_total > 0
+        return $this->getOrder()->order_total > 0
             ? $this->orderManager->getPaymentGateways()
             : collect();
     }
@@ -314,7 +314,7 @@ final class Checkout extends Component
         return redirect()->back();
     }
 
-    protected function getOrder(): ?Order
+    protected function getOrder(): Order
     {
         if (!is_null($this->order)) {
             return $this->order;

@@ -1,96 +1,121 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Call to an undefined method Igniter\\\\Flame\\\\Database\\\\Builder\\<Igniter\\\\Cart\\\\Models\\\\Menu\\>\\:\\:listFrontEnd\\(\\)\\.$#"
+			message: '#^Call to an undefined method Igniter\\Flame\\Database\\Builder\<Igniter\\Cart\\Models\\Menu\>\:\:listFrontEnd\(\)\.$#'
+			identifier: method.notFound
 			count: 1
 			path: src/Actions/ListMenuItems.php
 
 		-
-			message: "#^Property Igniter\\\\Orange\\\\Livewire\\\\LeaveReview\\:\\:\\$customerReview \\(Igniter\\\\Flame\\\\Database\\\\Model\\|null\\) does not accept Illuminate\\\\Database\\\\Eloquent\\\\Model\\|null\\.$#"
+			message: '#^Method Igniter\\Orange\\Data\\LocationData\:\:orderType\(\) never returns null so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 1
+			path: src/Data/LocationData.php
+
+		-
+			message: '#^Property Igniter\\Orange\\Livewire\\LeaveReview\:\:\$customerReview \(Igniter\\Flame\\Database\\Model\|null\) does not accept Illuminate\\Database\\Eloquent\\Model\|null\.$#'
+			identifier: assign.propertyType
 			count: 1
 			path: src/Livewire/LeaveReview.php
 
 		-
-			message: "#^Call to an undefined method Igniter\\\\Flame\\\\Database\\\\Builder\\<Igniter\\\\Local\\\\Models\\\\Location\\>\\:\\:applyFilters\\(\\)\\.$#"
+			message: '#^Call to an undefined method Igniter\\Flame\\Database\\Builder\<Igniter\\Local\\Models\\Location\>\:\:applyFilters\(\)\.$#'
+			identifier: method.notFound
 			count: 1
 			path: src/Livewire/LocationList.php
 
 		-
-			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Models\\\\Location\\:\\:getOrderTypeOptions\\(\\)\\.$#"
+			message: '#^Call to an undefined static method Igniter\\Local\\Models\\Location\:\:getOrderTypeOptions\(\)\.$#'
+			identifier: staticMethod.notFound
 			count: 1
 			path: src/Livewire/LocationList.php
 
 		-
-			message: "#^Relation 'delivery_areas' is not found in Igniter\\\\Local\\\\Models\\\\Location model\\.$#"
+			message: '#^Relation ''delivery_areas'' is not found in Igniter\\Local\\Models\\Location model\.$#'
+			identifier: larastan.relationExistence
 			count: 1
 			path: src/Livewire/LocationList.php
 
 		-
-			message: "#^Relation 'media' is not found in Igniter\\\\Local\\\\Models\\\\Location model\\.$#"
+			message: '#^Relation ''media'' is not found in Igniter\\Local\\Models\\Location model\.$#'
+			identifier: larastan.relationExistence
 			count: 1
 			path: src/Livewire/LocationList.php
 
 		-
-			message: "#^Relation 'reviews' is not found in Igniter\\\\Local\\\\Models\\\\Location model\\.$#"
+			message: '#^Relation ''reviews'' is not found in Igniter\\Local\\Models\\Location model\.$#'
+			identifier: larastan.relationExistence
 			count: 1
 			path: src/Livewire/LocationList.php
 
 		-
-			message: "#^Relation 'settings' is not found in Igniter\\\\Local\\\\Models\\\\Location model\\.$#"
+			message: '#^Relation ''settings'' is not found in Igniter\\Local\\Models\\Location model\.$#'
+			identifier: larastan.relationExistence
 			count: 1
 			path: src/Livewire/LocationList.php
 
 		-
-			message: "#^Relation 'working_hours' is not found in Igniter\\\\Local\\\\Models\\\\Location model\\.$#"
+			message: '#^Relation ''working_hours'' is not found in Igniter\\Local\\Models\\Location model\.$#'
+			identifier: larastan.relationExistence
 			count: 1
 			path: src/Livewire/LocationList.php
 
 		-
-			message: "#^Call to an undefined method Igniter\\\\User\\\\Models\\\\Customer\\:\\:reservations\\(\\)\\.$#"
+			message: '#^Call to an undefined method Igniter\\User\\Models\\Customer\:\:reservations\(\)\.$#'
+			identifier: method.notFound
 			count: 1
 			path: src/Livewire/ReservationList.php
 
 		-
-			message: "#^Call to an undefined method Igniter\\\\Flame\\\\Database\\\\Builder\\<Igniter\\\\Local\\\\Models\\\\Review\\>\\:\\:isApproved\\(\\)\\.$#"
+			message: '#^Call to an undefined method Igniter\\Flame\\Database\\Builder\<Igniter\\Local\\Models\\Review\>\:\:isApproved\(\)\.$#'
+			identifier: method.notFound
 			count: 1
 			path: src/Livewire/ReviewList.php
 
 		-
-			message: "#^Relation 'customer' is not found in Igniter\\\\Local\\\\Models\\\\Review model\\.$#"
+			message: '#^Relation ''customer'' is not found in Igniter\\Local\\Models\\Review model\.$#'
+			identifier: larastan.relationExistence
 			count: 1
 			path: src/Livewire/ReviewList.php
 
 		-
-			message: "#^Call to an undefined method Igniter\\\\Flame\\\\Database\\\\NestedSet\\\\QueryBuilder\\:\\:sorted\\(\\)\\.$#"
+			message: '#^Call to an undefined method Igniter\\Flame\\Database\\NestedSet\\QueryBuilder\:\:sorted\(\)\.$#'
+			identifier: method.notFound
 			count: 1
 			path: src/View/Components/CategoryList.php
 
 		-
-			message: "#^Static property Igniter\\\\Orange\\\\View\\\\Components\\\\CategoryList\\:\\:\\$selectedCategoryCache \\(Igniter\\\\Cart\\\\Models\\\\Category\\|null\\) does not accept Illuminate\\\\Database\\\\Eloquent\\\\Model\\|null\\.$#"
+			message: '#^Static property Igniter\\Orange\\View\\Components\\CategoryList\:\:\$selectedCategoryCache \(Igniter\\Cart\\Models\\Category\|null\) does not accept Illuminate\\Database\\Eloquent\\Model\|null\.$#'
+			identifier: assign.propertyType
 			count: 1
 			path: src/View/Components/CategoryList.php
 
 		-
-			message: "#^Relation 'locations' is not found in Igniter\\\\Cart\\\\Models\\\\Menu model\\.$#"
+			message: '#^Relation ''locations'' is not found in Igniter\\Cart\\Models\\Menu model\.$#'
+			identifier: larastan.relationExistence
 			count: 1
 			path: src/View/Components/FeaturedItems.php
 
 		-
-			message: "#^Relation 'media' is not found in Igniter\\\\Cart\\\\Models\\\\Menu model\\.$#"
+			message: '#^Relation ''media'' is not found in Igniter\\Cart\\Models\\Menu model\.$#'
+			identifier: larastan.relationExistence
 			count: 1
 			path: src/View/Components/FeaturedItems.php
 
 		-
-			message: "#^Call to an undefined method Igniter\\\\Flame\\\\Database\\\\Builder\\<Igniter\\\\Local\\\\Models\\\\Review\\>\\:\\:isApproved\\(\\)\\.$#"
+			message: '#^Call to an undefined method Igniter\\Flame\\Database\\Builder\<Igniter\\Local\\Models\\Review\>\:\:isApproved\(\)\.$#'
+			identifier: method.notFound
 			count: 1
 			path: src/View/Components/LocalHeader.php
 
 		-
-			message: "#^Relation 'customer' is not found in Igniter\\\\Local\\\\Models\\\\Review model\\.$#"
+			message: '#^Relation ''customer'' is not found in Igniter\\Local\\Models\\Review model\.$#'
+			identifier: larastan.relationExistence
 			count: 1
 			path: src/View/Components/LocalHeader.php
 
 		-
-			message: "#^Call to an undefined method Igniter\\\\User\\\\Models\\\\Customer\\:\\:orders\\(\\)\\.$#"
+			message: '#^Call to an undefined method Igniter\\User\\Models\\Customer\:\:orders\(\)\.$#'
+			identifier: method.notFound
 			count: 1
 			path: src/View/Components/OrderList.php
