@@ -40,6 +40,28 @@ it('initializes flash messages correctly', function(): void {
         ]);
 });
 
+it('listens for flash message added event', function(): void {
+    Livewire::test(FlashMessage::class)
+        ->call('updateMessages', [
+            (object)[
+                'level' => 'info',
+                'message' => 'Info message',
+                'title' => null,
+                'important' => false,
+                'overlay' => false,
+            ],
+        ])
+        ->assertSet('messages', [
+            (object)[
+                'level' => 'info',
+                'message' => 'Info message',
+                'title' => null,
+                'important' => false,
+                'overlay' => false,
+            ],
+        ]);
+});
+
 it('renders flash message view', function(): void {
     Livewire::test(FlashMessage::class)
         ->assertViewIs('igniter-orange::livewire.utils.flash-message');

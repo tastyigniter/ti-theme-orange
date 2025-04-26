@@ -6,6 +6,8 @@ namespace Igniter\Orange\Tests\Livewire\Features;
 
 use Exception;
 use Igniter\Orange\Livewire\Features\SupportFlashMessages;
+use Livewire\Features\SupportRedirects\Redirector;
+use Livewire\Mechanisms\HandleComponents\ComponentContext;
 
 it('handles exception and stops propagation when not in debug mode', function(): void {
     config()->set('app.debug', false);
@@ -19,10 +21,26 @@ it('handles exception and stops propagation when not in debug mode', function():
     expect(flash()->messages())->toHaveCount(1);
 });
 
-it('does not dispatch flash messages on dehydrate when not a livewire request', function(): void {
+it('does not dispatch flash messages event on dehydrate when not a livewire request', function(): void {
     $component = new SupportFlashMessages;
 
     $context = [];
+    $result = $component->dehydrate($context);
+
+    expect($result)->toBeNull();
+});
+
+it('does not dispatch flash messages event on livewire request redirect', function(): void {
+    request()->headers->set('X-Livewire', 'true');
+
+    $component = new SupportFlashMessages;
+
+    $context = new ComponentContext(null, false);
+    $context->effects = [
+        'returns' => [
+            new Redirector(resolve('url')),
+        ],
+    ];
     $result = $component->dehydrate($context);
 
     expect($result)->toBeNull();
