@@ -156,7 +156,7 @@ final class FulfillmentModal extends Component
 
         Event::dispatch('igniter.orange.fulfilmentUpdated');
 
-        $this->redirect(Livewire::originalUrl(), navigate: true);
+        return $this->redirect(Livewire::originalUrl());
     }
 
     protected function parseTimeslot(Collection $timeslot): void
