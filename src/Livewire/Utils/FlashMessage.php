@@ -6,12 +6,19 @@ namespace Igniter\Orange\Livewire\Utils;
 
 use Igniter\Flame\Flash\Facades\Flash;
 use Igniter\Flame\Flash\Message;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use stdClass;
 
 final class FlashMessage extends Component
 {
     public array $messages = [];
+
+    #[On('flashMessageAdded')]
+    public function updateMessages($messages): void
+    {
+        $this->messages = array_merge($this->messages, $messages);
+    }
 
     public function mount(): void
     {

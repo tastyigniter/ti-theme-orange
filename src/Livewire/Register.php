@@ -107,13 +107,13 @@ final class Register extends Component
             ]);
         }
 
-        $redirectUrl = page_url($customer->is_activated ? $this->redirectPage : $this->loginPage);
-        flash()->success(lang($customer->is_activated
-            ? 'igniter.user::default.login.alert_account_created'
-            : 'igniter.user::default.login.alert_account_activation',
-        ));
+        $customer->is_activated
+            ? flash()->success(lang('igniter.user::default.login.alert_account_created'))
+            : flash()->overlay(lang('igniter.user::default.login.alert_account_activation'));
 
-        return redirect()->intended(get('redirect', $redirectUrl));
+        return $customer->is_activated
+            ? redirect()->intended(get('redirect', page_url($this->redirectPage)))
+            : redirect()->to(get('redirect', page_url($this->loginPage)));
     }
 
     public function onActivate()

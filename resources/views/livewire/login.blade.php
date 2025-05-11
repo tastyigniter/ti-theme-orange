@@ -71,7 +71,6 @@
         @if ((bool)$registrationAllowed)
             @lang('igniter.orange::default.text_signup_no_account')
             <a
-                wire:navigate
                 class=""
                 href="{{ page_url('account.register') }}"
             >@lang('igniter.orange::default.button_register')</a>
