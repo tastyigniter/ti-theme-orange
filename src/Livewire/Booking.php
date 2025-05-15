@@ -340,7 +340,7 @@ final class Booking extends Component
         }
     }
 
-    protected function prepareDates()
+    protected function prepareDates(): void
     {
         /** @var LocationAction $location */
         $location = Location::current();
