@@ -82,6 +82,10 @@ final class Booking extends Component
 
     public $endDate;
 
+    public array $dates = [];
+
+    public array $disabledDates = [];
+
     /**
      * @var BookingManager
      */
@@ -164,6 +168,7 @@ final class Booking extends Component
         Assets::addJs('igniter-orange::/js/booking.js', 'booking-js');
         Assets::addCss('igniter-orange::/css/booking.css', 'booking-css');
 
+        $this->prepareDates();
         $this->prepareProps();
     }
 
@@ -317,46 +322,11 @@ final class Booking extends Component
         return [];
     }
 
-    #[Computed, Locked]
-    public function disabledDates()
-    {
-        $result = [];
-        $startDate = $this->startDate->copy();
-        $endDate = $this->endDate->copy();
-        $schedule = $this->manager->getSchedule();
-        for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
-            if (count($schedule->forDate($date)) === 0) {
-                $result[] = $date->toDateString();
-            }
-        }
-
-        return $result;
-    }
-
-    #[Computed, Locked]
-    public function dates()
-    {
-        $start = $this->startDate->copy();
-        $end = $this->endDate->copy();
-
-        $options = [];
-        $schedule = $this->manager->getSchedule();
-        for ($date = $start; $date->lte($end); $date->addDay()) {
-            if (count($schedule->forDate($date)) > 0) {
-                $options[] = $date->copy();
-            }
-        }
-
-        return $options;
-    }
-
     protected function prepareProps(): void
     {
         /** @var LocationAction $location */
         $location = Location::current();
 
-        $this->startDate = now()->addDays($location->getMinReservationAdvanceTime())->startOfDay();
-        $this->endDate = now()->addDays($location->getMaxReservationAdvanceTime())->endOfDay();
         $this->minGuestSize = $location->getMinReservationGuestCount() ?: $this->minGuestSize;
         $this->maxGuestSize = $location->getMaxReservationGuestCount() ?: $this->maxGuestSize;
         $this->guest ??= $this->minGuestSize;
@@ -368,5 +338,26 @@ final class Booking extends Component
             $this->form->email = $customer->email;
             $this->form->telephone = $customer->telephone;
         }
+    }
+
+    protected function prepareDates()
+    {
+        /** @var LocationAction $location */
+        $location = Location::current();
+
+        $start = now()->addDays($location->getMinReservationAdvanceTime())->startOfDay();
+        $end = now()->addDays($location->getMaxReservationAdvanceTime())->endOfDay();
+
+        $schedule = $this->manager->getSchedule();
+        for ($date = $start; $date->lte($end); $date->addDay()) {
+            if (count($schedule->forDate($date)) > 0) {
+                $this->dates[] = $date->copy();
+            } else {
+                $this->disabledDates[] = $date->toDateString();
+            }
+        }
+
+        $this->startDate = collect($this->dates)->first()?->copy();
+        $this->endDate = collect($this->dates)->last()?->copy();
     }
 }
