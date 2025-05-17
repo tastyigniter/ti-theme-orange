@@ -23,7 +23,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Computed;
-use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -193,13 +192,19 @@ final class Checkout extends Component
         $this->initForm();
     }
 
-    #[Computed, Locked]
+    #[Computed]
+    public function cartTotal(): string
+    {
+        return currency_format($this->cartManager->getCart()->total());
+    }
+
+    #[Computed]
     public function formTabFields(string $tab): array
     {
         return array_get($this->checkoutForm->getTab('primary'), $tab, []);
     }
 
-    #[Computed, Locked]
+    #[Computed]
     public function paymentGateways()
     {
         return $this->getOrder()->order_total > 0

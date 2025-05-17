@@ -18,7 +18,6 @@ use Igniter\User\Facades\AdminAuth;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
 use Livewire\Attributes\Computed;
-use Livewire\Attributes\Locked;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -136,13 +135,13 @@ final class LocationList extends Component
         $this->distanceUnit = setting('distance_unit');
     }
 
-    #[Computed, Locked]
+    #[Computed]
     public function orderTypes()
     {
         return LocationModel::getOrderTypeOptions();
     }
 
-    #[Computed, Locked]
+    #[Computed]
     public function sorters()
     {
         $defaults = [
@@ -184,7 +183,7 @@ final class LocationList extends Component
         return $result;
     }
 
-    #[Computed, Locked]
+    #[Computed]
     public function filters()
     {
         $defaults = [

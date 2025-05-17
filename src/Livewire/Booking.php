@@ -18,7 +18,6 @@ use Igniter\System\Facades\Assets;
 use Igniter\User\Facades\Auth;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
-use Livewire\Attributes\Locked;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Throwable;
@@ -283,14 +282,14 @@ final class Booking extends Component
         return null;
     }
 
-    #[Computed, Locked]
+    #[Computed]
     public function timeslots(): Collection
     {
         return $this->manager->makeTimeSlots(make_carbon($this->date))
             ->map(fn($dateTime): Carbon => make_carbon($dateTime));
     }
 
-    #[Computed, Locked]
+    #[Computed]
     public function reducedTimeslots()
     {
         $timeslots = $this->timeslots->values();
@@ -316,7 +315,7 @@ final class Booking extends Component
             ]);
     }
 
-    #[Computed, Locked]
+    #[Computed]
     public function disabledDaysOfWeek(): array
     {
         return [];

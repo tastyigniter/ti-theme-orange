@@ -24,6 +24,7 @@ beforeEach(function(): void {
     $this->orderTypeMock->shouldReceive('getCode')->andReturn(LocationModel::DELIVERY);
     Location::shouldReceive('getId')->andReturn($this->location->getKey());
     Location::shouldReceive('current')->andReturn($this->location);
+    Location::shouldReceive('orderType')->byDefault()->andReturn($this->orderTypeMock);
     Location::shouldReceive('getOrderType')->andReturn($this->orderTypeMock);
     Location::shouldReceive('checkOrderTime')->byDefault()->andReturnTrue();
     Location::shouldReceive('checkNoOrderTypeAvailable')->andReturnFalse();

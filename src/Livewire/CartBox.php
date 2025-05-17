@@ -16,6 +16,9 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
+/**
+ * @property-read string $cartTotal
+ */
 final class CartBox extends Component
 {
     use ConfigurableComponent;
