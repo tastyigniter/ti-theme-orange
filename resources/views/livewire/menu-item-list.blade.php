@@ -31,3 +31,38 @@
         ></button>
     @endif
 </div>
+
+@script
+<script>
+    document.addEventListener('livewire:initialized', () => {
+        document.querySelectorAll('[data-control="menu-item"]').forEach((el) => {
+            el.addEventListener('click', (event) => {
+                if (el.classList.contains('disabled')) {
+                    event.preventDefault();
+                    return;
+                } else {
+                    el.classList.add('disabled');
+                }
+
+                el.querySelectorAll('i').forEach((icon) => {
+                    if (icon.hasAttribute('wire:loading.class')) {
+                        icon.classList.add('fa-spinner', 'fa-spin');
+                    }
+                });
+            });
+        });
+    })
+    Livewire.hook('commit', ({respond}) => {
+        respond(() => {
+            document.querySelectorAll('[data-control="menu-item"]').forEach((el) => {
+                el.classList.remove('disabled');
+                el.querySelectorAll('i.fa-spin').forEach((icon) => {
+                    if (icon.hasAttribute('wire:loading.class')) {
+                        icon.classList.remove('fa-spinner', 'fa-spin');
+                    }
+                })
+            });
+        })
+    });
+</script>
+@endscript
