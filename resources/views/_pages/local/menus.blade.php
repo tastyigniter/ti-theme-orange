@@ -3,6 +3,7 @@ title: igniter.orange::default.menus_title
 permalink: '/:location?local/menus/:category?'
 description: ''
 layout: default
+hideFooter: 1
 
 '[igniter-orange::local-header]': []
 '[igniter-orange::fulfillment]': []
