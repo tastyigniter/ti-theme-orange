@@ -87,14 +87,17 @@
                 modalFooter.classList.add('modal-footer', 'border-0');
                 modalContent.appendChild(modalFooter);
 
-                var modalOk = document.createElement('button');
+                var modalOk = document.createElement('a');
                 modalOk.classList.add('btn', 'btn-primary');
                 modalOk.setAttribute('type', 'button');
-                modalOk.setAttribute('data-bs-dismiss', 'modal');
-                modalOk.textContent = 'Ok';
+                if (message.actionUrl) {
+                    modalOk.setAttribute('href', message.actionUrl);
+                } else {
+                    modalOk.setAttribute('data-bs-dismiss', 'modal');
+                }
+                modalOk.textContent = message.actionText ?? 'Ok';
                 modalFooter.appendChild(modalOk);
 
-                console.log('modal', modal);
                 return modal;
             },
             init: function () {
