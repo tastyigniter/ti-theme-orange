@@ -23,6 +23,9 @@
                 </p>
             @endif
             @include('igniter-orange::includes.cartbox.buttons')
+            @teleport('body')
+                @include('igniter-orange::includes.cartbox.buttons-mobile')
+            @endteleport
         </div>
     </div>
 </div>

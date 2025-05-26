@@ -19,9 +19,11 @@ description: Default layout
     </div>
 </main>
 
+@unless($this->page->hideFooter)
 <footer class="footer mt-auto">
     @include('igniter-orange::includes.footer')
 </footer>
+@endunless
 <livewire:igniter-orange::utils.modal/>
 <livewire:igniter-orange::utils.flash-message/>
 @include('igniter-orange::includes.eucookiebanner')

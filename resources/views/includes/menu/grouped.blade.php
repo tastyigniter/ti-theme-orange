@@ -32,9 +32,9 @@
                         @endif
 
                         @if ($showThumb && $menuCategory->hasMedia('thumb'))
-                            <div class="image">
+                            <div class="image mb-3">
                                 <img
-                                    class="img-fluid"
+                                    class="img-fluid rounded"
                                     src="{{ $menuCategory->getThumb(['width' => $categoryThumbWidth, 'height' => $categoryThumbHeight]) }}"
                                     alt="{{ $menuCategory->name }}"
                                 />

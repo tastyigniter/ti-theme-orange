@@ -3,6 +3,7 @@ title: igniter.orange::default.menus_title
 permalink: '/:location?local/menus/:category?'
 description: ''
 layout: default
+hideFooter: 1
 
 '[igniter-orange::local-header]': []
 '[igniter-orange::fulfillment]': []
@@ -53,14 +54,5 @@ layout: default
             <livewire:igniter-orange::cart-box/>
         </div>
     </div>
-</div>
-<div class="fixed-bottom d-block d-lg-none">
-    <a
-        class="btn btn-primary w-100 btn-lg radius-none cart-toggle text-nowrap"
-        href="{{ page_url('cart') }}"
-    >
-        @lang('igniter.orange::default.button_view_cart'):
-        <span class="fw-bold">{{ currency_format(Cart::total()) }}</span>
-    </a>
 </div>
 <livewire:igniter-orange::fulfillment-modal/>

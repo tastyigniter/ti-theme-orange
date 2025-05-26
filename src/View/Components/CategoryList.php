@@ -23,7 +23,7 @@ final class CategoryList extends Component
 
     public function __construct(
         public string $menusPage = 'local.menus',
-        public bool $hideEmpty = false,
+        public bool $hideEmpty = true,
         public bool $useLinkAnchor = true,
     ) {}
 

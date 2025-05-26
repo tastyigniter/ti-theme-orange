@@ -12,9 +12,13 @@ use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
 use Igniter\System\Facades\Assets;
 use Illuminate\Support\Facades\Redirect;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
+/**
+ * @property-read string $cartTotal
+ */
 final class CartBox extends Component
 {
     use ConfigurableComponent;
@@ -148,6 +152,12 @@ final class CartBox extends Component
         return Redirect::to(page_url($this->checkoutPage));
     }
 
+    #[Computed]
+    public function cartTotal(): string
+    {
+        return currency_format($this->cartManager->getCart()->total());
+    }
+
     public function locationIsClosed(): bool
     {
         return !Location::checkOrderTime() || Location::checkNoOrderTypeAvailable();
@@ -166,7 +176,7 @@ final class CartBox extends Component
         }
 
         if ($this->cartManager->getCart()->count()) {
-            return lang('igniter.cart::default.button_order').' · '.currency_format($this->cartManager->getCart()->total());
+            return lang('igniter.cart::default.button_order').' · '.$this->cartTotal;
         }
 
         return lang('igniter.cart::default.button_order');

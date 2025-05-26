@@ -57,7 +57,7 @@
             <tbody>
             <tr class="fw-bold">
                 <td>@lang('igniter.cart::default.text_order_total'):</td>
-                <td class="text-end">{{ currency_format($cart->total()) }}</td>
+                <td class="text-end">{{ $this->cartTotal }}</td>
             </tr>
             </tbody>
         </table>

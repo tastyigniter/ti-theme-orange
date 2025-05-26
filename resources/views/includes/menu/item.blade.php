@@ -12,6 +12,7 @@
             data-arguments='{"menuId": {{ $menuItemData->id }}}'
         @else
             wire:click="$dispatch('cart-box:add-item', {menuId: {{ $menuItemData->id }}, quantity: {{ $menuItemData->minimumQuantity }}})"
+            data-control="menu-item"
         @endif
     @endif
 >
@@ -25,9 +26,6 @@
             'far fa-clock' => !$menuItemData->mealtimeIsAvailable()
         ])
            wire:loading.class="fa-spinner fa-spin"
-           @unless($menuItemData->hasOptions())
-           wire:target="$dispatch('cart-box:add-item', {menuId: {{ $menuItemData->id }}, quantity: {{ $menuItemData->minimumQuantity }}})"
-           @endunless
         ></i>
     </button>
     @endunless
