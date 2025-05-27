@@ -1,5 +1,5 @@
 <div>
-    <div class="card mb-1">
+    <div class="card mb-1 bg-white">
         <div class="card-body">
             {!! $customer
                 ? sprintf(lang('igniter.orange::default.text_logged_out'), e($customer->first_name), url('logout'))
@@ -7,7 +7,7 @@
             !!}
         </div>
     </div>
-    <div class="card">
+    <div class="card bg-white">
         <div class="card-body">
             <div data-control="booking">
                 @if ($pickerStep == $this::STEP_BOOKING)
@@ -28,7 +28,7 @@
         </div>
     </div>
     @if (in_array($pickerStep, [$this::STEP_BOOKING, $this::STEP_TIMESLOT]))
-        <div class="card">
+        <div class="card bg-white">
             <div class="card-body">
                 <a href="{{ page_url('reservation.reservation') }}">Start again</a>
             </div>

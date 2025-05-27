@@ -6,7 +6,7 @@ permalink: ':location/reservation'
 '[igniter-orange::booking]': []
 ---
 <div class="container pt-4 pb-5">
-    <div class="card mb-1">
+    <div class="card mb-1 bg-white">
         <div class="card-body">
             <div class="mb-3" wire:ignore>
                 <a
