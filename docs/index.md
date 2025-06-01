@@ -14,7 +14,7 @@ composer require tastyigniter/ti-theme-orange -W
 
 ## Usage
 
-This section explains how to use the Orange theme in your TastyIgniter installation.
+This section covers how to use the Orange theme in your TastyIgniter installation.
 
 ### Setting featured items
 
