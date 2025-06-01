@@ -13,6 +13,7 @@ use Igniter\Flame\Exception\ApplicationException;
 use Igniter\Flame\Support\Facades\File;
 use Igniter\Flame\Traits\EventEmitter;
 use Igniter\Local\Facades\Location;
+use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
 use Igniter\Orange\Actions\EnsureUniqueProcess;
@@ -388,6 +389,7 @@ final class Checkout extends Component
 
         $data = $this->validate($rules, $messages, $attributes);
         $data = array_merge(
+            $this->fields,
             array_pull($data, 'fields.payment_fields', []),
             array_pull($data, 'fields', []),
             $data,
@@ -419,6 +421,7 @@ final class Checkout extends Component
             $this->fields['city'] = $userPosition->getSubLocality();
             $this->fields['state'] = $userPosition->getLocality();
             $this->fields['postcode'] = $userPosition->getPostalCode();
+            $this->fields['country_id'] = array_get(countries(), $userPosition->getCountryCode(), LocationModel::getDefaultKey());
         }
     }
 

@@ -8,6 +8,7 @@ use Exception;
 use Igniter\Flame\Geolite\Facades\Geocoder;
 use Igniter\Flame\Geolite\Model\Location as GeoliteLocation;
 use Igniter\Local\Facades\Location;
+use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Main\Traits\UsesPage;
 use Igniter\User\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -202,8 +203,8 @@ trait SearchesNearby
     {
         $nearByLocation = Location::searchByCoordinates(
             $userLocation->getCoordinates(),
-        )->first(function($location) use ($userLocation) {
-            if ($area = $location->searchDeliveryArea($userLocation->getCoordinates())) {
+        )->first(function(LocationModel $location) use ($userLocation) { // @phpstan-ignore-line argument.type
+            if (!is_null($area = $location->searchDeliveryArea($userLocation->getCoordinates()))) {
                 Location::updateNearbyArea($area);
 
                 return $area;
