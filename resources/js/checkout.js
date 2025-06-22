@@ -23,8 +23,6 @@
             })
             .on('ajaxFail', this.options.buttonSelector, function () {
                 $(this).prop('disabled', false)
-            })
-            .on('ajaxFail', this.options.buttonSelector, function () {
                 self.$checkoutBtn.prop('disabled', false)
             })
             .on('submit', this.options.formSelector, $.proxy(this.onSubmitCheckoutForm, this))

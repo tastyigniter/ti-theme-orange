@@ -29,6 +29,8 @@ it('initializes flash messages correctly', function(): void {
                 'title' => null,
                 'important' => false,
                 'overlay' => false,
+                'actionUrl' => null,
+                'actionText' => null,
             ],
             (object)[
                 'level' => 'success',
@@ -36,6 +38,8 @@ it('initializes flash messages correctly', function(): void {
                 'title' => null,
                 'important' => false,
                 'overlay' => false,
+                'actionUrl' => null,
+                'actionText' => null,
             ],
         ]);
 });

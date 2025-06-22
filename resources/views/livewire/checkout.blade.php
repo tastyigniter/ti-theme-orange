@@ -1,8 +1,8 @@
 <div>
     <div class="row pt-4">
-        <h1>@lang('igniter.orange::default.text_title_checkout') {{ $locationCurrent->getName() }}</h1>
+        <h1 class="px-0">@lang('igniter.orange::default.text_title_checkout') {{ $locationCurrent->getName() }}</h1>
 
-        <div class="my-3">
+        <div class="px-0 my-3">
             {!! $customer
                 ? sprintf(lang('igniter.orange::default.text_logged_out'), e($customer->first_name), url('logout'))
                 : sprintf(lang('igniter.orange::default.text_logged_in'), page_url('account.login'))

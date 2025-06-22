@@ -129,7 +129,7 @@ it('can mount and prepare props', function(): void {
         ->assertSet('fields', fn($fields): bool => [
             'first_name', 'last_name', 'email', 'telephone',
             'comment', 'delivery_comment', 'payment', 'termsAgreed',
-            'address_1', 'city', 'state', 'postcode',
+            'address_1', 'city', 'state', 'postcode', 'country_id',
         ] === array_keys($fields));
 
     Event::assertDispatched('igniter.orange.checkCheckoutSecurity');
