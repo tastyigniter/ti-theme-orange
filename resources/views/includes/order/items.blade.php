@@ -47,7 +47,7 @@
 
 <div class="cart-totals">
     <div class="table-responsive">
-        <table class="table table-sm mb-0">
+        <table class="table table-sm table-borderless mb-0">
             <tbody>
             <tr>
                 <td class="border-top p-0" colspan="99999"></td>
