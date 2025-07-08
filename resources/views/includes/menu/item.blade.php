@@ -68,7 +68,7 @@
             @if (!$menuItemData->mealtimeIsAvailable())
                 <div class="breadcrumb-item">
                     <i class="far fa-clock text-danger"></i>
-                    <small class="text-danger">{{ $menuItemData->mealtimeTitles() }}</small>
+                    <small class="text-danger">@lang('igniter.cart::default.mealtimes.text_available') {{ $menuItemData->mealtimeTitles() }}</small>
                 </div>
             @endif
         </div>

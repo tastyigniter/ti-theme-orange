@@ -11,11 +11,18 @@ use Illuminate\Support\Collection;
 
 class ListMenuItems
 {
-    protected $showThumb = false;
+    protected $hideUnavailable = false;
 
     protected Collection|LengthAwarePaginator $menuList;
 
     protected array $menuListCategories = [];
+
+    public function hideUnavailable(bool $hideUnavailable = true): self
+    {
+        $this->hideUnavailable = $hideUnavailable;
+
+        return $this;
+    }
 
     public function handle(array $filters, array $with = []): self
     {
@@ -28,10 +35,9 @@ class ListMenuItems
         $menuList = MenuModel::query()->with($with)->listFrontEnd($filters);
 
         if (!array_key_exists('pageLimit', $filters)) {
-            $menuList = $menuList->get()->map(fn($menuItem): MenuItemData => new MenuItemData($menuItem));
+            $menuList = $this->processMenuItems($menuList->get());
         } else {
-            $menuList->setCollection($menuList->getCollection()
-                ->map(fn($menuItem): MenuItemData => new MenuItemData($menuItem)));
+            $menuList->setCollection($this->processMenuItems($menuList->getCollection()));
         }
 
         if (!strlen((string)array_get($filters, 'category')) && array_get($filters, 'isGrouped', false)) {
@@ -82,6 +88,14 @@ class ListMenuItems
                 }
 
                 return $categoryId;
+            });
+    }
+
+    protected function processMenuItems(Collection $menuList): Collection
+    {
+        return $menuList->map(fn($menuItem): MenuItemData => new MenuItemData($menuItem))
+            ->when($this->hideUnavailable, function(Collection $menuList) {
+                return $menuList->filter(fn(MenuItemData $menuItemData) => $menuItemData->mealtimeIsAvailable());
             });
     }
 }

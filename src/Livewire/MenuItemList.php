@@ -46,6 +46,8 @@ final class MenuItemList extends Component
 
     public bool $hideMenuSearch = false;
 
+    public bool $hideUnavailableItems = false;
+
     #[Url(as: 'q')]
     public string $menuSearchTerm = '';
 
@@ -168,6 +170,11 @@ final class MenuItemList extends Component
                 'type' => 'switch',
                 'validationRule' => 'required|boolean',
             ],
+            'hideUnavailableItems' => [
+                'label' => 'Hide unavailable menu items',
+                'type' => 'switch',
+                'validationRule' => 'required|boolean',
+            ],
         ];
     }
 
@@ -234,6 +241,8 @@ final class MenuItemList extends Component
             $with[] = 'ingredients.media';
         }
 
-        return resolve(ListMenuItems::class)->handle($filters, $with);
+        return resolve(ListMenuItems::class)
+            ->hideUnavailable($this->hideUnavailableItems)
+            ->handle($filters, $with);
     }
 }
