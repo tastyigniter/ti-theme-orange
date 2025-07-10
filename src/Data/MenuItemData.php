@@ -94,9 +94,9 @@ class MenuItemData
     public function mealtimeTitles(): string
     {
         return $this->model->mealtimes
-            ->filter(fn(Mealtime $mealtime) => $mealtime->isEnabled())
+            ->filter(fn(Mealtime $mealtime): bool => $mealtime->isEnabled())
             ->pluck('description')
-            ->join(", ");
+            ->join(', ');
     }
 
     public function getUrl(?string $pageId = null): string

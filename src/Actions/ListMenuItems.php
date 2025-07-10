@@ -94,8 +94,6 @@ class ListMenuItems
     protected function processMenuItems(Collection $menuList): Collection
     {
         return $menuList->map(fn($menuItem): MenuItemData => new MenuItemData($menuItem))
-            ->when($this->hideUnavailable, function(Collection $menuList) {
-                return $menuList->filter(fn(MenuItemData $menuItemData) => $menuItemData->mealtimeIsAvailable());
-            });
+            ->when($this->hideUnavailable, fn(Collection $menuList) => $menuList->filter(fn(MenuItemData $menuItemData) => $menuItemData->mealtimeIsAvailable()));
     }
 }
