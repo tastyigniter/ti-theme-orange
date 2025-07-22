@@ -215,7 +215,7 @@ final class OrderPreview extends Component
         }
 
         $order = $this->orderManager->getOrderByHash($this->hash, Auth::customer());
-        if (!$order->isPaymentProcessed()) {
+        if (!$order?->isPaymentProcessed()) {
             return null;
         }
 
