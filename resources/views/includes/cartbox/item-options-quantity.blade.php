@@ -20,7 +20,10 @@
             ><i class="fa fa-minus fa-fw"></i></button>
             <input
                 x-model="optionQuantity"
-                x-init="$watch('optionQuantity', () => calculateTotal() || $wire.set('menuOptions.{{ $menuOption->menu_option_id }}.option_values.{{ $menuOptionValueId }}.qty', optionQuantity, false))"
+                x-init="
+                    $wire.set('menuOptions.{{ $menuOption->menu_option_id }}.option_values.{{ $menuOptionValueId }}.qty', optionQuantity, false);
+                    $watch('optionQuantity', () => calculateTotal() || $wire.set('menuOptions.{{ $menuOption->menu_option_id }}.option_values.{{ $menuOptionValueId }}.qty', optionQuantity, false))
+                "
                 type="text"
                 class="form-control bg-transparent shadow-none border-0 text-center p-0"
                 id="menuOptionQuantity{{ $menuOptionValueId }}"

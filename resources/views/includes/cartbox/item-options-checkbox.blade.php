@@ -1,8 +1,30 @@
 @foreach ($optionValues->sortBy('priority') as $optionValue)
     <div @class(['form-check', 'py-1' => !$loop->first || !$loop->last])>
         <input
-            x-on:change="calculateTotal()"
-            wire:model.fill="menuOptions.{{ $menuOption->menu_option_id }}.option_values.{{$optionValue->menu_option_value_id}}"
+            x-data="{
+                key: '{{ $menuOption->menu_option_id }}',
+                id: {{ $optionValue->menu_option_value_id }},
+                init() {
+                    $wire.menuOptions[this.key] ??= { option_values: [] };
+
+                    const values = $wire.menuOptions[this.key].option_values;
+                    if ($el.checked && !values.includes(this.id)) {
+                        values.push(this.id);
+                    }
+                    $wire.set(`menuOptions.${this.key}.option_values`, values, false);
+                },
+                toggle() {
+                    const values = $wire.menuOptions[this.key]?.option_values ?? [];
+                    const updated = $el.checked
+                        ? [...new Set([...values, this.id])]
+                        : values.filter(v => v !== this.id);
+
+                    $wire.set(`menuOptions.${this.key}.option_values`, updated, false);
+                    calculateTotal();
+                }
+            }"
+            x-init="init"
+            x-on:change="toggle"
             type="checkbox"
             class="form-check-input"
             id="menuOptionCheck{{ $menuOptionValueId = $optionValue->menu_option_value_id }}"

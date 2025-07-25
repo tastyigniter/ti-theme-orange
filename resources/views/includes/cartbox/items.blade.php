@@ -4,7 +4,7 @@
 >
     <ul class="list-unstyled user-select-none mb-0">
         @foreach ($cart->content()->reverse() as $cartItem)
-            <li @class(['d-flex align-items-start', 'mb-3' => !$loop->last])>
+            <li @class(['d-flex align-items-start', 'mb-3' => !$loop->last]) wire:key="cart-item-{{ $cartItem->rowId }}">
                 @unless($previewMode)
                     <div class="me-3 text-nowrap">
                         <button
