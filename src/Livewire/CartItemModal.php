@@ -127,13 +127,15 @@ final class CartItemModal extends ModalComponent
     public function onSave(): void
     {
         try {
-            $this->cartManager->addOrUpdateCartItem([
+            $cartItem = $this->cartManager->addOrUpdateCartItem([
                 'menuId' => $this->menuId,
                 'rowId' => $this->rowId,
                 'quantity' => $this->quantity,
                 'comment' => $this->comment,
                 'menu_options' => $this->menuOptions,
             ]);
+
+            $this->rowId = $cartItem->rowId;
 
             $this->dispatch('hideModal');
         } catch (Exception $exception) {

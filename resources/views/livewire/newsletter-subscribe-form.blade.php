@@ -21,7 +21,7 @@
             <x-igniter-orange::forms.error field="email" class="text-danger" />
         </x-igniter-orange::forms.form>
     @else
-        <div class="alert alert-success">
+        <div class="alert alert-success p-0">
             {{ $message }}
         </div>
     @endunless

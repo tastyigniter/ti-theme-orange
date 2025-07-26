@@ -2,7 +2,7 @@
     id="menu-search"
     wire:submit="$refresh"
 >
-    <div class="input-group border border-2 rounded">
+    <div class="input-group bg-white border border-2 rounded">
         <div
             class="bg-white d-inline-flex align-items-center py-1 px-2 rounded"
         ><i class="fa fa-search"></i></div>

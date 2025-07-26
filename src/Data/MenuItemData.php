@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Igniter\Orange\Data;
 
+use Igniter\Cart\Models\Mealtime;
 use Igniter\Cart\Models\Menu;
 use Igniter\Local\Facades\Location;
 
@@ -92,17 +93,10 @@ class MenuItemData
 
     public function mealtimeTitles(): string
     {
-        $titles = [];
-        foreach ($this->model->mealtimes ?? [] as $mealtime) {
-            $titles[] = sprintf(
-                lang('igniter.local::default.text_mealtime'),
-                $mealtime->mealtime_name,
-                now()->setTimeFromTimeString($mealtime->start_time)->isoFormat(lang('system::lang.moment.time_format')),
-                now()->setTimeFromTimeString($mealtime->end_time)->isoFormat(lang('system::lang.moment.time_format')),
-            );
-        }
-
-        return implode("\r\n", $titles);
+        return $this->model->mealtimes
+            ->filter(fn(Mealtime $mealtime): bool => $mealtime->isEnabled())
+            ->pluck('description')
+            ->join(', ');
     }
 
     public function getUrl(?string $pageId = null): string

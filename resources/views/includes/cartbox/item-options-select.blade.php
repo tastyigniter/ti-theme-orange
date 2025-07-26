@@ -1,6 +1,6 @@
 <select
     x-on:change="calculateTotal()"
-    wire:model="menuOptions.{{ $menuOption->menu_option_id }}.option_values.0"
+    wire:model.fill="menuOptions.{{ $menuOption->menu_option_id }}.option_values.0"
     name="menuOptions[{{ $menuOption->menu_option_id }}][option_values][]"
     class="form-select"
 >
