@@ -16,10 +16,11 @@ use Livewire\Livewire;
 beforeEach(function(): void {
     $this->location = LocationModel::factory()->create();
     $this->orderTypeMock = $this->mock(AbstractOrderType::class);
-    $this->orderTypeMock->shouldReceive('getCode')->andReturn(LocationModel::DELIVERY);
+    $this->orderTypeMock->shouldReceive('getCode')->andReturn(LocationModel::COLLECTION);
     $this->orderTypeMock->shouldReceive('isDisabled')->andReturnFalse();
     Location::shouldReceive('getId')->andReturn($this->location->getKey());
     Location::shouldReceive('current')->andReturn($this->location);
+    Location::shouldReceive('orderType')->andReturn(LocationModel::COLLECTION);
     Location::shouldReceive('getOrderType')->andReturn($this->orderTypeMock);
     Location::shouldReceive('orderTypeIsDelivery')->andReturnFalse();
     Location::shouldReceive('checkNoOrderTypeAvailable')->andReturnFalse();
