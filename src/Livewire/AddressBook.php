@@ -41,6 +41,11 @@ final class AddressBook extends Component
         ];
     }
 
+    public function showAddressBookFormModal(): void
+    {
+        $this->showModal = true;
+    }
+
     public function defineProperties(): array
     {
         return [
@@ -58,7 +63,7 @@ final class AddressBook extends Component
     public static function getPropertyOptions(Form $form, FormField $field): array
     {
         return match ($field->getConfig('property')) {
-            'sortOrder' => collect((new Address)->queryModifierGetSorts())->mapWithKeys(fn($value, $key) => [$value => $value])->all(),
+            'sortOrder' => collect((new Address)->queryModifierGetSorts())->mapWithKeys(fn ($value, $key) => [$value => $value])->all(),
             default => [],
         };
     }
@@ -84,7 +89,7 @@ final class AddressBook extends Component
     public function updated($property, $value): void
     {
         if ($property === 'addressId') {
-            $this->showModal = !empty($value);
+            $this->showModal = ! empty($value);
             $this->form->reset();
             $this->resetErrorBag();
         }
@@ -125,7 +130,7 @@ final class AddressBook extends Component
 
         $customer->saveDefaultAddress($addressId);
 
-        $this->defaultAddressId = (int)$addressId;
+        $this->defaultAddressId = (int) $addressId;
     }
 
     public function onDelete(string $addressId): void
@@ -148,7 +153,7 @@ final class AddressBook extends Component
 
     protected function loadAddressBook()
     {
-        if (!$customer = Auth::customer()) {
+        if (! $customer = Auth::customer()) {
             return [];
         }
 

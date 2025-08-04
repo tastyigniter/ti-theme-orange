@@ -3,11 +3,11 @@
         <h4 class="mb-0">@lang('igniter.user::default.text_address')</h4>
         <button
             class="btn btn-secondary"
-            wire:click="$set('showModal', true)"
+            wire:click="showAddressBookFormModal"
             wire:loading.class="disabled"
         >@lang('igniter.user::default.account.button_add')</button>
     </div>
-    <div class="card-body p-0 pb-2">
+    <div class="card-body pb-2">
         @if(count($addresses))
             <div class="list-group list-group-flush">
                 @foreach ($addresses as $address)
@@ -22,7 +22,7 @@
                     >
                         <div class="d-flex align-items-center">
                             <i class="fa fa-location-dot opacity-75 me-2"></i>
-                            <address class="flex-grow-1 mb-0">{{ format_address($address) }}</address>
+                            <address class="flex-grow-1 mb-0">{!! format_address($address) !!}</address>
                             <i class="fa fa-pencil-alt ms-2"></i>
                         </div>
                     </div>
@@ -32,12 +32,11 @@
             <div class="d-flex justify-content-between">
                 <div class="links">{{$addresses->links()}}</div>
             </div>
-
-            @if($showModal)
-                @include('igniter-orange::includes.account.address-book-form')
-            @endif
         @else
             <p>@lang('igniter.user::default.account.text_no_address')</p>
+        @endif
+        @if($showModal)
+            @include('igniter-orange::includes.account.address-book-form')
         @endif
     </div>
 </div>

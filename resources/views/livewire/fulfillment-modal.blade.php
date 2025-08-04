@@ -44,7 +44,7 @@
                             </div>
                         </div>
                         @unless($hideDeliveryAddress)
-                            <div x-cloak x-show="!hideDeliveryAddress" class="pb-3">
+                            <div x-cloak x-show="!hideDeliveryAddress" class="pb-3 position-relative">
                                 <h6 class="my-3">
                                     <i class="fa fa-map-pin"></i>&nbsp;&nbsp;
                                     @lang('igniter.orange::default.text_delivering_to')
@@ -59,7 +59,7 @@
                                 @if(!$previewMode && $showAddressPicker)
                                     <div class="input-group bg-white rounded border p-1 mb-3 mb-lg-0">
                                         <input
-                                            wire:model="searchQuery"
+                                            wire:model.live.debounce.500ms="searchQuery"
                                             type="text"
                                             id="search-query"
                                             class="bg-white form-control shadow-none border-none"
@@ -71,6 +71,27 @@
                                             class="btn shadow-none"
                                         ><i class="fa fa-location-arrow fs-5 align-bottom"></i></button>
                                     </div>
+                                    @if($isSearching)
+                                        <ul class="autocomplete-suggestions">
+                                            @forelse($suggestions as $key => $suggestion)
+                                                <li
+                                                    wire:click="selectSuggestion({{ $key }})">
+                                                    @if($suggestion['title'])
+                                                        <div class="fw-bold">{{ $suggestion['title'] }}</div>
+                                                    @endif
+                                                    @if($suggestion['description'])
+                                                        <div>{{ $suggestion['description'] }}</div>
+                                                    @endif
+                                                </li>
+                                            @empty
+                                                {{--                                                    @if(!($hasLoader && $isLoading))--}}
+                                                <li class="text-center">
+                                                    No suggestions found
+                                                </li>
+                                                {{--                                                @endif--}}
+                                            @endforelse
+                                        </ul>
+                                    @endif
 
                                     <x-igniter-orange::forms.error
                                         field="searchQuery"

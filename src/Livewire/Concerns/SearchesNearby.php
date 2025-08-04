@@ -10,6 +10,7 @@ use Igniter\Flame\Geolite\Model\Location as GeoliteLocation;
 use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Main\Traits\UsesPage;
+use Igniter\Orange\Classes\GMPlaceApiService;
 use Igniter\User\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
@@ -39,6 +40,8 @@ trait SearchesNearby
     public ?int $savedAddressId = null;
 
     protected string $searchField = 'searchQuery';
+
+    public array $suggestions = [];
 
     public function definePropertiesSearchNearby(): array
     {
@@ -227,5 +230,32 @@ trait SearchesNearby
         return is_array($searchQuery)
             ? $this->geocodeSearchPoint($searchQuery)
             : $this->geocodeSearchQuery($searchQuery);
+    }
+
+    public function selectSuggestion(int $index): void
+    {
+        $suggestion = $this->suggestions[$index] ?? null;
+        if (!$suggestion) {
+            return;
+        }
+        $this->isSearching = false;
+        $searchDetails = resolve(GMPlaceApiService::class)->getSearchDetails($suggestion['placeId']);
+        if (count($searchDetails)) {
+            $this->searchPoint = [$searchDetails['latitude'], $searchDetails['longitude']];
+            $this->searchQuery = $searchDetails['description'];
+        } else {
+            $this->searchQuery = $suggestion['title'];
+        }
+
+    }
+
+    public function updatedSearchQuery(): void
+    {
+        if (strlen($this->searchQuery) < 3) {
+            $this->isSearching = false;
+        } else {
+            $this->isSearching = true;
+            $this->suggestions = resolve(GMPlaceApiService::class)->search($this->searchQuery);
+        }
     }
 }
