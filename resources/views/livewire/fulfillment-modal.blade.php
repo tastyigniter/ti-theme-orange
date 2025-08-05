@@ -50,7 +50,7 @@
                                     @lang('igniter.orange::default.text_delivering_to')
                                     @unless($previewMode)
                                         <a
-                                            wire:click="$set('showAddressPicker', true)"
+                                            wire:click="changeDeliveryAddress"
                                             role="button"
                                             class="small text-primary"
                                         >@lang('igniter.local::default.search.text_change')</a>
@@ -71,6 +71,11 @@
                                             class="btn shadow-none"
                                         ><i class="fa fa-location-arrow fs-5 align-bottom"></i></button>
                                     </div>
+                                    <x-igniter-orange::forms.error
+                                        field="searchQuery"
+                                        id="searchQueryFeedback"
+                                        class="text-danger"
+                                    />
                                     @if($isSearching)
                                         <ul class="autocomplete-suggestions">
                                             @forelse($suggestions as $key => $suggestion)
@@ -92,13 +97,13 @@
                                             @endforelse
                                         </ul>
                                     @endif
-
-                                    <x-igniter-orange::forms.error
-                                        field="searchQuery"
-                                        id="searchQueryFeedback"
-                                        class="text-danger"
-                                    />
-                                    @include('igniter-orange::includes.local.saved-address-picker')
+                                    @if($searchPoint)
+                                        <div wire:ignore>
+                                            <div id="map" class="map-container"></div>
+                                        </div>
+                                    @else
+                                        @include('igniter-orange::includes.local.saved-address-picker')
+                                    @endif
                                 @else
                                     <div class="p-2 border rounded bg-white w-100">
                                         <div

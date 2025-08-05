@@ -6,5 +6,5 @@ interface AutocompleteService
 {
     public function search(string $query): array;
 
-    public function getSearchDetails(string $placeId): array;
+    public function getSearchPosition(string $placeId): array;
 }

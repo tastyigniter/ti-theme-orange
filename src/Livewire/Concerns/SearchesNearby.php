@@ -43,6 +43,8 @@ trait SearchesNearby
 
     public array $suggestions = [];
 
+    public string $mapKey = '';
+
     public function definePropertiesSearchNearby(): array
     {
         return [
@@ -57,6 +59,7 @@ trait SearchesNearby
 
     public function mountSearchesNearby(): void
     {
+        $this->mapKey = setting('maps_api_key');
         $this->searchQuery = Location::getSession('searchQuery');
         $this->deliveryAddress = Auth::customer()?->address?->formatted_address;
     }
@@ -239,20 +242,30 @@ trait SearchesNearby
             return;
         }
         $this->isSearching = false;
-        $searchDetails = resolve(GMPlaceApiService::class)->getSearchDetails($suggestion['placeId']);
-        if (count($searchDetails)) {
-            $this->searchPoint = [$searchDetails['latitude'], $searchDetails['longitude']];
-            $this->searchQuery = $searchDetails['description'];
-        } else {
-            $this->searchQuery = $suggestion['title'];
+        $position = resolve(GMPlaceApiService::class)->getSearchPosition($suggestion['placeId']);
+        $this->searchQuery = $suggestion['title'];
+        if (is_array($position)) {
+            $this->searchPoint = $position;
+            $this->dispatch('initializeDeliveryLocationMap', lat: $position[0], lng: $position[1]);
         }
+    }
 
+    public function changeDeliveryAddress(): void
+    {
+        $this->showAddressPicker = true;
+        $position = Location::userPosition();
+        if ($coordinates = $position?->getCoordinates()) {
+            $this->searchPoint = [$coordinates->getLatitude(), $coordinates->getLongitude()];
+            $this->dispatch('initializeDeliveryLocationMap', lat: $coordinates->getLatitude(),
+                lng: $coordinates->getLongitude());
+        }
     }
 
     public function updatedSearchQuery(): void
     {
         if (strlen($this->searchQuery) < 3) {
             $this->isSearching = false;
+            $this->searchPoint = null;
         } else {
             $this->isSearching = true;
             $this->suggestions = resolve(GMPlaceApiService::class)->search($this->searchQuery);

@@ -20,3 +20,8 @@
 .autocomplete-suggestions li:hover {
     background-color: #f0f0f0;
 }
+
+.map-container {
+    width: 100%;
+    height: 350px;
+}

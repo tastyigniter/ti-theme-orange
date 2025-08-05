@@ -51,10 +51,10 @@ class GMPlaceApiService implements AutocompleteService
         }
     }
 
-    public function getSearchDetails(string $placeId): array
+    public function getSearchPosition(string $placeId): array
     {
         $response = $this->client()
-            ->withHeader('X-Goog-FieldMask', 'formattedAddress,location,shortFormattedAddress')
+            ->withHeader('X-Goog-FieldMask', 'location')
             ->get('/' . $placeId, [
                 'sessionToken' => $this->getSessionToken()
             ]);
@@ -65,11 +65,7 @@ class GMPlaceApiService implements AutocompleteService
         }
 
         $this->clearSessionToken();
-        return [
-            'description' => $data['formattedAddress'],
-            'latitude' => $data['location']['latitude'],
-            'longitude' => $data['location']['longitude']
-        ];
+        return [$data['location']['latitude'], $data['location']['longitude']];
     }
 
     protected function client(): \Illuminate\Http\Client\PendingRequest
