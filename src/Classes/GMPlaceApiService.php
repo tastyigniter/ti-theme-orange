@@ -4,8 +4,11 @@ namespace Igniter\Orange\Classes;
 
 use Exception;
 use Igniter\Orange\Contracts\AutocompleteService;
+use Igniter\System\Facades\Country;
+use Igniter\System\Models\Country as ModelCountry;
 use Igniter\System\Traits\SessionMaker;
 use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
@@ -27,26 +30,25 @@ class GMPlaceApiService implements AutocompleteService
                 'suggestions.placePrediction.placeId,suggestions.placePrediction.text.text,suggestions.placePrediction.structuredFormat.secondaryText.text')
             ->post(':autocomplete', [
                 'input' => $query,
-                'includedRegionCodes' => ['ng'],
+                'includedRegionCodes' => [strtolower(Country::getCountryCodeById(ModelCountry::getDefaultKey()))],
                 'sessionToken' => $this->getSessionToken(),
             ]);
 
-        $data = $response->json();
         if ($response->failed()) {
-            //TODO: Report error
-            throw new Exception('Error fetching suggestions: ' . $data['error']['message']);
+            throw new Exception('Error fetching suggestions: ' . $response->body());
         }
         try {
+            $data = $response->json();
             if ($data) {
                 return collect($data['suggestions'])
                     ->map(fn($item) => [
                         'placeId' => $item['placePrediction']['placeId'],
                         'title' => $item['placePrediction']['text']['text'],
-                        'description' => $item['placePrediction']['structuredFormat']['secondaryText']['text']
+                        'description' => $item['placePrediction']['structuredFormat']['secondaryText']['text'],
+                        'geocoder' => 'google'
                     ])->toArray();
             } else return [];
         } catch (Exception $e) {
-            //TODO: Report error
             throw new Exception('Error processing suggestions: ' . $e->getMessage());
         }
     }
@@ -59,16 +61,16 @@ class GMPlaceApiService implements AutocompleteService
                 'sessionToken' => $this->getSessionToken()
             ]);
 
-        $data = $response->json();
         if ($response->failed()) {
-            throw new Exception('Error fetching place details: ' . $data['error']['message']);
+            throw new Exception('Error fetching place details: ' . $response->body());
         }
 
+        $data = $response->json();
         $this->clearSessionToken();
         return [$data['location']['latitude'], $data['location']['longitude']];
     }
 
-    protected function client(): \Illuminate\Http\Client\PendingRequest
+    protected function client(): PendingRequest
     {
         return Http::withHeaders([
             'X-Goog-Api-Key' => setting('maps_api_key'),

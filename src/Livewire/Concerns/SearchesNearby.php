@@ -10,7 +10,7 @@ use Igniter\Flame\Geolite\Model\Location as GeoliteLocation;
 use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Main\Traits\UsesPage;
-use Igniter\Orange\Classes\GMPlaceApiService;
+use Igniter\Orange\Contracts\AutocompleteService;
 use Igniter\User\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
@@ -242,11 +242,16 @@ trait SearchesNearby
             return;
         }
         $this->isSearching = false;
-        $position = resolve(GMPlaceApiService::class)->getSearchPosition($suggestion['placeId']);
+        if (isset($suggestion['lat']) && isset($suggestion['lon'])) {
+            $position = [$suggestion['lat'], $suggestion['lon']];
+        } else {
+            $position = resolve(AutocompleteService::class)->getSearchPosition($suggestion['placeId']);
+        }
         $this->searchQuery = $suggestion['title'];
         if (is_array($position)) {
             $this->searchPoint = $position;
-            $this->dispatch('initializeDeliveryLocationMap', lat: $position[0], lng: $position[1]);
+            $this->dispatch('initializeDeliveryLocationMap', lat: $position[0], lng: $position[1],
+                geocoder: $suggestion['geocoder']);
         }
     }
 
@@ -257,7 +262,7 @@ trait SearchesNearby
         if ($coordinates = $position?->getCoordinates()) {
             $this->searchPoint = [$coordinates->getLatitude(), $coordinates->getLongitude()];
             $this->dispatch('initializeDeliveryLocationMap', lat: $coordinates->getLatitude(),
-                lng: $coordinates->getLongitude());
+                lng: $coordinates->getLongitude(), geocoder: setting('default_geocoder'));
         }
     }
 
@@ -266,9 +271,10 @@ trait SearchesNearby
         if (strlen($this->searchQuery) < 3) {
             $this->isSearching = false;
             $this->searchPoint = null;
+            $this->dispatch('resetMap');
         } else {
             $this->isSearching = true;
-            $this->suggestions = resolve(GMPlaceApiService::class)->search($this->searchQuery);
+            $this->suggestions = resolve(AutocompleteService::class)->search($this->searchQuery);
         }
     }
 }
