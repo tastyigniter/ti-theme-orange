@@ -245,7 +245,11 @@ trait SearchesNearby
         if (isset($suggestion['lat']) && isset($suggestion['lon'])) {
             $position = [$suggestion['lat'], $suggestion['lon']];
         } else {
-            $position = resolve(AutocompleteService::class)->getSearchPosition($suggestion['placeId']);
+            try {
+                $position = resolve(AutocompleteService::class)->getSearchPosition($suggestion['placeId']);
+            } catch (Exception $e) {
+                flash()->error($e->getMessage())->now();
+            }
         }
         $this->searchQuery = $suggestion['title'];
         if (is_array($position)) {
@@ -274,7 +278,11 @@ trait SearchesNearby
             $this->dispatch('resetMap');
         } else {
             $this->isSearching = true;
-            $this->suggestions = resolve(AutocompleteService::class)->search($this->searchQuery);
+            try {
+                $this->suggestions = resolve(AutocompleteService::class)->search($this->searchQuery);
+            } catch (Exception $e) {
+                flash()->error($e->getMessage())->now();
+            }
         }
     }
 }
