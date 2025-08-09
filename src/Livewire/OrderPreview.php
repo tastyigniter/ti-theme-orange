@@ -159,7 +159,7 @@ final class OrderPreview extends Component
         return $this->getProcessedOrder() && !$this->getProcessedOrder()->isCanceled() && $this->getProcessedOrder()->isCancelable();
     }
 
-    public function onReOrder()
+    public function onReOrder(): void
     {
         $order = $this->getProcessedOrder();
 
