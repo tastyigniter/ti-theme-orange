@@ -50,7 +50,7 @@ it('subscribes new email to newsletter', function(): void {
         ->call('onSubscribe')
         ->assertHasNoErrors()
         ->assertSet('email', null)
-        ->assertSet('message', lang('igniter.frontend::default.newsletter.alert_success_subscribed'));
+        ->assertSet('message', lang('igniter.orange::default.newsletter.alert_success_subscribed'));
 });
 
 it('subscribes existing email to newsletter', function(): void {
@@ -61,7 +61,7 @@ it('subscribes existing email to newsletter', function(): void {
         ->call('onSubscribe')
         ->assertHasNoErrors()
         ->assertSet('email', null)
-        ->assertSet('message', lang('igniter.frontend::default.newsletter.alert_success_existing'));
+        ->assertSet('message', lang('igniter.orange::default.newsletter.alert_success_existing'));
 });
 
 it('handles mailchimp subscription exception', function(): void {
