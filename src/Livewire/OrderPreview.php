@@ -159,7 +159,7 @@ final class OrderPreview extends Component
         return $this->getProcessedOrder() && !$this->getProcessedOrder()->isCanceled() && $this->getProcessedOrder()->isCancelable();
     }
 
-    public function onReOrder()
+    public function onReOrder(): void
     {
         $order = $this->getProcessedOrder();
 
@@ -175,18 +175,18 @@ final class OrderPreview extends Component
             if ($notes) {
                 throw new ApplicationException(implode(PHP_EOL, $notes));
             }
+
+            flash()->success(sprintf(
+                lang('igniter.cart::default.orders.alert_reorder_success'), $order->order_id,
+            ));
+
+            $this->redirect(page_url($this->menusPage, [
+                'orderId' => $order->order_id,
+                'location' => $order->location->permalink_slug,
+            ]));
         }, function(Throwable $ex): never {
             throw ValidationException::withMessages(['onReOrder' => $ex->getMessage()]);
         });
-
-        flash()->success(sprintf(
-            lang('igniter.cart::default.orders.alert_reorder_success'), $order->order_id,
-        ));
-
-        return $this->redirect(page_url($this->menusPage, [
-            'orderId' => $order->order_id,
-            'location' => $order->location->permalink_slug,
-        ]));
     }
 
     public function onCancel(): void

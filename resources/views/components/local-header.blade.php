@@ -22,7 +22,7 @@
                 </div>
                 @if (!$locationInfo->orderType()->getSchedule()->isOpen() && $locationInfo->orderType()->getSchedule()->isOpening())
                     <div class="breadcrumb-item">
-                        {!! sprintf(lang('igniter.local::default.text_starts'), make_carbon($locationInfo->orderType()->getSchedule()->getOpenTime())->isoFormat(lang('igniter::system.moment.day_time_format_short'))) !!}
+                        {!! $locationInfo->orderType()->getOpeningDescription(lang('igniter::system.moment.day_time_format_short')) !!}
                     </div>
                 @endif
                 <div class="breadcrumb-item">

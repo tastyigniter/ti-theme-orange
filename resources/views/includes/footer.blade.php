@@ -14,7 +14,7 @@
 
             <div class="col-lg-3 mt-4 mt-lg-0">
                 <div id="newsletter-box">
-                    <h5 class="mb-4">@lang('igniter.frontend::default.newsletter.text_subscribe')</h5>
+                    <h5 class="mb-4">@lang('igniter.orange::default.newsletter.text_subscribe')</h5>
                     <livewire:igniter-orange::newsletter-subscribe-form />
                 </div>
             </div>
