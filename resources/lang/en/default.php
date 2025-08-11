@@ -41,6 +41,7 @@ return [
     'text_for_saved_addresses' => 'for your saved addresses',
     'text_select_saved_addresses' => 'Or, select a saved addresses',
     'text_no_saved_addresses' => 'No saved addresses found',
+    'text_mark_your_location' => 'Mark your location',
     'text_sort' => 'Sort',
     'text_customer_reviews' => 'Customer reviews',
     'text_local_tab_info' => 'Info',

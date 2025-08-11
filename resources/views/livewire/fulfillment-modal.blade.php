@@ -98,8 +98,9 @@
                                         </ul>
                                     @endif
                                     @if($searchPoint)
-                                        <div wire:ignore>
-                                            <div id="map" class="map-container"></div>
+                                        <div wire:ignore class="mt-3">
+                                            <h6>@lang('igniter.orange::default.text_mark_your_location')</h6>
+                                            <div id="map" class="map-container rounded pt-2"></div>
                                         </div>
                                     @else
                                         @include('igniter-orange::includes.local.saved-address-picker')
