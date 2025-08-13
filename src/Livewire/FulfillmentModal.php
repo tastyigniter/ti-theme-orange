@@ -22,6 +22,8 @@ final class FulfillmentModal extends Component
     use ConfigurableComponent;
     use SearchesNearby;
 
+    public bool $isSearching = false;
+
     public array $timeslotDates = [];
 
     public array $timeslotTimes = [];
@@ -84,6 +86,7 @@ final class FulfillmentModal extends Component
     public function mount(): void
     {
         Assets::addJs('igniter-orange::/js/fulfillment.js', 'fulfillment-js');
+        Assets::addCss('igniter-orange::/css/fulfillment.css', 'fulfillment-css');
 
         $this->parseTimeslot($this->location->scheduleTimeslot());
         $this->updateCurrentOrderType();

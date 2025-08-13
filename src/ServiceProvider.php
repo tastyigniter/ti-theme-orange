@@ -14,6 +14,9 @@ use Igniter\Main\Classes\ThemeManager;
 use Igniter\Main\Template\Page;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Actions\EnsureUniqueProcess;
+use Igniter\Orange\Classes\GMPlaceApiService;
+use Igniter\Orange\Classes\OSNominatimApiService;
+use Igniter\Orange\Contracts\AutocompleteService;
 use Igniter\Orange\Http\Controllers\Logout;
 use Igniter\Orange\Http\Middleware\SetOriginalRouteParametersOnLivewireRoute;
 use Igniter\Orange\Livewire\Features\SupportFlashMessages;
@@ -69,6 +72,9 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->configureGoogleFonts();
 
         $this->defineRoutes();
+
+        $this->app->bind(AutocompleteService::class,
+            setting('default_geocoder') === 'nominatim' ? OSNominatimApiService::class : GMPlaceApiService::class);
     }
 
     protected function loadLivewireComponentsFrom(string|array $path): void
