@@ -85,11 +85,6 @@ final class FulfillmentModal extends Component
 
     public function mount(): void
     {
-        if (setting('default_geocoder') === 'nominatim' || setting('default_geocoder') === 'custom') {
-            Assets::addCss('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css', 'leaflet-css');
-            Assets::addJs('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', 'leaflet-js');
-        }
-
         Assets::addJs('igniter-orange::/js/fulfillment.js', 'fulfillment-js');
         Assets::addCss('igniter-orange::/css/fulfillment.css', 'fulfillment-css');
 
