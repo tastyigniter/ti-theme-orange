@@ -88,34 +88,32 @@ window.OrangeFulfillment = (timeslot) => {
             });
         },
         initializeOpenStreetMap(position) {
-            if(!map) {
-                map = L.map('map').setView(position, 15);
-                L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    maxZoom: 19,
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            map = L.map('map').setView(position, 15);
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 
-                }).addTo(map);
-                this.marker = L.marker(position).addTo(map)
-                    .bindPopup('Delivery Location');
+            }).addTo(map);
+            this.marker = L.marker(position).addTo(map)
+                .bindPopup('Delivery Location');
 
-                const self = this;
+            const self = this;
 
-                map.on('click', function(e) {
-                    self.marker.setLatLng(e.latlng);
-                    map.panTo(e.latlng);
-                    self.$wire.dispatch('userPositionUpdated', {
-                        position: [e.latlng.lat, e.latlng.lng]
-                    });
+            map.on('click', function(e) {
+                self.marker.setLatLng(e.latlng);
+                map.panTo(e.latlng);
+                self.$wire.dispatch('userPositionUpdated', {
+                    position: [e.latlng.lat, e.latlng.lng]
                 });
-                map.on('drag', function() {
-                    self.marker.setLatLng(map.getCenter());
+            });
+            map.on('drag', function() {
+                self.marker.setLatLng(map.getCenter());
+            });
+            map.on('dragend', function() {
+                self.$wire.dispatch('userPositionUpdated', {
+                    position: [map.getCenter().lat, map.getCenter().lng]
                 });
-                map.on('dragend', function() {
-                    self.$wire.dispatch('userPositionUpdated', {
-                        position: [map.getCenter().lat, map.getCenter().lng]
-                    });
-                });
-            }
+            });
         },
         getPosition(lat, lng) {
             return { lat: parseFloat(lat), lng: parseFloat(lng) };
