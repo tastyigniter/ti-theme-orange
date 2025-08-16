@@ -10,7 +10,7 @@
             value="0"
         />
         <div
-            id="{{$field->getId()}}"
+            id="{{$field->getId('container')}}"
             @class(['form-check', 'form-check-inline' => $field->placeholder])
         >
             <input

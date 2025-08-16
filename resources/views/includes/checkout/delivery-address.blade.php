@@ -10,5 +10,5 @@
 <x-igniter-orange::forms.error
     field="delivery_address"
     id="delivery-address-feedback"
-    class="text-danger"
+    class="text-danger fs-6"
 />

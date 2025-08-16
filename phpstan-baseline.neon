@@ -19,6 +19,12 @@ parameters:
 			path: src/Data/MenuItemData.php
 
 		-
+			message: '#^Ternary operator condition is always true\.$#'
+			identifier: ternary.alwaysTrue
+			count: 1
+			path: src/Livewire/Checkout.php
+
+		-
 			message: '#^Property Igniter\\Orange\\Livewire\\LeaveReview\:\:\$customerReview \(Igniter\\Flame\\Database\\Model\|null\) does not accept Illuminate\\Database\\Eloquent\\Model\|null\.$#'
 			identifier: assign.propertyType
 			count: 1
