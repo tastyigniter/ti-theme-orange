@@ -76,33 +76,15 @@
                                             class="btn shadow-none"
                                         ><i class="fa fa-location-arrow fs-5 align-bottom"></i></button>
                                     </div>
+                                    @if($isSearching && $searchAutocompleteEnabled)
+                                        @include('igniter-orange::includes.local.autocomplete-suggestions')
+                                    @endif
                                     <x-igniter-orange::forms.error
                                         field="searchQuery"
                                         id="searchQueryFeedback"
                                         class="text-danger"
                                     />
-                                    @if($isSearching &&  $searchAutocompleteEnabled)
-                                        <ul class="autocomplete-suggestions">
-                                            @forelse($suggestions as $key => $suggestion)
-                                                <li
-                                                    wire:click="selectSuggestion({{ $key }})">
-                                                    @if($suggestion['title'])
-                                                        <div class="fw-bold">{{ $suggestion['title'] }}</div>
-                                                    @endif
-                                                    @if($suggestion['description'])
-                                                        <div>{{ $suggestion['description'] }}</div>
-                                                    @endif
-                                                </li>
-                                            @empty
-                                                {{--                                                    @if(!($hasLoader && $isLoading))--}}
-                                                <li class="text-center">
-                                                    No suggestions found
-                                                </li>
-                                                {{--                                                @endif--}}
-                                            @endforelse
-                                        </ul>
-                                    @endif
-                                    @if($searchPoint && $this->searchMapEnabled)
+                                    @if($searchPoint && $this->searchAutocompleteEnabled)
                                         <div wire:ignore class="mt-3">
                                             <h6>@lang('igniter.orange::default.text_mark_your_location')</h6>
                                             <div id="map" class="map-container rounded pt-2"></div>

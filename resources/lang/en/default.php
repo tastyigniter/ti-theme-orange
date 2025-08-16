@@ -141,6 +141,7 @@ return [
     'label_sort_by' => 'The default sorting order for the locations',
     'label_order_type' => 'The default order type for the locations',
     'label_security' => 'Who can access this page (all, customer or guest)',
+    'label_search_autocomplete_enabled' => 'Enable autocomplete for delivery location search input',
 
     'button_back' => 'Back',
     'button_confirm' => 'Confirm',

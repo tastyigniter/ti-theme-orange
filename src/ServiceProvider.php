@@ -21,6 +21,7 @@ use Igniter\Orange\Http\Controllers\Logout;
 use Igniter\Orange\Http\Middleware\SetOriginalRouteParametersOnLivewireRoute;
 use Igniter\Orange\Livewire\Features\SupportFlashMessages;
 use Igniter\System\Classes\ComponentManager;
+use Igniter\System\Http\Controllers\Settings;
 use Igniter\System\Libraries\Assets;
 use Igniter\User\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
@@ -63,6 +64,20 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
                 $view->with([
                     'theme' => controller()->getTheme(),
                     'page' => controller()->getPage(),
+                ]);
+            }
+        });
+
+        Event::listen('admin.form.extendFields', function (Form $form) {
+            if ($form->getController() instanceof Settings) {
+                $form->addTabFields([
+                    'search_autocomplete_enabled' => [
+                        'tab' => 'igniter::system.settings.text_tab_general',
+                        'label' => 'igniter.orange::default.label_search_autocomplete_enabled',
+                        'type' => 'switch',
+                        'span' => 'right',
+                        'default' => true,
+                    ]
                 ]);
             }
         });
