@@ -22,7 +22,7 @@
                     >
                         <div class="d-flex align-items-center">
                             <i class="fa fa-location-dot opacity-75 me-2"></i>
-                            <address class="flex-grow-1 mb-0">{!! format_address($address) !!}</address>
+                            <address class="flex-grow-1 mb-0">{{ format_address($address, false) }}</address>
                             <i class="fa fa-pencil-alt ms-2"></i>
                         </div>
                     </div>
