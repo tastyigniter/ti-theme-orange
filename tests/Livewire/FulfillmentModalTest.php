@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace Igniter\Orange\Tests\Livewire;
 
+use Exception;
 use Igniter\Flame\Geolite\Facades\Geocoder;
+use Igniter\Flame\Geolite\Model\Coordinates;
 use Igniter\Flame\Geolite\Model\Location as GeoliteLocation;
+use Igniter\Flame\Geolite\Model\Location as UserPosition;
+use Igniter\Flame\Geolite\Provider\GoogleProvider;
+use Igniter\Flame\Geolite\Provider\NominatimProvider;
 use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Local\Models\LocationArea;
@@ -116,10 +121,96 @@ it('updates search query', function(): void {
     ]));
 
     Livewire::test(FulfillmentModal::class)
+        ->set('searchAutocompleteEnabled', false)
         ->set('searchQuery', '123 Main St')
         ->set('showAddressPicker', true)
         ->call('onConfirm')
         ->assertRedirect();
+});
+
+it('fetches google places suggestions when search query is provided', function(): void {
+    $placeDetails = [
+        'placeId' => 'place_id_123',
+        'title' => '123 Main St',
+        'description' => '123 Main St, City, Country',
+        'provider' => 'google',
+        'data' => [],
+    ];
+    Geocoder::shouldReceive('driver')->andReturn(mock(GoogleProvider::class, function($mock) use ($placeDetails): void {
+        $mock->shouldReceive('placesAutocomplete')->andReturn(collect([$placeDetails]));
+        $mock->shouldReceive('getPlaceCoordinates')->andReturn(new Coordinates(51.50987615, -0.1446716));
+    }));
+
+    setting()->set('default_geocoder', 'google');
+    Livewire::test(FulfillmentModal::class)
+        ->set('searchAutocompleteEnabled', true)
+        ->set('searchQuery', '123 Main St')
+        ->call('onSelectSuggestion', 0)
+        ->assertSet('placesSuggestions', [$placeDetails])
+        ->assertSet('searchPoint', [51.50987615, -0.1446716])
+        ->assertDispatched('updateDeliveryLocationMap');
+});
+
+it('fetches nominatim places suggestions when search query is provided', function(): void {
+    $placeDetails = [
+        'placeId' => 'place_id_123',
+        'title' => '123 Main St',
+        'description' => '123 Main St, City, Country',
+        'provider' => 'nominatim',
+        'data' => [
+            'latitude' => 51.50987615,
+            'longitude' => -0.1446716,
+        ],
+    ];
+    Geocoder::shouldReceive('driver')->andReturn(mock(NominatimProvider::class, function($mock) use ($placeDetails): void {
+        $mock->shouldReceive('placesAutocomplete')->andReturn(collect([$placeDetails]));
+    }));
+
+    Livewire::test(FulfillmentModal::class)
+        ->set('searchAutocompleteEnabled', true)
+        ->set('searchQuery', '123 Main St')
+        ->call('onSelectSuggestion', 0)
+        ->assertSet('placesSuggestions', [$placeDetails])
+        ->assertSet('searchPoint', [51.50987615, -0.1446716])
+        ->assertDispatched('updateDeliveryLocationMap');
+});
+
+it('throws exception when fetching places suggestions fails', function(): void {
+    Geocoder::shouldReceive('driver')->andReturn(mock(GoogleProvider::class, function($mock): void {
+        $mock->shouldReceive('placesAutocomplete')->andThrow(new Exception('API error'));
+    }));
+
+    Livewire::test(FulfillmentModal::class)
+        ->set('searchAutocompleteEnabled', true)
+        ->set('searchQuery', '123 Main St')
+        ->assertHasErrors(['searchQuery']);
+});
+
+it('throws exception when fetching google places details fails', function(): void {
+    Livewire::test(FulfillmentModal::class)
+        ->set('searchAutocompleteEnabled', true)
+        ->call('onSelectSuggestion', 0)
+        ->assertNotDispatched('updateDeliveryLocationMap');
+
+    $placeDetails = [
+        'placeId' => 'place_id_123',
+        'title' => '123 Main St',
+        'description' => '123 Main St, City, Country',
+        'provider' => 'google',
+        'data' => [],
+    ];
+    Geocoder::shouldReceive('driver')->andReturn(mock(GoogleProvider::class, function($mock) use ($placeDetails): void {
+        $mock->shouldReceive('placesAutocomplete')->andReturn(collect([$placeDetails]));
+        $mock->shouldReceive('getPlaceCoordinates')->andThrow(new Exception('API error'));
+    }));
+
+    Livewire::test(FulfillmentModal::class)
+        ->set('searchAutocompleteEnabled', true)
+        ->set('searchQuery', '123 Main St')
+        ->call('onSelectSuggestion', 0)
+        ->assertSet('placesSuggestions', [$placeDetails])
+        ->assertNotDispatched('updateDeliveryLocationMap')
+        ->assertHasErrors(['searchQuery']);
 });
 
 it('throws exception when no delivery area are found', function(): void {
@@ -131,10 +222,29 @@ it('throws exception when no delivery area are found', function(): void {
     ]));
 
     Livewire::test(FulfillmentModal::class)
+        ->set('searchAutocompleteEnabled', false)
         ->set('searchQuery', '123 Main St')
         ->set('showAddressPicker', true)
         ->call('onConfirm')
         ->assertHasErrors(['searchQuery']);
+});
+
+it('onChangeDeliveryAddress dispatches updateDeliveryLocationMap event', function(): void {
+    Livewire::test(FulfillmentModal::class)
+        ->set('searchAutocompleteEnabled', false)
+        ->call('onChangeDeliveryAddress')
+        ->assertNotDispatched('updateDeliveryLocationMap');
+
+    $userPosition = mock(UserPosition::class);
+    $userPosition->shouldReceive('getCoordinates')->andReturn(new Coordinates(0, 0));
+    Location::partialMock()->shouldReceive('userPosition')->andReturn($userPosition);
+    Location::setModel(LocationModel::factory()->create());
+
+    Livewire::test(FulfillmentModal::class)
+        ->set('searchAutocompleteEnabled', true)
+        ->call('onChangeDeliveryAddress')
+        ->assertSet('searchPoint', [0, 0])
+        ->assertDispatched('updateDeliveryLocationMap');
 });
 
 it('onSelectAddress errors when saved address is outside covered area', function(): void {

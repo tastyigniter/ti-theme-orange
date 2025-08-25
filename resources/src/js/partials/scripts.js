@@ -131,7 +131,7 @@ $(function () {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
                 Livewire.dispatch('userPositionUpdated', {
-                    position: [position.coords.latitude, position.coords.longitude]
+                    position: [position.coords.latitude, position.coords.longitude], updateMap: true
                 })
             }, (error) => {
                 $button.removeClass('disabled')

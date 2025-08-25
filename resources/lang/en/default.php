@@ -41,6 +41,7 @@ return [
     'text_for_saved_addresses' => 'for your saved addresses',
     'text_select_saved_addresses' => 'Or, select a saved addresses',
     'text_no_saved_addresses' => 'No saved addresses found',
+    'text_mark_your_location' => 'Mark your location',
     'text_sort' => 'Sort',
     'text_customer_reviews' => 'Customer reviews',
     'text_local_tab_info' => 'Info',
@@ -140,6 +141,7 @@ return [
     'label_sort_by' => 'The default sorting order for the locations',
     'label_order_type' => 'The default order type for the locations',
     'label_security' => 'Who can access this page (all, customer or guest)',
+    'label_search_autocomplete_enabled' => 'Enable autocomplete for delivery location search input',
 
     'button_back' => 'Back',
     'button_confirm' => 'Confirm',

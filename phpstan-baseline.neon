@@ -19,10 +19,16 @@ parameters:
 			path: src/Data/MenuItemData.php
 
 		-
-			message: '#^Ternary operator condition is always true\.$#'
-			identifier: ternary.alwaysTrue
+			message: '#^Call to an undefined method Igniter\\Flame\\Geolite\\Contracts\\AbstractProvider\:\:getPlaceCoordinates\(\)\.$#'
+			identifier: method.notFound
 			count: 1
-			path: src/Livewire/Checkout.php
+			path: src/Livewire/FulfillmentModal.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\Flame\\Geolite\\Contracts\\AbstractProvider\:\:placesAutocomplete\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Livewire/FulfillmentModal.php
 
 		-
 			message: '#^Property Igniter\\Orange\\Livewire\\LeaveReview\:\:\$customerReview \(Igniter\\Flame\\Database\\Model\|null\) does not accept Illuminate\\Database\\Eloquent\\Model\|null\.$#'
@@ -31,7 +37,55 @@ parameters:
 			path: src/Livewire/LeaveReview.php
 
 		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: src/Livewire/LeaveReview.php
+
+		-
+			message: '#^Access to an undefined property Igniter\\Orange\\Livewire\\LocalSearch\:\:\$orderType\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Livewire/LocalSearch.php
+
+		-
+			message: '#^Access to an undefined property Igniter\\Orange\\Livewire\\LocalSearch\:\:\$showAddressPicker\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Livewire/LocalSearch.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\Flame\\Geolite\\Contracts\\AbstractProvider\:\:getPlaceCoordinates\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Livewire/LocalSearch.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\Flame\\Geolite\\Contracts\\AbstractProvider\:\:placesAutocomplete\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Livewire/LocalSearch.php
+
+		-
+			message: '#^Access to an undefined property Igniter\\Orange\\Livewire\\LocationList\:\:\$showAddressPicker\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Livewire/LocationList.php
+
+		-
 			message: '#^Call to an undefined method Igniter\\Flame\\Database\\Builder\<Igniter\\Local\\Models\\Location\>\:\:applyFilters\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Livewire/LocationList.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\Flame\\Geolite\\Contracts\\AbstractProvider\:\:getPlaceCoordinates\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Livewire/LocationList.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\Flame\\Geolite\\Contracts\\AbstractProvider\:\:placesAutocomplete\(\)\.$#'
 			identifier: method.notFound
 			count: 1
 			path: src/Livewire/LocationList.php
@@ -71,6 +125,18 @@ parameters:
 			identifier: larastan.relationExistence
 			count: 1
 			path: src/Livewire/LocationList.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: src/Livewire/Login.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: src/Livewire/OrderPreview.php
 
 		-
 			message: '#^Call to an undefined method Igniter\\User\\Models\\Customer\:\:reservations\(\)\.$#'

@@ -6,10 +6,13 @@ namespace Igniter\Orange\Livewire\Concerns;
 
 use Exception;
 use Igniter\Flame\Geolite\Facades\Geocoder;
+use Igniter\Flame\Geolite\GeoQuery;
+use Igniter\Flame\Geolite\Model\Coordinates;
 use Igniter\Flame\Geolite\Model\Location as GeoliteLocation;
 use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Main\Traits\UsesPage;
+use Igniter\System\Facades\Assets;
 use Igniter\User\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
@@ -17,6 +20,7 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Session;
 use Livewire\Livewire;
+use Throwable;
 
 /**
  * SearchesNearby trait.
@@ -40,6 +44,16 @@ trait SearchesNearby
 
     protected string $searchField = 'searchQuery';
 
+    public array $placesSuggestions = [];
+
+    public string $mapKey = '';
+
+    public bool $searchAutocompleteEnabled = true;
+
+    public bool $isSearching = false;
+
+    public string $geocoder;
+
     public function definePropertiesSearchNearby(): array
     {
         return [
@@ -49,11 +63,27 @@ trait SearchesNearby
                 'options' => static::getThemePageOptions(...),
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
+            'searchAutocompleteEnabled' => [
+                'label' => 'Enable address autocomplete and mark your location option when entering delivery address.',
+                'type' => 'switch',
+            ],
         ];
     }
 
     public function mountSearchesNearby(): void
     {
+        $this->geocoder = setting('default_geocoder', 'nominatim');
+        if ($this->searchAutocompleteEnabled) {
+            Assets::addCss('igniter-orange::/css/autocomplete.css', 'autocomplete-css');
+            if ($this->geocoder === 'nominatim') {
+                Assets::addCss('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css', 'leaflet-css');
+                Assets::addJs('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', 'leaflet-js');
+            } else {
+                Assets::addJs('igniter-orange::/js/google-maps.js', 'google-maps-js');
+            }
+        }
+
+        $this->mapKey = setting('maps_api_key');
         $this->searchQuery = Location::getSession('searchQuery');
         $this->deliveryAddress = Auth::customer()?->address?->formatted_address;
     }
@@ -120,14 +150,27 @@ trait SearchesNearby
     }
 
     #[On('userPositionUpdated')]
-    public function onUserPositionUpdated($position = null): void
+    public function onUserPositionUpdated($position = null, $updateMap = false): void
     {
         $this->searchPoint = $position;
 
         try {
             $this->geocodeUserPosition();
+            if ($updateMap && $this->searchAutocompleteEnabled) {
+                $this->updatedOrderType();
+            }
         } catch (Exception $ex) {
             throw ValidationException::withMessages([$this->searchField => $ex->getMessage()]);
+        }
+    }
+
+    public function updatedOrderType(): void
+    {
+        if ($this->orderType === LocationModel::DELIVERY && $this->searchAutocompleteEnabled) {
+            $this->dispatch('updateDeliveryLocationMap',
+                lat: $this->searchPoint[0] ?? null,
+                lng: $this->searchPoint[1] ?? null,
+                geocoder: $this->geocoder);
         }
     }
 
@@ -143,6 +186,73 @@ trait SearchesNearby
         }
 
         return $this->redirect(Livewire::originalUrl(), navigate: true);
+    }
+
+    public function onSelectSuggestion(int $index): void
+    {
+        $suggestion = $this->placesSuggestions[$index] ?? null;
+        if (!$this->searchAutocompleteEnabled || !$suggestion) {
+            return;
+        }
+
+        $this->isSearching = false;
+        $this->searchQuery = $suggestion['title'] ?? null;
+
+        try {
+            $placeCoordinates = array_get($suggestion, 'provider') === 'nominatim'
+                ? new Coordinates($suggestion['data']['latitude'], $suggestion['data']['longitude'])
+                : Geocoder::driver('google')->getPlaceCoordinates(GeoQuery::create($suggestion['placeId']));
+
+            $this->searchPoint = [$placeCoordinates->getLatitude(), $placeCoordinates->getLongitude()];
+
+            $this->dispatch(
+                'updateDeliveryLocationMap',
+                lat: $this->searchPoint[0],
+                lng: $this->searchPoint[1],
+                geocoder: $suggestion['provider'],
+            );
+        } catch (Throwable $e) {
+            throw ValidationException::withMessages([$this->searchField => $e->getMessage()]);
+        }
+    }
+
+    public function onChangeDeliveryAddress(): void
+    {
+        $this->showAddressPicker = true;
+        if (!$this->searchAutocompleteEnabled) {
+            return;
+        }
+
+        if ($coordinates = Location::userPosition()?->getCoordinates()) {
+            $this->searchPoint = [$coordinates->getLatitude(), $coordinates->getLongitude()];
+            $this->dispatch(
+                'updateDeliveryLocationMap',
+                lat: $coordinates->getLatitude(),
+                lng: $coordinates->getLongitude(),
+                geocoder: $this->geocoder,
+            );
+        }
+    }
+
+    public function updatedSearchQuery(): void
+    {
+        if (!$this->searchAutocompleteEnabled) {
+            return;
+        }
+
+        try {
+            if (strlen($this->searchQuery) < 3) {
+                $this->isSearching = false;
+                $this->searchPoint = null;
+                $this->dispatch('resetMap');
+            } else {
+                $this->isSearching = true;
+                $query = GeoQuery::create($this->searchQuery);
+                $this->placesSuggestions = Geocoder::driver()->placesAutocomplete($query)->toArray();
+            }
+        } catch (Exception $e) {
+            throw ValidationException::withMessages([$this->searchField => $e->getMessage()]);
+        }
     }
 
     protected function getSearchQuery()

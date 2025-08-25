@@ -11,7 +11,7 @@ layout: default
 <?php
 function onStart()
 {
-    if (request()->route()->parameter('location') !== Location::current()->permalink_slug) {
+    if (request()->route()->parameter('location') !== \Igniter\Local\Facades\Location::current()->permalink_slug) {
         return redirect()->to(page_url('home'));
     }
 

@@ -68,7 +68,7 @@ final class BannerPreview extends Component
     }
 
     #[Override]
-    public function shouldRender()
+    public function shouldRender(): bool
     {
         return $this->loadBanner() !== null;
     }

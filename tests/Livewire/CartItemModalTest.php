@@ -20,7 +20,7 @@ beforeEach(function(): void {
     $this->orderTypeMock->shouldReceive('isDisabled')->andReturnFalse();
     Location::shouldReceive('getId')->andReturn($this->location->getKey());
     Location::shouldReceive('current')->andReturn($this->location);
-    Location::shouldReceive('orderType')->andReturn(LocationModel::COLLECTION);
+    Location::shouldReceive('orderType')->andReturn(LocationModel::DELIVERY);
     Location::shouldReceive('getOrderType')->andReturn($this->orderTypeMock);
     Location::shouldReceive('orderTypeIsDelivery')->andReturnFalse();
     Location::shouldReceive('checkNoOrderTypeAvailable')->andReturnFalse();

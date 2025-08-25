@@ -3,6 +3,7 @@
         wire:ignore.self
         @class(['modal fade', 'show' => $showAddressPicker])
         id="fulfillmentModal"
+        data-map-key="{{ $mapKey }}"
         tabindex="-1"
         aria-labelledby="fulfillmentModalLabel"
         aria-hidden="true"
@@ -44,13 +45,13 @@
                             </div>
                         </div>
                         @unless($hideDeliveryAddress)
-                            <div x-cloak x-show="!hideDeliveryAddress" class="pb-3">
+                            <div x-cloak x-show="!hideDeliveryAddress" class="pb-3 position-relative">
                                 <h6 class="my-3">
                                     <i class="fa fa-map-pin"></i>&nbsp;&nbsp;
                                     @lang('igniter.orange::default.text_delivering_to')
                                     @unless($previewMode)
                                         <a
-                                            wire:click="$set('showAddressPicker', true)"
+                                            wire:click="onChangeDeliveryAddress"
                                             role="button"
                                             class="small text-primary"
                                         >@lang('igniter.local::default.search.text_change')</a>
@@ -59,7 +60,11 @@
                                 @if(!$previewMode && $showAddressPicker)
                                     <div class="input-group bg-white rounded border p-1 mb-3 mb-lg-0">
                                         <input
-                                            wire:model="searchQuery"
+                                            @if($searchAutocompleteEnabled)
+                                                wire:model.live.debounce.500ms="searchQuery"
+                                            @else
+                                                wire:model="searchQuery"
+                                            @endif
                                             type="text"
                                             id="search-query"
                                             class="bg-white form-control shadow-none border-none"
@@ -71,17 +76,26 @@
                                             class="btn shadow-none"
                                         ><i class="fa fa-location-arrow fs-5 align-bottom"></i></button>
                                     </div>
-
+                                    @if($isSearching && $searchAutocompleteEnabled)
+                                        @include('igniter-orange::includes.local.autocomplete-suggestions')
+                                    @endif
                                     <x-igniter-orange::forms.error
                                         field="searchQuery"
                                         id="searchQueryFeedback"
                                         class="text-danger"
                                     />
-                                    @include('igniter-orange::includes.local.saved-address-picker')
+                                    @if($searchPoint && $this->searchAutocompleteEnabled)
+                                        <div wire:ignore class="mt-3">
+                                            <h6>@lang('igniter.orange::default.text_mark_your_location')</h6>
+                                            <div id="map" class="map-container rounded pt-2"></div>
+                                        </div>
+                                    @else
+                                        @include('igniter-orange::includes.local.saved-address-picker')
+                                    @endif
                                 @else
                                     <div class="p-2 border rounded bg-white w-100">
                                         <div
-                                            class="pe-2 text-truncate"
+                                            class="pe-2 fw-bold text-truncate"
                                         >{{ $searchQuery ?? $deliveryAddress ?? lang('igniter.local::default.alert_no_search_query') }}</div>
                                     </div>
                                 @endif

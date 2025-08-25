@@ -421,7 +421,8 @@ final class Checkout extends Component
             $this->fields['city'] = $userPosition->getSubLocality();
             $this->fields['state'] = $userPosition->getLocality();
             $this->fields['postcode'] = $userPosition->getPostalCode();
-            $this->fields['country_id'] = array_get(countries(), $userPosition->getCountryCode(), LocationModel::getDefaultKey());
+            $this->fields['country_id'] = array_get(countries('country_id', 'iso_code_2'),
+                $userPosition->getCountryCode(), LocationModel::getDefaultKey());
         }
     }
 

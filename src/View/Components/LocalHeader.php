@@ -77,7 +77,7 @@ final class LocalHeader extends Component
     }
 
     #[Override]
-    public function shouldRender()
+    public function shouldRender(): bool
     {
         return !is_null(resolve('location')->current());
     }

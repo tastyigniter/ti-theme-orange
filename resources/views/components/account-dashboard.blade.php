@@ -16,7 +16,7 @@
                         href="{{ page_url('account.address') }}"
                     >@lang('igniter.user::default.text_edit')</a>
                 </h5>
-                <address class="text-left text-overflow">{{ $formattedAddress }}</address>
+                <address class="text-left text-overflow">{!! $formattedAddress !!}</address>
             @else
                 <p>@lang('igniter.user::default.text_no_default_address')</p>
             @endif

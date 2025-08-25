@@ -27,6 +27,7 @@ beforeEach(function(): void {
     Location::shouldReceive('orderType')->byDefault()->andReturn(LocationModel::COLLECTION);
     Location::shouldReceive('getOrderType')->andReturn($this->orderTypeMock);
     Location::shouldReceive('checkOrderTime')->byDefault()->andReturnTrue();
+    Location::shouldReceive('orderDateTime')->byDefault()->andReturn(now());
     Location::shouldReceive('checkNoOrderTypeAvailable')->andReturnFalse();
     Location::shouldReceive('minimumOrderTotal')->andReturn(0);
 });
@@ -103,6 +104,9 @@ it('updates cart item quantity', function(): void {
         'name' => 'Test Item',
         'price' => 10,
     ], 1);
+    Location::shouldReceive('orderType')->andReturn(LocationModel::COLLECTION);
+    Location::shouldReceive('checkMinimumOrderTotal')->andReturnTrue();
+    Location::shouldReceive('orderTypeIsDelivery')->andReturnFalse();
 
     Livewire::test(CartBox::class)
         ->call('onUpdateItemQuantity', rowId: $cartItem->rowId, action: 'plus');
@@ -189,6 +193,9 @@ it('button label returns cart is empty', function(): void {
         'name' => 'Test Item',
         'price' => 10,
     ], 1);
+    Location::shouldReceive('orderType')->andReturn(LocationModel::COLLECTION);
+    Location::shouldReceive('checkMinimumOrderTotal')->andReturnTrue();
+    Location::shouldReceive('orderTypeIsDelivery')->andReturnFalse();
 
     Livewire::test(CartBox::class)
         ->call('buttonLabel')
