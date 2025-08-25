@@ -54,8 +54,8 @@
             </tr>
             @foreach ($order->getOrderTotals() as $orderTotal)
                 @continue($order->isCollectionType() && $orderTotal->code == 'delivery')
-                @php($thickLine = ($orderTotal->code == 'order_total' || $orderTotal->code == 'total'))
-                @continue(!$thickLine && !$orderTotal->is_summable)
+                @php($thickLine = in_array($orderTotal->code, ['order_total', 'total']))
+                @continue(!$thickLine && (!$orderTotal->is_summable && $orderTotal->code !== 'subtotal'))
                 <tr>
                     <td class="px-0 {{ $thickLine ? 'border-top lead fw-bold' : 'text-muted border-0' }}">
                         {{ $orderTotal->title }}

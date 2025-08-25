@@ -181,4 +181,13 @@ return [
 
         'alert_contact_sent' => 'Message Sent successfully, we will get back to you shortly!',
     ],
+
+    'newsletter' => [
+        'text_subscribe' => 'Subscribe to our newsletter',
+
+        'label_email' => 'Email',
+
+        'alert_success_subscribed' => 'Thanks, Your email now subscribed for our offers',
+        'alert_success_existing' => 'Thanks, Your email already subscribed for our offers',
+    ],
 ];

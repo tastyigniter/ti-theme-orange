@@ -93,6 +93,11 @@ it('adds item', function(): void {
 });
 
 it('updates cart item quantity', function(): void {
+    Location::shouldReceive('orderDateTime')->andReturn(now());
+    Location::shouldReceive('orderType')->andReturn(LocationModel::COLLECTION);
+    Location::shouldReceive('checkMinimumOrderTotal')->andReturnTrue();
+    Location::shouldReceive('orderTypeIsDelivery')->andReturnFalse();
+
     $menuItem = Menu::factory()->create();
     $cartItem = Cart::add([
         'id' => $menuItem->getKey(),
@@ -178,6 +183,10 @@ it('button label returns location closed', function(): void {
 });
 
 it('button label returns cart is empty', function(): void {
+    Location::shouldReceive('orderDateTime')->andReturn(now());
+    Location::shouldReceive('orderType')->andReturn(LocationModel::COLLECTION);
+    Location::shouldReceive('checkMinimumOrderTotal')->andReturnTrue();
+    Location::shouldReceive('orderTypeIsDelivery')->andReturnFalse();
     $menuItem = Menu::factory()->create();
     Cart::add([
         'id' => $menuItem->getKey(),

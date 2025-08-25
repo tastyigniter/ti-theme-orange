@@ -90,17 +90,17 @@ final class Login extends Component
                 'credentials' => $this->form->except('remember'),
                 'remember' => $this->form->remember,
             ])->handle();
+
+            if (strlen($this->redirect) > 0) {
+                $this->redirect(page_url($this->redirect));
+            } else {
+                $this->intendedRedirect
+                    ? $this->redirectIntended(page_url($this->redirectPage))
+                    : $this->redirect(page_url($this->redirectPage));
+            }
         }, function(Throwable $e): never {
             throw ValidationException::withMessages(['form.email' => $e->getMessage()]);
         });
-
-        if (strlen($this->redirect) > 0) {
-            $this->redirect(page_url($this->redirect));
-        } else {
-            $this->intendedRedirect
-                ? $this->redirectIntended(page_url($this->redirectPage))
-                : $this->redirect(page_url($this->redirectPage));
-        }
     }
 
     protected function getRedirectIntendedUrl(): ?string

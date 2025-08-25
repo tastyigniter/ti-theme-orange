@@ -3,9 +3,7 @@
         @if ($locationDefault)
             <div class="card-body">
                 <h1 class="h3 card-title">{{ $locationDefault->getName() }}</h1>
-                <div class="mb-2">
-                    <i class="fa fa-globe me-2"></i>{{ format_address($locationDefault->getAddress(), false) }}
-                </div>
+                <div class="mb-2"><i class="fa fa-globe me-2"></i>{!! format_address($locationDefault->getAddress()) !!}</div>
                 <div class="mb-2"><i class="fa fa-phone me-2"></i>{{ $locationDefault->getTelephone() }}</div>
             </div>
         @endif

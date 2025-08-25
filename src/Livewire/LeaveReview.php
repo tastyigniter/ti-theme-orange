@@ -120,13 +120,13 @@ final class LeaveReview extends Component
                 'service' => $this->service,
                 'review_text' => $this->comment,
             ]);
+
+            flash()->success(lang('igniter.local::default.review.alert_review_success'))->now();
         }, function(Throwable $e): never {
             throw ValidationException::withMessages([
                 'comment' => $e->getMessage(),
             ]);
         });
-
-        flash()->success(lang('igniter.local::default.review.alert_review_success'))->now();
     }
 
     protected function reviewable()
