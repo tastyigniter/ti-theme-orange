@@ -27,11 +27,13 @@ window.OrangeFulfillment = (timeslot) => {
             this.$wire.$watch('isAsap', value => {
                 this.showTimePicker = value == 0;
             });
+
             this.$wire.on('resetMap', () => {
                 if (map) {
                     map = null;
                 }
             })
+
             this.$wire.on('updateDeliveryLocationMap', ({ lat, lng, geocoder}) => {
                 if(!map) {
                     setTimeout(() => {
@@ -59,7 +61,7 @@ window.OrangeFulfillment = (timeslot) => {
             map = new Map(document.getElementById('map'), {
                 zoom: 15,
                 center: position,
-                mapId: 'DEMO_MAP_ID',
+                mapId: 'DELIVERY_MAP_ID',
                 disableDefaultUI: true,
             });
 

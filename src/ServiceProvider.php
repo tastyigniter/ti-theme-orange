@@ -14,14 +14,10 @@ use Igniter\Main\Classes\ThemeManager;
 use Igniter\Main\Template\Page;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Actions\EnsureUniqueProcess;
-use Igniter\Orange\Classes\GMPlaceApiService;
-use Igniter\Orange\Classes\OSNominatimApiService;
-use Igniter\Orange\Contracts\AutocompleteService;
 use Igniter\Orange\Http\Controllers\Logout;
 use Igniter\Orange\Http\Middleware\SetOriginalRouteParametersOnLivewireRoute;
 use Igniter\Orange\Livewire\Features\SupportFlashMessages;
 use Igniter\System\Classes\ComponentManager;
-use Igniter\System\Http\Controllers\Settings;
 use Igniter\System\Libraries\Assets;
 use Igniter\User\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
@@ -68,28 +64,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             }
         });
 
-        Event::listen('admin.form.extendFields', function (Form $form) {
-            if ($form->getController() instanceof Settings) {
-                $form->addTabFields([
-                    'search_autocomplete_enabled' => [
-                        'tab' => 'igniter::system.settings.text_tab_general',
-                        'label' => 'igniter.orange::default.label_search_autocomplete_enabled',
-                        'type' => 'switch',
-                        'span' => 'right',
-                        'default' => true,
-                    ]
-                ]);
-            }
-        });
-
         $this->configureLivewire();
         $this->configurePageAuthentication();
         $this->configureGoogleFonts();
 
         $this->defineRoutes();
-
-        $this->app->bind(AutocompleteService::class,
-            setting('default_geocoder') === 'nominatim' ? OSNominatimApiService::class : GMPlaceApiService::class);
     }
 
     protected function loadLivewireComponentsFrom(string|array $path): void

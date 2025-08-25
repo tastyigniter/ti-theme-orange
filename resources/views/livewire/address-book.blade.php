@@ -3,7 +3,7 @@
         <h4 class="mb-0">@lang('igniter.user::default.text_address')</h4>
         <button
             class="btn btn-secondary"
-            wire:click="showAddressBookFormModal"
+            wire:click="$set('showModal', true)"
             wire:loading.class="disabled"
         >@lang('igniter.user::default.account.button_add')</button>
     </div>

@@ -58,6 +58,7 @@ it('onSearchNearby errors when geocode returns empty result', function(): void {
     Geocoder::shouldReceive('getLogs')->andReturn([]);
 
     Livewire::test(LocalSearch::class)
+        ->set('searchAutocompleteEnabled', false)
         ->set('searchQuery', 'invalid address')
         ->call('onSearchNearby')
         ->assertHasErrors(['searchQuery' => [lang('igniter.local::default.alert_invalid_search_query')]]);
@@ -76,6 +77,7 @@ it('onSearchNearby errors when geocode returns invalid coordinates', function():
     ]));
 
     Livewire::test(LocalSearch::class)
+        ->set('searchAutocompleteEnabled', false)
         ->set('searchQuery', '123 Main St')
         ->call('onSearchNearby')
         ->assertHasErrors(['searchQuery' => [lang('igniter.local::default.alert_invalid_search_query')]]);
@@ -113,6 +115,7 @@ it('onSearchNearby errors when no nearby location area is found', function(): vo
     ]));
 
     Livewire::test(LocalSearch::class)
+        ->set('searchAutocompleteEnabled', false)
         ->set('searchQuery', '123 Main St')
         ->call('onSearchNearby')
         ->assertHasErrors(['searchQuery' => [lang('igniter.local::default.alert_no_found_restaurant')]]);
@@ -135,6 +138,7 @@ it('onSearchNearby searches nearby location', function(): void {
     ]));
 
     Livewire::test(LocalSearch::class)
+        ->set('searchAutocompleteEnabled', false)
         ->set('searchQuery', '123 Main St')
         ->call('onSearchNearby')
         ->assertRedirect(restaurant_url('local.menus'));
@@ -214,6 +218,7 @@ it('onUpdateSearchQuery updates user position in session correctly', function():
     ]));
 
     Livewire::test(LocalSearch::class)
+        ->set('searchAutocompleteEnabled', false)
         ->set('searchQuery', '123 Main St')
         ->call('onUpdateSearchQuery')
         ->assertRedirect();

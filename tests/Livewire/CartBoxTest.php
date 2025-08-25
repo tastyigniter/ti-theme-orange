@@ -20,13 +20,14 @@ use Livewire\Livewire;
 beforeEach(function(): void {
     $this->location = LocationModel::factory()->create();
     $this->orderTypeMock = $this->mock(AbstractOrderType::class);
-    $this->orderTypeMock->shouldReceive('getSchedule')->andReturn($this->location->newWorkingSchedule(LocationModel::DELIVERY, 5));
-    $this->orderTypeMock->shouldReceive('getCode')->andReturn(LocationModel::DELIVERY);
+    $this->orderTypeMock->shouldReceive('getSchedule')->andReturn($this->location->newWorkingSchedule(LocationModel::COLLECTION, 5));
+    $this->orderTypeMock->shouldReceive('getCode')->andReturn(LocationModel::COLLECTION);
     Location::shouldReceive('getId')->andReturn($this->location->getKey());
     Location::shouldReceive('current')->andReturn($this->location);
-    Location::shouldReceive('orderType')->byDefault()->andReturn($this->orderTypeMock);
+    Location::shouldReceive('orderType')->byDefault()->andReturn(LocationModel::COLLECTION);
     Location::shouldReceive('getOrderType')->andReturn($this->orderTypeMock);
     Location::shouldReceive('checkOrderTime')->byDefault()->andReturnTrue();
+    Location::shouldReceive('orderDateTime')->byDefault()->andReturn(now());
     Location::shouldReceive('checkNoOrderTypeAvailable')->andReturnFalse();
     Location::shouldReceive('minimumOrderTotal')->andReturn(0);
 });
@@ -77,11 +78,11 @@ it('opens cart item modal', function(): void {
         ->assertDispatched('showModal');
 });
 
-it('updates adds item', function(): void {
+it('adds item', function(): void {
     $menuItem = Menu::factory()->create();
     Location::shouldReceive('orderTypeIsDelivery')->andReturnFalse();
     Location::shouldReceive('orderDateTime')->andReturn(now());
-    Location::shouldReceive('orderType')->andReturn($this->orderTypeMock);
+    Location::shouldReceive('orderType')->andReturn(LocationModel::COLLECTION);
     Location::shouldReceive('checkMinimumOrderTotal')->andReturnTrue();
     $this->orderTypeMock->shouldReceive('isDisabled')->andReturnFalse();
 
@@ -98,7 +99,7 @@ it('updates cart item quantity', function(): void {
         'name' => 'Test Item',
         'price' => 10,
     ], 1);
-    Location::shouldReceive('orderType')->andReturn($this->orderTypeMock);
+    Location::shouldReceive('orderType')->andReturn(LocationModel::COLLECTION);
     Location::shouldReceive('checkMinimumOrderTotal')->andReturnTrue();
     Location::shouldReceive('orderTypeIsDelivery')->andReturnFalse();
 
@@ -153,7 +154,7 @@ it('proceeds to checkout', function(): void {
     Location::shouldReceive('setCurrent')->with($this->location)->once();
     Location::shouldReceive('checkMinimumOrderTotal')->andReturnTrue();
     Location::shouldReceive('orderTypeIsDelivery')->andReturnFalse();
-    Location::shouldReceive('orderType')->andReturn($this->orderTypeMock);
+    Location::shouldReceive('orderType')->andReturn(LocationModel::COLLECTION);
 
     Livewire::test(CartBox::class)
         ->call('onProceedToCheckout', $this->location->getKey())
@@ -183,7 +184,7 @@ it('button label returns cart is empty', function(): void {
         'name' => 'Test Item',
         'price' => 10,
     ], 1);
-    Location::shouldReceive('orderType')->andReturn($this->orderTypeMock);
+    Location::shouldReceive('orderType')->andReturn(LocationModel::COLLECTION);
     Location::shouldReceive('checkMinimumOrderTotal')->andReturnTrue();
     Location::shouldReceive('orderTypeIsDelivery')->andReturnFalse();
 

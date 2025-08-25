@@ -51,7 +51,7 @@
                                     @lang('igniter.orange::default.text_delivering_to')
                                     @unless($previewMode)
                                         <a
-                                            wire:click="changeDeliveryAddress"
+                                            wire:click="onChangeDeliveryAddress"
                                             role="button"
                                             class="small text-primary"
                                         >@lang('igniter.local::default.search.text_change')</a>
@@ -95,7 +95,7 @@
                                 @else
                                     <div class="p-2 border rounded bg-white w-100">
                                         <div
-                                            class="pe-2 text-truncate"
+                                            class="pe-2 fw-bold text-truncate"
                                         >{{ $searchQuery ?? $deliveryAddress ?? lang('igniter.local::default.alert_no_search_query') }}</div>
                                     </div>
                                 @endif

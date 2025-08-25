@@ -149,7 +149,7 @@ final class LocationData
                     return $hour;
                 }, array_get($schedule->getHours(), $index, []));
 
-                $scheduleItems[$code][$day] = array_filter($hours, fn($hour): bool => (bool)$hour['status']);
+                $scheduleItems[$code][$day] = array_filter($hours, fn(array $hour): bool => (bool)$hour['status']);
             }
         }
 
