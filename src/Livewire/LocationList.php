@@ -115,7 +115,7 @@ final class LocationList extends Component
     public static function getPropertyOptions(Form $form, FormField $field): array|Collection
     {
         return match ($field->getConfig('property')) {
-            'sortBy' => collect((new self)->sorters())->mapWithKeys(fn($sorter, $key) => [$key => array_get($sorter, 'name')])->all(),
+            'sortBy' => collect((new self)->sorters())->mapWithKeys(fn($sorter, $key): array => [$key => array_get($sorter, 'name')])->all(),
             'orderType' => (new self)->orderTypes(),
             default => [],
         };

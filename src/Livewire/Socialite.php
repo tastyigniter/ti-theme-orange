@@ -90,6 +90,6 @@ final class Socialite extends Component
 
     protected function loadLinks()
     {
-        return resolve(ProviderManager::class)->listProviderLinks()->mapWithKeys(fn($url, $code) => [$code => $url.'?success='.page_url($this->successPage).'&error='.page_url($this->errorPage)])->all();
+        return resolve(ProviderManager::class)->listProviderLinks()->mapWithKeys(fn($url, $code): array => [$code => $url.'?success='.page_url($this->successPage).'&error='.page_url($this->errorPage)])->all();
     }
 }

@@ -52,7 +52,7 @@ final class OrderList extends Component
 
     public static function getSortOrderOptions()
     {
-        return collect((new Order)->queryModifierGetSorts())->mapWithKeys(fn($value, $key) => [$value => $value])->all();
+        return collect((new Order)->queryModifierGetSorts())->mapWithKeys(fn($value, $key): array => [$value => $value])->all();
     }
 
     protected function loadOrders()

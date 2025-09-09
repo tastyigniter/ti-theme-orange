@@ -58,7 +58,7 @@ final class AddressBook extends Component
     public static function getPropertyOptions(Form $form, FormField $field): array
     {
         return match ($field->getConfig('property')) {
-            'sortOrder' => collect((new Address)->queryModifierGetSorts())->mapWithKeys(fn($value, $key) => [$value => $value])->all(),
+            'sortOrder' => collect((new Address)->queryModifierGetSorts())->mapWithKeys(fn($value, $key): array => [$value => $value])->all(),
             default => [],
         };
     }

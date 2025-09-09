@@ -42,6 +42,6 @@ trait WithReviews
 
     public static function getSortOrderOptionsWithReviews(): array
     {
-        return collect((new ReviewModel)->queryModifierGetSorts())->mapWithKeys(fn($value, $key) => [$value => $value])->all();
+        return collect((new ReviewModel)->queryModifierGetSorts())->mapWithKeys(fn($value, $key): array => [$value => $value])->all();
     }
 }

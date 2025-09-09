@@ -142,7 +142,7 @@ final class LocationData
         foreach ($this->scheduleTypes() as $code => $definition) {
             $schedule = $this->model->createScheduleItem($code);
             foreach ((new WorkingHour)->getWeekDaysOptions() as $index => $day) {
-                $hours = array_map(function(array $hour) {
+                $hours = array_map(function(array $hour): array {
                     $hour['open'] = now()->setTimeFromTimeString($hour['open'])->isoFormat(lang('system::lang.moment.time_format'));
                     $hour['close'] = now()->setTimeFromTimeString($hour['close'])->isoFormat(lang('system::lang.moment.time_format'));
 
