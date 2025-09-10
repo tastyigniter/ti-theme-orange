@@ -47,14 +47,14 @@ final class Register extends Component
     {
         return [
             'agreeTermsSlug' => [
-                'label' => 'Page to redirect to after registration.',
+                'label' => 'Static page for the registration terms and conditions. Leave empty to disable.',
                 'type' => 'select',
                 'options' => self::getStaticPageOptions(...),
                 'comment' => 'If set, require customers to agree to terms before registering',
                 'validationRule' => 'sometimes|alpha_dash',
             ],
             'redirectPage' => [
-                'label' => 'Static page for the registration terms and conditions.',
+                'label' => 'Page to redirect to after a successful registration.',
                 'type' => 'select',
                 'options' => self::getThemePageOptions(...),
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
