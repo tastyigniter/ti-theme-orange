@@ -20,7 +20,11 @@
                             wire:loading.class="disabled"
                         ><i class="fa fa-location-arrow fs-4 align-bottom"></i> </button>
                         <input
-                            wire:model="searchQuery"
+                            @if($searchAutocompleteEnabled)
+                                wire:model.live.debounce.500ms="searchQuery"
+                            @else
+                                wire:model="searchQuery"
+                            @endif
                             type="text"
                             id="search-query"
                             class="bg-white form-control shadow-none border-none"
@@ -35,6 +39,10 @@
                     </div>
                 </x-igniter-orange::forms.form>
             </div>
+            
+            @if($isSearching && $searchAutocompleteEnabled)
+                @include('igniter-orange::includes.local.autocomplete-suggestions')
+            @endif
 
             <x-igniter-orange::forms.error
                 field="searchQuery"

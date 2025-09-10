@@ -347,7 +347,7 @@ it('onConfirm errors when order total is below payment minimum order total', fun
         ->set('fields.last_name', 'Doe')
         ->set('fields.email', 'test@example.com')
         ->dispatch('checkout::confirm')
-        ->assertHasErrors(['field.comments' => [sprintf(
+        ->assertHasErrors(['fields.payment' => [sprintf(
             lang('igniter.payregister::default.alert_min_order_total'),
             currency_format(100.00),
             'Cash On Delivery',

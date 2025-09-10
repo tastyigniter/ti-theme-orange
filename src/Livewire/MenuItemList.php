@@ -181,7 +181,7 @@ final class MenuItemList extends Component
     public static function getPropertyOptions(Form $form, FormField $field): array
     {
         return match ($field->getConfig('property')) {
-            'sortOrder' => collect((new MenuModel)->queryModifierGetSorts())->mapWithKeys(fn($value, $key) => [$value => $value])->all(),
+            'sortOrder' => collect((new MenuModel)->queryModifierGetSorts())->mapWithKeys(fn($value, $key): array => [$value => $value])->all(),
             default => [],
         };
     }

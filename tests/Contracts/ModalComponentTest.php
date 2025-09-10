@@ -11,7 +11,7 @@ use Livewire\Features\SupportEvents\Event;
 it('closes modal with events', function(): void {
     $modalComponent = new class extends ModalComponent
     {
-        public function dispatch($event, ...$params)
+        public function dispatch($event, ...$params): Event
         {
             expect(in_array($event, ['closeModal', 'event1', 'event2']))->toBeTrue();
 

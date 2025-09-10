@@ -224,7 +224,7 @@ final class OrderPreview extends Component
 
     protected function getLoginPageUrl(): string
     {
-        $currentUrl = str_before(request()->fullUrl(), request()->root());
+        $currentUrl = str_after(request()->fullUrl(), request()->root());
 
         return page_url($this->loginPage).'?redirect='.urlencode($currentUrl);
     }

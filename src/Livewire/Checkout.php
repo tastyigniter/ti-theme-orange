@@ -263,7 +263,7 @@ final class Checkout extends Component
                 $this->orderManager->saveOrder($order, $data);
             });
 
-            if ($this->isTwoPageCheckout && $this->checkoutStep !== self::STEP_PAY) {
+            if ($this->isInitialCheckoutStep()) {
                 return $this->redirect(Livewire::originalUrl().'?step='.self::STEP_PAY);
             }
 
@@ -277,7 +277,7 @@ final class Checkout extends Component
 
             return $this->redirect($order->getUrl($this->successPage));
         } catch (Exception $ex) {
-            $errorFieldName = $this->checkoutStep !== self::STEP_PAY ? 'field.comments' : 'fields.payment';
+            $errorFieldName = $this->isInitialCheckoutStep() ? 'fields.comment' : 'fields.payment';
 
             throw ValidationException::withMessages([$errorFieldName => $ex->getMessage()]);
         }
@@ -365,7 +365,7 @@ final class Checkout extends Component
         $messages = $this->checkoutForm->validationMessages();
         $attributes = $this->checkoutForm->validationAttributes();
 
-        if (!$this->agreeTermsSlug || ($this->isTwoPageCheckout && $this->checkoutStep !== self::STEP_PAY)) {
+        if (!$this->agreeTermsSlug || $this->isInitialCheckoutStep()) {
             $rules = array_except($rules, ['fields.termsAgreed']);
         }
 
@@ -421,8 +421,14 @@ final class Checkout extends Component
             $this->fields['city'] = $userPosition->getSubLocality();
             $this->fields['state'] = $userPosition->getLocality();
             $this->fields['postcode'] = $userPosition->getPostalCode();
-            $this->fields['country_id'] = array_get(countries(), $userPosition->getCountryCode(), LocationModel::getDefaultKey());
+            $this->fields['country_id'] = array_get(countries('country_id', 'iso_code_2'),
+                $userPosition->getCountryCode(), LocationModel::getDefaultKey());
         }
+    }
+
+    protected function isInitialCheckoutStep(): bool
+    {
+        return $this->isTwoPageCheckout && $this->checkoutStep !== self::STEP_PAY;
     }
 
     protected function formExtendFieldsBefore(CheckoutForm $checkoutForm): void
