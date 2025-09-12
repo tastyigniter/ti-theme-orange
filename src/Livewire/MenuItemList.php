@@ -143,7 +143,7 @@ final class MenuItemList extends Component
                     'condition' => 'checked',
                 ],
             ],
-            'allergenThumbWidth' => [
+            'ingredientThumbWidth' => [
                 'label' => 'Allergen image thumb width.',
                 'type' => 'number',
                 'span' => 'left',
@@ -154,7 +154,7 @@ final class MenuItemList extends Component
                     'condition' => 'checked',
                 ],
             ],
-            'allergenThumbHeight' => [
+            'ingredientThumbHeight' => [
                 'label' => 'Allergen image thumb height.',
                 'type' => 'number',
                 'span' => 'right',

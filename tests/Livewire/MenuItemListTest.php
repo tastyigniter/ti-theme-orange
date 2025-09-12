@@ -35,8 +35,8 @@ it('initialize component correctly', function(): void {
         ->and($component->menuThumbHeight)->toBe(80)
         ->and($component->categoryThumbWidth)->toBe(1240)
         ->and($component->categoryThumbHeight)->toBe(256)
-        ->and($component->allergenThumbWidth)->toBe(28)
-        ->and($component->allergenThumbHeight)->toBe(28)
+        ->and($component->ingredientThumbWidth)->toBe(28)
+        ->and($component->ingredientThumbHeight)->toBe(28)
         ->and($component->selectedCategorySlug)->toBe('')
         ->and($component->hideMenuSearch)->toBeFalse()
         ->and($component->menuSearchTerm)->toBe('')
@@ -65,8 +65,8 @@ it('defines properties correctly', function(): void {
         'menuThumbHeight',
         'categoryThumbWidth',
         'categoryThumbHeight',
-        'allergenThumbWidth',
-        'allergenThumbHeight',
+        'ingredientThumbWidth',
+        'ingredientThumbHeight',
         'hideMenuSearch',
     );
 });
