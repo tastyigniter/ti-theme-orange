@@ -293,26 +293,28 @@ final class Booking extends Component
     public function reducedTimeslots()
     {
         $timeslots = $this->timeslots->values();
-        $noOfSlots = $this->noOfSlots ?: $timeslots->count();
-
-        $selectedIndex = $timeslots->search(fn(Carbon $slot): bool => $slot->isSameAs('Y-m-d H:i', make_carbon($this->date.' '.$this->time)));
-
-        if (($from = ($selectedIndex ?: 0) - ((int)($noOfSlots / 2) - 1)) < 0) {
-            $from = 0;
-        }
-
         $selectedDate = make_carbon($this->date);
+        $selectedDateTime = make_carbon($this->date.' '.$this->time);
+        $numberOfSlots = $this->noOfSlots ?: $timeslots->count();
         $autoAllocateTable = (bool)Location::current()->getSettings('booking.auto_allocate_table', 1);
 
-        return $timeslots
-            ->slice($from, $noOfSlots)
-            ->map(fn($dateTime, $index) => (object)[
-                'dateTime' => $dateTime,
-                'fullyBooked' => $autoAllocateTable ? $this->manager->isFullyBookedOn(
-                    $selectedDate->copy()->setTimeFromTimeString($dateTime->format('H:i')), $this->guest,
-                ) : false,
-                'isSelected' => $selectedIndex === $index,
-            ]);
+        // Find the index of the currently selected time slot
+        $selectedIndex = $timeslots->search(fn(Carbon $slot): bool => $slot->isSameAs('Y-m-d H:i', $selectedDateTime));
+
+        // Calculate the starting index for the slice, centered around the selected slot
+        $startIndex = max(0, $selectedIndex - (int)($numberOfSlots / 2) - 1);
+
+        $reducedTimeslots = $timeslots->slice($startIndex, $numberOfSlots);
+
+        $timeslotsBookedStatus = $autoAllocateTable
+            ? $this->manager->isTimeslotsFullyBookedOn($reducedTimeslots, $selectedDate, $this->guest)
+            : [];
+
+        return $reducedTimeslots->map(fn($dateTime, $index) => (object)[
+            'dateTime' => $dateTime,
+            'fullyBooked' => in_array($dateTime->format('Y-m-d H:i'), $timeslotsBookedStatus),
+            'isSelected' => $selectedIndex === $index,
+        ]);
     }
 
     #[Computed]

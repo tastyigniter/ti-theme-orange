@@ -18,11 +18,11 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Livewire;
 
 beforeEach(function(): void {
-    $location = LocationModel::factory()->create();
+    $this->location = LocationModel::factory()->create();
     $orderTypeMock = $this->mock(AbstractOrderType::class);
-    $orderTypeMock->shouldReceive('getSchedule')->andReturn($location->newWorkingSchedule(LocationModel::DELIVERY, 5));
+    $orderTypeMock->shouldReceive('getSchedule')->andReturn($this->location->newWorkingSchedule(LocationModel::DELIVERY, 5));
     $orderTypeMock->shouldReceive('getCode')->andReturn(LocationModel::DELIVERY);
-    Location::shouldReceive('current')->andReturn($location);
+    Location::shouldReceive('current')->andReturn($this->location);
     Location::shouldReceive('getOrderType')->andReturn($orderTypeMock);
 });
 
@@ -114,7 +114,15 @@ it('updates date and reset timeslots', function(): void {
 
 it('returns reduced timeslots', function(): void {
     $component = Livewire::test(Booking::class);
+    expect($component->get('reducedTimeslots'))->toHaveLength($component->get('noOfSlots'));
 
+    $this->location->settings()->create([
+        'item' => 'booking',
+        'data' => ['auto_allocate_table' => 0],
+    ]);
+    $this->location->refresh();
+
+    $component = Livewire::test(Booking::class);
     expect($component->get('reducedTimeslots'))->toHaveLength($component->get('noOfSlots'));
 });
 
