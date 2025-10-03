@@ -125,7 +125,7 @@ final class AddressBook extends Component
 
         $customer->saveDefaultAddress($addressId);
 
-        $this->defaultAddressId = (int) $addressId;
+        $this->defaultAddressId = (int)$addressId;
     }
 
     public function onDelete(string $addressId): void
