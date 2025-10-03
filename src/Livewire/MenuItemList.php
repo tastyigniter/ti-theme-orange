@@ -38,9 +38,9 @@ final class MenuItemList extends Component
 
     public int $categoryThumbHeight = 256;
 
-    public int $allergenThumbWidth = 28;
+    public int $ingredientThumbWidth = 28;
 
-    public int $allergenThumbHeight = 28;
+    public int $ingredientThumbHeight = 28;
 
     public string $selectedCategorySlug = '';
 
@@ -143,7 +143,7 @@ final class MenuItemList extends Component
                     'condition' => 'checked',
                 ],
             ],
-            'allergenThumbWidth' => [
+            'ingredientThumbWidth' => [
                 'label' => 'Allergen image thumb width.',
                 'type' => 'number',
                 'span' => 'left',
@@ -154,7 +154,7 @@ final class MenuItemList extends Component
                     'condition' => 'checked',
                 ],
             ],
-            'allergenThumbHeight' => [
+            'ingredientThumbHeight' => [
                 'label' => 'Allergen image thumb height.',
                 'type' => 'number',
                 'span' => 'right',

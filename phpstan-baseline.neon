@@ -25,18 +25,6 @@ parameters:
 			path: src/Livewire/Checkout.php
 
 		-
-			message: '#^Call to an undefined method Igniter\\Flame\\Geolite\\Contracts\\AbstractProvider\:\:getPlaceCoordinates\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Livewire/FulfillmentModal.php
-
-		-
-			message: '#^Call to an undefined method Igniter\\Flame\\Geolite\\Contracts\\AbstractProvider\:\:placesAutocomplete\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Livewire/FulfillmentModal.php
-
-		-
 			message: '#^Property Igniter\\Orange\\Livewire\\LeaveReview\:\:\$customerReview \(Igniter\\Flame\\Database\\Model\|null\) does not accept Illuminate\\Database\\Eloquent\\Model\|null\.$#'
 			identifier: assign.propertyType
 			count: 1
@@ -55,18 +43,6 @@ parameters:
 			path: src/Livewire/LocalSearch.php
 
 		-
-			message: '#^Call to an undefined method Igniter\\Flame\\Geolite\\Contracts\\AbstractProvider\:\:getPlaceCoordinates\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Livewire/LocalSearch.php
-
-		-
-			message: '#^Call to an undefined method Igniter\\Flame\\Geolite\\Contracts\\AbstractProvider\:\:placesAutocomplete\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Livewire/LocalSearch.php
-
-		-
 			message: '#^Access to an undefined property Igniter\\Orange\\Livewire\\LocationList\:\:\$showAddressPicker\.$#'
 			identifier: property.notFound
 			count: 1
@@ -74,18 +50,6 @@ parameters:
 
 		-
 			message: '#^Call to an undefined method Igniter\\Flame\\Database\\Builder\<Igniter\\Local\\Models\\Location\>\:\:applyFilters\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Livewire/LocationList.php
-
-		-
-			message: '#^Call to an undefined method Igniter\\Flame\\Geolite\\Contracts\\AbstractProvider\:\:getPlaceCoordinates\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Livewire/LocationList.php
-
-		-
-			message: '#^Call to an undefined method Igniter\\Flame\\Geolite\\Contracts\\AbstractProvider\:\:placesAutocomplete\(\)\.$#'
 			identifier: method.notFound
 			count: 1
 			path: src/Livewire/LocationList.php
