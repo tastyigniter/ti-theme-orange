@@ -86,7 +86,6 @@ final class FulfillmentModal extends Component
         Assets::addJs('igniter-orange::/js/fulfillment.js', 'fulfillment-js');
 
         $this->parseTimeslot($this->location->scheduleTimeslot());
-        $this->updateCurrentOrderType();
 
         $this->orderType = $this->location->orderType();
         $this->isAsap = $this->location->orderTimeIsAsap();
@@ -98,6 +97,7 @@ final class FulfillmentModal extends Component
     public function boot(): void
     {
         $this->location = resolve('location');
+        $this->updateCurrentOrderType();
     }
 
     public function updating($name, string $value): void
@@ -175,7 +175,7 @@ final class FulfillmentModal extends Component
         });
     }
 
-    protected function updateCurrentOrderType(): void
+    protected function updateCurrentOrderType()
     {
         if (!$this->location->current()) {
             return;
@@ -193,6 +193,7 @@ final class FulfillmentModal extends Component
 
         if ($orderType) {
             $this->location->updateOrderType($orderType);
+            $this->redirect(Livewire::originalUrl());
         }
     }
 
