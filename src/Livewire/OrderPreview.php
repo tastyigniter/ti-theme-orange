@@ -126,7 +126,7 @@ final class OrderPreview extends Component
         return null;
     }
 
-    public function getStatusWidthForProgressBars()
+    public function getStatusWidthForProgressBars(): array
     {
         $result = [];
 

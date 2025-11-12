@@ -469,7 +469,7 @@ final class Checkout extends Component
             $this->formExtendFieldsBefore($this->checkoutForm);
         });
 
-        $this->checkoutForm->bindEvent('form.extendFields', function($fields): void {
+        $this->checkoutForm->bindEvent('form.extendFields', function(array $fields): void {
             $this->formExtendFields($this->checkoutForm, $fields);
         });
 

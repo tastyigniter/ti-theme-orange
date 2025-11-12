@@ -91,7 +91,7 @@ final class Login extends Component
                 'remember' => $this->form->remember,
             ])->handle();
 
-            if (strlen($this->redirect) > 0) {
+            if ($this->redirect !== '') {
                 $this->redirect(page_url($this->redirect));
             } else {
                 $this->intendedRedirect

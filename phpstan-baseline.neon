@@ -7,8 +7,20 @@ parameters:
 			path: src/Actions/ListMenuItems.php
 
 		-
+			message: '#^Access to an undefined property Igniter\\Cart\\Models\\Concerns\\LocationAction\|Igniter\\Local\\Models\\Location\:\:\$reviews_count\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Data/LocationData.php
+
+		-
 			message: '#^Method Igniter\\Orange\\Data\\LocationData\:\:orderType\(\) never returns null so it can be removed from the return type\.$#'
 			identifier: return.unusedType
+			count: 1
+			path: src/Data/LocationData.php
+
+		-
+			message: '#^Using nullsafe property access on non\-nullable type Igniter\\Cart\\Models\\Concerns\\LocationAction\|Igniter\\Local\\Models\\Location\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
 			count: 1
 			path: src/Data/LocationData.php
 
