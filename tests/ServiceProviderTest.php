@@ -37,7 +37,8 @@ it('redirects authorised user when page does not require authentication', functi
 
 it('configures Google Fonts correctly', function(): void {
     $fontUrl = 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap';
-    $themeModel = Theme::factory()->findOrCreateTestTheme([
+    $themeModel = Theme::factory()->create([
+        'code' => 'tests-theme',
         'version' => '1.0.0',
         'description' => 'Test theme',
         'data' => [
