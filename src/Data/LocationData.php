@@ -107,7 +107,7 @@ final class LocationData
 
     public function reviewsCount(): int
     {
-        return $this->model->reviews_count ?? 0;
+        return (int) $this->model->reviews_count ?? 0;
     }
 
     public function deliveryAreas(): Collection
