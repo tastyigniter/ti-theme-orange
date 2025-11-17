@@ -73,7 +73,15 @@ final class CategoryList extends Component
             return self::$categoriesCache;
         }
 
-        $query = Category::query()->with(['children', 'children.children'])->whereIsEnabled()->sorted();
+        $query = Category::query()
+            ->with([
+                'children',
+                'children.children',
+            ])
+            ->withCount([
+                'menus',
+            ])
+            ->whereIsEnabled()->sorted();
 
         if ($location = Location::current()) {
             $query->whereHasOrDoesntHaveLocation($location->getKey());

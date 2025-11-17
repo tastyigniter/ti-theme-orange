@@ -6,14 +6,14 @@ namespace Igniter\Orange\Actions;
 
 use Igniter\Cart\Models\Menu as MenuModel;
 use Igniter\Orange\Data\MenuItemData;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
 
 class ListMenuItems
 {
     protected $hideUnavailable = false;
 
-    protected Collection|LengthAwarePaginator $menuList;
+    protected Collection|Paginator $menuList;
 
     protected array $menuListCategories = [];
 
@@ -27,16 +27,21 @@ class ListMenuItems
     public function handle(array $filters, array $with = []): self
     {
         $with = array_merge([
-            'mealtimes', 'menu_options',
-            'categories', 'special', 'ingredients',
-            'menu_options.option', 'locations', 'stocks',
+            'mealtimes', 'media',
+            'categories', 'categories.media', 'special', 'ingredients',
         ], $with);
 
-        $menuList = MenuModel::query()->with($with)->listFrontEnd($filters);
+        $menuList = MenuModel::query()
+            ->withCount([
+                'menu_options',
+            ])
+            ->with($with)
+            ->listFrontEnd(array_except($filters, ['pageLimit']));
 
         if (!array_key_exists('pageLimit', $filters)) {
             $menuList = $this->processMenuItems($menuList->get());
         } else {
+            $menuList = $menuList->simplePaginate($filters['pageLimit'], page: $filters['page'] ?? 1);
             $menuList->setCollection($this->processMenuItems($menuList->getCollection()));
         }
 
@@ -53,7 +58,7 @@ class ListMenuItems
         return $this;
     }
 
-    public function getList(): Collection|LengthAwarePaginator
+    public function getList(): Collection|Paginator
     {
         return $this->menuList;
     }

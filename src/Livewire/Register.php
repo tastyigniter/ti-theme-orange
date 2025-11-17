@@ -82,9 +82,9 @@ final class Register extends Component
     public function mount(): void
     {
         $this->registrationAllowed = (bool)setting('allow_registration', true);
-        $this->requireRegistrationTerms = $this->agreeTermsSlug !== null && strlen($this->agreeTermsSlug) > 0;
+        $this->requireRegistrationTerms = $this->agreeTermsSlug !== null && $this->agreeTermsSlug !== '';
 
-        if (strlen($this->activationCode) > 0) {
+        if ($this->activationCode !== '') {
             $this->onActivate();
         }
     }

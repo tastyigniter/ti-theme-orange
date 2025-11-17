@@ -1,7 +1,7 @@
 @if ($paginator->hasPages())
-    <ul class="pagination">
+    <ul class="pagination d-flex justify-content-between">
         @if ($paginator->onFirstPage())
-            <li class="disabled"><span>@lang('pagination.previous')</span></li>
+            <li class="disabled"><a href="#"><span>@lang('pagination.previous')</span></a></li>
         @else
             <li>
                 <a

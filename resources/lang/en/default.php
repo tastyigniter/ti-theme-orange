@@ -151,6 +151,7 @@ return [
     'button_view_cart' => 'View Cart',
     'button_register' => 'Register',
     'button_show_more_options' => 'Show more',
+    'button_show_less_options' => 'Show less',
 
     'help_security' => 'Choose who can access this page',
 

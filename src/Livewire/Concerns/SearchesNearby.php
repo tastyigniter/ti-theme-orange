@@ -166,7 +166,7 @@ trait SearchesNearby
 
     public function updatedOrderType(): void
     {
-        if ($this->orderType === LocationModel::DELIVERY && $this->searchAutocompleteEnabled) {
+        if ($this->orderType && $this->orderType === LocationModel::DELIVERY && $this->searchAutocompleteEnabled) {
             $this->dispatch('updateDeliveryLocationMap',
                 lat: $this->searchPoint[0] ?? null,
                 lng: $this->searchPoint[1] ?? null,

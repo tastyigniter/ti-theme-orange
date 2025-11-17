@@ -55,7 +55,7 @@ class BannerData
             return [];
         }
 
-        return array_map(fn($path): string => ImageHelper::resize($path, [
+        return array_map(fn(string $path): string => ImageHelper::resize($path, [
             'width' => $this->imageWidth,
             'height' => $this->imageHeight,
         ]), array_filter((array)$this->model->image_code));

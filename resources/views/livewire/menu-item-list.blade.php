@@ -14,7 +14,7 @@
 
         @if($itemsPerPage > 0)
             <div class="pagination-bar text-right">
-                <div class="links">{{ $menuList->links() }}</div>
+                <div class="links">{{ $menuList->links('igniter-orange::pagination.simple_default') }}</div>
             </div>
         @endif
     </div>

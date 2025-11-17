@@ -30,7 +30,10 @@ trait WithReviews
         }
 
         return ReviewModel::query()
-            ->with(['customer', 'customer.address'])
+            ->with([
+                'customer' => fn($query) => $query->select('customer_id', 'address_id'),
+                'customer.address' => fn($query) => $query->select('address_id', 'customer_id', 'city'),
+            ])
             ->isApproved()
             ->listFrontEnd([
                 'page' => $page ?? $this->getPage(),

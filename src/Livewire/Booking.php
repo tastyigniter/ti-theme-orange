@@ -358,7 +358,7 @@ final class Booking extends Component
             }
         }
 
-        $this->startDate = collect($this->dates)->first()?->copy();
-        $this->endDate = collect($this->dates)->last()?->copy();
+        $this->startDate = $this->dates ? collect($this->dates)->first()?->copy() : $start;
+        $this->endDate = $this->dates ? collect($this->dates)->last()?->copy() : $end;
     }
 }
