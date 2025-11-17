@@ -67,7 +67,7 @@ parameters:
 			path: src/Livewire/LocationList.php
 
 		-
-			message: '#^Call to an undefined method Igniter\\Flame\\Database\\Builder\<Igniter\\Local\\Models\\Location\>\:\:applyFilters\(\)\.$#'
+			message: '#^Call to an undefined method Igniter\\Flame\\Database\\Builder\<Igniter\\Local\\Models\\Location\>\:\:listFrontEnd\(\)\.$#'
 			identifier: method.notFound
 			count: 1
 			path: src/Livewire/LocationList.php
@@ -75,6 +75,12 @@ parameters:
 		-
 			message: '#^Call to an undefined static method Igniter\\Local\\Models\\Location\:\:getOrderTypeOptions\(\)\.$#'
 			identifier: staticMethod.notFound
+			count: 1
+			path: src/Livewire/LocationList.php
+
+		-
+			message: '#^Relation ''country'' is not found in Igniter\\Local\\Models\\Location model\.$#'
+			identifier: larastan.relationExistence
 			count: 1
 			path: src/Livewire/LocationList.php
 

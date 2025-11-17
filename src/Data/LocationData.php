@@ -102,7 +102,7 @@ final class LocationData
 
     public function reviewsScore(): float
     {
-        return Review::getScoreForLocation($this->model->getKey());
+        return Review::calculateScoreForLocation($this->model);
     }
 
     public function reviewsCount(): int
