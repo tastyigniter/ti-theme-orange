@@ -4,6 +4,7 @@
         class="menu-option mb-3"
         data-control="item-option"
         data-option-type="{{ $menuOption->display_type }}"
+        wire:key="option-{{ $index }}"
     >
         <div class="option option-{{ $menuOption->display_type }}">
             <div class="option-details">
@@ -33,7 +34,7 @@
 
                         <div class="hidden-item-options" style="display: none;">
                             @include('igniter-orange::includes.cartbox.item-options-'.$menuOption->display_type, [
-                                'optionValues' => $optionValues->sortBy('priority')->slice($limitOptionsValues-1),
+                                'optionValues' => $optionValues->sortBy('priority')->slice($limitOptionsValues),
                             ])
                         </div>
                         <button
@@ -41,6 +42,12 @@
                             data-toggle="more-options"
                             class="btn btn-link"
                         >@lang('igniter.orange::default.button_show_more_options')</button>
+                        <button
+                            type="button"
+                            data-toggle="less-options"
+                            class="btn btn-link"
+                            style="display: none;"
+                        >@lang('igniter.orange::default.button_show_less_options')</button>
                     @else
                         @include('igniter-orange::includes.cartbox.item-options-'.$menuOption->display_type)
                     @endif
