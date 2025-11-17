@@ -226,13 +226,23 @@ final class LocationList extends Component
 
         $query = LocationModel::query()->withCount([
             'reviews' => fn($q) => $q->isApproved(),
-        ])->with(['media', 'delivery_areas', 'settings', 'working_hours', 'reviews' => fn($q) => $q->isApproved()]);
+        ])->with([
+            'media',
+            'delivery_areas',
+            'settings',
+            'working_hours',
+            'country',
+            'reviews' => fn($q) => $q->isApproved()->select('delivery', 'service', 'quality'),
+        ]);
 
         $filterByDeliveryAreas = $this->orderType === 'delivery';
 
         $this->filterQuery($query);
 
-        $results = $query->applyFilters($options)->paginate($this->itemPerPage, $this->getPage());
+        // Remove pagination options so listFrontEnd returns a query builder
+        unset($options['pageLimit']);
+
+        $results = $query->listFrontEnd($options)->paginate($this->itemPerPage, $this->getPage());
 
         $coordinates = Location::userPosition()->getCoordinates();
 

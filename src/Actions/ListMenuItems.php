@@ -27,12 +27,16 @@ class ListMenuItems
     public function handle(array $filters, array $with = []): self
     {
         $with = array_merge([
-            'mealtimes', 'menu_options',
-            'categories', 'special', 'ingredients',
-            'menu_options.option', 'locations', 'stocks',
+            'mealtimes', 'media',
+            'categories', 'categories.media', 'special', 'ingredients',
         ], $with);
 
-        $menuList = MenuModel::query()->with($with)->listFrontEnd($filters);
+        $menuList = MenuModel::query()
+            ->withCount([
+                'menu_options',
+            ])
+            ->with($with)
+            ->listFrontEnd(array_except($filters, ['pageLimit']));
 
         if (!array_key_exists('pageLimit', $filters)) {
             $menuList = $this->processMenuItems($menuList->get());
