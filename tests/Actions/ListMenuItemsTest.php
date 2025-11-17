@@ -8,7 +8,7 @@ use Igniter\Cart\Models\Category;
 use Igniter\Cart\Models\Menu;
 use Igniter\Orange\Actions\ListMenuItems;
 use Igniter\Orange\Data\MenuItemData;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
 
 it('returns paginated menu items as MenuItemData when pageLimit > 0', function(): void {
@@ -19,7 +19,7 @@ it('returns paginated menu items as MenuItemData when pageLimit > 0', function()
     $action = new ListMenuItems;
     $result = $action->handle(['pageLimit' => 20])->getList();
 
-    expect($result)->toBeInstanceOf(LengthAwarePaginator::class)
+    expect($result)->toBeInstanceOf(Paginator::class)
         ->and($result->first())->toBeInstanceOf(MenuItemData::class);
 });
 
@@ -35,7 +35,7 @@ it('returns grouped items when isGrouped is true and no category specified', fun
         'pageLimit' => 20,
     ])->getList();
 
-    expect($result)->toBeInstanceOf(LengthAwarePaginator::class)
+    expect($result)->toBeInstanceOf(Paginator::class)
         ->and($result->keys()->all())->toContain($category->getKey())
         ->and(array_first($result->get($category->getKey())))->toBeInstanceOf(MenuItemData::class)
         ->and($action->getCategoryList())->toHaveKey($category->getKey());
