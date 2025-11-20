@@ -92,12 +92,13 @@ final class FulfillmentModal extends Component
         $this->orderDate = $this->location->orderDateTime()->format('Y-m-d');
         $this->orderTime = $this->location->orderDateTime()->format('H:i');
         $this->hideDeliveryAddress = !$this->location->orderTypeIsDelivery();
+
+        $this->updateCurrentOrderType();
     }
 
     public function boot(): void
     {
         $this->location = resolve('location');
-        $this->updateCurrentOrderType();
     }
 
     public function updating($name, string $value): void
@@ -175,7 +176,7 @@ final class FulfillmentModal extends Component
         });
     }
 
-    protected function updateCurrentOrderType()
+    protected function updateCurrentOrderType(): void
     {
         if (!$this->location->current()) {
             return;
@@ -191,7 +192,7 @@ final class FulfillmentModal extends Component
             $orderType = optional($this->location->getOrderTypes()->first(fn(AbstractOrderType $orderType): bool => !$orderType->isDisabled()))->getCode();
         }
 
-        if ($orderType) {
+        if ($orderType !== $this->orderType) {
             $this->location->updateOrderType($orderType);
             $this->redirect(Livewire::originalUrl());
         }
