@@ -147,7 +147,7 @@ it('returns correct mealtime titles', function(): void {
     $mealtimeTitles = $menuItemData->mealtimeTitles();
 
     expect($mealtimeTitles)->toBeString();
-})->note('Assert mealtime title once changes from cart extension has been merged');
+});
 
 it('returns correct URL for menu item', function(): void {
     $location = LocationModel::factory()->create(['permalink_slug' => 'test-location']);

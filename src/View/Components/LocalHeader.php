@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Igniter\Orange\View\Components;
 
+use Igniter\Local\Classes\WorkingSchedule;
 use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\ReviewSettings;
 use Igniter\Main\Traits\ConfigurableComponent;
@@ -27,6 +28,7 @@ final class LocalHeader extends Component
         public int $reviewPerPage = 10,
         public string $reviewSortOrder = 'created_at desc',
         public string $reviewsPage = 'local.reviews',
+        public string $currentPage = 'local.menus',
     ) {
         $this->itemPerPage = $this->reviewPerPage;
         $this->sortOrder = $this->reviewSortOrder;
@@ -101,5 +103,12 @@ final class LocalHeader extends Component
     public function listReviews()
     {
         return $this->loadReviewList(1);
+    }
+
+    public function currentSchedule($locationInfo): WorkingSchedule
+    {
+        return $this->currentPage === 'local.menus'
+            ? $locationInfo->orderType()->getSchedule()
+            : $locationInfo->openingSchedule();
     }
 }

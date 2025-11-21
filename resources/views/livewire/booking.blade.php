@@ -9,7 +9,16 @@
     </div>
     <div class="card bg-white">
         <div class="card-body">
-            <div data-control="booking">
+            <div
+                data-control="booking"
+                data-min-date="{{ $startDate->format('Y-m-d') }}"
+                data-max-date="{{ $endDate->format('Y-m-d') }}"
+                data-days-of-week-disabled='@json($this->disabledDaysOfWeek)'
+                data-disable='@json($disabledDates)'
+                data-week-start="{{ $weekStartOn }}"
+                data-date-format="Y-m-d"
+                data-locale={{ $calendarLocale }}
+            >
                 @if ($pickerStep == $this::STEP_BOOKING)
                     @include('igniter-orange::includes.booking.info')
                     @include('igniter-orange::includes.booking.booking-form')

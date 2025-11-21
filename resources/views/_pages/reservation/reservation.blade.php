@@ -18,7 +18,7 @@ permalink: ':location/reservation'
                 </a>
             </div>
 
-            <x-igniter-orange::local-header />
+            <x-igniter-orange::local-header current-page="reservation.reservation" />
         </div>
     </div>
     <livewire:igniter-orange::booking/>
