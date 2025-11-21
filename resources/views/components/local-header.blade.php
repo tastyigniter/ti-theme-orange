@@ -12,15 +12,15 @@
         <div style="--bs-breadcrumb-divider: '·';">
             <div class="breadcrumb mb-2">
                 <div class="breadcrumb-item fw-bold">
-                    @if ($locationInfo->orderType()->getSchedule()->isOpen())
+                    @if ($currentSchedule($locationInfo)->isOpen())
                         @lang('igniter.local::default.text_is_opened')
-                    @elseif ($locationInfo->orderType()->getSchedule()->isOpening())
-                        {!! sprintf(lang('igniter.local::default.text_opening_time'), make_carbon($locationInfo->orderType()->getSchedule()->getOpenTime())->isoFormat(lang('igniter::system.moment.day_time_format_short'))) !!}
+                    @elseif ($currentSchedule($locationInfo)->isOpening())
+                        {!! sprintf(lang('igniter.local::default.text_opening_time'), make_carbon($currentSchedule($locationInfo)->getOpenTime())->isoFormat(lang('igniter::system.moment.day_time_format_short'))) !!}
                     @else
                         @lang('igniter.local::default.text_closed')
                     @endif
                 </div>
-                @if (!$locationInfo->orderType()->getSchedule()->isOpen() && $locationInfo->orderType()->getSchedule()->isOpening())
+                @if (!$currentSchedule($locationInfo)->isOpen() && $currentSchedule($locationInfo)->isOpening())
                     <div class="breadcrumb-item">
                         {!! $locationInfo->orderType()->getOpeningDescription(lang('igniter::system.moment.day_time_format_short')) !!}
                     </div>
