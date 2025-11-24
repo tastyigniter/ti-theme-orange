@@ -81,7 +81,7 @@ final class CategoryList extends Component
                 'children.children',
             ])
             ->withCount([
-                'menus' => function ($query) use ($location) {
+                'menus' => function($query) use ($location): void {
                     if ($location) {
                         $query->whereHasOrDoesntHaveLocation($location->getKey());
                     }
