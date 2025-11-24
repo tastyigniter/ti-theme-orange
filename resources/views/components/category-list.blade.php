@@ -7,7 +7,7 @@
                     href="#category-all-heading"
                 @else
                     href="{{ page_url($menusPage, ['category' => null]) }}"
-                wire:navigate
+                    wire:navigate
                 @endif
             >@lang('igniter.local::default.text_all_categories')</a>
         </li>
@@ -22,7 +22,7 @@
                         href="#category-{{ strtolower(str_slug($category->name)) }}-heading"
                     @else
                         href="{{ page_url($menusPage, ['category' => $category->permalink_slug]) }}"
-                    wire:navigate
+                        wire:navigate
                     @endif
                 >{{ $category->name }}</a>
             </li>

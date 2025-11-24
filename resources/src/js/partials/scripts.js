@@ -106,25 +106,6 @@ $(function () {
     }
 });
 
-// Remove #anchors from browser URL
-$(function () {
-    $('a[href*="#"]:not([href="#"])').click(function (event) {
-        if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
-            var target = $(this.hash);
-            target = target.length ? target : $('[name='+this.hash.slice(1)+']');
-            if (target.length) {
-                event.preventDefault();
-                var offset = $('.sticky-top').outerHeight() || 0;
-                $('html, body').animate({
-                    scrollTop: target.offset().top - offset
-                }, 0);
-            }
-
-            return false;
-        }
-    });
-});
-
 // Geolocate user position
 $(function () {
     $(document).on('click', '[data-control="user-position"]', (event) => {

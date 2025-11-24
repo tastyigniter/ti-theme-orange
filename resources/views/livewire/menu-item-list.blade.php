@@ -64,5 +64,88 @@
             });
         })
     });
+    $(function () {
+        let scrollSpyTimer = null;
+
+        $(document).on('activate.bs.scrollspy', function (e) {
+            // Reset the timer for "final" activation
+            clearTimeout(scrollSpyTimer);
+
+            scrollSpyTimer = setTimeout(function () {
+                const $nav = $('#navbar-categories');
+                const $active = $(e.relatedTarget);
+
+                if (!$active?.length) return;
+
+                const left = $active.position().left;
+                const right = left + $active.outerWidth();
+
+                if (left < 0 || right > $nav.width()) {
+                    $active[0].scrollIntoView({
+                        behavior: 'smooth',
+                        inline: 'center',
+                        block: 'nearest'
+                    });
+                }
+            }, 250); // Delay tuned: waits for scrolling & anchor snapping to settle
+        });
+
+        // Keep last active nav-link highlighted when no section is in view
+        let lastActive = null;
+        $(document)
+            .on('activate.bs.scrollspy', e => {
+                lastActive = $(e.relatedTarget);
+            })
+            .on('scroll', () => {
+                if (!$('#navbar-categories .nav-link.active').length && lastActive) {
+                    lastActive.addClass('active');
+                }
+            });
+
+        // Smooth scroll to anchor links
+        $('a[href*="#"]:not([href="#"])').click(function (event) {
+            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+                var $target = $(this.hash);
+                $target = $target.length ? $target : $('[name='+this.hash.slice(1)+']');
+                if ($target.length) {
+                    event.preventDefault()
+                    var offset = $('.sticky-top').outerHeight() || 0;
+                    $('html, body').animate({
+                        scrollTop: $target.offset().top-offset
+                    }, 500, function () {
+                        $('[data-bs-toggle="collapse"]:is(.collapsed)', $target).trigger('click');
+                        var spy = bootstrap.ScrollSpy.getInstance($target.closest('[data-bs-spy="scroll"]'));
+                        if (spy) spy.refresh();
+                    });
+                }
+
+                return false;
+            }
+        });
+    });
+
+    (function () {
+        const rm = "80px 0px -85%".split(" ");
+        const top = rm[0];
+        const bottom = rm[2];
+
+        const debug = document.createElement("div");
+        debug.style.position = "fixed";
+        debug.style.left = "0";
+        debug.style.right = "0";
+        debug.style.pointerEvents = "none";
+        debug.style.background = "rgba(255,0,0,0.1)"; // light red overlay
+        debug.style.zIndex = "999999";
+
+        // Calculate dynamic heights
+        const topPx = parseInt(top);
+        const bottomPx = window.innerHeight * (parseFloat(bottom) / 100);
+
+        debug.style.top = topPx+"px";
+        debug.style.height = (window.innerHeight-topPx+bottomPx)+"px";
+        document.body.appendChild(debug);
+
+        console.log("📌 ScrollSpy activation zone overlay added.");
+    })();
 </script>
 @endscript
