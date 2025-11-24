@@ -24,8 +24,8 @@ use Igniter\PayRegister\Models\PaymentProfile;
 use Igniter\PayRegister\Payments\Cod;
 use Igniter\System\Facades\Assets;
 use Igniter\User\Models\Customer;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Event;
+use Livewire\Features\SupportRedirects\Redirector;
 use Livewire\Livewire;
 use Override;
 
@@ -485,7 +485,7 @@ class TestPaymentReturnsRedirect extends BasePaymentGateway
     }
 
     #[Override]
-    public function processPaymentForm($data, $host, $order): RedirectResponse
+    public function processPaymentForm($data, $host, $order): Redirector
     {
         return redirect('http://example.com');
     }
