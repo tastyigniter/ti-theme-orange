@@ -1,1 +1,67 @@
-!function(e,i){"object"==typeof exports&&"undefined"!=typeof module?i(exports):"function"==typeof define&&define.amd?define(["exports"],i):i((e="undefined"!=typeof globalThis?globalThis:e||self).lv={})}(this,(function(e){"use strict";var i="undefined"!=typeof window&&void 0!==window.flatpickr?window.flatpickr:{l10ns:{}},n={firstDayOfWeek:1,weekdays:{shorthand:["Sv","Pr","Ot","Tr","Ce","Pk","Se"],longhand:["Svētdiena","Pirmdiena","Otrdiena","Trešdiena","Ceturtdiena","Piektdiena","Sestdiena"]},months:{shorthand:["Jan","Feb","Mar","Apr","Mai","Jūn","Jūl","Aug","Sep","Okt","Nov","Dec"],longhand:["Janvāris","Februāris","Marts","Aprīlis","Maijs","Jūnijs","Jūlijs","Augusts","Septembris","Oktobris","Novembris","Decembris"]},rangeSeparator:" līdz ",time_24hr:!0};i.l10ns.lv=n;var t=i.l10ns;e.Latvian=n,e.default=t,Object.defineProperty(e,"__esModule",{value:!0})}));
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+  typeof define === 'function' && define.amd ? define(['exports'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.lv = {}));
+}(this, (function (exports) { 'use strict';
+
+  var fp = typeof window !== "undefined" && window.flatpickr !== undefined
+      ? window.flatpickr
+      : {
+          l10ns: {},
+      };
+  var Latvian = {
+      firstDayOfWeek: 1,
+      weekdays: {
+          shorthand: ["Sv", "Pr", "Ot", "Tr", "Ce", "Pk", "Se"],
+          longhand: [
+              "Svētdiena",
+              "Pirmdiena",
+              "Otrdiena",
+              "Trešdiena",
+              "Ceturtdiena",
+              "Piektdiena",
+              "Sestdiena",
+          ],
+      },
+      months: {
+          shorthand: [
+              "Jan",
+              "Feb",
+              "Mar",
+              "Apr",
+              "Mai",
+              "Jūn",
+              "Jūl",
+              "Aug",
+              "Sep",
+              "Okt",
+              "Nov",
+              "Dec",
+          ],
+          longhand: [
+              "Janvāris",
+              "Februāris",
+              "Marts",
+              "Aprīlis",
+              "Maijs",
+              "Jūnijs",
+              "Jūlijs",
+              "Augusts",
+              "Septembris",
+              "Oktobris",
+              "Novembris",
+              "Decembris",
+          ],
+      },
+      rangeSeparator: " līdz ",
+      time_24hr: true,
+  };
+  fp.l10ns.lv = Latvian;
+  var lv = fp.l10ns;
+
+  exports.Latvian = Latvian;
+  exports.default = lv;
+
+  Object.defineProperty(exports, '__esModule', { value: true });
+
+})));

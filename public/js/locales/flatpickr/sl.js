@@ -1,1 +1,70 @@
-!function(e,n){"object"==typeof exports&&"undefined"!=typeof module?n(exports):"function"==typeof define&&define.amd?define(["exports"],n):n((e="undefined"!=typeof globalThis?globalThis:e||self).sl={})}(this,(function(e){"use strict";var n="undefined"!=typeof window&&void 0!==window.flatpickr?window.flatpickr:{l10ns:{}},o={weekdays:{shorthand:["Ned","Pon","Tor","Sre","Čet","Pet","Sob"],longhand:["Nedelja","Ponedeljek","Torek","Sreda","Četrtek","Petek","Sobota"]},months:{shorthand:["Jan","Feb","Mar","Apr","Maj","Jun","Jul","Avg","Sep","Okt","Nov","Dec"],longhand:["Januar","Februar","Marec","April","Maj","Junij","Julij","Avgust","September","Oktober","November","December"]},firstDayOfWeek:1,rangeSeparator:" do ",time_24hr:!0,ordinal:function(){return"."}};n.l10ns.sl=o;var t=n.l10ns;e.Slovenian=o,e.default=t,Object.defineProperty(e,"__esModule",{value:!0})}));
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+  typeof define === 'function' && define.amd ? define(['exports'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.sl = {}));
+}(this, (function (exports) { 'use strict';
+
+  var fp = typeof window !== "undefined" && window.flatpickr !== undefined
+      ? window.flatpickr
+      : {
+          l10ns: {},
+      };
+  var Slovenian = {
+      weekdays: {
+          shorthand: ["Ned", "Pon", "Tor", "Sre", "Čet", "Pet", "Sob"],
+          longhand: [
+              "Nedelja",
+              "Ponedeljek",
+              "Torek",
+              "Sreda",
+              "Četrtek",
+              "Petek",
+              "Sobota",
+          ],
+      },
+      months: {
+          shorthand: [
+              "Jan",
+              "Feb",
+              "Mar",
+              "Apr",
+              "Maj",
+              "Jun",
+              "Jul",
+              "Avg",
+              "Sep",
+              "Okt",
+              "Nov",
+              "Dec",
+          ],
+          longhand: [
+              "Januar",
+              "Februar",
+              "Marec",
+              "April",
+              "Maj",
+              "Junij",
+              "Julij",
+              "Avgust",
+              "September",
+              "Oktober",
+              "November",
+              "December",
+          ],
+      },
+      firstDayOfWeek: 1,
+      rangeSeparator: " do ",
+      time_24hr: true,
+      ordinal: function () {
+          return ".";
+      },
+  };
+  fp.l10ns.sl = Slovenian;
+  var sl = fp.l10ns;
+
+  exports.Slovenian = Slovenian;
+  exports.default = sl;
+
+  Object.defineProperty(exports, '__esModule', { value: true });
+
+})));
