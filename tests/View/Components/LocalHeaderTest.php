@@ -110,3 +110,30 @@ it('lists empty reviews when no current location', function(): void {
 
     expect((new LocalHeader)->listReviews())->toBeNull();
 });
+
+it('returns order schedule when current page is menus', function(): void {
+    $location = LocationModel::factory()->create();
+    Location::setModel($location);
+
+    $component = new LocalHeader;
+    $component->currentPage = 'local.menus';
+
+    $locationInfo = LocationData::current();
+    $schedule = $component->currentSchedule($locationInfo);
+
+    expect($schedule)->toBe($locationInfo->orderType()->getSchedule());
+});
+
+it('returns opening schedule when current page is not menus', function(): void {
+    $location = LocationModel::factory()->create();
+    Location::setModel($location);
+
+    $component = new LocalHeader;
+    $component->currentPage = 'local.info';
+
+    $locationInfo = LocationData::current();
+    $schedule = $component->currentSchedule($locationInfo);
+
+    expect($schedule)->toBe($locationInfo->openingSchedule());
+});
+

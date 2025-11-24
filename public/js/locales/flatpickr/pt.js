@@ -1,1 +1,66 @@
-!function(e,o){"object"==typeof exports&&"undefined"!=typeof module?o(exports):"function"==typeof define&&define.amd?define(["exports"],o):o((e="undefined"!=typeof globalThis?globalThis:e||self).pt={})}(this,(function(e){"use strict";var o="undefined"!=typeof window&&void 0!==window.flatpickr?window.flatpickr:{l10ns:{}},a={weekdays:{shorthand:["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"],longhand:["Domingo","Segunda-feira","Terça-feira","Quarta-feira","Quinta-feira","Sexta-feira","Sábado"]},months:{shorthand:["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"],longhand:["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"]},rangeSeparator:" até ",time_24hr:!0};o.l10ns.pt=a;var n=o.l10ns;e.Portuguese=a,e.default=n,Object.defineProperty(e,"__esModule",{value:!0})}));
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+  typeof define === 'function' && define.amd ? define(['exports'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.pt = {}));
+}(this, (function (exports) { 'use strict';
+
+  var fp = typeof window !== "undefined" && window.flatpickr !== undefined
+      ? window.flatpickr
+      : {
+          l10ns: {},
+      };
+  var Portuguese = {
+      weekdays: {
+          shorthand: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
+          longhand: [
+              "Domingo",
+              "Segunda-feira",
+              "Terça-feira",
+              "Quarta-feira",
+              "Quinta-feira",
+              "Sexta-feira",
+              "Sábado",
+          ],
+      },
+      months: {
+          shorthand: [
+              "Jan",
+              "Fev",
+              "Mar",
+              "Abr",
+              "Mai",
+              "Jun",
+              "Jul",
+              "Ago",
+              "Set",
+              "Out",
+              "Nov",
+              "Dez",
+          ],
+          longhand: [
+              "Janeiro",
+              "Fevereiro",
+              "Março",
+              "Abril",
+              "Maio",
+              "Junho",
+              "Julho",
+              "Agosto",
+              "Setembro",
+              "Outubro",
+              "Novembro",
+              "Dezembro",
+          ],
+      },
+      rangeSeparator: " até ",
+      time_24hr: true,
+  };
+  fp.l10ns.pt = Portuguese;
+  var pt = fp.l10ns;
+
+  exports.Portuguese = Portuguese;
+  exports.default = pt;
+
+  Object.defineProperty(exports, '__esModule', { value: true });
+
+})));

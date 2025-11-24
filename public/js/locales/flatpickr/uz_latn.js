@@ -1,1 +1,75 @@
-!function(a,e){"object"==typeof exports&&"undefined"!=typeof module?e(exports):"function"==typeof define&&define.amd?define(["exports"],e):e((a="undefined"!=typeof globalThis?globalThis:a||self).uz_latn={})}(this,(function(a){"use strict";var e="undefined"!=typeof window&&void 0!==window.flatpickr?window.flatpickr:{l10ns:{}},n={weekdays:{shorthand:["Ya","Du","Se","Cho","Pa","Ju","Sha"],longhand:["Yakshanba","Dushanba","Seshanba","Chorshanba","Payshanba","Juma","Shanba"]},months:{shorthand:["Yan","Fev","Mar","Apr","May","Iyun","Iyul","Avg","Sen","Okt","Noy","Dek"],longhand:["Yanvar","Fevral","Mart","Aprel","May","Iyun","Iyul","Avgust","Sentabr","Oktabr","Noyabr","Dekabr"]},firstDayOfWeek:1,ordinal:function(){return""},rangeSeparator:" — ",weekAbbreviation:"Hafta",scrollTitle:"Kattalashtirish uchun aylantiring",toggleTitle:"O‘tish uchun bosing",amPM:["AM","PM"],yearAriaLabel:"Yil",time_24hr:!0};e.l10ns.uz_latn=n;var t=e.l10ns;a.UzbekLatin=n,a.default=t,Object.defineProperty(a,"__esModule",{value:!0})}));
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+  typeof define === 'function' && define.amd ? define(['exports'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.uz_latn = {}));
+}(this, (function (exports) { 'use strict';
+
+  var fp = typeof window !== "undefined" && window.flatpickr !== undefined
+      ? window.flatpickr
+      : {
+          l10ns: {},
+      };
+  var UzbekLatin = {
+      weekdays: {
+          shorthand: ["Ya", "Du", "Se", "Cho", "Pa", "Ju", "Sha"],
+          longhand: [
+              "Yakshanba",
+              "Dushanba",
+              "Seshanba",
+              "Chorshanba",
+              "Payshanba",
+              "Juma",
+              "Shanba",
+          ],
+      },
+      months: {
+          shorthand: [
+              "Yan",
+              "Fev",
+              "Mar",
+              "Apr",
+              "May",
+              "Iyun",
+              "Iyul",
+              "Avg",
+              "Sen",
+              "Okt",
+              "Noy",
+              "Dek",
+          ],
+          longhand: [
+              "Yanvar",
+              "Fevral",
+              "Mart",
+              "Aprel",
+              "May",
+              "Iyun",
+              "Iyul",
+              "Avgust",
+              "Sentabr",
+              "Oktabr",
+              "Noyabr",
+              "Dekabr",
+          ],
+      },
+      firstDayOfWeek: 1,
+      ordinal: function () {
+          return "";
+      },
+      rangeSeparator: " — ",
+      weekAbbreviation: "Hafta",
+      scrollTitle: "Kattalashtirish uchun aylantiring",
+      toggleTitle: "O‘tish uchun bosing",
+      amPM: ["AM", "PM"],
+      yearAriaLabel: "Yil",
+      time_24hr: true,
+  };
+  fp.l10ns["uz_latn"] = UzbekLatin;
+  var uz_latn = fp.l10ns;
+
+  exports.UzbekLatin = UzbekLatin;
+  exports.default = uz_latn;
+
+  Object.defineProperty(exports, '__esModule', { value: true });
+
+})));

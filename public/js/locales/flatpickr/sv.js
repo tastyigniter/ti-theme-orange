@@ -1,1 +1,71 @@
-!function(e,n){"object"==typeof exports&&"undefined"!=typeof module?n(exports):"function"==typeof define&&define.amd?define(["exports"],n):n((e="undefined"!=typeof globalThis?globalThis:e||self).sv={})}(this,(function(e){"use strict";var n="undefined"!=typeof window&&void 0!==window.flatpickr?window.flatpickr:{l10ns:{}},a={firstDayOfWeek:1,weekAbbreviation:"v",weekdays:{shorthand:["sön","mån","tis","ons","tor","fre","lör"],longhand:["söndag","måndag","tisdag","onsdag","torsdag","fredag","lördag"]},months:{shorthand:["jan","feb","mar","apr","maj","jun","jul","aug","sep","okt","nov","dec"],longhand:["januari","februari","mars","april","maj","juni","juli","augusti","september","oktober","november","december"]},rangeSeparator:" till ",time_24hr:!0,ordinal:function(){return"."}};n.l10ns.sv=a;var o=n.l10ns;e.Swedish=a,e.default=o,Object.defineProperty(e,"__esModule",{value:!0})}));
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+  typeof define === 'function' && define.amd ? define(['exports'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.sv = {}));
+}(this, (function (exports) { 'use strict';
+
+  var fp = typeof window !== "undefined" && window.flatpickr !== undefined
+      ? window.flatpickr
+      : {
+          l10ns: {},
+      };
+  var Swedish = {
+      firstDayOfWeek: 1,
+      weekAbbreviation: "v",
+      weekdays: {
+          shorthand: ["sön", "mån", "tis", "ons", "tor", "fre", "lör"],
+          longhand: [
+              "söndag",
+              "måndag",
+              "tisdag",
+              "onsdag",
+              "torsdag",
+              "fredag",
+              "lördag",
+          ],
+      },
+      months: {
+          shorthand: [
+              "jan",
+              "feb",
+              "mar",
+              "apr",
+              "maj",
+              "jun",
+              "jul",
+              "aug",
+              "sep",
+              "okt",
+              "nov",
+              "dec",
+          ],
+          longhand: [
+              "januari",
+              "februari",
+              "mars",
+              "april",
+              "maj",
+              "juni",
+              "juli",
+              "augusti",
+              "september",
+              "oktober",
+              "november",
+              "december",
+          ],
+      },
+      rangeSeparator: " till ",
+      time_24hr: true,
+      ordinal: function () {
+          return ".";
+      },
+  };
+  fp.l10ns.sv = Swedish;
+  var sv = fp.l10ns;
+
+  exports.Swedish = Swedish;
+  exports.default = sv;
+
+  Object.defineProperty(exports, '__esModule', { value: true });
+
+})));

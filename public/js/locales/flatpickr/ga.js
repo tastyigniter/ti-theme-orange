@@ -1,1 +1,66 @@
-!function(e,a){"object"==typeof exports&&"undefined"!=typeof module?a(exports):"function"==typeof define&&define.amd?define(["exports"],a):a((e="undefined"!=typeof globalThis?globalThis:e||self).ga={})}(this,(function(e){"use strict";var a="undefined"!=typeof window&&void 0!==window.flatpickr?window.flatpickr:{l10ns:{}},i={firstDayOfWeek:1,weekdays:{shorthand:["Dom","Lua","Mái","Céa","Déa","Aoi","Sat"],longhand:["Dé Domhnaigh","Dé Luain","Dé Máirt","Dé Céadaoin","Déardaoin","Dé hAoine","Dé Sathairn"]},months:{shorthand:["Ean","Fea","Már","Aib","Bea","Mei","Iúi","Lún","MFo","DFo","Sam","Nol"],longhand:["Eanáir","Feabhra","Márta","Aibreán","Bealtaine","Meitheamh","Iúil","Lúnasa","Meán Fómhair","Deireadh Fómhair","Samhain","Nollaig"]},time_24hr:!0};a.l10ns.hr=i;var n=a.l10ns;e.Irish=i,e.default=n,Object.defineProperty(e,"__esModule",{value:!0})}));
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+  typeof define === 'function' && define.amd ? define(['exports'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.ga = {}));
+}(this, (function (exports) { 'use strict';
+
+  var fp = typeof window !== "undefined" && window.flatpickr !== undefined
+      ? window.flatpickr
+      : {
+          l10ns: {},
+      };
+  var Irish = {
+      firstDayOfWeek: 1,
+      weekdays: {
+          shorthand: ["Dom", "Lua", "Mái", "Céa", "Déa", "Aoi", "Sat"],
+          longhand: [
+              "Dé Domhnaigh",
+              "Dé Luain",
+              "Dé Máirt",
+              "Dé Céadaoin",
+              "Déardaoin",
+              "Dé hAoine",
+              "Dé Sathairn",
+          ],
+      },
+      months: {
+          shorthand: [
+              "Ean",
+              "Fea",
+              "Már",
+              "Aib",
+              "Bea",
+              "Mei",
+              "Iúi",
+              "Lún",
+              "MFo",
+              "DFo",
+              "Sam",
+              "Nol",
+          ],
+          longhand: [
+              "Eanáir",
+              "Feabhra",
+              "Márta",
+              "Aibreán",
+              "Bealtaine",
+              "Meitheamh",
+              "Iúil",
+              "Lúnasa",
+              "Meán Fómhair",
+              "Deireadh Fómhair",
+              "Samhain",
+              "Nollaig",
+          ],
+      },
+      time_24hr: true,
+  };
+  fp.l10ns.hr = Irish;
+  var ga = fp.l10ns;
+
+  exports.Irish = Irish;
+  exports.default = ga;
+
+  Object.defineProperty(exports, '__esModule', { value: true });
+
+})));

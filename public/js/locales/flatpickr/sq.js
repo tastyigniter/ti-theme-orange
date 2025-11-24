@@ -1,1 +1,72 @@
-!function(e,r){"object"==typeof exports&&"undefined"!=typeof module?r(exports):"function"==typeof define&&define.amd?define(["exports"],r):r((e="undefined"!=typeof globalThis?globalThis:e||self).sq={})}(this,(function(e){"use strict";var r="undefined"!=typeof window&&void 0!==window.flatpickr?window.flatpickr:{l10ns:{}},a={weekdays:{shorthand:["Di","Hë","Ma","Më","En","Pr","Sh"],longhand:["E Diel","E Hënë","E Martë","E Mërkurë","E Enjte","E Premte","E Shtunë"]},months:{shorthand:["Jan","Shk","Mar","Pri","Maj","Qer","Kor","Gus","Sht","Tet","Nën","Dhj"],longhand:["Janar","Shkurt","Mars","Prill","Maj","Qershor","Korrik","Gusht","Shtator","Tetor","Nëntor","Dhjetor"]},firstDayOfWeek:1,rangeSeparator:" deri ",weekAbbreviation:"Java",yearAriaLabel:"Viti",monthAriaLabel:"Muaji",hourAriaLabel:"Ora",minuteAriaLabel:"Minuta",time_24hr:!0};r.l10ns.sq=a;var n=r.l10ns;e.Albanian=a,e.default=n,Object.defineProperty(e,"__esModule",{value:!0})}));
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+  typeof define === 'function' && define.amd ? define(['exports'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.sq = {}));
+}(this, (function (exports) { 'use strict';
+
+  var fp = typeof window !== "undefined" && window.flatpickr !== undefined
+      ? window.flatpickr
+      : {
+          l10ns: {},
+      };
+  var Albanian = {
+      weekdays: {
+          shorthand: ["Di", "Hë", "Ma", "Më", "En", "Pr", "Sh"],
+          longhand: [
+              "E Diel",
+              "E Hënë",
+              "E Martë",
+              "E Mërkurë",
+              "E Enjte",
+              "E Premte",
+              "E Shtunë",
+          ],
+      },
+      months: {
+          shorthand: [
+              "Jan",
+              "Shk",
+              "Mar",
+              "Pri",
+              "Maj",
+              "Qer",
+              "Kor",
+              "Gus",
+              "Sht",
+              "Tet",
+              "Nën",
+              "Dhj",
+          ],
+          longhand: [
+              "Janar",
+              "Shkurt",
+              "Mars",
+              "Prill",
+              "Maj",
+              "Qershor",
+              "Korrik",
+              "Gusht",
+              "Shtator",
+              "Tetor",
+              "Nëntor",
+              "Dhjetor",
+          ],
+      },
+      firstDayOfWeek: 1,
+      rangeSeparator: " deri ",
+      weekAbbreviation: "Java",
+      yearAriaLabel: "Viti",
+      monthAriaLabel: "Muaji",
+      hourAriaLabel: "Ora",
+      minuteAriaLabel: "Minuta",
+      time_24hr: true,
+  };
+  fp.l10ns.sq = Albanian;
+  var sq = fp.l10ns;
+
+  exports.Albanian = Albanian;
+  exports.default = sq;
+
+  Object.defineProperty(exports, '__esModule', { value: true });
+
+})));
