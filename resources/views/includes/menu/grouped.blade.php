@@ -2,7 +2,8 @@
     class="menu-group"
     data-bs-spy="scroll"
     data-bs-target="#navbar-categories"
-    data-bs-root-margin="0px 0px -30%"
+    data-bs-root-margin="80px 0px -80%"
+    data-bs-threshold="[1]"
     data-bs-smooth-scroll="true"
 >
     @forelse ($groupedMenuItems as $categoryId => $menuList)
