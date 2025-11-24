@@ -123,29 +123,5 @@
             }
         });
     });
-
-    (function () {
-        const rm = "80px 0px -85%".split(" ");
-        const top = rm[0];
-        const bottom = rm[2];
-
-        const debug = document.createElement("div");
-        debug.style.position = "fixed";
-        debug.style.left = "0";
-        debug.style.right = "0";
-        debug.style.pointerEvents = "none";
-        debug.style.background = "rgba(255,0,0,0.1)"; // light red overlay
-        debug.style.zIndex = "999999";
-
-        // Calculate dynamic heights
-        const topPx = parseInt(top);
-        const bottomPx = window.innerHeight * (parseFloat(bottom) / 100);
-
-        debug.style.top = topPx+"px";
-        debug.style.height = (window.innerHeight-topPx+bottomPx)+"px";
-        document.body.appendChild(debug);
-
-        console.log("📌 ScrollSpy activation zone overlay added.");
-    })();
 </script>
 @endscript
