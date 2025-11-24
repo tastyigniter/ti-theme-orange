@@ -12,6 +12,7 @@ use Igniter\Orange\Livewire\Forms\AddressBookForm;
 use Igniter\System\Models\Country;
 use Igniter\User\Facades\Auth;
 use Igniter\User\Models\Address;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -63,7 +64,7 @@ final class AddressBook extends Component
         };
     }
 
-    public function render()
+    public function render(): View
     {
         if ($address = $this->getAddress($this->addressId)) {
             $this->form->fillFrom($address, Auth::customer()->address_id);

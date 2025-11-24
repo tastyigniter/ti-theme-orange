@@ -8,6 +8,7 @@ use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Reservation\Classes\BookingManager;
 use Igniter\Reservation\Models\Reservation;
 use Igniter\User\Facades\Auth;
+use Illuminate\Contracts\View\View;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
@@ -48,7 +49,7 @@ final class ReservationPreview extends Component
         ];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::livewire.reservation-preview', [
             'reservation' => $this->getReservation(),

@@ -6,6 +6,7 @@ namespace Igniter\Orange\View\Components;
 
 use Igniter\Pages\Classes\MenuManager;
 use Igniter\Pages\Models\Menu;
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Override;
 
@@ -21,7 +22,7 @@ final class Nav extends Component
     }
 
     #[Override]
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::includes.navs.'.$this->code, [
             'menuItems' => $this->menuItems(),

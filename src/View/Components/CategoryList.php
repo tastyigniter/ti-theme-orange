@@ -8,6 +8,7 @@ use Igniter\Cart\Models\Category;
 use Igniter\Local\Facades\Location;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 use Override;
@@ -59,7 +60,7 @@ final class CategoryList extends Component
     }
 
     #[Override]
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::components.category-list', [
             'categories' => $this->loadCategories(),

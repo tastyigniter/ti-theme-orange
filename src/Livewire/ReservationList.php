@@ -11,6 +11,7 @@ use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
 use Igniter\Reservation\Models\Reservation;
 use Igniter\User\Facades\Auth;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -65,7 +66,7 @@ final class ReservationList extends Component
         };
     }
 
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::livewire.reservation-list', [
             'allowReviews' => ReviewSettings::allowReviews(),

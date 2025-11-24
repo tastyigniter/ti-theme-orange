@@ -7,6 +7,7 @@ namespace Igniter\Orange\Livewire;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
 use Igniter\Socialite\Classes\ProviderManager;
+use Illuminate\Contracts\View\View;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -57,7 +58,7 @@ final class Socialite extends Component
         ];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::livewire.socialite');
     }

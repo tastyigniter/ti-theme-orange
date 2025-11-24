@@ -11,6 +11,7 @@ use Igniter\Main\Helpers\MainHelper;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
 use Igniter\User\Facades\Auth;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
@@ -96,7 +97,7 @@ final class OrderPreview extends Component
         ];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::livewire.order-preview', [
             'customer' => Auth::customer(),

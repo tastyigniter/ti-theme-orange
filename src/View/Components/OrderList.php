@@ -8,6 +8,7 @@ use Igniter\Cart\Models\Order;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
 use Igniter\User\Facades\Auth;
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Override;
 
@@ -72,7 +73,7 @@ final class OrderList extends Component
     }
 
     #[Override]
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::components.order-list', [
             'orders' => $this->loadOrders(),

@@ -12,6 +12,7 @@ use Igniter\Main\Traits\UsesPage;
 use Igniter\Orange\Data\LocationData;
 use Igniter\Orange\Livewire\Concerns\WithReviews;
 use Igniter\System\Facades\Assets;
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Override;
 
@@ -85,7 +86,7 @@ final class LocalHeader extends Component
     }
 
     #[Override]
-    public function render()
+    public function render(): View
     {
         Assets::addCss('igniter.local::/css/starrating.css', 'starrating-css');
         Assets::addJs('igniter.local::/js/starrating.js', 'starrating-js');

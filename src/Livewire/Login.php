@@ -10,6 +10,7 @@ use Igniter\Orange\Livewire\Forms\LoginForm;
 use Igniter\User\Actions\LoginCustomer;
 use Igniter\User\Facades\Auth;
 use Igniter\User\Models\Customer;
+use Illuminate\Contracts\View\View;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -58,7 +59,7 @@ final class Login extends Component
         ];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::livewire.login');
     }

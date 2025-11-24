@@ -6,6 +6,7 @@ namespace Igniter\Orange\Livewire;
 
 use Igniter\Frontend\Models\CaptchaSettings;
 use Igniter\Main\Traits\ConfigurableComponent;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 final class Captcha extends Component
@@ -31,7 +32,7 @@ final class Captcha extends Component
         $this->lang = CaptchaSettings::getLang();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::livewire.captcha');
     }

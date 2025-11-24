@@ -11,6 +11,7 @@ use Igniter\Local\Facades\Location;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
 use Igniter\System\Facades\Assets;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Redirect;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
@@ -62,7 +63,7 @@ final class CartBox extends Component
         ];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::livewire.cart-box', [
             'previewMode' => false,
