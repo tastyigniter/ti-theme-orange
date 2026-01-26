@@ -7,6 +7,7 @@ namespace Igniter\Orange\Livewire;
 use Exception;
 use Igniter\Frontend\Models\Subscriber;
 use Igniter\Main\Traits\ConfigurableComponent;
+use Illuminate\Contracts\View\View;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -43,7 +44,7 @@ final class NewsletterSubscribeForm extends Component
         ];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::livewire.newsletter-subscribe-form');
     }

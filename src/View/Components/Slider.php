@@ -6,6 +6,7 @@ namespace Igniter\Orange\View\Components;
 
 use Igniter\Frontend\Models\Slider as SliderModel;
 use Igniter\Main\Traits\ConfigurableComponent;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 use Override;
@@ -88,7 +89,7 @@ final class Slider extends Component
     }
 
     #[Override]
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::components.slider', [
             'slides' => $this->slides(),

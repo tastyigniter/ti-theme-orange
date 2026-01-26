@@ -16,6 +16,7 @@ use Igniter\Reservation\Classes\BookingManager;
 use Igniter\Reservation\Models\Concerns\LocationAction;
 use Igniter\System\Facades\Assets;
 use Igniter\User\Facades\Auth;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
@@ -146,7 +147,7 @@ final class Booking extends Component
         ];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::livewire.booking', [
             'customer' => Auth::customer(),

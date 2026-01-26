@@ -10,6 +10,7 @@ use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Livewire\Forms\SettingsForm;
 use Igniter\User\Actions\LogoutCustomer;
 use Igniter\User\Facades\Auth;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 final class AccountSettings extends Component
@@ -40,7 +41,7 @@ final class AccountSettings extends Component
         ];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::livewire.account-settings');
     }

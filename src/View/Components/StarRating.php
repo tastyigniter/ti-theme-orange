@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Igniter\Orange\View\Components;
 
 use Igniter\Local\Models\Review as ReviewModel;
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Override;
 
@@ -22,7 +23,7 @@ final class StarRating extends Component
     }
 
     #[Override]
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::components.star-rating', [
             'hints' => $this->getHints(),

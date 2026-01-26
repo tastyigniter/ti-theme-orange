@@ -7,6 +7,7 @@ namespace Igniter\Orange\Livewire;
 use Igniter\Frontend\Actions\SendContactMail;
 use Igniter\Local\Models\Location;
 use Igniter\Main\Traits\ConfigurableComponent;
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -46,7 +47,7 @@ final class Contact extends Component
         ];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::livewire.contact', [
             'locationDefault' => Location::getDefault(),

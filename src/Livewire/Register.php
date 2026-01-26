@@ -9,6 +9,7 @@ use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
 use Igniter\Orange\Livewire\Forms\RegisterForm;
 use Igniter\User\Actions\RegisterCustomer;
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 
@@ -74,7 +75,7 @@ final class Register extends Component
         ];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::livewire.register');
     }

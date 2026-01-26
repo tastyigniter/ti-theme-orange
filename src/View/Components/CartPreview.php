@@ -6,6 +6,7 @@ namespace Igniter\Orange\View\Components;
 
 use Igniter\Cart\Classes\CartManager;
 use Igniter\Main\Traits\ConfigurableComponent;
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Override;
 
@@ -23,7 +24,7 @@ final class CartPreview extends Component
     }
 
     #[Override]
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::components.cart-preview', [
             'previewMode' => true,

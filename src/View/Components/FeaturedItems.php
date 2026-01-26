@@ -7,6 +7,7 @@ namespace Igniter\Orange\View\Components;
 use Igniter\Cart\Models\Menu;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Data\MenuItemData;
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Override;
 
@@ -93,7 +94,7 @@ final class FeaturedItems extends Component
     }
 
     #[Override]
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::components.featured-items', [
             'featuredItems' => $this->loadItems(),

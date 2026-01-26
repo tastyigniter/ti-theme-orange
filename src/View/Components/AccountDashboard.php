@@ -7,6 +7,7 @@ namespace Igniter\Orange\View\Components;
 use Igniter\Cart\Facades\Cart;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\User\Facades\Auth;
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Override;
 
@@ -51,7 +52,7 @@ final class AccountDashboard extends Component
     }
 
     #[Override]
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::components.account-dashboard');
     }

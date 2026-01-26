@@ -12,6 +12,7 @@ use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Reservation\Classes\BookingManager;
 use Igniter\System\Facades\Assets;
 use Igniter\User\Facades\Auth;
+use Illuminate\Contracts\View\View;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 use Throwable;
@@ -63,7 +64,7 @@ final class LeaveReview extends Component
         ];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::livewire.leave-review', [
             'allowReviews' => ReviewSettings::allowReviews(),

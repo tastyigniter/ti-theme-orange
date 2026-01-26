@@ -14,6 +14,7 @@ use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Main\Traits\UsesPage;
 use Igniter\System\Facades\Assets;
 use Igniter\User\Facades\Auth;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Computed;
@@ -89,7 +90,7 @@ trait SearchesNearby
     }
 
     #[Computed]
-    public function savedAddresses()
+    public function savedAddresses(): Collection
     {
         return collect(Auth::customer()->addresses ?? []);
     }

@@ -6,6 +6,7 @@ namespace Igniter\Orange\View\Components;
 
 use Igniter\Local\Facades\Location;
 use Igniter\Main\Traits\ConfigurableComponent;
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Override;
 
@@ -37,7 +38,7 @@ final class Fulfillment extends Component
     }
 
     #[Override]
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::components.fulfillment', [
             'isAsap' => Location::orderTimeIsAsap(),

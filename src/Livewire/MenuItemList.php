@@ -11,6 +11,7 @@ use Igniter\Local\Facades\Location;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Actions\ListMenuItems;
 use Igniter\System\Facades\Assets;
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -186,7 +187,7 @@ final class MenuItemList extends Component
         };
     }
 
-    public function render()
+    public function render(): View
     {
         $menuListAction = $this->loadList();
 

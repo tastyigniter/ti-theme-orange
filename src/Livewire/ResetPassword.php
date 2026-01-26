@@ -7,6 +7,7 @@ namespace Igniter\Orange\Livewire;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
 use Igniter\User\Models\Customer;
+use Illuminate\Contracts\View\View;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
@@ -58,7 +59,7 @@ final class ResetPassword extends Component
         ];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::livewire.reset-password');
     }

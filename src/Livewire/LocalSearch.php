@@ -6,6 +6,7 @@ namespace Igniter\Orange\Livewire;
 
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Livewire\Concerns\SearchesNearby;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 final class LocalSearch extends Component
@@ -34,7 +35,7 @@ final class LocalSearch extends Component
         ], $this->definePropertiesSearchNearby());
     }
 
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::livewire.local-search');
     }

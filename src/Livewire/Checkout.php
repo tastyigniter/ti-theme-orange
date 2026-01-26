@@ -19,6 +19,7 @@ use Igniter\Main\Traits\UsesPage;
 use Igniter\Orange\Actions\EnsureUniqueProcess;
 use Igniter\System\Facades\Assets;
 use Igniter\User\Facades\Auth;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
@@ -151,7 +152,7 @@ final class Checkout extends Component
         ];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::livewire.checkout', [
             'customer' => Auth::customer(),

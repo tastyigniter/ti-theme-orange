@@ -15,6 +15,7 @@ use Igniter\Main\Traits\UsesPage;
 use Igniter\Orange\Data\LocationData;
 use Igniter\Orange\Livewire\Concerns\SearchesNearby;
 use Igniter\User\Facades\AdminAuth;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
 use Livewire\Attributes\Computed;
@@ -121,7 +122,7 @@ final class LocationList extends Component
         };
     }
 
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::livewire.location-list', [
             'allowReviews' => ReviewSettings::allowReviews(),

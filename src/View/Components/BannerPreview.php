@@ -7,6 +7,7 @@ namespace Igniter\Orange\View\Components;
 use Igniter\Frontend\Models\Banner;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Data\BannerData;
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Override;
 
@@ -60,7 +61,7 @@ final class BannerPreview extends Component
     }
 
     #[Override]
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::components.banner-preview', [
             'bannerData' => $this->loadBanner(),

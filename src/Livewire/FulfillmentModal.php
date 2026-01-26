@@ -10,6 +10,7 @@ use Igniter\Local\Models\Location;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Livewire\Concerns\SearchesNearby;
 use Igniter\System\Facades\Assets;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Validation\ValidationException;
@@ -74,7 +75,7 @@ final class FulfillmentModal extends Component
         ], $this->definePropertiesSearchNearby());
     }
 
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::livewire.fulfillment-modal', [
             'orderTypes' => $this->location->getActiveOrderTypes(),

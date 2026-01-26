@@ -11,6 +11,7 @@ use Igniter\Local\Facades\Location;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Contracts\ModalComponent;
 use Igniter\Orange\Data\MenuItemData;
+use Illuminate\Contracts\View\View;
 use Illuminate\Validation\ValidationException;
 
 final class CartItemModal extends ModalComponent
@@ -97,7 +98,7 @@ final class CartItemModal extends ModalComponent
         ];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('igniter-orange::livewire.cart-item-modal', [
             'cartItem' => $this->getCartItem(),
