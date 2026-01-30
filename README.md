@@ -28,10 +28,6 @@ TastyIgniter Orange Theme is built with customization in mind. It uses the power
 
 Documentation can be found on the [TastyIgniter documentation website](https://tastyigniter.com/docs/themes/orange).
 
-## Changelog
-
-Please see [CHANGELOG](https://github.com/tastyigniter/ti-theme-orange/blob/master/CHANGELOG.md) for more information on what has changed recently.
-
 ## Reporting issues
 
 If you encounter a bug in this extension, please report it using the [Issue Tracker](https://github.com/tastyigniter/TastyIgniter/issues) on GitHub.
