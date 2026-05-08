@@ -1,7 +1,9 @@
 <?php
 
+use Igniter\System\Models\Country;
+
 // add country & currency helper
-$defaultCountry = \Igniter\System\Models\Country::getDefault();
+$defaultCountry = Country::getDefault();
 $defaultCurrency = currency()->getDefault();
 $jsVars = [];
 if ($defaultCountry) {
