@@ -28,13 +28,9 @@ TastyIgniter Orange Theme is built with customization in mind. It uses the power
 
 Documentation can be found on the [TastyIgniter documentation website](https://tastyigniter.com/docs/themes/orange).
 
-## Changelog
-
-Please see [CHANGELOG](https://github.com/tastyigniter/ti-theme-orange/blob/master/CHANGELOG.md) for more information on what has changed recently.
-
 ## Reporting issues
 
-If you encounter a bug in this extension, please report it using the [Issue Tracker](https://github.com/tastyigniter/ti-theme-orange/issues) on GitHub.
+If you encounter a bug in this extension, please report it using the [Issue Tracker](https://github.com/tastyigniter/TastyIgniter/issues) on GitHub.
 
 ## Contributing
 
@@ -46,4 +42,4 @@ For reporting security vulnerabilities, please see [our security policy](https:/
 
 ## License
 
-TastyIgniter Local extension is open-source software licensed under the [MIT license](https://github.com/tastyigniter/ti-theme-orange/blob/master/LICENSE.md).
+TastyIgniter Orange Theme is open-source software licensed under the [MIT license](https://github.com/tastyigniter/ti-theme-orange/blob/master/LICENSE.md).

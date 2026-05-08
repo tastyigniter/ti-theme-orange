@@ -5,7 +5,7 @@
         @else
             <li>
                 <a
-                    href="{{ $paginator->previousPageUrl() }}"
+                    href="{{ url($paginator->previousPageUrl()) }}"
                     rel="prev"
                 >@lang('pagination.previous')</a>
             </li>
@@ -14,7 +14,7 @@
         @if ($paginator->hasMorePages())
             <li>
                 <a
-                    href="{{ $paginator->nextPageUrl() }}"
+                    href="{{ url($paginator->nextPageUrl()) }}"
                     rel="next"
                 >@lang('pagination.next')</a>
             </li>

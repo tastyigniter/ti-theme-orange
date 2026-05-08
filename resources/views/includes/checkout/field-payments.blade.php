@@ -11,6 +11,7 @@
                     <div
                         @class(['list-group-item px-0', 'selected' => $paymentIsSelected])
                         data-checkout-payment
+                        wire:key="{{ $paymentMethod->code }}"
                     >
                         <div class="form-check">
                             <input

@@ -18,6 +18,9 @@
         var self = this
         $(document)
             .on('click', '[data-checkout-control]', $.proxy(this.onControlClick, this))
+            .on('change', '[data-checkout-control=payment]', function (event) {
+                self.choosePayment($(event.currentTarget))
+            })
             .on('ajaxBeforeSend', this.options.buttonSelector, function () {
                 $(this).prop('disabled', true)
             })
@@ -57,12 +60,12 @@
         var $paymentContainer = $el.closest('[data-checkout-payment]'),
             $paymentInput = $paymentContainer.find(this.paymentInputSelector)
 
-        if (!$paymentInput.length || $paymentInput.prop('checked'))
+        if (!$paymentInput.length || $paymentInput.prop('readonly'))
             return
 
         this.$form.off('submitCheckoutForm')
 
-        $(this.paymentInputSelector, document).prop('disabled', true)
+        $(this.paymentInputSelector, document).prop('readonly', true)
         Livewire.dispatch(this.options.choosePaymentEvent, {code: $paymentInput.data('paymentCode')});
     }
 
@@ -101,15 +104,10 @@
         var $el = $(event.currentTarget),
             control = $el.data('checkoutControl')
 
-        switch (control) {
-            case 'payment':
-            case 'payment-label':
-            case 'choose-payment':
-                this.choosePayment($el)
-                return false
-            case 'delete-payment-profile':
-                this.deletePaymentProfile($el, event)
-                return false
+        if (control === 'payment-label') {
+            this.choosePayment($el)
+        } else if (control === 'delete-payment-profile') {
+            this.deletePaymentProfile($el, event)
         }
     }
 

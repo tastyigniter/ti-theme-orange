@@ -299,6 +299,10 @@ final class Checkout extends Component
         $this->checkoutForm->getField('payment')->value = $code;
         $this->orderManager->applyCurrentPaymentFee($payment->code);
 
+        if ($this->order->payment !== $code) {
+            $this->order->updateQuietly(['payment' => $code]);
+        }
+
         $this->order = null;
     }
 

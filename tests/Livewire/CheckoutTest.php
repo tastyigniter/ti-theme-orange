@@ -431,6 +431,8 @@ it('onConfirm redirects to success page correctly', function(): void {
 it('updates selected payment correctly', function(): void {
     Event::fake(['igniter.orange.validateCheckout']);
     setupCheckout();
+    $orderManager = resolve(OrderManager::class);
+    $orderManager->setCurrentPaymentCode('stripe');
 
     Livewire::test(Checkout::class)
         ->set('fields.payment', '')
