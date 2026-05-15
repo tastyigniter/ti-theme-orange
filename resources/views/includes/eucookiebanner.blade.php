@@ -13,7 +13,7 @@
         <div class="container">
             <div class="d-flex align-items-center">
                 <p id="eu-cookie-message" class="mb-0">
-                    <span>{!! $theme->gdpr_cookie_message !!}</span>
+                    <span>{{ $theme->gdpr_cookie_message }}</span>
                     <a
                         href="{{ page_url($privacyPage ? $privacyPage->permalink_slug : '') }}"
                     >{{ $theme->gdpr_more_info_text }}</a>

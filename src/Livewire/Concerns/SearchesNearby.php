@@ -201,7 +201,7 @@ trait SearchesNearby
 
         try {
             $placeCoordinates = array_get($suggestion, 'provider') === 'nominatim'
-                ? new Coordinates($suggestion['data']['latitude'], $suggestion['data']['longitude'])
+                ? new Coordinates((float)$suggestion['data']['latitude'], (float)$suggestion['data']['longitude'])
                 : Geocoder::driver('google')->getPlaceCoordinates(GeoQuery::create($suggestion['placeId']));
 
             $this->searchPoint = [$placeCoordinates->getLatitude(), $placeCoordinates->getLongitude()];
