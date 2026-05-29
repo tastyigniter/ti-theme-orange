@@ -96,10 +96,12 @@ final class FulfillmentModal extends Component
         $this->orderTime = $this->location->orderDateTime()->format('H:i');
         $this->hideDeliveryAddress = !$this->location->orderTypeIsDelivery();
 
-        if (!$this->location->hasLaterSchedule()) {
-            $this->isAsap = true;
-        } elseif (!$this->location->hasAsapSchedule()) {
-            $this->isAsap = false;
+        if ($this->location->current()) {
+            if (!$this->location->hasLaterSchedule()) {
+                $this->isAsap = true;
+            } elseif (!$this->location->hasAsapSchedule()) {
+                $this->isAsap = false;
+            }
         }
 
         $this->updateCurrentOrderType();
