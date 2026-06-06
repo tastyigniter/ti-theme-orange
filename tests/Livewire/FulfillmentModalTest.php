@@ -63,7 +63,7 @@ it('mounts and prepare props', function(): void {
 it('mounts component fails when no current location', function(): void {
     Location::clearInternalCache();
     Location::shouldReceive('scheduleTimeslot')->andReturn(collect());
-    Location::shouldReceive('current')->andReturnNull()->once();
+    Location::shouldReceive('current')->andReturnNull()->twice();
     Location::shouldReceive('orderType')->andReturn(LocationModel::DELIVERY);
     Location::shouldReceive('orderTimeIsAsap')->andReturnTrue();
     Location::shouldReceive('orderDateTime')->andReturn(now());
@@ -109,7 +109,7 @@ it('confirms order fulfillment options', function(): void {
 it('hides the Later radio when the order type is ASAP only', function(): void {
     $this->location->settings()->create([
         'item' => LocationModel::DELIVERY,
-        'data' => ['is_enabled' => 1, 'order_time_restriction' => 1],
+        'data' => ['is_enabled' => 1, 'time_restriction' => 1],
     ]);
 
     Livewire::test(FulfillmentModal::class)
@@ -121,13 +121,25 @@ it('hides the Later radio when the order type is ASAP only', function(): void {
 it('hides the ASAP radio when the order type is Later only', function(): void {
     $this->location->settings()->create([
         'item' => LocationModel::DELIVERY,
-        'data' => ['is_enabled' => 1, 'order_time_restriction' => 2],
+        'data' => ['is_enabled' => 1, 'time_restriction' => 2],
     ]);
 
     Livewire::test(FulfillmentModal::class)
         ->assertViewHas('showAsapOption', false)
         ->assertViewHas('showLaterOption', true)
         ->assertSet('isAsap', false);
+});
+
+it('rejects later orders when the order type is ASAP only', function(): void {
+    $this->location->settings()->create([
+        'item' => LocationModel::DELIVERY,
+        'data' => ['is_enabled' => 1, 'time_restriction' => 1],
+    ]);
+
+    Livewire::test(FulfillmentModal::class)
+        ->set('isAsap', false)
+        ->call('onConfirm')
+        ->assertHasErrors(['isAsap']);
 });
 
 it('updates search query', function(): void {
