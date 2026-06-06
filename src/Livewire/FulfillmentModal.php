@@ -79,6 +79,8 @@ final class FulfillmentModal extends Component
     {
         return view('igniter-orange::livewire.fulfillment-modal', [
             'orderTypes' => $this->location->getActiveOrderTypes(),
+            'showAsapOption' => $this->location->hasAsapSchedule(),
+            'showLaterOption' => $this->location->hasLaterSchedule(),
         ]);
     }
 
@@ -93,6 +95,14 @@ final class FulfillmentModal extends Component
         $this->orderDate = $this->location->orderDateTime()->format('Y-m-d');
         $this->orderTime = $this->location->orderDateTime()->format('H:i');
         $this->hideDeliveryAddress = !$this->location->orderTypeIsDelivery();
+
+        if ($this->location->current()) {
+            if (!$this->location->hasLaterSchedule()) {
+                $this->isAsap = true;
+            } elseif (!$this->location->hasAsapSchedule()) {
+                $this->isAsap = false;
+            }
+        }
 
         $this->updateCurrentOrderType();
     }
@@ -215,7 +225,7 @@ final class FulfillmentModal extends Component
     protected function updateTimeslot(): void
     {
         $timeSlotDateTime = $this->isAsap ? now() : make_carbon($this->orderDate.' '.$this->orderTime);
-        throw_unless($this->location->checkOrderTime($timeSlotDateTime), ValidationException::withMessages([
+        throw_unless($this->location->checkOrderTime($timeSlotDateTime, null, $this->isAsap), ValidationException::withMessages([
             'isAsap' => sprintf(lang('igniter.local::default.alert_order_is_unavailable'), $this->location->getOrderType()->getLabel()),
         ]));
 

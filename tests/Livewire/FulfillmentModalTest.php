@@ -106,6 +106,30 @@ it('confirms order fulfillment options', function(): void {
         ->assertRedirect();
 });
 
+it('hides the Later radio when the order type is ASAP only', function(): void {
+    $this->location->settings()->create([
+        'item' => LocationModel::DELIVERY,
+        'data' => ['is_enabled' => 1, 'order_time_restriction' => 1],
+    ]);
+
+    Livewire::test(FulfillmentModal::class)
+        ->assertViewHas('showLaterOption', false)
+        ->assertViewHas('showAsapOption', true)
+        ->assertSet('isAsap', true);
+});
+
+it('hides the ASAP radio when the order type is Later only', function(): void {
+    $this->location->settings()->create([
+        'item' => LocationModel::DELIVERY,
+        'data' => ['is_enabled' => 1, 'order_time_restriction' => 2],
+    ]);
+
+    Livewire::test(FulfillmentModal::class)
+        ->assertViewHas('showAsapOption', false)
+        ->assertViewHas('showLaterOption', true)
+        ->assertSet('isAsap', false);
+});
+
 it('updates search query', function(): void {
     $area = LocationArea::factory()->create([
         'type' => 'polygon',

@@ -1,3 +1,4 @@
+@if ($showAsapOption ?? true)
 <div class="form-check py-2 border-bottom">
     <input
         wire:model="isAsap"
@@ -14,6 +15,8 @@
         for="isAsap"
     >@lang('igniter.local::default.text_asap')</label>
 </div>
+@endif
+@if ($showLaterOption ?? true)
 <div class="form-check py-2">
     <input
         wire:model="isAsap"
@@ -30,6 +33,7 @@
         for="isLater"
     >@lang('igniter.local::default.text_later')</label>
 </div>
+@endif
 <div x-cloak x-show="showTimePicker">
     <div class="row gx-3 mt-2 mx-4 mb-3">
         <div class="col">
