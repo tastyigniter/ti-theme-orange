@@ -77,8 +77,12 @@ final class FulfillmentModal extends Component
 
     public function render(): View
     {
+        $hasLocation = $this->location->current() !== null;
+
         return view('igniter-orange::livewire.fulfillment-modal', [
             'orderTypes' => $this->location->getActiveOrderTypes(),
+            'showAsapOption' => $hasLocation ? $this->location->hasAsapSchedule() : true,
+            'showLaterOption' => $hasLocation ? $this->location->hasLaterSchedule() : true,
         ]);
     }
 
@@ -214,11 +218,26 @@ final class FulfillmentModal extends Component
 
     protected function updateTimeslot(): void
     {
+        throw_unless($this->checkScheduleRestriction($this->isAsap), ValidationException::withMessages([
+            'isAsap' => sprintf(lang('igniter.local::default.alert_order_is_unavailable'), $this->location->getOrderType()->getLabel()),
+        ]));
+
         $timeSlotDateTime = $this->isAsap ? now() : make_carbon($this->orderDate.' '.$this->orderTime);
         throw_unless($this->location->checkOrderTime($timeSlotDateTime), ValidationException::withMessages([
             'isAsap' => sprintf(lang('igniter.local::default.alert_order_is_unavailable'), $this->location->getOrderType()->getLabel()),
         ]));
 
         $this->location->updateScheduleTimeSlot($timeSlotDateTime, $this->isAsap);
+    }
+
+    protected function checkScheduleRestriction(?bool $isAsap = null): bool
+    {
+        $restriction = $this->location->getOrderType()->getScheduleRestriction();
+
+        if ($isAsap === false && $restriction === AbstractOrderType::ASAP_ONLY) {
+            return false;
+        }
+
+        return !($isAsap && $restriction === AbstractOrderType::LATER_ONLY);
     }
 }
