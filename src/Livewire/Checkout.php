@@ -209,7 +209,7 @@ final class Checkout extends Component
     #[Computed]
     public function paymentGateways()
     {
-        return $this->getOrder()->order_total > 0
+        return number_format($this->getOrder()->order_total, 2) > 0
             ? $this->orderManager->getPaymentGateways()
             : collect();
     }
