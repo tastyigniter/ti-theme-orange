@@ -85,10 +85,10 @@ final class CartBox extends Component
         $this->cartManager = resolve(CartManager::class);
     }
 
-    public function updated($property, int|string|float $value): void
+    public function updated($property, int|string|float|null $value): void
     {
         if ($property === 'tipAmount') {
-            $this->onApplyTip($value, true);
+            $this->onApplyTip((float) $value, true);
         }
     }
 
