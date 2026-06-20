@@ -1,8 +1,9 @@
-window.OrangeCartItemOptions = (min, max, linkedValueIds = []) => {
+window.OrangeCartItemOptions = (min, max, linkedValueIds = [], menuOptionId = null) => {
     return {
         minSelection: min,
         maxSelection: max,
         linkedValueIds,
+        menuOptionId,
         isVisible() {
             if (!this.linkedValueIds.length) return true
             const menuOptions = Object.values(this.$wire.menuOptions ?? {})
@@ -23,6 +24,14 @@ window.OrangeCartItemOptions = (min, max, linkedValueIds = []) => {
                 })
         },
         init() {
+            if (this.linkedValueIds.length && this.menuOptionId !== null) {
+                this.$watch(() => this.isVisible(), (visible) => {
+                    if (!visible) {
+                        this.$wire.set(`menuOptions.${this.menuOptionId}.option_values`, [], false)
+                    }
+                })
+            }
+
             Livewire.on('cartItemTotalCalculated', () => {
                 this.toggleSelection()
             })
