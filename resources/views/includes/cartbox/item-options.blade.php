@@ -1,6 +1,7 @@
 @foreach ($menuItemData->getOptions() as $index => $menuOption)
     <div
-        x-data="OrangeCartItemOptions({{ $menuOption->min_selected }}, {{ $menuOption->max_selected }})"
+        x-data="OrangeCartItemOptions({{ $menuOption->min_selected }}, {{ $menuOption->max_selected }}, {{ json_encode($menuOption->linked_option_value_ids) }})"
+        x-show="isVisible()"
         class="menu-option mb-3"
         data-control="item-option"
         data-option-type="{{ $menuOption->display_type }}"

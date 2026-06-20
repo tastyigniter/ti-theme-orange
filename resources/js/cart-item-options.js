@@ -1,14 +1,23 @@
-window.OrangeCartItemOptions = (min, max) => {
+window.OrangeCartItemOptions = (min, max, linkedValueIds = []) => {
     return {
         minSelection: min,
         maxSelection: max,
+        linkedValueIds,
+        isVisible() {
+            if (!this.linkedValueIds.length) return true
+            const menuOptions = Object.values(this.$wire.menuOptions ?? {})
+            return menuOptions.some((opt) => {
+                const vals = [].concat(opt?.option_values ?? [])
+                return vals.some((v) => this.linkedValueIds.includes(+v))
+            })
+        },
         toggleSelection() {
             if (this.maxSelection <= 0)
-                return;
+                return
 
-            const selectedCount = this.$el.querySelectorAll('input[type="checkbox"][data-option-price]:checked:not([disabled])').length;
+            const selectedCount = this.$el.querySelectorAll('input[type="checkbox"][data-option-price]:checked:not([disabled])').length
 
-            [...this.$el.querySelectorAll('input[type="checkbox"][data-option-price]:not(:checked)')]
+            ;[...this.$el.querySelectorAll('input[type="checkbox"][data-option-price]:not(:checked)')]
                 .forEach(($el) => {
                     selectedCount === this.maxSelection ? $el.setAttribute('disabled', 'disabled') : $el.removeAttribute('disabled')
                 })
@@ -24,12 +33,12 @@ window.OrangeCartItemOptions = (min, max) => {
 
                 if ($el.data('toggle') == 'more-options') {
                     $el.fadeOut()
-                    $container.find('[data-toggle="less-options"]').fadeIn();
-                    $container.find('.hidden-item-options').fadeIn();
+                    $container.find('[data-toggle="less-options"]').fadeIn()
+                    $container.find('.hidden-item-options').fadeIn()
                 } else {
                     $el.fadeOut()
-                    $container.find('[data-toggle="more-options"]').fadeIn();
-                    $container.find('.hidden-item-options').fadeOut();
+                    $container.find('[data-toggle="more-options"]').fadeIn()
+                    $container.find('.hidden-item-options').fadeOut()
                 }
             })
         }
