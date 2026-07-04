@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Igniter\Orange\Tests;
 
 use Igniter\Main\Classes\ThemeManager;
+use Igniter\Main\Http\Middleware\CheckInitialSetup;
 use Igniter\Main\Models\Theme;
 use Igniter\Orange\Actions\EnsureUniqueProcess;
 use Igniter\Orange\ServiceProvider;
@@ -22,6 +23,7 @@ it('registers support for flash messages', function(): void {
 
 it('redirects unauthorised user when page requires authentication', function(): void {
     $this
+        ->withoutMiddleware(CheckInitialSetup::class)
         ->get(route('igniter.theme.account.account'))
         ->assertRedirect(route('igniter.theme.home'));
 });
@@ -30,6 +32,7 @@ it('redirects authorised user when page does not require authentication', functi
     $customer = Customer::factory()->create();
 
     $this
+        ->withoutMiddleware(CheckInitialSetup::class)
         ->actingAs($customer, 'igniter-customer')
         ->get(route('igniter.theme.account.register'))
         ->assertRedirect(route('igniter.theme.home'));
