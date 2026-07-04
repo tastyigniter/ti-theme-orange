@@ -192,9 +192,13 @@ final class FulfillmentModal extends Component
             return;
         }
 
+        if ($this->location->getActiveOrderTypes()->isEmpty()) {
+            return;
+        }
+
         $orderType = $this->defaultOrderType;
         if (!$this->location->hasOrderType($orderType)) {
-            $orderType = optional($this->location->getOrderTypes()->first(fn(AbstractOrderType $orderType): bool => !$orderType->isDisabled()))->getCode();
+            $orderType = optional($this->location->getActiveOrderTypes()->first())->getCode();
         }
 
         if ($orderType !== $this->orderType) {
