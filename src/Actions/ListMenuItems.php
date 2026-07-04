@@ -35,6 +35,10 @@ class ListMenuItems
             ->withCount([
                 'menu_options',
             ])
+            ->where(fn($q) => $q
+                ->whereHas('categories', fn($q) => $q->whereIsEnabled())
+                ->orWhereDoesntHave('categories')
+            )
             ->with($with)
             ->listFrontEnd(array_except($filters, ['pageLimit']));
 

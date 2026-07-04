@@ -41,6 +41,27 @@ it('returns grouped items when isGrouped is true and no category specified', fun
         ->and($action->getCategoryList())->toHaveKey($category->getKey());
 });
 
+it('excludes menu item attached only to a disabled category', function(): void {
+    $disabledCategory = Category::factory()->create(['status' => 0]);
+    $menuItem = Menu::factory()->create();
+    $menuItem->categories()->attach($disabledCategory);
+
+    $result = (new ListMenuItems)->handle(['pageLimit' => 20])->getList();
+
+    expect($result->getCollection()->contains(fn(MenuItemData $d) => $d->id === $menuItem->getKey()))->toBeFalse();
+});
+
+it('includes menu item attached to both an enabled and a disabled category', function(): void {
+    $enabledCategory = Category::factory()->create(['status' => 1]);
+    $disabledCategory = Category::factory()->create(['status' => 0]);
+    $menuItem = Menu::factory()->create();
+    $menuItem->categories()->attach([$enabledCategory->getKey(), $disabledCategory->getKey()]);
+
+    $result = (new ListMenuItems)->handle(['pageLimit' => 20])->getList();
+
+    expect($result->getCollection()->contains(fn(MenuItemData $d) => $d->id === $menuItem->getKey()))->toBeTrue();
+});
+
 it('groups items without categories under key 0', function(): void {
     Menu::factory()->create();
 
