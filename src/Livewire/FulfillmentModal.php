@@ -183,16 +183,12 @@ final class FulfillmentModal extends Component
 
     protected function updateCurrentOrderType(): void
     {
-        if (!$this->location->current()) {
+        if (!$this->location->current() || $this->location->getActiveOrderTypes()->isEmpty()) {
             return;
         }
 
         $sessionOrderType = $this->location->getSession('orderType');
         if ($sessionOrderType && $this->location->hasOrderType($sessionOrderType)) {
-            return;
-        }
-
-        if ($this->location->getActiveOrderTypes()->isEmpty()) {
             return;
         }
 
