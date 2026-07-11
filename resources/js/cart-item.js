@@ -15,17 +15,41 @@ window.OrangeCartItem = () => {
         },
         calculateTotal() {
             var menuPrice = parseFloat(this.price);
-            [...this.$refs['item-options']?.querySelectorAll('input[data-option-price]:checked:not([disabled]), select:not([disabled]) option[data-option-price]:checked')]
-                .forEach((value, index) => {
-                    menuPrice += parseFloat(value.dataset.optionPrice);
-                });
 
-            [...this.$refs['item-options']?.querySelectorAll('[data-option-quantity] input[data-option-price]:not([disabled])')]
-                .forEach((value, index) => {
-                    const quantity = parseInt(value._x_model?.get());
-                    if (quantity > 0) {
-                        menuPrice += (quantity * parseFloat(value.dataset.optionPrice));
-                    }
+            [...this.$refs['item-options']?.querySelectorAll('[data-control="item-option"]') ?? []]
+                .forEach((group) => {
+                    const groupCap = parseInt(group.dataset.freeQuantityCap) || 0;
+                    const entries = [];
+
+                    [...group.querySelectorAll('input[data-option-price]:checked:not([disabled]), select:not([disabled]) option[data-option-price]:checked')]
+                        .forEach((value) => {
+                            entries.push({
+                                id: +value.dataset.optionValueId,
+                                qty: 1,
+                                price: parseFloat(value.dataset.optionPrice),
+                                freeQuantity: parseInt(value.dataset.freeQuantity) || 0,
+                            });
+                        });
+
+                    [...group.querySelectorAll('[data-option-quantity] input[data-option-price]:not([disabled])')]
+                        .forEach((value) => {
+                            const quantity = parseInt(value._x_model?.get());
+                            if (quantity > 0) {
+                                entries.push({
+                                    id: +value.dataset.optionValueId,
+                                    qty: quantity,
+                                    price: parseFloat(value.dataset.optionPrice),
+                                    freeQuantity: parseInt(value.dataset.freeQuantity) || 0,
+                                });
+                            }
+                        });
+
+                    const freeQtyById = window.OrangeAllocateFreeQuantities(entries, groupCap);
+
+                    entries.forEach((entry) => {
+                        const chargeableQty = Math.max(0, entry.qty - (freeQtyById[entry.id] ?? 0));
+                        menuPrice += chargeableQty * entry.price;
+                    });
                 });
 
             this.total = app.currencyFormat(this.quantity * menuPrice);
