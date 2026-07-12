@@ -20,9 +20,10 @@
                 @if ($menuOption->min_selected > 0 || $menuOption->max_selected > 0)
                     <p>{!! sprintf(lang('igniter.cart::default.text_option_summary'), $menuOption->min_selected, $menuOption->max_selected) !!}</p>
                 @endif
-                @if ($menuOption->free_quantity > 0)
+                @php $freeQuantity = (int) ($menuOption->free_quantity ?? 0); @endphp
+                @if ($freeQuantity > 0)
                     <p class="text-muted small mb-0">
-                        {{ sprintf(lang('igniter.cart::default.text_free_quantity_included'), $menuOption->free_quantity) }}
+                        {{ sprintf(lang('igniter.cart::default.text_free_quantity_included'), $freeQuantity) }}
                         (<span x-text="freeQuantityUsed">0</span> @lang('igniter.cart::default.text_free_quantity_used'))
                     </p>
                 @endif
