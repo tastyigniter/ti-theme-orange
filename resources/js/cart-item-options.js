@@ -35,6 +35,7 @@ window.OrangeCartItemOptions = (min, max, linkedValueIds = [], menuOptionId = nu
         pricePrefix,
         freeQtyById: {},
         freeQuantityUsed: 0,
+        clearing: false,
         isVisible() {
             if (!this.linkedValueIds.length) return true
             const menuOptions = Object.values(this.$wire.menuOptions ?? {})
@@ -99,9 +100,23 @@ window.OrangeCartItemOptions = (min, max, linkedValueIds = [], menuOptionId = nu
         init() {
             if (this.linkedValueIds.length && this.menuOptionId !== null) {
                 this.$watch(() => this.isVisible(), (visible) => {
-                    if (!visible) {
-                        this.$wire.set(`menuOptions.${this.menuOptionId}.option_values`, [], false)
+                    if (visible || this.clearing) {
+                        return
                     }
+                    this.clearing = true
+
+                    this.$wire.set(`menuOptions.${this.menuOptionId}.option_values`, [], false)
+
+                    this.$el.querySelectorAll('input:not([type=hidden]):checked').forEach((input) => {
+                        input.checked = false
+                        input.dispatchEvent(new Event('change', { bubbles: true }))
+                    })
+                    this.$el.querySelectorAll('select').forEach((select) => {
+                        select.value = ''
+                        select.dispatchEvent(new Event('change', { bubbles: true }))
+                    })
+
+                    this.$nextTick(() => { this.clearing = false })
                 })
             }
 
