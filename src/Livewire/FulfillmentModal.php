@@ -238,6 +238,6 @@ final class FulfillmentModal extends Component
             return false;
         }
 
-        return !($isAsap && $restriction === AbstractOrderType::LATER_ONLY);
+        return !$isAsap || $restriction !== AbstractOrderType::LATER_ONLY;
     }
 }
