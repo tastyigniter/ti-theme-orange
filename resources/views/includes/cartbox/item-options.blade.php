@@ -1,10 +1,11 @@
 @foreach ($menuItemData->getOptions() as $index => $menuOption)
     <div
-        x-data="OrangeCartItemOptions({{ $menuOption->min_selected }}, {{ $menuOption->max_selected }}, {{ json_encode($menuOption->linked_option_value_ids) }}, {{ $menuOption->menu_option_id }})"
+        x-data="OrangeCartItemOptions({{ $menuOption->min_selected }}, {{ $menuOption->max_selected }}, {{ json_encode($menuOption->linked_option_value_ids) }}, {{ $menuOption->menu_option_id }}, {{ (int) ($menuOption->free_quantity ?? 0) }}, @js(lang('igniter.cart::default.text_free')), @js(lang('igniter::main.text_plus')))"
         x-show="isVisible()"
         class="menu-option mb-3"
         data-control="item-option"
         data-option-type="{{ $menuOption->display_type }}"
+        data-free-quantity-cap="{{ (int) ($menuOption->free_quantity ?? 0) }}"
         wire:key="option-{{ $index }}"
     >
         <div class="option option-{{ $menuOption->display_type }}">
@@ -18,6 +19,13 @@
                 </h5>
                 @if ($menuOption->min_selected > 0 || $menuOption->max_selected > 0)
                     <p>{!! sprintf(lang('igniter.cart::default.text_option_summary'), $menuOption->min_selected, $menuOption->max_selected) !!}</p>
+                @endif
+                @php $freeQuantity = (int) ($menuOption->free_quantity ?? 0); @endphp
+                @if ($freeQuantity > 0)
+                    <p class="text-muted small mb-0">
+                        {{ sprintf(lang('igniter.cart::default.text_free_quantity_included'), $freeQuantity) }}
+                        (<span x-text="freeQuantityUsed">0</span> @lang('igniter.cart::default.text_free_quantity_used'))
+                    </p>
                 @endif
             </div>
 
