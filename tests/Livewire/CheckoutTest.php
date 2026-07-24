@@ -23,7 +23,6 @@ use Igniter\PayRegister\Models\Payment;
 use Igniter\PayRegister\Models\PaymentProfile;
 use Igniter\PayRegister\Payments\Cod;
 use Igniter\System\Facades\Assets;
-use Igniter\System\Models\Settings;
 use Igniter\User\Models\Customer;
 use Illuminate\Support\Facades\Event;
 use Livewire\Features\SupportRedirects\Redirector;
