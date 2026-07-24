@@ -376,7 +376,7 @@ final class Checkout extends Component
 
         $this->withValidator(function($validator) use ($order): void {
             $validator->after(function($validator) use ($order): void {
-                if ($order->isDeliveryType()) {
+                if ($order->isDeliveryType() && Location::requiresUserPosition()) {
                     rescue(function(): void {
                         $this->orderManager->validateDeliveryAddress(array_only($this->fields, [
                             'address_1', 'city', 'state', 'postcode', 'country',

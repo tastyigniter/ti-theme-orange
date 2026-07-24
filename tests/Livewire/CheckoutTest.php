@@ -23,6 +23,7 @@ use Igniter\PayRegister\Models\Payment;
 use Igniter\PayRegister\Models\PaymentProfile;
 use Igniter\PayRegister\Payments\Cod;
 use Igniter\System\Facades\Assets;
+use Igniter\System\Models\Settings;
 use Igniter\User\Models\Customer;
 use Illuminate\Support\Facades\Event;
 use Livewire\Features\SupportRedirects\Redirector;
@@ -222,7 +223,45 @@ it('onValidate fails validation when selected payment is invalid', function(): v
 });
 
 it('onValidate fails validation when delivery address is invalid', function(): void {
+    setting()->set(['location_order' => '1']);
     setupCheckout();
+
+    Geocoder::shouldReceive('geocode')->andReturn(collect([
+        GeoliteLocation::createFromArray([
+            'latitude' => 51.50987615,
+            'longitude' => -0.1446716,
+            'subLocality' => 'Suburb',
+            'locality' => 'City',
+            'postalCode' => '12345',
+        ]),
+    ]));
+
+    Livewire::test(Checkout::class)
+        ->dispatch('checkout::validate');
+
+    expect(flash()->messages()->first())->message->toBe(lang('igniter.local::default.alert_no_search_query'));
+});
+
+it('onValidate adds a delivery address error when delivery address validation fails', function(): void {
+    setting()->set(['location_order' => '1']);
+    $result = setupCheckout();
+
+    $area = LocationArea::factory()->create([
+        'type' => 'polygon',
+        'conditions' => [
+            ['type' => 'above', 'amount' => 5, 'total' => 0, 'priority' => 1],
+        ],
+        'boundaries' => [
+            'vertices' => '[{"lat":51.525998393642936,"lng":-0.13086516710191232},{"lat":51.506999160557775,"lng":-0.13052184434800607},{"lat":51.50651835413632,"lng":-0.17409930227410442},{"lat":51.526225344669776,"lng":-0.17351994512688762}]',
+        ],
+    ]);
+    $result->location->delivery_areas()->save($area);
+    LocationFacade::updateNearbyArea($area);
+
+    $order = resolve(OrderManager::class)->getOrder();
+    $order->order_type = Location::DELIVERY;
+    $order->save();
+    LocationFacade::updateOrderType(Location::DELIVERY);
 
     Geocoder::shouldReceive('geocode')->andReturn(collect([
         GeoliteLocation::createFromArray([
