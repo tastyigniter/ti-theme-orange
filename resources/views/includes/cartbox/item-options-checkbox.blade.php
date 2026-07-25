@@ -30,6 +30,8 @@
             id="menuOptionCheck{{ $menuOptionValueId = $optionValue->menu_option_value_id }}"
             name="menuOptions[{{ $menuOption->menu_option_id }}][option_values][{{$optionValue->menu_option_value_id}}]"
             data-option-price="{{ $optionValue->price }}"
+            data-option-value-id="{{ $menuOptionValueId }}"
+            data-free-quantity="{{ (int) ($optionValue->free_quantity ?? 0) }}"
             @checked(($cartItem && $cartItem->hasOptionValue($menuOptionValueId)) || $optionValue->isDefault())
         >
 
@@ -39,7 +41,7 @@
         >
             {!! $optionValue->name !!}
             @if ($optionValue->price > 0 || !$hideZeroOptionPrices)
-                <span class="float-end fw-light">@lang('igniter::main.text_plus'){{ currency_format($optionValue->price) }}</span>
+                <span class="float-end fw-light" x-text="priceLabel({{ $menuOptionValueId }}, 1, {{ $optionValue->price }})"></span>
             @endif
         </label>
     </div>

@@ -29,6 +29,8 @@
                 id="menuOptionQuantity{{ $menuOptionValueId }}"
                 name="menu_options[{{ $index }}][option_values][{{ $optionIndex }}][qty]"
                 data-option-price="{{ $optionValue->price }}"
+                data-option-value-id="{{ $menuOptionValueId }}"
+                data-free-quantity="{{ (int) ($optionValue->free_quantity ?? 0) }}"
                 inputmode="numeric"
                 pattern="[0-9]*"
                 min="0"
@@ -45,7 +47,7 @@
         <label class="form-quantity-label ps-3 w-100">
             {{ $optionValue->name }}
             @if ($optionValue->price > 0 || !$hideZeroOptionPrices)
-                <span class="float-end fw-light">@lang('igniter::main.text_plus')<span x-html="app.currencyFormat(optionQuantity < 1 ? optionPrice : optionQuantity*optionPrice)"></span></span>
+                <span class="float-end fw-light" x-text="priceLabel({{ $menuOptionValueId }}, optionQuantity, optionPrice)"></span>
             @endif
         </label>
     </div>

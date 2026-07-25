@@ -9,6 +9,8 @@
             name="menuOptions[{{ $menuOption->menu_option_id }}][option_values][]"
             value="{{ $optionValue->menu_option_value_id }}"
             data-option-price="{{ $optionValue->price }}"
+            data-option-value-id="{{ $menuOptionValueId }}"
+            data-free-quantity="{{ (int) ($optionValue->free_quantity ?? 0) }}"
             @checked(($cartItem && $cartItem->hasOptionValue($menuOptionValueId)) || $optionValue->isDefault())
         >
 

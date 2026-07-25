@@ -11,6 +11,8 @@
             value="{{ $optionValue->menu_option_value_id }}"
             @selected(($cartItem && $cartItem->hasOptionValue($optionValue->menu_option_value_id)) || $optionValue->isDefault())
             data-option-price="{{ $optionValue->price }}"
+            data-option-value-id="{{ $optionValue->menu_option_value_id }}"
+            data-free-quantity="{{ (int) ($optionValue->free_quantity ?? 0) }}"
         >{{ $optionValue->name }}{!! ($optionValue->price > 0 || !$hideZeroOptionPrices ? '&nbsp;&nbsp;-&nbsp;&nbsp;'.lang('igniter::main.text_plus').currency_format($optionValue->price) : '') !!}</option>
     @endforeach
 </select>
