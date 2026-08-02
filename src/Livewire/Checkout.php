@@ -376,14 +376,21 @@ final class Checkout extends Component
 
         $this->withValidator(function($validator) use ($order): void {
             $validator->after(function($validator) use ($order): void {
-                if ($order->isDeliveryType() && Location::requiresUserPosition()) {
-                    rescue(function(): void {
-                        $this->orderManager->validateDeliveryAddress(array_only($this->fields, [
-                            'address_1', 'city', 'state', 'postcode', 'country',
-                        ]));
-                    }, function(Throwable $ex) use ($validator): void {
-                        $validator->errors()->add('delivery_address', $ex->getMessage());
-                    });
+                if ($order->isDeliveryType()) {
+                    if (Location::requiresUserPosition()) {
+                        rescue(function(): void {
+                            $this->orderManager->validateDeliveryAddress(array_only($this->fields, [
+                                'address_1', 'city', 'state', 'postcode', 'country',
+                            ]));
+                        }, function(Throwable $ex) use ($validator): void {
+                            $validator->errors()->add('delivery_address', $ex->getMessage());
+                        });
+                    } elseif (blank(array_get($this->fields, 'address_1'))) {
+                        // The delivery area restriction is disabled, so the address is
+                        // deliberately not geocoded or area-checked. It must still exist:
+                        // a delivery order without a street address cannot be delivered.
+                        $validator->errors()->add('delivery_address', lang('igniter.local::default.alert_missing_street_address'));
+                    }
                 }
 
                 if ($this->fields['payment'] && !$this->orderManager->getPayment($this->fields['payment'])) {
