@@ -299,10 +299,12 @@ final class Checkout extends Component
         $this->checkoutForm->getField('payment')->value = $code;
         $this->orderManager->applyCurrentPaymentFee($payment->code);
 
-        if ($this->order->payment !== $code || $this->order->order_total !== $this->cartManager->getCart()->total()) {
+        $cartTotal = $this->cartManager->getCart()->total();
+
+        if ($this->order->payment !== $code || $this->order->order_total !== $cartTotal) {
             $this->order->updateQuietly([
                 'payment' => $code,
-                'order_total' => $this->cartManager->getCart()->total(),
+                'order_total' => $cartTotal,
             ]);
         }
 
