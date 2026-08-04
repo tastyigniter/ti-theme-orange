@@ -19,9 +19,9 @@ final class AccountDashboard extends Component
 
     public ?int $defaultAddressId;
 
-    public string $formattedAddress = '';
+    public string $formattedAddress;
 
-    public string $customerName = '';
+    public string $customerName;
 
     public function __construct()
     {

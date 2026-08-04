@@ -285,7 +285,7 @@ trait SearchesNearby
 
         $userLocation = $this->handleGeocodeResponse($collection);
 
-        $this->searchQuery = $userLocation->format();
+        $this->searchQuery = $userLocation->getFormattedAddress();
 
         return $userLocation;
     }
