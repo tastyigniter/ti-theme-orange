@@ -192,12 +192,13 @@ it('onUserPositionUpdated updates user position in session correctly', function(
             'streetName' => 'Main St',
             'latitude' => 51.50987615,
             'longitude' => -0.1446716,
+            'formattedAddress' => '123 Main St',
         ]),
     ]));
 
     Livewire::test(LocalSearch::class)
         ->call('onUserPositionUpdated', [51.50987615, -0.1446716])
-        ->assertSet('searchQuery', '123 Main St  ');
+        ->assertSet('searchQuery', '123 Main St');
 });
 
 it('onUpdateSearchQuery errors when no search query or point', function(): void {

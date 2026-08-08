@@ -277,6 +277,39 @@ it('onValidate adds a delivery address error when delivery address validation fa
         ->assertHasErrors(['delivery_address' => [lang('igniter.local::default.alert_missing_street_address')]]);
 });
 
+it('onValidate requires a delivery address when the delivery area restriction is disabled', function(): void {
+    setting()->set(['location_order' => '0']);
+    setupCheckout();
+
+    // No usable position, so no address is prepared onto the order
+    LocationFacade::updateUserPosition(new GeoliteLocation('test'));
+
+    $order = resolve(OrderManager::class)->getOrder();
+    $order->order_type = Location::DELIVERY;
+    $order->save();
+    LocationFacade::updateOrderType(Location::DELIVERY);
+
+    Livewire::test(Checkout::class)
+        ->dispatch('checkout::validate')
+        ->assertHasErrors(['delivery_address' => [lang('igniter.local::default.alert_missing_street_address')]]);
+});
+
+it('onValidate does not geocode the delivery address when the delivery area restriction is disabled', function(): void {
+    setting()->set(['location_order' => '0']);
+    setupCheckout();
+
+    $order = resolve(OrderManager::class)->getOrder();
+    $order->order_type = Location::DELIVERY;
+    $order->save();
+    LocationFacade::updateOrderType(Location::DELIVERY);
+
+    Geocoder::shouldReceive('geocode')->never();
+
+    Livewire::test(Checkout::class)
+        ->dispatch('checkout::validate')
+        ->assertHasNoErrors('delivery_address');
+});
+
 it('onValidate dispatches an event on success', function(): void {
     Event::fake(['igniter.orange.validateCheckout']);
     setupCheckout();
