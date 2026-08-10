@@ -134,11 +134,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
                     $isAuthenticated = Auth::check();
                     if ($page->security == 'customer' && !$isAuthenticated) {
-                        return redirect()->guest(page_url('home'));
+                        return redirect()->guest(page_url($page->securityRedirectPage ?: 'account.login'));
                     }
 
                     if ($page->security == 'guest' && $isAuthenticated) {
-                        return redirect()->guest(page_url('home'));
+                        return redirect()->guest(page_url($page->securityRedirectPage ?: 'home'));
                     }
                 });
             });
@@ -154,7 +154,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
                     'settings[security]' => [
                         'tab' => 'igniter::system.themes.text_tab_meta',
                         'label' => 'igniter.orange::default.label_security',
-                        'type' => 'checkboxtoggle',
+                        'type' => 'radiotoggle',
                         'default' => 'all',
                         'span' => 'right',
                         'options' => [
@@ -163,6 +163,20 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
                             'guest' => 'igniter.orange::default.text_guest',
                         ],
                         'comment' => 'igniter.orange::default.help_security',
+                    ],
+                    'settings[securityRedirectPage]' => [
+                        'tab' => 'igniter::system.themes.text_tab_meta',
+                        'label' => 'igniter.orange::default.label_security_redirect_page',
+                        'type' => 'select',
+                        'default' => 'account.login',
+                        'span' => 'right',
+                        'options' => fn(): array => Page::getDropdownOptions(),
+                        'comment' => 'igniter.orange::default.help_security_redirect_page',
+                        'trigger' => [
+                            'action' => 'hide',
+                            'field' => 'settings[security]',
+                            'condition' => 'value[all]',
+                        ],
                     ],
                 ], 'primary');
             }

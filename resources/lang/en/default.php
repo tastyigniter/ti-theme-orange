@@ -141,6 +141,7 @@ return [
     'label_sort_by' => 'The default sorting order for the locations',
     'label_order_type' => 'The default order type for the locations',
     'label_security' => 'Who can access this page (all, customer or guest)',
+    'label_security_redirect_page' => 'Redirect page for customer or guests',
     'label_search_autocomplete_enabled' => 'Enable autocomplete for delivery location search input',
 
     'button_back' => 'Back',
@@ -154,6 +155,7 @@ return [
     'button_show_less_options' => 'Show less',
 
     'help_security' => 'Choose who can access this page',
+    'help_security_redirect_page' => 'Page to redirect guests or customers to when this page requires a logged-in customer or guest',
 
     'alert_preview_mode' => 'Action not allowed in preview mode',
     'alert_saved_address_not_found' => 'Selected address not found',
