@@ -6,7 +6,7 @@
             <span @class([
                 'fa-star',
                 'fa' => $value <= $score,
-                'far' => $value >= $score
+                'far' => $value > $score
              ])></span>
         @endfor
     @elseif(isset($hints))
