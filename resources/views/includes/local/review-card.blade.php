@@ -18,17 +18,17 @@
                 </div>
                 <div class="d-md-flex mt-2">
                     <div class="pe-md-4">
-                        <span class="text-muted"><b>Quality:</b></span>
+                        <span class="text-muted"><b>@lang('igniter.local::default.review.label_quality'):</b></span>
                         <x-igniter-orange::star-rating :score="$review->quality" name="quality"
                                                        class="text-warning"/>
                     </div>
                     <div class="px-md-4">
-                        <span class="text-muted"><b>Delivery:</b></span>
+                        <span class="text-muted"><b>@lang('igniter.local::default.review.label_delivery'):</b></span>
                         <x-igniter-orange::star-rating :score="$review->delivery" name="delivery"
                                                        class="text-warning"/>
                     </div>
                     <div class="px-md-4">
-                        <span class="text-muted"><b>Service:</b></span>
+                        <span class="text-muted"><b>@lang('igniter.local::default.review.label_service'):</b></span>
                         <x-igniter-orange::star-rating :score="$review->service" name="service"
                                                        class="text-warning"/>
                     </div>
