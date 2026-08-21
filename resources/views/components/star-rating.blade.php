@@ -2,11 +2,14 @@
     {{ $attributes }}
 >
     @if($readOnly && isset($max))
+        @php($displayScore = floor($score * 2) / 2)
         @for ($value = 1; $value<($max+1); $value++)
+            @php($isHalfStar = ($value - 0.5) === $displayScore)
             <span @class([
-                'fa-star',
-                'fa' => $value <= $score,
-                'far' => $value > $score
+                'fa-star' => !$isHalfStar,
+                'fa-star-half' => $isHalfStar,
+                'fa' => $value <= $displayScore || $isHalfStar,
+                'far' => $value > $displayScore && !$isHalfStar,
              ])></span>
         @endfor
     @elseif(isset($hints))
