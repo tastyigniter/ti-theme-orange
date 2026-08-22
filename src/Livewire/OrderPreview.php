@@ -173,8 +173,6 @@ final class OrderPreview extends Component
             $currentInstance = $cartManager->getCart()->currentInstance();
 
             try {
-                // Reorder must be validated against the location that owns the historical order,
-                // not whichever location happens to be active on the account page.
                 $location->clearInternalCache();
                 $location->setModel($order->location);
                 $cartManager->cartInstance($order->location_id);
@@ -184,8 +182,6 @@ final class OrderPreview extends Component
                     throw new ApplicationException($this->formatUnavailableReorderMessage($unavailableItems));
                 }
 
-                // Rebuild the legacy payload with current IDs after semantic matching. This lets old
-                // orders survive menu rebuilds where the option/value names stayed the same.
                 $this->normalizeHistoricalOrderOptions($order);
 
                 $notes = $cartManager->restoreWithOrderMenus($order->getOrderMenus());
@@ -286,14 +282,10 @@ final class OrderPreview extends Component
                 }
             }
 
-            // A missing historical selection already explains why this menu can not be reordered.
-            // Avoid adding secondary "required option" messages for the same menu.
             if ($hasUnavailableSavedSelection) {
                 continue;
             }
 
-            // Also validate the current option requirements. This catches a menu that gained a new
-            // required option, or whose min/max selection rules changed after the historical order.
             foreach ($currentMenuOptions as $menuOptionId => $menuOption) {
                 try {
                     $cartManager->validateMenuItemOption(
