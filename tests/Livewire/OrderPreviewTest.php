@@ -6,7 +6,9 @@ namespace Igniter\Orange\Tests\Livewire;
 
 use Igniter\Admin\Models\Status;
 use Igniter\Cart\Classes\OrderManager;
+use Igniter\Cart\Models\Menu;
 use Igniter\Cart\Models\Order;
+use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
 use Igniter\Orange\Livewire\OrderPreview;
@@ -178,6 +180,30 @@ it('handles reorder', function(): void {
     Livewire::test(OrderPreview::class, ['hash' => $this->order->hash])
         ->call('onReOrder')
         ->assertRedirect();
+});
+
+it('uses the original order location when validating a reorder', function(): void {
+    $currentLocation = LocationModel::factory()->create();
+    resolve('location')->setCurrent($currentLocation);
+
+    $menu = Menu::factory()->create();
+    $menu->locations()->attach($this->order->location);
+
+    $this->order->menus()->create([
+        'menu_id' => $menu->getKey(),
+        'name' => $menu->menu_name,
+        'quantity' => 1,
+        'price' => $menu->menu_price,
+        'subtotal' => $menu->menu_price,
+        'option_values' => serialize([]),
+    ]);
+
+    Livewire::test(OrderPreview::class, ['hash' => $this->order->hash])
+        ->call('onReOrder')
+        ->assertHasNoErrors()
+        ->assertRedirect();
+
+    expect(resolve('location')->getId())->toBe($currentLocation->getKey());
 });
 
 it('handles cancel order', function(): void {
