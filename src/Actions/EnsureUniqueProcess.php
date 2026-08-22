@@ -59,6 +59,7 @@ class EnsureUniqueProcess
 
                     return $result;
                 }
+
                 DB::rollBack();
                 Log::warning(sprintf('Lock [%s] NOT acquired on attempt #%s', $lockKey, $attempt));
                 sleep($this->retryDelay);
