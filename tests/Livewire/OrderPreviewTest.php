@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace Igniter\Orange\Tests\Livewire;
 
 use Igniter\Admin\Models\Status;
+use Igniter\Cart\Classes\CartManager;
 use Igniter\Cart\Classes\OrderManager;
 use Igniter\Cart\Models\Menu;
+use Igniter\Cart\Models\MenuOption;
+use Igniter\Cart\Models\MenuOptionValue;
 use Igniter\Cart\Models\Order;
 use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Main\Traits\ConfigurableComponent;
@@ -204,6 +207,48 @@ it('uses the original order location when validating a reorder', function(): voi
         ->assertRedirect();
 
     expect(resolve('location')->getId())->toBe($currentLocation->getKey());
+});
+
+it('does not change the cart when a historical selected option is unavailable', function(): void {
+    $menu = Menu::factory()->create();
+    $menu->locations()->attach($this->order->location);
+
+    $option = MenuOption::factory()->create(['display_type' => 'checkbox']);
+    $menuOption = $menu->menu_options()->create(['option_id' => $option->getKey()]);
+    $optionValue = MenuOptionValue::factory()->create();
+    $menuOptionValue = $menuOption->menu_option_values()->create([
+        'option_value_id' => $optionValue->getKey(),
+    ]);
+
+    $orderMenu = $this->order->menus()->create([
+        'menu_id' => $menu->getKey(),
+        'name' => $menu->menu_name,
+        'quantity' => 1,
+        'price' => $menu->menu_price,
+        'subtotal' => $menu->menu_price,
+        'option_values' => serialize([]),
+    ]);
+
+    $orderMenu->menu_options()->create([
+        'order_id' => $this->order->getKey(),
+        'menu_option_id' => $menuOption->getKey(),
+        'menu_option_value_id' => $menuOptionValue->getKey(),
+        'order_option_name' => $menuOptionValue->name,
+        'order_option_price' => 0,
+        'quantity' => 1,
+        'free_qty' => 0,
+    ]);
+
+    $menuOptionValue->delete();
+
+    Livewire::test(OrderPreview::class, ['hash' => $this->order->hash])
+        ->call('onReOrder')
+        ->assertHasErrors(['onReOrder']);
+
+    $cartManager = resolve(CartManager::class);
+    $cartManager->cartInstance($this->order->location_id);
+
+    expect($cartManager->getCart()->content())->toHaveCount(0);
 });
 
 it('handles cancel order', function(): void {
