@@ -247,28 +247,42 @@ final class OrderPreview extends Component
 
             $currentMenuOptions = $menu->menu_options->keyBy('menu_option_id');
             $savedOptionGroups = $orderMenu->menu_options->groupBy('menu_option_id');
+            $historicalOptionNames = $this->getHistoricalOptionNames($orderMenu);
+            $resolvedSelections = [];
             $hasUnavailableSavedSelection = false;
 
             foreach ($savedOptionGroups as $menuOptionId => $savedValues) {
-                $menuOption = $currentMenuOptions->get((int)$menuOptionId);
+                $historicalOptionName = $historicalOptionNames->get((string)$menuOptionId);
+                $menuOption = $this->resolveCurrentMenuOption(
+                    $currentMenuOptions,
+                    (int)$menuOptionId,
+                    $historicalOptionName,
+                );
+
                 if (!$menuOption) {
                     $hasUnavailableSavedSelection = true;
                     foreach ($savedValues as $savedValue) {
-                        $unavailable[] = $orderMenu->name.' – '.$savedValue->order_option_name;
+                        $detail = $historicalOptionName
+                            ? $historicalOptionName.': '.$savedValue->order_option_name
+                            : $savedValue->order_option_name;
+                        $unavailable[] = $orderMenu->name.' – '.$detail;
                     }
                     continue;
                 }
 
-                $availableValueIds = $menuOption->menu_option_values
-                    ->pluck('menu_option_value_id')
-                    ->map(fn($id): int => (int)$id)
-                    ->all();
-
                 foreach ($savedValues as $savedValue) {
-                    if (!in_array((int)$savedValue->menu_option_value_id, $availableValueIds, true)) {
+                    $currentValue = $this->resolveCurrentMenuOptionValue($menuOption, $savedValue);
+                    if (!$currentValue) {
                         $hasUnavailableSavedSelection = true;
                         $unavailable[] = $orderMenu->name.' – '.$menuOption->option_name.': '.$savedValue->order_option_name;
+                        continue;
                     }
+
+                    $resolvedSelections[$menuOption->getKey()][] = [
+                        'id' => (int)$currentValue->menu_option_value_id,
+                        'qty' => max(1, (int)($savedValue->quantity ?? 1)),
+                        'name' => $currentValue->name,
+                    ];
                 }
             }
 
@@ -281,23 +295,11 @@ final class OrderPreview extends Component
             // Also validate the current option requirements. This catches a menu that gained a new
             // required option, or whose min/max selection rules changed after the historical order.
             foreach ($currentMenuOptions as $menuOptionId => $menuOption) {
-                $availableValueIds = $menuOption->menu_option_values
-                    ->pluck('menu_option_value_id')
-                    ->map(fn($id): int => (int)$id)
-                    ->all();
-
-                $selectedValues = collect($savedOptionGroups->get($menuOptionId, []))
-                    ->filter(fn($savedValue): bool => in_array((int)$savedValue->menu_option_value_id, $availableValueIds, true))
-                    ->map(fn($savedValue): array => [
-                        'id' => (int)$savedValue->menu_option_value_id,
-                        'qty' => max(1, (int)($savedValue->quantity ?? 1)),
-                        'name' => $savedValue->order_option_name,
-                    ])
-                    ->values()
-                    ->all();
-
                 try {
-                    $cartManager->validateMenuItemOption($menuOption, $selectedValues);
+                    $cartManager->validateMenuItemOption(
+                        $menuOption,
+                        $resolvedSelections[$menuOptionId] ?? [],
+                    );
                 } catch (Throwable $ex) {
                     $unavailable[] = $orderMenu->name.' – '.trim(strip_tags($ex->getMessage()));
                 }
@@ -351,29 +353,99 @@ final class OrderPreview extends Component
             }
 
             $currentMenuOptions = $orderMenu->menu->menu_options->keyBy('menu_option_id');
+            $historicalOptionNames = $this->getHistoricalOptionNames($orderMenu);
 
             $orderMenu->option_values = $orderMenu->menu_options
                 ->groupBy('menu_option_id')
-                ->map(function($savedValues, $menuOptionId) use ($currentMenuOptions): array {
-                    $menuOption = $currentMenuOptions->get((int)$menuOptionId);
+                ->map(function($savedValues, $menuOptionId) use ($currentMenuOptions, $historicalOptionNames): ?array {
+                    $menuOption = $this->resolveCurrentMenuOption(
+                        $currentMenuOptions,
+                        (int)$menuOptionId,
+                        $historicalOptionNames->get((string)$menuOptionId),
+                    );
 
-                    return [
-                        'id' => (int)$menuOptionId,
-                        'name' => $menuOption?->option_name ?? lang('igniter.cart::default.orders.text_deleted_option'),
-                        'values' => CartItemOptionValues::make($savedValues->map(
-                            fn($savedValue): CartItemOptionValue => CartItemOptionValue::fromArray([
-                                'id' => (int)$savedValue->menu_option_value_id,
+                    if (!$menuOption) {
+                        return null;
+                    }
+
+                    $values = $savedValues
+                        ->map(function($savedValue) use ($menuOption): ?CartItemOptionValue {
+                            $currentValue = $this->resolveCurrentMenuOptionValue($menuOption, $savedValue);
+                            if (!$currentValue) {
+                                return null;
+                            }
+
+                            return CartItemOptionValue::fromArray([
+                                'id' => (int)$currentValue->menu_option_value_id,
                                 'qty' => max(1, (int)($savedValue->quantity ?? 1)),
-                                'name' => $savedValue->order_option_name,
+                                'name' => $currentValue->name,
                                 'price' => (float)$savedValue->order_option_price,
                                 'free_qty' => (int)($savedValue->free_qty ?? 0),
-                            ]),
-                        )->values()->all()),
+                            ]);
+                        })
+                        ->filter()
+                        ->values()
+                        ->all();
+
+                    return [
+                        'id' => (int)$menuOption->menu_option_id,
+                        'name' => $menuOption->option_name,
+                        'values' => CartItemOptionValues::make($values),
                     ];
                 })
+                ->filter()
                 ->values()
                 ->all();
         }
+    }
+
+    protected function getHistoricalOptionNames($orderMenu)
+    {
+        return collect($orderMenu->option_values ?? [])
+            ->mapWithKeys(function($menuOption, $optionKey): array {
+                $menuOptionId = data_get($menuOption, 'id')
+                    ?? (is_numeric($optionKey) ? (int)$optionKey : null);
+                $menuOptionName = trim((string)data_get($menuOption, 'name', ''));
+
+                return $menuOptionId && $menuOptionName !== ''
+                    ? [(string)$menuOptionId => $menuOptionName]
+                    : [];
+            });
+    }
+
+    protected function resolveCurrentMenuOption($currentMenuOptions, int $historicalId, ?string $historicalName)
+    {
+        if ($menuOption = $currentMenuOptions->get($historicalId)) {
+            return $menuOption;
+        }
+
+        $historicalName = trim((string)$historicalName);
+        if ($historicalName === '') {
+            return null;
+        }
+
+        return $currentMenuOptions->first(fn($menuOption): bool =>
+            strcasecmp(trim((string)$menuOption->option_name), $historicalName) === 0,
+        );
+    }
+
+    protected function resolveCurrentMenuOptionValue($menuOption, $savedValue)
+    {
+        $historicalId = (int)$savedValue->menu_option_value_id;
+        if ($currentValue = $menuOption->menu_option_values->first(fn($value): bool =>
+            (int)$value->menu_option_value_id === $historicalId,
+        )) {
+            return $currentValue;
+        }
+
+        $historicalName = trim((string)$savedValue->order_option_name);
+        if ($historicalName === '') {
+            return null;
+        }
+
+        return $menuOption->menu_option_values->first(fn($value): bool =>
+            strcasecmp(trim((string)$value->name), $historicalName) === 0,
+        );
     }
 
     protected function getProcessedOrder()
