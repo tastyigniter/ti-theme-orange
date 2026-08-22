@@ -177,17 +177,34 @@ final class OrderPreview extends Component
                 $location->setModel($order->location);
                 $cartManager->cartInstance($order->location_id);
 
+                $unavailableItems = $this->getUnavailableReorderItems($order, $cartManager);
+                if ($unavailableItems !== []) {
+                    throw new ApplicationException(
+                        lang('igniter.orange::default.alert_reorder_unavailable').' '.implode('; ', $unavailableItems),
+                    );
+                }
+
+                // Prefer the normalized order_menu_options rows over legacy serialized cart objects.
+                // This keeps old v3/imported orders deterministic when all selected items are still available.
+                $this->normalizeHistoricalOrderOptions($order);
+
                 $notes = $cartManager->restoreWithOrderMenus($order->getOrderMenus());
+                if ($notes) {
+                    $notes = array_values(array_unique(array_filter(array_map(
+                        fn($note): string => trim(strip_tags((string)$note)),
+                        $notes,
+                    ))));
+
+                    throw new ApplicationException(
+                        lang('igniter.orange::default.alert_reorder_unavailable').' '.implode('; ', $notes),
+                    );
+                }
             } finally {
                 $cartManager->getCart()->instance($currentInstance);
                 $location->clearInternalCache();
                 if ($currentLocation) {
                     $location->setModel($currentLocation);
                 }
-            }
-
-            if ($notes) {
-                throw new ApplicationException(implode(PHP_EOL, $notes));
             }
 
             flash()->success(sprintf(
@@ -216,6 +233,107 @@ final class OrderPreview extends Component
         ]));
 
         flash()->success(lang('igniter.cart::default.orders.alert_cancel_success'));
+    }
+
+    protected function getUnavailableReorderItems($order, CartManager $cartManager): array
+    {
+        $unavailable = [];
+
+        foreach ($order->getOrderMenus() as $orderMenu) {
+            if (!$menu = $orderMenu->menu) {
+                $unavailable[] = $orderMenu->name;
+                continue;
+            }
+
+            try {
+                $cartManager->validateCartMenuItem($menu, $orderMenu->quantity);
+            } catch (Throwable $ex) {
+                $unavailable[] = trim(strip_tags($ex->getMessage()));
+                continue;
+            }
+
+            $currentMenuOptions = $menu->menu_options->keyBy('menu_option_id');
+            $savedOptionGroups = $orderMenu->menu_options->groupBy('menu_option_id');
+
+            foreach ($savedOptionGroups as $menuOptionId => $savedValues) {
+                $menuOption = $currentMenuOptions->get((int)$menuOptionId);
+                if (!$menuOption) {
+                    foreach ($savedValues as $savedValue) {
+                        $unavailable[] = $orderMenu->name.' – '.$savedValue->order_option_name;
+                    }
+                    continue;
+                }
+
+                $availableValueIds = $menuOption->menu_option_values
+                    ->pluck('menu_option_value_id')
+                    ->map(fn($id): int => (int)$id)
+                    ->all();
+
+                foreach ($savedValues as $savedValue) {
+                    if (!in_array((int)$savedValue->menu_option_value_id, $availableValueIds, true)) {
+                        $unavailable[] = $orderMenu->name.' – '.$menuOption->option_name.': '.$savedValue->order_option_name;
+                    }
+                }
+            }
+
+            // Also validate the current option requirements. This catches a menu that gained a new
+            // required option, or whose min/max selection rules changed after the historical order.
+            foreach ($currentMenuOptions as $menuOptionId => $menuOption) {
+                $availableValueIds = $menuOption->menu_option_values
+                    ->pluck('menu_option_value_id')
+                    ->map(fn($id): int => (int)$id)
+                    ->all();
+
+                $selectedValues = collect($savedOptionGroups->get($menuOptionId, []))
+                    ->filter(fn($savedValue): bool => in_array((int)$savedValue->menu_option_value_id, $availableValueIds, true))
+                    ->map(fn($savedValue): array => [
+                        'id' => (int)$savedValue->menu_option_value_id,
+                        'qty' => max(1, (int)($savedValue->quantity ?? 1)),
+                        'name' => $savedValue->order_option_name,
+                    ])
+                    ->values()
+                    ->all();
+
+                try {
+                    $cartManager->validateMenuItemOption($menuOption, $selectedValues);
+                } catch (Throwable $ex) {
+                    $unavailable[] = $orderMenu->name.' – '.trim(strip_tags($ex->getMessage()));
+                }
+            }
+        }
+
+        return array_values(array_unique(array_filter($unavailable)));
+    }
+
+    protected function normalizeHistoricalOrderOptions($order): void
+    {
+        foreach ($order->getOrderMenus() as $orderMenu) {
+            if (!$orderMenu->menu || $orderMenu->menu_options->isEmpty()) {
+                continue;
+            }
+
+            $currentMenuOptions = $orderMenu->menu->menu_options->keyBy('menu_option_id');
+
+            $orderMenu->option_values = $orderMenu->menu_options
+                ->groupBy('menu_option_id')
+                ->map(function($savedValues, $menuOptionId) use ($currentMenuOptions): array {
+                    $menuOption = $currentMenuOptions->get((int)$menuOptionId);
+
+                    return [
+                        'id' => (int)$menuOptionId,
+                        'name' => $menuOption?->option_name ?? lang('igniter.cart::default.orders.text_deleted_option'),
+                        'values' => $savedValues->map(fn($savedValue): array => [
+                            'id' => (int)$savedValue->menu_option_value_id,
+                            'qty' => max(1, (int)($savedValue->quantity ?? 1)),
+                            'name' => $savedValue->order_option_name,
+                            'price' => (float)$savedValue->order_option_price,
+                            'free_qty' => (int)($savedValue->free_qty ?? 0),
+                        ])->values()->all(),
+                    ];
+                })
+                ->values()
+                ->all();
+        }
     }
 
     protected function getProcessedOrder()
