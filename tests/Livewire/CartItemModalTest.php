@@ -7,6 +7,7 @@ namespace Igniter\Orange\Tests\Livewire;
 use Igniter\Cart\Classes\AbstractOrderType;
 use Igniter\Cart\Facades\Cart;
 use Igniter\Cart\Models\Menu;
+use Igniter\Cart\Models\MenuOption;
 use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Main\Traits\ConfigurableComponent;
@@ -106,6 +107,38 @@ it('throws exception when saving cart item fails', function(): void {
         ->set('quantity', 0)
         ->call('onSave')
         ->assertHasErrors(['menuOptions']);
+});
+
+it('throws exception when required menu option is not selected', function(): void {
+    $menu = Menu::factory()->create();
+    $option = MenuOption::factory()->create(['display_type' => 'select']);
+    $menuOption = $menu->menu_options()->create([
+        'option_id' => $option->getKey(),
+        'is_required' => true,
+    ]);
+
+    Livewire::test(CartItemModal::class, ['menuId' => $menu->getKey()])
+        ->set('quantity', $menu->minimum_qty)
+        ->set('menuOptions', [
+            $menuOption->getKey() => ['option_values' => ['not-numeric', '']],
+        ])
+        ->call('onSave')
+        ->assertHasErrors(['menuOptions.'.$menuOption->getKey()]);
+});
+
+it('saves cart item with checkbox menu option', function(): void {
+    $menu = Menu::factory()->create();
+    $option = MenuOption::factory()->create(['display_type' => 'checkbox']);
+    $menuOption = $menu->menu_options()->create(['option_id' => $option->getKey()]);
+    $menuOptionValue = $menuOption->menu_option_values()->create(['option_value_id' => 1, 'price' => 10]);
+
+    Livewire::test(CartItemModal::class, ['menuId' => $menu->getKey()])
+        ->set('quantity', $menu->minimum_qty)
+        ->set('menuOptions', [
+            $menuOption->getKey() => ['option_values' => [$menuOptionValue->getKey()]],
+        ])
+        ->call('onSave')
+        ->assertDispatched('hideModal');
 });
 
 it('returns current location id', function(): void {

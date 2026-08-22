@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Igniter\Orange\Tests\View\Components;
 
 use Igniter\Orange\View\Components\StarRating;
+use Illuminate\Support\Facades\Blade;
 
 it('initializes star rating component correctly', function(): void {
     $component = new StarRating('rating', 4.5, 5, true);
@@ -19,4 +20,20 @@ it('renders view with hints', function(): void {
     $view = (new StarRating)->render();
 
     expect($view->getData()['hints'])->toBe(['Poor', 'Average', 'Good', 'Very Good', 'Excellent']);
+});
+
+it('renders all stars filled for a full score', function(): void {
+    $html = Blade::render('<x-igniter-orange::star-rating name="rating" :score="5.0" />');
+
+    expect(substr_count($html, 'class="fa-star fa"'))->toBe(5)
+        ->and($html)->not->toContain('fa-star-half')
+        ->and($html)->not->toContain('class="fa-star far"');
+});
+
+it('renders a half star for an average score above four and a half', function(): void {
+    $html = Blade::render('<x-igniter-orange::star-rating name="rating" :score="4.6" />');
+
+    expect(substr_count($html, 'class="fa-star fa"'))->toBe(4)
+        ->and(substr_count($html, 'class="fa-star-half fa"'))->toBe(1)
+        ->and($html)->not->toContain('class="fa-star far"');
 });

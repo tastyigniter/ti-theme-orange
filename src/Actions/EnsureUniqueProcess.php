@@ -58,12 +58,11 @@ class EnsureUniqueProcess
                     DB::commit();
 
                     return $result;
-                } else {
-                    DB::rollBack();
-                    Log::warning(sprintf('Lock [%s] NOT acquired on attempt #%s', $lockKey, $attempt));
-
-                    sleep($this->retryDelay);
                 }
+
+                DB::rollBack();
+                Log::warning(sprintf('Lock [%s] NOT acquired on attempt #%s', $lockKey, $attempt));
+                sleep($this->retryDelay);
             } catch (QueryException $ex) {
                 DB::rollBack();
 

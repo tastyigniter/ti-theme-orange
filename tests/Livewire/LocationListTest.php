@@ -9,6 +9,7 @@ use Igniter\Admin\Widgets\Form;
 use Igniter\Cart\Http\Controllers\Menus;
 use Igniter\Flame\Geolite\Model\Location as GeoliteLocation;
 use Igniter\Local\Facades\Location;
+use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Local\Models\ReviewSettings;
 use Igniter\Main\Http\Controllers\Themes;
 use Igniter\Main\Models\Theme;
@@ -133,6 +134,27 @@ it('mounts and renders component correctly', function(): void {
         ->assertViewHas('allowReviews', true)
         ->assertViewHas('searchQueryPosition')
         ->assertViewHas('locationsList');
+});
+
+it('loads review scores for locations', function(): void {
+    $location = LocationModel::factory()->create();
+    $location->reviews()->create([
+        'customer_id' => 1,
+        'quality' => 5,
+        'service' => 5,
+        'delivery' => 4,
+        'review_status' => true,
+    ]);
+
+    ReviewSettings::set('allow_reviews', 1);
+
+    Livewire::test(LocationList::class)
+        ->assertViewHas('locationsList', function($locationsList) use ($location): bool {
+            $locationData = $locationsList->getCollection()
+                ->first(fn($item): bool => $item->id === $location->getKey());
+
+            return $locationData && round($locationData->reviewsScore(), 1) === 4.7;
+        });
 });
 
 it('returns order type options', function(): void {

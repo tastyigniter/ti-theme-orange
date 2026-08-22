@@ -61,6 +61,11 @@
                         @include('igniter-orange::includes.cartbox.item-options-'.$menuOption->display_type)
                     @endif
                 </div>
+
+                <x-igniter-orange::forms.error
+                    field="menuOptions.{{ $menuOption->menu_option_id }}"
+                    class="text-danger mt-2"
+                />
             @endif
         </div>
     </div>

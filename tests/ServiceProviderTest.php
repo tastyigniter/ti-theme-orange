@@ -25,7 +25,7 @@ it('redirects unauthorised user when page requires authentication', function(): 
     $this
         ->withoutMiddleware(CheckInitialSetup::class)
         ->get(route('igniter.theme.account.account'))
-        ->assertRedirect(route('igniter.theme.home'));
+        ->assertRedirect(route('igniter.theme.account.login'));
 });
 
 it('redirects authorised user when page does not require authentication', function(): void {

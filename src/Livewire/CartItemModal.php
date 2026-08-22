@@ -127,6 +127,8 @@ final class CartItemModal extends ModalComponent
 
     public function onSave(): void
     {
+        $this->validateMenuOptions();
+
         try {
             $cartItem = $this->cartManager->addOrUpdateCartItem([
                 'menuId' => $this->menuId,
@@ -140,7 +142,7 @@ final class CartItemModal extends ModalComponent
 
             $this->dispatch('hideModal');
         } catch (Exception $exception) {
-            throw ValidationException::withMessages(['menuOptions' => $exception->getMessage()]);
+            throw ValidationException::withMessages(['menuOptions' => strip_tags($exception->getMessage())]);
         }
     }
 
@@ -163,6 +165,31 @@ final class CartItemModal extends ModalComponent
         }
 
         return $value;
+    }
+
+    protected function validateMenuOptions(): void
+    {
+        $errors = [];
+        $selectedOptions = collect($this->menuOptions);
+
+        foreach ($this->getMenuItemData()->getOptions() as $menuOption) {
+            $selectedOption = $selectedOptions->get($menuOption->getKey());
+            $selectedValues = array_filter((array)array_get($selectedOption, 'option_values', []));
+
+            if (!in_array($menuOption->option->display_type, ['quantity', 'checkbox'])) {
+                $selectedValues = array_filter($selectedValues, is_numeric(...));
+            }
+
+            try {
+                $this->cartManager->validateMenuItemOption($menuOption, $selectedValues);
+            } catch (Exception $exception) {
+                $errors['menuOptions.'.$menuOption->getKey()] = strip_tags($exception->getMessage());
+            }
+        }
+
+        if ($errors !== []) {
+            throw ValidationException::withMessages($errors);
+        }
     }
 
     protected function getCartItem(): ?CartItem

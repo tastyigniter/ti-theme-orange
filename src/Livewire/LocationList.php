@@ -233,7 +233,7 @@ final class LocationList extends Component
             'settings',
             'working_hours',
             'country',
-            'reviews' => fn($q) => $q->isApproved()->select('delivery', 'service', 'quality'),
+            'reviews' => fn($q) => $q->isApproved()->select('review_id', 'location_id', 'delivery', 'service', 'quality'),
         ]);
 
         $filterByDeliveryAreas = $this->orderType === 'delivery';
