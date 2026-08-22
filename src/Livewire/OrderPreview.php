@@ -165,13 +165,26 @@ final class OrderPreview extends Component
         $order = $this->getProcessedOrder();
 
         rescue(function() use ($order): void {
+            $location = resolve('location');
+            $currentLocation = $location->current();
             $cartManager = resolve(CartManager::class);
             $currentInstance = $cartManager->getCart()->currentInstance();
-            $cartManager->cartInstance($order->location_id);
 
-            $notes = $cartManager->restoreWithOrderMenus($order->getOrderMenus());
+            try {
+                // Reorder must be validated against the location that owns the historical order,
+                // not whichever location happens to be active on the account page.
+                $location->clearInternalCache();
+                $location->setModel($order->location);
+                $cartManager->cartInstance($order->location_id);
 
-            $cartManager->getCart()->instance($currentInstance);
+                $notes = $cartManager->restoreWithOrderMenus($order->getOrderMenus());
+            } finally {
+                $cartManager->getCart()->instance($currentInstance);
+                $location->clearInternalCache();
+                if ($currentLocation) {
+                    $location->setModel($currentLocation);
+                }
+            }
 
             if ($notes) {
                 throw new ApplicationException(implode(PHP_EOL, $notes));
