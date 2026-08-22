@@ -180,7 +180,7 @@ final class OrderPreview extends Component
                 $unavailableItems = $this->getUnavailableReorderItems($order, $cartManager);
                 if ($unavailableItems !== []) {
                     throw new ApplicationException(
-                        lang('igniter.orange::default.alert_reorder_unavailable').' '.implode('; ', $unavailableItems),
+                        lang('igniter.cart::default.orders.alert_reorder_failed').' '.implode('; ', $unavailableItems),
                     );
                 }
 
@@ -196,7 +196,7 @@ final class OrderPreview extends Component
                     ))));
 
                     throw new ApplicationException(
-                        lang('igniter.orange::default.alert_reorder_unavailable').' '.implode('; ', $notes),
+                        lang('igniter.cart::default.orders.alert_reorder_failed').' '.implode('; ', $notes),
                     );
                 }
             } finally {
