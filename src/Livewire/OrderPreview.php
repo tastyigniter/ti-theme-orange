@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Igniter\Orange\Livewire;
 
+use Igniter\Cart\CartItemOptionValue;
+use Igniter\Cart\CartItemOptionValues;
 use Igniter\Cart\Classes\CartManager;
 use Igniter\Cart\Classes\OrderManager;
 use Igniter\Flame\Exception\ApplicationException;
@@ -322,13 +324,15 @@ final class OrderPreview extends Component
                     return [
                         'id' => (int)$menuOptionId,
                         'name' => $menuOption?->option_name ?? lang('igniter.cart::default.orders.text_deleted_option'),
-                        'values' => $savedValues->map(fn($savedValue): array => [
-                            'id' => (int)$savedValue->menu_option_value_id,
-                            'qty' => max(1, (int)($savedValue->quantity ?? 1)),
-                            'name' => $savedValue->order_option_name,
-                            'price' => (float)$savedValue->order_option_price,
-                            'free_qty' => (int)($savedValue->free_qty ?? 0),
-                        ])->values()->all(),
+                        'values' => CartItemOptionValues::make($savedValues->map(
+                            fn($savedValue): CartItemOptionValue => CartItemOptionValue::fromArray([
+                                'id' => (int)$savedValue->menu_option_value_id,
+                                'qty' => max(1, (int)($savedValue->quantity ?? 1)),
+                                'name' => $savedValue->order_option_name,
+                                'price' => (float)$savedValue->order_option_price,
+                                'free_qty' => (int)($savedValue->free_qty ?? 0),
+                            ]),
+                        )->values()->all()),
                     ];
                 })
                 ->values()
