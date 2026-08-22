@@ -86,7 +86,7 @@ final class OrderPreview extends Component
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
             'menusPage' => [
-                'label' => 'Page to redirect to when the user clicks the reorder button.',
+                'label' => 'Page to redirect to when the user clicks the re-order button.',
                 'type' => 'select',
                 'options' => self::getThemePageOptions(...),
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
@@ -181,9 +181,7 @@ final class OrderPreview extends Component
 
                 $unavailableItems = $this->getUnavailableReorderItems($order, $cartManager);
                 if ($unavailableItems !== []) {
-                    throw new ApplicationException(
-                        lang('igniter.cart::default.orders.alert_reorder_failed').' '.implode('; ', $unavailableItems),
-                    );
+                    throw new ApplicationException($this->formatUnavailableReorderMessage($unavailableItems));
                 }
 
                 // Prefer the normalized order_menu_options rows over legacy serialized cart objects.
@@ -192,14 +190,7 @@ final class OrderPreview extends Component
 
                 $notes = $cartManager->restoreWithOrderMenus($order->getOrderMenus());
                 if ($notes) {
-                    $notes = array_values(array_unique(array_filter(array_map(
-                        fn($note): string => trim(strip_tags((string)$note)),
-                        $notes,
-                    ))));
-
-                    throw new ApplicationException(
-                        lang('igniter.cart::default.orders.alert_reorder_failed').' '.implode('; ', $notes),
-                    );
+                    throw new ApplicationException($this->formatUnavailableReorderMessage($notes));
                 }
             } finally {
                 $cartManager->getCart()->instance($currentInstance);
@@ -256,10 +247,12 @@ final class OrderPreview extends Component
 
             $currentMenuOptions = $menu->menu_options->keyBy('menu_option_id');
             $savedOptionGroups = $orderMenu->menu_options->groupBy('menu_option_id');
+            $hasUnavailableSavedSelection = false;
 
             foreach ($savedOptionGroups as $menuOptionId => $savedValues) {
                 $menuOption = $currentMenuOptions->get((int)$menuOptionId);
                 if (!$menuOption) {
+                    $hasUnavailableSavedSelection = true;
                     foreach ($savedValues as $savedValue) {
                         $unavailable[] = $orderMenu->name.' – '.$savedValue->order_option_name;
                     }
@@ -273,9 +266,16 @@ final class OrderPreview extends Component
 
                 foreach ($savedValues as $savedValue) {
                     if (!in_array((int)$savedValue->menu_option_value_id, $availableValueIds, true)) {
+                        $hasUnavailableSavedSelection = true;
                         $unavailable[] = $orderMenu->name.' – '.$menuOption->option_name.': '.$savedValue->order_option_name;
                     }
                 }
+            }
+
+            // A missing historical selection already explains why this menu can not be reordered.
+            // Avoid adding secondary "required option" messages for the same menu.
+            if ($hasUnavailableSavedSelection) {
+                continue;
             }
 
             // Also validate the current option requirements. This catches a menu that gained a new
@@ -305,6 +305,42 @@ final class OrderPreview extends Component
         }
 
         return array_values(array_unique(array_filter($unavailable)));
+    }
+
+    protected function formatUnavailableReorderMessage(array $items): string
+    {
+        $grouped = [];
+
+        foreach (array_unique(array_filter(array_map(
+            fn($item): string => trim(strip_tags((string)$item)),
+            $items,
+        ))) as $item) {
+            [$menuName, $detail] = array_pad(explode(' – ', $item, 2), 2, null);
+            $menuName = trim($menuName);
+
+            if (!$detail) {
+                $grouped[$menuName] ??= [];
+                continue;
+            }
+
+            $grouped[$menuName][] = trim($detail);
+        }
+
+        $details = collect($grouped)
+            ->map(function(array $menuDetails, string $menuName): string {
+                $menuDetails = array_values(array_unique(array_filter($menuDetails)));
+
+                return $menuDetails === []
+                    ? $menuName
+                    : $menuName.' ('.implode(', ', $menuDetails).')';
+            })
+            ->values()
+            ->implode('; ');
+
+        $failedMessage = trim(str_before(lang('igniter.cart::default.orders.alert_reorder_failed'), '.'));
+        $unavailableLabel = ucfirst(strtolower((string)lang('igniter.cart::default.text_is_unavailable')));
+
+        return rtrim($failedMessage, '.').'. '.$unavailableLabel.': '.$details;
     }
 
     protected function normalizeHistoricalOrderOptions($order): void
