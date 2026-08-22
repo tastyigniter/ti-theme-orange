@@ -331,10 +331,10 @@ final class OrderPreview extends Component
             ->values()
             ->implode('; ');
 
-        $failedMessage = trim(str_before(lang('igniter.cart::default.orders.alert_reorder_failed'), '.'));
-        $unavailableLabel = ucfirst(strtolower((string)lang('igniter.cart::default.text_is_unavailable')));
-
-        return rtrim($failedMessage, '.').'. '.$unavailableLabel.': '.$details;
+        return sprintf(
+            lang('igniter.orange::default.alert_reorder_unavailable'),
+            $details,
+        );
     }
 
     protected function normalizeHistoricalOrderOptions($order): void
