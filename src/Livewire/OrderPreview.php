@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Igniter\Orange\Livewire;
 
+use Igniter\Cart\CartItemOptionValue;
+use Igniter\Cart\CartItemOptionValues;
 use Igniter\Cart\Classes\CartManager;
 use Igniter\Cart\Classes\OrderManager;
 use Igniter\Flame\Exception\ApplicationException;
@@ -84,7 +86,7 @@ final class OrderPreview extends Component
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
             ],
             'menusPage' => [
-                'label' => 'Page to redirect to when the user clicks the reorder button.',
+                'label' => 'Page to redirect to when the user clicks the re-order button.',
                 'type' => 'select',
                 'options' => self::getThemePageOptions(...),
                 'validationRule' => 'required|regex:/^[a-z0-9\-_\.]+$/i',
@@ -165,16 +167,33 @@ final class OrderPreview extends Component
         $order = $this->getProcessedOrder();
 
         rescue(function() use ($order): void {
+            $location = resolve('location');
+            $currentLocation = $location->current();
             $cartManager = resolve(CartManager::class);
             $currentInstance = $cartManager->getCart()->currentInstance();
-            $cartManager->cartInstance($order->location_id);
 
-            $notes = $cartManager->restoreWithOrderMenus($order->getOrderMenus());
+            try {
+                $location->clearInternalCache();
+                $location->setModel($order->location);
+                $cartManager->cartInstance($order->location_id);
 
-            $cartManager->getCart()->instance($currentInstance);
+                $unavailableItems = $this->getUnavailableReorderItems($order, $cartManager);
+                if ($unavailableItems !== []) {
+                    throw new ApplicationException($this->formatUnavailableReorderMessage($unavailableItems));
+                }
 
-            if ($notes) {
-                throw new ApplicationException(implode(PHP_EOL, $notes));
+                $this->normalizeHistoricalOrderOptions($order);
+
+                $notes = $cartManager->restoreWithOrderMenus($order->getOrderMenus());
+                if ($notes) {
+                    throw new ApplicationException($this->formatUnavailableReorderMessage($notes));
+                }
+            } finally {
+                $cartManager->getCart()->instance($currentInstance);
+                $location->clearInternalCache();
+                if ($currentLocation) {
+                    $location->setModel($currentLocation);
+                }
             }
 
             flash()->success(sprintf(
@@ -203,6 +222,222 @@ final class OrderPreview extends Component
         ]));
 
         flash()->success(lang('igniter.cart::default.orders.alert_cancel_success'));
+    }
+
+    protected function getUnavailableReorderItems($order, CartManager $cartManager): array
+    {
+        $unavailable = [];
+
+        foreach ($order->getOrderMenus() as $orderMenu) {
+            if (!$menu = $orderMenu->menu) {
+                $unavailable[] = $orderMenu->name;
+                continue;
+            }
+
+            try {
+                $cartManager->validateCartMenuItem($menu, $orderMenu->quantity);
+            } catch (Throwable $ex) {
+                $unavailable[] = trim(strip_tags($ex->getMessage()));
+                continue;
+            }
+
+            $currentMenuOptions = $menu->menu_options->keyBy('menu_option_id');
+            $savedOptionGroups = $orderMenu->menu_options->groupBy('menu_option_id');
+            $historicalOptionNames = $this->getHistoricalOptionNames($orderMenu);
+            $resolvedSelections = [];
+            $hasUnavailableSavedSelection = false;
+
+            foreach ($savedOptionGroups as $menuOptionId => $savedValues) {
+                $historicalOptionName = $historicalOptionNames->get((string)$menuOptionId);
+                $menuOption = $this->resolveCurrentMenuOption(
+                    $currentMenuOptions,
+                    (int)$menuOptionId,
+                    $historicalOptionName,
+                );
+
+                if (!$menuOption) {
+                    $hasUnavailableSavedSelection = true;
+                    foreach ($savedValues as $savedValue) {
+                        $detail = $historicalOptionName
+                            ? $historicalOptionName.': '.$savedValue->order_option_name
+                            : $savedValue->order_option_name;
+                        $unavailable[] = $orderMenu->name.' – '.$detail;
+                    }
+                    continue;
+                }
+
+                foreach ($savedValues as $savedValue) {
+                    $currentValue = $this->resolveCurrentMenuOptionValue($menuOption, $savedValue);
+                    if (!$currentValue) {
+                        $hasUnavailableSavedSelection = true;
+                        $unavailable[] = $orderMenu->name.' – '.$menuOption->option_name.': '.$savedValue->order_option_name;
+                        continue;
+                    }
+
+                    $resolvedSelections[$menuOption->getKey()][] = [
+                        'id' => (int)$currentValue->menu_option_value_id,
+                        'qty' => max(1, (int)($savedValue->quantity ?? 1)),
+                        'name' => $currentValue->name,
+                    ];
+                }
+            }
+
+            if ($hasUnavailableSavedSelection) {
+                continue;
+            }
+
+            foreach ($currentMenuOptions as $menuOptionId => $menuOption) {
+                try {
+                    $cartManager->validateMenuItemOption(
+                        $menuOption,
+                        $resolvedSelections[$menuOptionId] ?? [],
+                    );
+                } catch (Throwable $ex) {
+                    $unavailable[] = $orderMenu->name.' – '.trim(strip_tags($ex->getMessage()));
+                }
+            }
+        }
+
+        return array_values(array_unique(array_filter($unavailable)));
+    }
+
+    protected function formatUnavailableReorderMessage(array $items): string
+    {
+        $grouped = [];
+
+        foreach (array_unique(array_filter(array_map(
+            fn($item): string => trim(strip_tags((string)$item)),
+            $items,
+        ))) as $item) {
+            [$menuName, $detail] = array_pad(explode(' – ', $item, 2), 2, null);
+            $menuName = trim($menuName);
+
+            if (!$detail) {
+                $grouped[$menuName] ??= [];
+                continue;
+            }
+
+            $grouped[$menuName][] = trim($detail);
+        }
+
+        $details = collect($grouped)
+            ->map(function(array $menuDetails, string $menuName): string {
+                $menuDetails = array_values(array_unique(array_filter($menuDetails)));
+
+                return $menuDetails === []
+                    ? $menuName
+                    : $menuName.' ('.implode(', ', $menuDetails).')';
+            })
+            ->values()
+            ->implode('; ');
+
+        return sprintf(
+            lang('igniter.orange::default.alert_reorder_unavailable'),
+            $details,
+        );
+    }
+
+    protected function normalizeHistoricalOrderOptions($order): void
+    {
+        foreach ($order->getOrderMenus() as $orderMenu) {
+            if (!$orderMenu->menu || $orderMenu->menu_options->isEmpty()) {
+                continue;
+            }
+
+            $currentMenuOptions = $orderMenu->menu->menu_options->keyBy('menu_option_id');
+            $historicalOptionNames = $this->getHistoricalOptionNames($orderMenu);
+
+            $orderMenu->option_values = $orderMenu->menu_options
+                ->groupBy('menu_option_id')
+                ->map(function($savedValues, $menuOptionId) use ($currentMenuOptions, $historicalOptionNames): ?array {
+                    $menuOption = $this->resolveCurrentMenuOption(
+                        $currentMenuOptions,
+                        (int)$menuOptionId,
+                        $historicalOptionNames->get((string)$menuOptionId),
+                    );
+
+                    if (!$menuOption) {
+                        return null;
+                    }
+
+                    $values = $savedValues
+                        ->map(function($savedValue) use ($menuOption): ?CartItemOptionValue {
+                            $currentValue = $this->resolveCurrentMenuOptionValue($menuOption, $savedValue);
+                            if (!$currentValue) {
+                                return null;
+                            }
+
+                            return CartItemOptionValue::fromArray([
+                                'id' => (int)$currentValue->menu_option_value_id,
+                                'qty' => max(1, (int)($savedValue->quantity ?? 1)),
+                                'name' => $currentValue->name,
+                                'price' => (float)$savedValue->order_option_price,
+                                'free_qty' => (int)($savedValue->free_qty ?? 0),
+                            ]);
+                        })
+                        ->filter()
+                        ->values()
+                        ->all();
+
+                    return [
+                        'id' => (int)$menuOption->menu_option_id,
+                        'name' => $menuOption->option_name,
+                        'values' => CartItemOptionValues::make($values),
+                    ];
+                })
+                ->filter()
+                ->values()
+                ->all();
+        }
+    }
+
+    protected function getHistoricalOptionNames($orderMenu)
+    {
+        return collect($orderMenu->option_values ?? [])
+            ->mapWithKeys(function($menuOption, $optionKey): array {
+                $menuOptionId = data_get($menuOption, 'id')
+                    ?? (is_numeric($optionKey) ? (int)$optionKey : null);
+                $menuOptionName = trim((string)data_get($menuOption, 'name', ''));
+
+                return $menuOptionId && $menuOptionName !== ''
+                    ? [(string)$menuOptionId => $menuOptionName]
+                    : [];
+            });
+    }
+
+    protected function resolveCurrentMenuOption($currentMenuOptions, int $historicalId, ?string $historicalName)
+    {
+        if ($menuOption = $currentMenuOptions->get($historicalId)) {
+            return $menuOption;
+        }
+
+        $historicalName = trim((string)$historicalName);
+        if ($historicalName === '') {
+            return null;
+        }
+
+        return $currentMenuOptions->first(fn($menuOption): bool =>
+            strcasecmp(trim((string)$menuOption->option_name), $historicalName) === 0,
+        );
+    }
+
+    protected function resolveCurrentMenuOptionValue($menuOption, $savedValue)
+    {
+        $historicalId = (int)$savedValue->menu_option_value_id;
+        if ($currentValue = $menuOption->menu_option_values->first(fn($value): bool =>
+            (int)$value->menu_option_value_id === $historicalId,
+        )) {
+            return $currentValue;
+        }
+
+        $historicalName = trim((string)$savedValue->order_option_name);
+        if ($historicalName === '') {
+            return null;
+        }
+
+        return $menuOption->menu_option_values->first(fn($value): bool =>
+            strcasecmp(trim((string)$value->name), $historicalName) === 0,
+        );
     }
 
     protected function getProcessedOrder()

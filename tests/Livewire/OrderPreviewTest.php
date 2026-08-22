@@ -5,8 +5,17 @@ declare(strict_types=1);
 namespace Igniter\Orange\Tests\Livewire;
 
 use Igniter\Admin\Models\Status;
+use Igniter\Cart\CartItemOption;
+use Igniter\Cart\CartItemOptions;
+use Igniter\Cart\CartItemOptionValue;
+use Igniter\Cart\CartItemOptionValues;
+use Igniter\Cart\Classes\CartManager;
 use Igniter\Cart\Classes\OrderManager;
+use Igniter\Cart\Models\Menu;
+use Igniter\Cart\Models\MenuOption;
+use Igniter\Cart\Models\MenuOptionValue;
 use Igniter\Cart\Models\Order;
+use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
 use Igniter\Orange\Livewire\OrderPreview;
@@ -178,6 +187,139 @@ it('handles reorder', function(): void {
     Livewire::test(OrderPreview::class, ['hash' => $this->order->hash])
         ->call('onReOrder')
         ->assertRedirect();
+});
+
+it('uses the original order location when validating a reorder', function(): void {
+    $currentLocation = LocationModel::factory()->create();
+    resolve('location')->setCurrent($currentLocation);
+
+    $menu = Menu::factory()->create();
+    $menu->locations()->attach($this->order->location);
+
+    $this->order->menus()->create([
+        'menu_id' => $menu->getKey(),
+        'name' => $menu->menu_name,
+        'quantity' => 1,
+        'price' => $menu->menu_price,
+        'subtotal' => $menu->menu_price,
+        'option_values' => serialize([]),
+    ]);
+
+    Livewire::test(OrderPreview::class, ['hash' => $this->order->hash])
+        ->call('onReOrder')
+        ->assertHasNoErrors()
+        ->assertRedirect();
+
+    expect(resolve('location')->getId())->toBe($currentLocation->getKey());
+});
+
+it('matches a historical option value by name when its id changed', function(): void {
+    $menu = Menu::factory()->create();
+    $menu->locations()->attach($this->order->location);
+
+    $option = MenuOption::factory()->create([
+        'option_name' => 'Basis',
+        'display_type' => 'radio',
+    ]);
+    $menuOption = $menu->menu_options()->create(['option_id' => $option->getKey()]);
+
+    $oldOptionValue = MenuOptionValue::factory()->create([
+        'option_id' => $option->getKey(),
+        'name' => 'Rijst',
+        'price' => 0,
+    ]);
+    $oldMenuOptionValue = $menuOption->menu_option_values()->create([
+        'option_value_id' => $oldOptionValue->getKey(),
+    ]);
+
+    $this->order->addOrderMenus([
+        (object)[
+            'id' => $menu->getKey(),
+            'name' => $menu->menu_name,
+            'qty' => 1,
+            'price' => $menu->menu_price,
+            'subtotal' => $menu->menu_price,
+            'comment' => '',
+            'options' => CartItemOptions::make([
+                CartItemOption::fromArray([
+                    'id' => $menuOption->getKey(),
+                    'name' => 'Basis',
+                    'values' => CartItemOptionValues::make([
+                        CartItemOptionValue::fromArray([
+                            'id' => $oldMenuOptionValue->getKey(),
+                            'name' => 'Rijst',
+                            'price' => 0,
+                            'qty' => 1,
+                        ]),
+                    ]),
+                ]),
+            ]),
+        ],
+    ]);
+
+    $oldMenuOptionValue->delete();
+
+    $newOptionValue = MenuOptionValue::factory()->create([
+        'option_id' => $option->getKey(),
+        'name' => 'Rijst',
+        'price' => 0,
+    ]);
+    $newMenuOptionValue = $menuOption->menu_option_values()->create([
+        'option_value_id' => $newOptionValue->getKey(),
+    ]);
+
+    Livewire::test(OrderPreview::class, ['hash' => $this->order->hash])
+        ->call('onReOrder')
+        ->assertHasNoErrors()
+        ->assertRedirect();
+
+    $cartManager = resolve(CartManager::class);
+    $cartManager->cartInstance($this->order->location_id);
+    $restoredValue = $cartManager->getCart()->content()->first()->options->first()->values->first();
+
+    expect($restoredValue->id)->toBe($newMenuOptionValue->getKey());
+});
+
+it('does not change the cart when a historical selected option is unavailable', function(): void {
+    $menu = Menu::factory()->create();
+    $menu->locations()->attach($this->order->location);
+
+    $option = MenuOption::factory()->create(['display_type' => 'checkbox']);
+    $menuOption = $menu->menu_options()->create(['option_id' => $option->getKey()]);
+    $optionValue = MenuOptionValue::factory()->create();
+    $menuOptionValue = $menuOption->menu_option_values()->create([
+        'option_value_id' => $optionValue->getKey(),
+    ]);
+
+    $orderMenu = $this->order->menus()->create([
+        'menu_id' => $menu->getKey(),
+        'name' => $menu->menu_name,
+        'quantity' => 1,
+        'price' => $menu->menu_price,
+        'subtotal' => $menu->menu_price,
+        'option_values' => serialize([]),
+    ]);
+
+    $orderMenu->menu_options()->create([
+        'order_id' => $this->order->getKey(),
+        'menu_option_id' => $menuOption->getKey(),
+        'menu_option_value_id' => $menuOptionValue->getKey(),
+        'order_option_name' => $menuOptionValue->name,
+        'order_option_price' => 0,
+        'quantity' => 1,
+        'free_qty' => 0,
+    ]);
+
+    $menuOptionValue->delete();
+
+    Livewire::test(OrderPreview::class, ['hash' => $this->order->hash])
+        ->call('onReOrder')
+        ->assertHasErrors(['onReOrder']);
+
+    $cartManager = resolve(CartManager::class);
+    $cartManager->cartInstance($this->order->location_id);
+
+    expect($cartManager->getCart()->content())->toHaveCount(0);
 });
 
 it('handles cancel order', function(): void {
