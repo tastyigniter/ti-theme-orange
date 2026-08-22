@@ -184,8 +184,8 @@ final class OrderPreview extends Component
                     throw new ApplicationException($this->formatUnavailableReorderMessage($unavailableItems));
                 }
 
-                // Prefer the normalized order_menu_options rows over legacy serialized cart objects.
-                // This keeps old v3/imported orders deterministic when all selected items are still available.
+                // Rebuild the legacy payload with current IDs after semantic matching. This lets old
+                // orders survive menu rebuilds where the option/value names stayed the same.
                 $this->normalizeHistoricalOrderOptions($order);
 
                 $notes = $cartManager->restoreWithOrderMenus($order->getOrderMenus());
