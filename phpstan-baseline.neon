@@ -1,7 +1,7 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^Call to an undefined method Igniter\\Flame\\Database\\Builder\<Igniter\\Cart\\Models\\Menu\>\:\:listFrontEnd\(\)\.$#'
+			message: '#^Call to an undefined method Igniter\\Flame\\Database\\Builder\:\:listFrontEnd\(\)\.$#'
 			identifier: method.notFound
 			count: 1
 			path: src/Actions/ListMenuItems.php
@@ -61,7 +61,7 @@ parameters:
 			path: src/Livewire/LocationList.php
 
 		-
-			message: '#^Call to an undefined method Igniter\\Flame\\Database\\Builder\<Igniter\\Local\\Models\\Location\>\:\:listFrontEnd\(\)\.$#'
+			message: '#^Call to an undefined method Igniter\\Flame\\Database\\Builder\:\:listFrontEnd\(\)\.$#'
 			identifier: method.notFound
 			count: 1
 			path: src/Livewire/LocationList.php
@@ -73,56 +73,14 @@ parameters:
 			path: src/Livewire/LocationList.php
 
 		-
-			message: '#^Relation ''country'' is not found in Igniter\\Local\\Models\\Location model\.$#'
-			identifier: larastan.relationExistence
-			count: 1
-			path: src/Livewire/LocationList.php
-
-		-
-			message: '#^Relation ''delivery_areas'' is not found in Igniter\\Local\\Models\\Location model\.$#'
-			identifier: larastan.relationExistence
-			count: 1
-			path: src/Livewire/LocationList.php
-
-		-
-			message: '#^Relation ''media'' is not found in Igniter\\Local\\Models\\Location model\.$#'
-			identifier: larastan.relationExistence
-			count: 1
-			path: src/Livewire/LocationList.php
-
-		-
-			message: '#^Relation ''reviews'' is not found in Igniter\\Local\\Models\\Location model\.$#'
-			identifier: larastan.relationExistence
-			count: 1
-			path: src/Livewire/LocationList.php
-
-		-
-			message: '#^Relation ''settings'' is not found in Igniter\\Local\\Models\\Location model\.$#'
-			identifier: larastan.relationExistence
-			count: 1
-			path: src/Livewire/LocationList.php
-
-		-
-			message: '#^Relation ''working_hours'' is not found in Igniter\\Local\\Models\\Location model\.$#'
-			identifier: larastan.relationExistence
-			count: 1
-			path: src/Livewire/LocationList.php
-
-		-
 			message: '#^Call to an undefined method Igniter\\User\\Models\\Customer\:\:reservations\(\)\.$#'
 			identifier: method.notFound
 			count: 1
 			path: src/Livewire/ReservationList.php
 
 		-
-			message: '#^Call to an undefined method Igniter\\Flame\\Database\\Builder\<Igniter\\Local\\Models\\Review\>\:\:isApproved\(\)\.$#'
+			message: '#^Call to an undefined method Igniter\\Flame\\Database\\Builder\:\:isApproved\(\)\.$#'
 			identifier: method.notFound
-			count: 1
-			path: src/Livewire/ReviewList.php
-
-		-
-			message: '#^Relation ''customer'' is not found in Igniter\\Local\\Models\\Review model\.$#'
-			identifier: larastan.relationExistence
 			count: 1
 			path: src/Livewire/ReviewList.php
 
@@ -139,26 +97,8 @@ parameters:
 			path: src/View/Components/CategoryList.php
 
 		-
-			message: '#^Relation ''locations'' is not found in Igniter\\Cart\\Models\\Menu model\.$#'
-			identifier: larastan.relationExistence
-			count: 1
-			path: src/View/Components/FeaturedItems.php
-
-		-
-			message: '#^Relation ''media'' is not found in Igniter\\Cart\\Models\\Menu model\.$#'
-			identifier: larastan.relationExistence
-			count: 1
-			path: src/View/Components/FeaturedItems.php
-
-		-
-			message: '#^Call to an undefined method Igniter\\Flame\\Database\\Builder\<Igniter\\Local\\Models\\Review\>\:\:isApproved\(\)\.$#'
+			message: '#^Call to an undefined method Igniter\\Flame\\Database\\Builder\:\:isApproved\(\)\.$#'
 			identifier: method.notFound
-			count: 1
-			path: src/View/Components/LocalHeader.php
-
-		-
-			message: '#^Relation ''customer'' is not found in Igniter\\Local\\Models\\Review model\.$#'
-			identifier: larastan.relationExistence
 			count: 1
 			path: src/View/Components/LocalHeader.php
 

@@ -11,6 +11,7 @@ use Igniter\System\Mail\AnonymousTemplateMailable;
 use Igniter\User\Models\Customer;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Sleep;
 use Livewire\Livewire;
 
 it('initialize component correctly', function(): void {
@@ -57,6 +58,7 @@ it('mounts and prepares props', function(): void {
 });
 
 it('handles forgot password', function(): void {
+    Sleep::fake();
     Mail::fake();
 
     $customer = Customer::factory()->create([
@@ -70,6 +72,22 @@ it('handles forgot password', function(): void {
     expect($customer->fresh()->reset_code)->not->toBeNull();
 
     Mail::assertQueued(AnonymousTemplateMailable::class, fn($mailable): bool => $mailable->getTemplateCode() === 'igniter.user::mail.password_reset_request');
+
+    Sleep::assertSleptTimes(1);
+});
+
+it('returns the same success when forgot password email is unknown', function(): void {
+    Sleep::fake();
+    Mail::fake();
+
+    Livewire::test(ResetPassword::class)
+        ->set('email', 'unknown@example.com')
+        ->call('onForgotPassword')
+        ->assertSet('message', lang('igniter.user::default.reset.alert_reset_request_success'))
+        ->assertSet('email', null);
+
+    Mail::assertNothingQueued();
+    Sleep::assertSleptTimes(1);
 });
 
 it('handles reset password', function(): void {
