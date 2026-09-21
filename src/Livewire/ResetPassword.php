@@ -8,6 +8,7 @@ use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Main\Traits\UsesPage;
 use Igniter\User\Models\Customer;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Timebox;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
@@ -77,25 +78,21 @@ final class ResetPassword extends Component
             'email' => lang('igniter.user::default.reset.label_email'),
         ]);
 
-        if ($customer = Customer::whereEmail($this->email)->first()) {
-            /** @var Customer $customer */
-            throw_unless($customer->enabled(), ValidationException::withMessages([
-                'email' => lang('igniter.user::default.reset.alert_reset_error'),
-            ]));
+        (new Timebox)->call(function(): void {
+            /** @var null|Customer $customer */
+            $customer = Customer::whereEmail($this->email)->first();
+            if ($customer && $customer->enabled()) {
+                $customer->resetPassword();
+                $customer->mailSendResetPasswordRequest([
+                    'reset_link' => page_url($this->resetPage, ['code' => $customer->reset_code]),
+                    'account_login_link' => page_url($this->loginPage),
+                ]);
+            }
 
-            throw_unless($customer->resetPassword(), ValidationException::withMessages([
-                'email' => lang('igniter.user::default.reset.alert_reset_error'),
-            ]));
+            $this->reset();
 
-            $customer->mailSendResetPasswordRequest([
-                'reset_link' => page_url($this->resetPage, ['code' => $customer->reset_code]),
-                'account_login_link' => page_url($this->loginPage),
-            ]);
-        }
-
-        $this->reset();
-
-        $this->message = lang('igniter.user::default.reset.alert_reset_request_success');
+            $this->message = lang('igniter.user::default.reset.alert_reset_request_success');
+        }, microseconds: (int) config('igniter-auth.timeboxDuration', 2_000_000));
     }
 
     public function onResetPassword()
