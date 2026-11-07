@@ -160,6 +160,7 @@ return [
     'alert_preview_mode' => 'Action not allowed in preview mode',
     'alert_saved_address_not_found' => 'Selected address not found',
     'alert_reservation_process_failed' => 'Unable to process your reservation at this time. Please try again in a moment.',
+    'alert_reorder_unavailable' => 'This order can no longer be reordered. No longer available: %s.',
 
     'error_telephone_required' => 'Telephone number is required',
     'error_telephone_invalid' => 'Telephone number is invalid',
