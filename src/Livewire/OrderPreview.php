@@ -263,6 +263,7 @@ final class OrderPreview extends Component
                             : $savedValue->order_option_name;
                         $unavailable[] = $orderMenu->name.' – '.$detail;
                     }
+
                     continue;
                 }
 
@@ -416,16 +417,14 @@ final class OrderPreview extends Component
             return null;
         }
 
-        return $currentMenuOptions->first(fn($menuOption): bool =>
-            strcasecmp(trim((string)$menuOption->option_name), $historicalName) === 0,
+        return $currentMenuOptions->first(fn($menuOption): bool => strcasecmp(trim((string)$menuOption->option_name), $historicalName) === 0,
         );
     }
 
     protected function resolveCurrentMenuOptionValue($menuOption, $savedValue)
     {
         $historicalId = (int)$savedValue->menu_option_value_id;
-        if ($currentValue = $menuOption->menu_option_values->first(fn($value): bool =>
-            (int)$value->menu_option_value_id === $historicalId,
+        if ($currentValue = $menuOption->menu_option_values->first(fn($value): bool => (int)$value->menu_option_value_id === $historicalId,
         )) {
             return $currentValue;
         }
@@ -435,8 +434,7 @@ final class OrderPreview extends Component
             return null;
         }
 
-        return $menuOption->menu_option_values->first(fn($value): bool =>
-            strcasecmp(trim((string)$value->name), $historicalName) === 0,
+        return $menuOption->menu_option_values->first(fn($value): bool => strcasecmp(trim((string)$value->name), $historicalName) === 0,
         );
     }
 
