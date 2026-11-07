@@ -477,6 +477,57 @@ it('onConfirm redirects when payment gateway redirects', function(): void {
         ->assertRedirect('http://example.com');
 });
 
+it('onConfirm requires the terms to be agreed when the terms field is missing from the submitted fields', function(): void {
+    Event::fake(['igniter.orange.validateCheckout']);
+    setupCheckout();
+    $orderManager = resolve(OrderManager::class);
+    $order = $orderManager->getOrder();
+    $order->order_type = Location::COLLECTION;
+    $order->save();
+    LocationFacade::updateOrderType(Location::COLLECTION);
+
+    // A Livewire update may replace the whole public `fields` array, so a
+    // crafted or desynced request can omit the termsAgreed key entirely.
+    Livewire::test(Checkout::class)
+        ->set('hideTelephoneField', true)
+        ->set('hideCommentField', true)
+        ->set('hideDeliveryCommentField', true)
+        ->set('fields', [
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+            'email' => 'test@example.com',
+            'payment' => 'cod',
+        ])
+        ->dispatch('checkout::confirm')
+        ->assertHasErrors(['fields.termsAgreed'])
+        ->assertNoRedirect();
+
+    expect($order->fresh()->isPaymentProcessed())->toBeFalse();
+});
+
+it('onConfirm redirects to success page when the terms are agreed', function(): void {
+    Event::fake(['igniter.orange.validateCheckout']);
+    setupCheckout();
+    $orderManager = resolve(OrderManager::class);
+    $order = $orderManager->getOrder();
+    $order->order_type = Location::COLLECTION;
+    $order->save();
+    LocationFacade::updateOrderType(Location::COLLECTION);
+
+    Livewire::test(Checkout::class)
+        ->set('hideTelephoneField', true)
+        ->set('hideCommentField', true)
+        ->set('hideDeliveryCommentField', true)
+        ->set('fields.first_name', 'John')
+        ->set('fields.last_name', 'Doe')
+        ->set('fields.email', 'test@example.com')
+        ->set('fields.payment', 'cod')
+        ->set('fields.termsAgreed', '1')
+        ->dispatch('checkout::confirm')
+        ->assertHasNoErrors()
+        ->assertRedirect(page_url('checkout.success', ['hash' => $order->hash]));
+});
+
 it('onConfirm redirects to success page correctly', function(): void {
     Event::fake(['igniter.orange.validateCheckout']);
     setupCheckout();
