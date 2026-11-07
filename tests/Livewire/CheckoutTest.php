@@ -218,7 +218,29 @@ it('onValidate fails validation when selected payment is invalid', function(): v
 
     Livewire::test(Checkout::class)
         ->dispatch('checkout::validate')
-        ->assertHasErrors(['payment' => [lang('igniter.cart::default.checkout.error_invalid_payment')]]);
+        ->assertHasErrors(['fields.payment' => [lang('igniter.cart::default.checkout.error_invalid_payment')]]);
+});
+
+it('onValidate shows the invalid payment error on the payment field and keeps it after the next request', function(): void {
+    setupCheckout();
+    $order = Order::factory()->create([
+        'order_type' => Location::COLLECTION,
+        'payment' => 'invalid',
+    ]);
+    $orderManager = resolve(OrderManager::class);
+    $orderManager->setCurrentOrderId($order->order_id);
+    $orderManager->setCurrentPaymentCode('invalid');
+    LocationFacade::updateOrderType($order->order_type);
+
+    // The payment field renders the error stored under `fields.payment`, so a
+    // bare `payment` key is never shown. Livewire also only carries error keys
+    // that map to a component property into the next request.
+    Livewire::test(Checkout::class)
+        ->dispatch('checkout::validate')
+        ->assertSee(lang('igniter.cart::default.checkout.error_invalid_payment'))
+        ->set('fields.first_name', 'John')
+        ->assertSee(lang('igniter.cart::default.checkout.error_invalid_payment'))
+        ->assertHasErrors(['fields.payment' => [lang('igniter.cart::default.checkout.error_invalid_payment')]]);
 });
 
 it('onValidate fails validation when delivery address is invalid', function(): void {

@@ -399,7 +399,7 @@ final class Checkout extends Component
                 }
 
                 if ($this->fields['payment'] && !$this->orderManager->getPayment($this->fields['payment'])) {
-                    $validator->errors()->add('payment', lang('igniter.cart::default.checkout.error_invalid_payment'));
+                    $validator->errors()->add('fields.payment', lang('igniter.cart::default.checkout.error_invalid_payment'));
                 }
             });
         });
