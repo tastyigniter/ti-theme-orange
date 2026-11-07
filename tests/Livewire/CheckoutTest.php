@@ -28,8 +28,9 @@ use Illuminate\Support\Facades\Event;
 use Livewire\Features\SupportRedirects\Redirector;
 use Livewire\Livewire;
 use Override;
+use stdClass;
 
-function setupCheckout()
+function setupCheckout(): stdClass
 {
     $location = Location::factory()->create();
     $menuItem = Menu::factory()->create();

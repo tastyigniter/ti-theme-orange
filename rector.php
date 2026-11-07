@@ -6,7 +6,6 @@ use Rector\CodingStyle\Rector\Catch_\CatchExceptionNameMatchingTypeRector;
 use Rector\CodingStyle\Rector\ClassMethod\NewlineBeforeNewAssignSetRector;
 use Rector\Config\RectorConfig;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictNewArrayRector;
-use Rector\TypeDeclaration\Rector\StmtsAwareInterface\DeclareStrictTypesRector;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -14,9 +13,6 @@ return RectorConfig::configure()
         __DIR__.'/tests',
     ])
     ->withImportNames(removeUnusedImports: true)
-    ->withRules([
-        DeclareStrictTypesRector::class,
-    ])
     ->withSkip([
         CatchExceptionNameMatchingTypeRector::class,
         NewlineBeforeNewAssignSetRector::class,
