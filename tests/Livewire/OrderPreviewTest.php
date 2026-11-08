@@ -204,7 +204,7 @@ it('uses the original order location when validating a reorder', function(): voi
         'quantity' => 1,
         'price' => $menu->menu_price,
         'subtotal' => $menu->menu_price,
-        'option_values' => serialize([]),
+        'option_values' => [],
     ]);
 
     Livewire::test(OrderPreview::class, ['hash' => $this->order->hash])
@@ -299,7 +299,7 @@ it('does not change the cart when a historical selected option is unavailable', 
         'quantity' => 1,
         'price' => $menu->menu_price,
         'subtotal' => $menu->menu_price,
-        'option_values' => serialize([]),
+        'option_values' => [],
     ]);
 
     $orderMenu->menu_options()->create([
@@ -354,7 +354,7 @@ it('errors when reordering with a menu item no longer available at the order loc
         'quantity' => 1,
         'price' => $menu->menu_price,
         'subtotal' => $menu->menu_price,
-        'option_values' => serialize([]),
+        'option_values' => [],
     ]);
 
     Livewire::test(OrderPreview::class, ['hash' => $this->order->hash])
@@ -379,7 +379,7 @@ it('errors when reordering with a deleted menu option without a historical name'
         'quantity' => 1,
         'price' => $menu->menu_price,
         'subtotal' => $menu->menu_price,
-        'option_values' => serialize([]),
+        'option_values' => [],
     ]);
 
     $orderMenu->menu_options()->create([
@@ -481,7 +481,7 @@ it('errors when reordering with a newly required menu option', function(): void 
         'quantity' => 1,
         'price' => $menu->menu_price,
         'subtotal' => $menu->menu_price,
-        'option_values' => serialize([]),
+        'option_values' => [],
     ]);
 
     Livewire::test(OrderPreview::class, ['hash' => $this->order->hash])
@@ -554,7 +554,7 @@ it('errors when reordering with a deleted option value and no saved option name'
         'quantity' => 1,
         'price' => $menu->menu_price,
         'subtotal' => $menu->menu_price,
-        'option_values' => serialize([]),
+        'option_values' => [],
     ]);
 
     $orderMenu->menu_options()->create([
@@ -628,7 +628,7 @@ it('errors when restoring order menus returns notes', function(): void {
         'quantity' => 1,
         'price' => $menu->menu_price,
         'subtotal' => $menu->menu_price,
-        'option_values' => serialize([]),
+        'option_values' => [],
     ]);
 
     $cartManager = new class extends CartManager
@@ -662,7 +662,7 @@ it('skips unresolvable menu options when normalizing historical order options', 
         'quantity' => 1,
         'price' => $menu->menu_price,
         'subtotal' => $menu->menu_price,
-        'option_values' => serialize([]),
+        'option_values' => [],
     ]);
 
     $orderMenu->menu_options()->create([
@@ -701,7 +701,7 @@ it('skips unresolvable option values when normalizing historical order options',
         'quantity' => 1,
         'price' => $menu->menu_price,
         'subtotal' => $menu->menu_price,
-        'option_values' => serialize([]),
+        'option_values' => [],
     ]);
 
     $orderMenu->menu_options()->create([
