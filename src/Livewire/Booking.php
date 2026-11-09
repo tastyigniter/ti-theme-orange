@@ -21,6 +21,7 @@ use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Livewire\Component;
+use stdClass;
 use Throwable;
 
 /**
@@ -311,7 +312,7 @@ final class Booking extends Component
             ? $this->manager->isTimeslotsFullyBookedOn($reducedTimeslots, $selectedDate, $this->guest)
             : [];
 
-        return $reducedTimeslots->map(fn($dateTime, $index) => (object)[
+        return $reducedTimeslots->map(fn($dateTime, $index): stdClass => (object)[
             'dateTime' => $dateTime,
             'fullyBooked' => in_array($dateTime->format('Y-m-d H:i'), $timeslotsBookedStatus),
             'isSelected' => $selectedIndex === $index,

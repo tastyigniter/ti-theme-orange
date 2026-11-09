@@ -63,7 +63,7 @@ return [
         'comment' => ['max:500'],
         'delivery_comment' => ['max:500'],
         'payment' => ['sometimes', 'nullable', 'alpha_dash'],
-        'termsAgreed' => ['sometimes', 'accepted'],
+        'termsAgreed' => ['required', 'accepted'],
         'payment_fields' => ['sometimes', 'array'],
         'payment_fields.*' => ['sometimes'],
         'payment_fields.pay_from_profile' => ['sometimes', 'integer'],
