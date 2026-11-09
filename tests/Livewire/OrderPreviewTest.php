@@ -633,7 +633,7 @@ it('errors when restoring order menus returns notes', function(): void {
 
     $cartManager = new class extends CartManager
     {
-        public function restoreWithOrderMenus(Collection $orderMenuItems)
+        public function restoreWithOrderMenus(Collection $orderMenuItems): array
         {
             return ['Some items are no longer available'];
         }
