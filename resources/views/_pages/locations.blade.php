@@ -6,6 +6,4 @@ layout: default
 
 '[igniter-orange::location-list]': []
 ---
-<div class="container py-5">
-    <livewire:igniter-orange::location-list />
-</div>
+@themeBlocks

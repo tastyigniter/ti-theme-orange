@@ -16,6 +16,7 @@
     "require": {
         "livewire/livewire": "^v3.7",
         "spatie/laravel-google-fonts": "^1.2",
+        "stevebauman/purify": "^6.0",
         "tastyigniter/core": "^v4.0",
         "tastyigniter/ti-ext-cart": "^v4.0",
         "tastyigniter/ti-ext-coupons": "^v4.0",

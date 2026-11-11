@@ -7,10 +7,4 @@ permalink: /checkout/success/:hash?
 '[igniter-orange::leave-review]':
     type: order
 ---
-<div class="container">
-    <div class="row py-4">
-        <div class="col-sm-9 m-auto">
-            <livewire:igniter-orange::order-preview />
-        </div>
-    </div>
-</div>
+@themeBlocks
