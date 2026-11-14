@@ -22,6 +22,7 @@ use Igniter\Orange\Blocks\OrangeComponentBlock;
 use Igniter\Orange\Blocks\RichText;
 use Igniter\Orange\Blocks\Spacer;
 use Igniter\System\Classes\ComponentManager;
+use Igniter\User\Models\User;
 
 beforeEach(function(): void {
     $this->theme = resolve(ThemeManager::class)->findTheme('igniter-orange');
@@ -155,6 +156,8 @@ it('renders content blocks with the theme views', function(): void {
 });
 
 it('renders the home page from the page builder sections', function(): void {
+    User::factory()->create();
+
     $this->get(route('igniter.theme.home'))
         ->assertOk()
         ->assertSee('id="s_home_slider"', false)
@@ -267,6 +270,8 @@ it('renders the back link block', function(): void {
 });
 
 it('renders theme pages from the page builder sections', function(string $route, string $sectionId): void {
+    User::factory()->create();
+
     $this->get(route($route))
         ->assertOk()
         ->assertSee('id="'.$sectionId.'"', false);

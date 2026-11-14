@@ -47,7 +47,7 @@ class OrangeComponentBlock extends ComponentBlock
     #[Override]
     public function summary(array $settings): string
     {
-        return parent::summary(array_except($settings, self::WRAPPER_FIELDS));
+        return '';
     }
 
     #[Override]
