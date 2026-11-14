@@ -7,7 +7,7 @@
 @else
     {!! get_favicon() !!}
 @endif
-<title>{{ lang(get_title()).lang('igniter.orange::default.title_separator').setting('site_name') }}</title>
+<title>{{ lang(get_title() ?? '').lang('igniter.orange::default.title_separator').setting('site_name') }}</title>
 @if ($page->description)
     <meta name="description" content="{{ $page->description }}">
 @endif

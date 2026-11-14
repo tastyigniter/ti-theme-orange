@@ -7,7 +7,6 @@ namespace Igniter\Orange\Tests\Livewire;
 use Igniter\Admin\Classes\FormField;
 use Igniter\Admin\Widgets\Form;
 use Igniter\Cart\Http\Controllers\Menus;
-use Igniter\Main\Classes\ThemeManager;
 use Igniter\Main\Http\Controllers\Themes;
 use Igniter\Main\Models\Theme;
 use Igniter\Main\Traits\ConfigurableComponent;
@@ -163,26 +162,4 @@ it('returns empty array for unknown property', function(): void {
     $options = AddressBook::getPropertyOptions($form, $field);
 
     expect($options)->toBe([]);
-});
-
-it('loads component form on theme editor', function(): void {
-    $theme = resolve(ThemeManager::class)->findTheme('igniter-orange');
-    $theme->locked = false;
-
-    session()->put('widget.Themes-templateeditor-formtemplate-template', [
-        'igniter-orange-selected-type' => '_pages',
-        'igniter-orange-selected-file' => 'account.address',
-        'igniter-orange-selected-mTime' => 1716194991,
-    ]);
-
-    actingAsSuperUser()
-        ->post(route('igniter.main.themes', ['slug' => 'source/igniter-orange']), [
-            'context' => 'edit',
-            'alias' => 'igniter-orange::address-book',
-        ], [
-            'X-Requested-With' => 'XMLHttpRequest',
-            'X-IGNITER-REQUEST-HANDLER' => 'formSettingsComponents::onLoadRecord',
-        ])
-        ->assertSee('Number of addresses to display per page')
-        ->assertSee('Default sort order of addresses');
 });

@@ -7,9 +7,5 @@ permalink: /checkout
 '[igniter-orange::fulfillment-modal]':
     hideDeliveryAddress: true
 ---
-<div class="container">
-    <div class="col-lg-10 mx-auto">
-        <livewire:igniter-orange::checkout />
-    </div>
-</div>
+@themeBlocks
 <livewire:igniter-orange::fulfillment-modal />

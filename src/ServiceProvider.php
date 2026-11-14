@@ -8,12 +8,14 @@ use Igniter\Admin\Widgets\Form;
 use Igniter\Cart\Http\Middleware\CartMiddleware;
 use Igniter\Flame\Support\Facades\Igniter;
 use Igniter\Local\Http\Middleware\CheckLocation;
+use Igniter\Main\Classes\BlockManager;
 use Igniter\Main\Classes\MainController;
 use Igniter\Main\Classes\Theme;
 use Igniter\Main\Classes\ThemeManager;
 use Igniter\Main\Template\Page;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\Actions\EnsureUniqueProcess;
+use Igniter\Orange\Blocks\OrangeBlocks;
 use Igniter\Orange\Http\Controllers\Logout;
 use Igniter\Orange\Http\Middleware\SetOriginalRouteParametersOnLivewireRoute;
 use Igniter\Orange\Livewire\Features\SupportFlashMessages;
@@ -65,6 +67,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         });
 
         $this->configureLivewire();
+        $this->configurePageBuilder();
         $this->configurePageAuthentication();
         $this->configureGoogleFonts();
 
@@ -121,6 +124,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
                 }
             }
         });
+    }
+
+    protected function configurePageBuilder(): void
+    {
+        resolve(BlockManager::class)->registerBlocks('igniter-orange', fn(): array => OrangeBlocks::definitions());
     }
 
     protected function configurePageAuthentication(): void
