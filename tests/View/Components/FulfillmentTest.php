@@ -6,8 +6,10 @@ namespace Igniter\Orange\Tests\View\Components;
 
 use Carbon\Carbon;
 use Igniter\Local\Facades\Location;
+use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Igniter\Orange\View\Components\Fulfillment;
+use Illuminate\Support\Facades\Event;
 
 it('initializes fulfillment component correctly', function(): void {
     $component = new Fulfillment(true);
@@ -36,10 +38,26 @@ it('renders view with fulfillment data', function(): void {
     Location::shouldReceive('orderTimeIsAsap')->andReturn(true);
     Location::shouldReceive('getOrderType')->andReturn('delivery');
     Location::shouldReceive('orderDateTime')->andReturn(new Carbon('2023-10-10 12:00:00'));
+    Location::shouldReceive('current')->andReturn(null);
 
     $view = (new Fulfillment)->render();
 
     expect($view->getData()['isAsap'])->toBeTrue()
+        ->and($view->getData()['closureNotice'])->toBeNull()
         ->and($view->getData()['activeOrderType'])->toBe('delivery')
         ->and($view->getData()['orderDateTime']->format('Y-m-d H:i:s'))->toBe('2023-10-10 12:00:00');
+});
+
+it('shows a closure notice from extensions', function(): void {
+    $location = LocationModel::factory()->create();
+    Location::shouldReceive('orderTimeIsAsap')->andReturn(true);
+    Location::shouldReceive('getOrderType')->andReturn(null);
+    Location::shouldReceive('orderDateTime')->andReturn(new Carbon('2023-10-10 12:00:00'));
+    Location::shouldReceive('current')->andReturn($location);
+    Event::listen('igniter.location.closureNotice', fn($model): ?string => $model->is($location) ? 'Back on 1 Dec.' : null);
+
+    $view = (new Fulfillment)->render();
+
+    expect($view->getData()['closureNotice'])->toBe('Back on 1 Dec.')
+        ->and(view('igniter-orange::components.fulfillment', $view->getData() + ['previewMode' => true])->render())->toContain('Back on 1 Dec.');
 });

@@ -7,6 +7,7 @@ namespace Igniter\Orange\View\Components;
 use Igniter\Local\Facades\Location;
 use Igniter\Main\Traits\ConfigurableComponent;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Event;
 use Illuminate\View\Component;
 use Override;
 
@@ -44,6 +45,23 @@ final class Fulfillment extends Component
             'isAsap' => Location::orderTimeIsAsap(),
             'activeOrderType' => Location::getOrderType(),
             'orderDateTime' => Location::orderDateTime(),
+            'closureNotice' => $this->closureNotice(),
         ]);
+    }
+
+    /**
+     * A notice from extensions for a location that is temporarily closed, such as a
+     * vendor on vacation, or null.
+     */
+    protected function closureNotice(): ?string
+    {
+        $location = Location::current();
+        if (!$location) {
+            return null;
+        }
+
+        $notice = Event::dispatch('igniter.location.closureNotice', [$location], true);
+
+        return is_string($notice) && $notice !== '' ? $notice : null;
     }
 }
