@@ -7,6 +7,7 @@ namespace Igniter\Orange\Livewire;
 use Closure;
 use Igniter\Admin\Classes\FormField;
 use Igniter\Admin\Widgets\Form;
+use Igniter\Local\Classes\FeaturedLocations;
 use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Local\Models\ReviewSettings;
@@ -239,6 +240,7 @@ final class LocationList extends Component
         $filterByDeliveryAreas = $this->orderType === 'delivery';
 
         $this->filterQuery($query);
+        $this->boostFeatured($query, $coordinates);
 
         // Remove pagination options so listFrontEnd returns a query builder
         unset($options['pageLimit']);
@@ -252,6 +254,13 @@ final class LocationList extends Component
             ->map(fn($location): LocationData => new LocationData($location));
 
         return $results->setCollection($collection);
+    }
+
+    protected function boostFeatured($query, $coordinates): void
+    {
+        if ($ids = resolve(FeaturedLocations::class)->boostedIds($coordinates ?: null)) {
+            $query->orderByRaw(sprintf('%s in (%s) desc', $query->getModel()->getQualifiedKeyName(), implode(',', $ids)));
+        }
     }
 
     protected function filterQueryResult($location, $coordinates, $filterByDeliveryAreas = false): bool

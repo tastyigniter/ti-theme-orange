@@ -8,6 +8,7 @@ use Igniter\Admin\Classes\FormField;
 use Igniter\Admin\Widgets\Form;
 use Igniter\Cart\Http\Controllers\Menus;
 use Igniter\Flame\Geolite\Model\Location as GeoliteLocation;
+use Igniter\Local\Classes\FeaturedLocations;
 use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Local\Models\ReviewSettings;
@@ -193,4 +194,18 @@ it('returns available filter', function(): void {
 
     Livewire::test(LocationList::class, ['filter' => ['cuisine' => 'nigerian']])
         ->assertSet('filters', fn($response): bool => array_keys($response) === ['invalid', 'cuisine']);
+});
+
+it('lists featured locations first with a badge', function(): void {
+    resolve(FeaturedLocations::class)->clearCache();
+    LocationModel::factory()->create(['location_name' => 'Aardvark Diner', 'location_status' => true]);
+    $featured = LocationModel::factory()->create(['location_name' => 'Zebra Grill', 'location_status' => true]);
+    Event::listen('igniter.local.featuredLocationIds', fn(): array => [$featured->getKey()]);
+
+    Livewire::test(LocationList::class)
+        ->set('sortBy', 'name')
+        ->assertViewHas('locationsList', fn($locationsList): bool => $locationsList->getCollection()->first()->id === $featured->getKey())
+        ->assertSee(lang('igniter.orange::default.text_featured'));
+
+    resolve(FeaturedLocations::class)->clearCache();
 });
