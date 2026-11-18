@@ -13,6 +13,18 @@ parameters:
 			path: src/Data/LocationData.php
 
 		-
+			message: '#^Call to method isFeatured\(\) on an unknown class Igniter\\Local\\Classes\\FeaturedLocations\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Data/LocationData.php
+
+		-
+			message: '#^Class Igniter\\Local\\Classes\\FeaturedLocations not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Data/LocationData.php
+
+		-
 			message: '#^Method Igniter\\Orange\\Data\\LocationData\:\:orderType\(\) never returns null so it can be removed from the return type\.$#'
 			identifier: return.unusedType
 			count: 1
@@ -57,6 +69,18 @@ parameters:
 		-
 			message: '#^Call to an undefined static method Igniter\\Local\\Models\\Location\:\:getOrderTypeOptions\(\)\.$#'
 			identifier: staticMethod.notFound
+			count: 1
+			path: src/Livewire/LocationList.php
+
+		-
+			message: '#^Call to method boostedIds\(\) on an unknown class Igniter\\Local\\Classes\\FeaturedLocations\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Livewire/LocationList.php
+
+		-
+			message: '#^Class Igniter\\Local\\Classes\\FeaturedLocations not found\.$#'
+			identifier: class.notFound
 			count: 1
 			path: src/Livewire/LocationList.php
 
@@ -131,6 +155,18 @@ parameters:
 			identifier: larastan.relationExistence
 			count: 1
 			path: src/View/Components/FeaturedItems.php
+
+		-
+			message: '#^Call to method ids\(\) on an unknown class Igniter\\Local\\Classes\\FeaturedLocations\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/View/Components/FeaturedLocations.php
+
+		-
+			message: '#^Class Igniter\\Local\\Classes\\FeaturedLocations not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/View/Components/FeaturedLocations.php
 
 		-
 			message: '#^Relation ''customer'' is not found in Igniter\\Local\\Models\\Review model\.$#'
