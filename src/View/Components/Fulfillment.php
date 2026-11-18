@@ -60,7 +60,7 @@ final class Fulfillment extends Component
             return null;
         }
 
-        $notice = Event::dispatch('igniter.location.closureNotice', [$location], true);
+        $notice = Event::dispatch('igniter.orange.locationClosureNotice', [$location], true);
 
         return is_string($notice) && $notice !== '' ? $notice : null;
     }

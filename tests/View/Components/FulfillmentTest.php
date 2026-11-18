@@ -54,7 +54,7 @@ it('shows a closure notice from extensions', function(): void {
     Location::shouldReceive('getOrderType')->andReturn(null);
     Location::shouldReceive('orderDateTime')->andReturn(new Carbon('2023-10-10 12:00:00'));
     Location::shouldReceive('current')->andReturn($location);
-    Event::listen('igniter.location.closureNotice', fn($model): ?string => $model->is($location) ? 'Back on 1 Dec.' : null);
+    Event::listen('igniter.orange.locationClosureNotice', fn($model): ?string => $model->is($location) ? 'Back on 1 Dec.' : null);
 
     $view = (new Fulfillment)->render();
 
