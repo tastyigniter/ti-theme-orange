@@ -15,7 +15,12 @@
                     </div>
                 @endif
                 <div class="no-spacing">
-                    <h2 class="h5 mb-1 text-body">{{ $locationData->name }}</h2>
+                    <h2 class="h5 mb-1 text-body">
+                        {{ $locationData->name }}
+                        @if($locationData->isFeatured())
+                            <span class="badge text-bg-warning align-middle ms-1 fs-6 fw-normal">@lang('igniter.orange::default.text_featured')</span>
+                        @endif
+                    </h2>
                     @if($allowReviews)
                         <div class="rating rating-sm small text-muted mb-1">
                             <x-igniter-orange::star-rating :score="$locationData->reviewsScore()">

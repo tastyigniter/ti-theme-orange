@@ -9,6 +9,7 @@ use Igniter\Cart\Classes\AbstractOrderType;
 use Igniter\Cart\Classes\OrderTypes;
 use Igniter\Cart\Models\Concerns\LocationAction;
 use Igniter\Local\Classes\CoveredArea;
+use Igniter\Local\Classes\FeaturedLocations;
 use Igniter\Local\Classes\WorkingSchedule;
 use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\Location as LocationModel;
@@ -53,6 +54,11 @@ final class LocationData
         $current = Location::current();
 
         return new self($current);
+    }
+
+    public function isFeatured(): bool
+    {
+        return resolve(FeaturedLocations::class)->isFeatured($this->id);
     }
 
     public function url(string $page): string

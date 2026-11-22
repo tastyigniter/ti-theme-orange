@@ -38,3 +38,6 @@
         >@lang('igniter.local::default.search.text_change')</a>
     @endunless
 </div>
+@if ($closureNotice ?? null)
+    <div class="small text-muted mt-1">{{ $closureNotice }}</div>
+@endif
