@@ -474,6 +474,44 @@ it('onConfirm does not redirect when payment gateway returns false', function():
         ->assertNoRedirect();
 });
 
+it('onConfirm ignores submitted fields the checkout form does not define', function(): void {
+    Event::fake(['igniter.orange.validateCheckout']);
+    setupCheckout();
+    $order = Order::factory()->create([
+        'customer_id' => null,
+        'order_type' => Location::COLLECTION,
+        'processed' => 0,
+        'status_id' => 0,
+        'assignee_id' => null,
+    ]);
+    $orderManager = resolve(OrderManager::class);
+    $orderManager->setCurrentOrderId($order->order_id);
+    LocationFacade::updateOrderType($order->order_type);
+    $payment = Payment::firstWhere('code', 'cod');
+    $payment->class_name = TestPaymentWithFalse::class;
+    $payment->save();
+
+    Livewire::test(Checkout::class)
+        ->set('agreeTermsSlug', '')
+        ->set('hideTelephoneField', true)
+        ->set('hideCommentField', true)
+        ->set('hideDeliveryCommentField', true)
+        ->set('fields.first_name', 'John')
+        ->set('fields.last_name', 'Doe')
+        ->set('fields.email', 'test@example.com')
+        ->set('fields.payment', 'cod')
+        ->set('fields.processed', 1)
+        ->set('fields.status_id', 1)
+        ->set('fields.assignee_id', 1)
+        ->dispatch('checkout::confirm');
+
+    $order->refresh();
+    expect($order->first_name)->toBe('John')
+        ->and($order->isPaymentProcessed())->toBeFalse()
+        ->and((int)$order->status_id)->toBe(0)
+        ->and($order->assignee_id)->toBeNull();
+});
+
 it('onConfirm redirects when payment gateway redirects', function(): void {
     Event::fake(['igniter.orange.validateCheckout']);
     setupCheckout();

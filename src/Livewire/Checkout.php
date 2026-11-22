@@ -47,6 +47,8 @@ final class Checkout extends Component
 
     public const string STEP_PAY = 'pay';
 
+    protected const array DELIVERY_ADDRESS_KEYS = ['address_1', 'address_2', 'city', 'state', 'postcode', 'country_id'];
+
     /** Whether to use a two-page checkout */
     public bool $isTwoPageCheckout = false;
 
@@ -406,7 +408,7 @@ final class Checkout extends Component
 
         $data = $this->validate($rules, $messages, $attributes);
         $data = array_merge(
-            $this->fields,
+            $this->checkoutFieldData(),
             array_pull($data, 'fields.payment_fields', []),
             array_pull($data, 'fields', []),
             $data,
@@ -417,6 +419,16 @@ final class Checkout extends Component
         Event::dispatch('igniter.orange.validateCheckout', [$data, $order]);
 
         return $data;
+    }
+
+    protected function checkoutFieldData(): array
+    {
+        $allowed = array_merge(
+            array_keys($this->checkoutForm->getFields()),
+            self::DELIVERY_ADDRESS_KEYS,
+        );
+
+        return array_only($this->fields, $allowed);
     }
 
     protected function isOrderMarkedAsProcessed(): ?Order
