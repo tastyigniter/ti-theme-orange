@@ -109,3 +109,23 @@ it('registers customer and sends email verification', function(): void {
 
     Mail::assertQueued(AnonymousTemplateMailable::class, fn($mail): bool => $mail->getTemplateCode() === 'igniter.user::mail.activation');
 });
+
+it('only follows sign-up redirects to this site', function(mixed $redirect, string $expected): void {
+    $method = new \ReflectionMethod(Register::class, 'safeRedirectUrl');
+
+    expect($method->invoke(new Register, $redirect, '/fallback'))->toBe($expected);
+})->with([
+    'relative path' => ['/account/orders', '/account/orders'],
+    'other host' => ['https://evil.test/login', '/fallback'],
+    'protocol relative' => ['//evil.test', '/fallback'],
+    'backslash trick' => ['/\\evil.test', '/fallback'],
+    'javascript scheme' => ['javascript:alert(1)', '/fallback'],
+    'missing' => [null, '/fallback'],
+    'array input' => [['/x'], '/fallback'],
+]);
+
+it('follows a sign-up redirect to an absolute url on this site', function(): void {
+    $method = new \ReflectionMethod(Register::class, 'safeRedirectUrl');
+
+    expect($method->invoke(new Register, url('/menus'), '/fallback'))->toBe(url('/menus'));
+});

@@ -113,8 +113,32 @@ final class Register extends Component
             : flash()->overlay(lang('igniter.user::default.login.alert_account_activation'));
 
         return $customer->is_activated
-            ? redirect()->intended(get('redirect', page_url($this->redirectPage)))
-            : redirect()->to(get('redirect', page_url($this->loginPage)));
+            ? redirect()->intended($this->safeRedirectUrl(get('redirect'), page_url($this->redirectPage)))
+            : redirect()->to($this->safeRedirectUrl(get('redirect'), page_url($this->loginPage)));
+    }
+
+    /**
+     * The redirect query parameter comes from the request, so only paths on this
+     * site are followed. Anything else, such as https://evil.test or
+     * //evil.test, falls back to the configured page.
+     */
+    protected function safeRedirectUrl(mixed $url, string $fallback): string
+    {
+        if (!is_string($url) || $url === '' || preg_match('/[\\\\\x00-\x1F]/', $url)) {
+            return $fallback;
+        }
+
+        if (str_starts_with($url, '/') && !str_starts_with($url, '//')) {
+            return $url;
+        }
+
+        $host = parse_url($url, PHP_URL_HOST);
+        $scheme = parse_url($url, PHP_URL_SCHEME);
+
+        return is_string($host) && in_array($scheme, ['http', 'https'], true)
+        && strcasecmp($host, (string)parse_url(url('/'), PHP_URL_HOST)) === 0
+            ? $url
+            : $fallback;
     }
 
     public function onActivate()
